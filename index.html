@@ -2,21 +2,20 @@
 <html lang="id" class="dark">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0">
     <meta name="color-scheme" content="dark light">
-    <title>Al-Quran Digital - Dark Mode Edition</title>
+    <title>Al-Quran Digital - Responsive Edition</title>
     
     <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
     <script>
-        // Memastikan Mode Malam adalah default absolut sebelum konten dirender
         (function() {
             const savedTheme = localStorage.getItem('theme');
             if (savedTheme === 'light') {
                 document.documentElement.classList.remove('dark');
             } else {
                 document.documentElement.classList.add('dark');
-                localStorage.setItem('theme', 'dark'); // Set default ke dark di storage
+                localStorage.setItem('theme', 'dark');
             }
         })();
 
@@ -31,7 +30,7 @@
                             950: '#022c22',
                         },
                         slate: {
-                            950: '#0a0f1e', // Latar belakang ultra dark yang lebih elegan
+                            950: '#0a0f1e',
                         }
                     },
                     fontFamily: {
@@ -47,7 +46,6 @@
     <link href="https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
     
     <style>
-        /* Mencegah pergeseran warna saat loading */
         :root { color-scheme: dark; }
         .dark { background-color: #0a0f1e; color: #f8fafc; }
         
@@ -63,13 +61,13 @@
         }
 
         .ayah-card {
-            transition: transform 0.2s ease, border-color 0.2s ease;
+            transition: transform 0.2s ease, border-color 0.2s ease, box-shadow 0.2s ease;
         }
 
         .ayah-active {
             border-color: #10b981 !important;
             background-color: rgba(16, 185, 129, 0.05);
-            transform: scale(1.01);
+            box-shadow: 0 10px 30px -10px rgba(16, 185, 129, 0.2);
         }
 
         .glass-nav {
@@ -78,57 +76,70 @@
             -webkit-backdrop-filter: blur(15px);
             border-bottom: 1px solid rgba(255, 255, 255, 0.05);
         }
+
+        /* Responsive Arabic Text Resize */
+        @media (max-width: 640px) {
+            .font-arabic { font-size: 1.875rem; line-height: 3.5rem; }
+        }
     </style>
 </head>
-<body class="bg-slate-50 text-slate-900 dark:bg-slate-950 dark:text-slate-100 transition-colors duration-300 min-h-screen font-sans">
+<body class="bg-slate-50 text-slate-900 dark:bg-slate-950 dark:text-slate-100 transition-colors duration-300 min-h-screen font-sans overflow-x-hidden">
 
-    <!-- Navigasi -->
+    <!-- Navigasi Adaptif -->
     <nav class="sticky top-0 z-50 glass-nav">
-        <div class="max-w-4xl mx-auto px-4 h-16 flex items-center justify-between">
-            <div class="flex items-center gap-3">
-                <button id="btn-back" class="hidden p-2 rounded-full hover:bg-slate-800 transition-colors" onclick="handleBack()">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 h-16 md:h-20 flex items-center justify-between">
+            <div class="flex items-center gap-2 md:gap-4">
+                <button id="btn-back" class="hidden p-2 rounded-full hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors" onclick="handleBack()">
                     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="m15 18-6-6 6-6"/></svg>
                 </button>
-                <h1 id="nav-title" class="text-xl font-bold text-gold-gradient">Al-Quran Digital</h1>
+                <div class="flex flex-col">
+                    <h1 id="nav-title" class="text-lg md:text-2xl font-bold text-gold-gradient truncate max-w-[180px] sm:max-w-none">Al-Quran Digital</h1>
+                </div>
             </div>
             
-            <button onclick="toggleTheme()" class="p-2.5 rounded-xl bg-slate-900 border border-slate-800 text-yellow-400" id="theme-toggle">
-                <!-- Icon Sun -->
+            <button onclick="toggleTheme()" class="p-2.5 rounded-xl bg-slate-100 dark:bg-slate-900 border border-slate-200 dark:border-slate-800 text-slate-600 dark:text-yellow-400 transition-all active:scale-95" id="theme-toggle">
                 <svg id="sun-icon" class="hidden" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="4"/><path d="M12 2v2"/><path d="M12 20v2"/><path d="m4.93 4.93 1.41 1.41"/><path d="m17.66 17.66 1.41 1.41"/><path d="M2 12h2"/><path d="M20 12h2"/><path d="m6.34 17.66-1.41 1.41"/><path d="m19.07 4.93-1.41 1.41"/></svg>
-                <!-- Icon Moon -->
                 <svg id="moon-icon" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z"/></svg>
             </button>
         </div>
     </nav>
 
-    <main class="max-w-4xl mx-auto px-4 py-8">
+    <!-- Main Container dengan Auto-Resize Width -->
+    <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6 md:py-10">
         
         <!-- Search & Grid Home -->
-        <div id="view-home" class="space-y-6">
-            <div class="relative group">
+        <div id="view-home" class="space-y-8 animate-in fade-in slide-in-from-bottom-4 duration-500">
+            <div class="relative group max-w-2xl mx-auto">
                 <input 
                     type="text" 
                     id="search-box"
                     placeholder="Cari surah (contoh: Al-Kahf)..." 
-                    class="w-full py-4 pl-12 pr-6 rounded-2xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 focus:border-primary-500 outline-none transition-all shadow-sm"
+                    class="w-full py-4 pl-12 pr-6 rounded-2xl bg-white dark:bg-slate-900 border-2 border-slate-200 dark:border-slate-800 focus:border-primary-500 outline-none transition-all shadow-lg shadow-slate-200/50 dark:shadow-none"
                     oninput="filterSurah()"
                 />
-                <svg class="absolute left-4 top-4 text-slate-400" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg>
+                <svg class="absolute left-4 top-1/2 -translate-y-1/2 text-slate-400" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg>
             </div>
 
-            <div id="surah-list" class="grid grid-cols-1 md:grid-cols-2 gap-4">
-                <!-- Skeleton Loading -->
-                <div class="animate-pulse bg-slate-800 h-20 rounded-2xl"></div>
-                <div class="animate-pulse bg-slate-800 h-20 rounded-2xl"></div>
+            <!-- Grid yang menyesuaikan jumlah kolom berdasarkan lebar layar -->
+            <div id="surah-list" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 md:gap-6">
+                <!-- Skeleton Loading dengan auto-resize -->
+                <div class="animate-pulse bg-slate-200 dark:bg-slate-900 h-24 rounded-2xl"></div>
+                <div class="animate-pulse bg-slate-200 dark:bg-slate-900 h-24 rounded-2xl"></div>
+                <div class="animate-pulse bg-slate-200 dark:bg-slate-900 h-24 rounded-2xl"></div>
+                <div class="animate-pulse bg-slate-200 dark:bg-slate-900 h-24 rounded-2xl"></div>
             </div>
         </div>
 
         <!-- View Surah Detail -->
-        <div id="view-detail" class="hidden space-y-8 animate-in fade-in duration-500">
-            <div id="surah-header" class="text-center p-10 rounded-3xl bg-slate-900 border border-slate-800 shadow-2xl">
+        <div id="view-detail" class="hidden space-y-8 max-w-4xl mx-auto animate-in fade-in duration-700">
+            <div id="surah-header" class="text-center p-8 md:p-12 rounded-3xl bg-slate-900 border border-slate-800 shadow-2xl overflow-hidden relative">
+                <!-- Background decor for wider screens -->
+                <div class="absolute -right-10 -top-10 opacity-10 pointer-events-none">
+                    <svg width="200" height="200" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2L4.5 20.29L5.21 21L12 18L18.79 21L19.5 20.29L12 2Z"/></svg>
+                </div>
                 <!-- Header Content Dinamis -->
             </div>
-            <div id="ayat-container" class="space-y-6"></div>
+            <div id="ayat-container" class="space-y-6 md:space-y-10"></div>
         </div>
     </main>
 
@@ -140,7 +151,6 @@
         let isFullPlay = false;
         const audio = new Audio();
 
-        // Inisialisasi awal
         window.addEventListener('DOMContentLoaded', () => {
             updateThemeUI();
             fetchSurahs();
@@ -152,8 +162,8 @@
             document.getElementById('sun-icon').classList.toggle('hidden', !isDark);
             document.getElementById('moon-icon').classList.toggle('hidden', isDark);
             document.getElementById('theme-toggle').className = isDark 
-                ? "p-2.5 rounded-xl bg-slate-900 border border-slate-800 text-yellow-400"
-                : "p-2.5 rounded-xl bg-slate-100 border border-slate-200 text-slate-600";
+                ? "p-2.5 rounded-xl bg-slate-900 border border-slate-800 text-yellow-400 active:scale-95 transition-transform"
+                : "p-2.5 rounded-xl bg-slate-100 border border-slate-200 text-slate-600 active:scale-95 transition-transform";
         }
 
         function toggleTheme() {
@@ -176,24 +186,27 @@
         function renderSurahList(data) {
             const container = document.getElementById('surah-list');
             container.innerHTML = data.map(s => `
-                <div onclick="loadSurah(${s.nomor})" class="p-5 bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-2xl flex items-center justify-between cursor-pointer hover:border-primary-500 transition-all group">
+                <div onclick="loadSurah(${s.nomor})" class="p-5 bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-2xl flex items-center justify-between cursor-pointer hover:border-primary-500 hover:shadow-xl hover:shadow-primary-500/10 transition-all group active:scale-[0.98]">
                     <div class="flex items-center gap-4">
-                        <div class="w-10 h-10 flex items-center justify-center rounded-xl bg-primary-500/10 text-primary-500 font-bold text-sm">
+                        <div class="w-10 h-10 flex-shrink-0 flex items-center justify-center rounded-xl bg-primary-500/10 text-primary-500 font-bold text-sm">
                             ${s.nomor}
                         </div>
-                        <div>
-                            <h3 class="font-bold dark:text-white group-hover:text-primary-500 transition-colors">${s.namaLatin}</h3>
-                            <p class="text-xs text-slate-500 font-medium">${s.jumlahAyat} Ayat • ${s.arti}</p>
+                        <div class="min-w-0">
+                            <h3 class="font-bold dark:text-white group-hover:text-primary-500 transition-colors truncate">${s.namaLatin}</h3>
+                            <p class="text-xs text-slate-500 font-medium truncate">${s.jumlahAyat} Ayat • ${s.arti}</p>
                         </div>
                     </div>
-                    <div class="font-arabic text-xl text-gold-gradient">${s.nama}</div>
+                    <div class="font-arabic text-xl md:text-2xl text-gold-gradient flex-shrink-0 ml-2">${s.nama}</div>
                 </div>
             `).join('');
         }
 
         function filterSurah() {
             const q = document.getElementById('search-box').value.toLowerCase();
-            const filtered = allSurahs.filter(s => s.namaLatin.toLowerCase().includes(q));
+            const filtered = allSurahs.filter(s => 
+                s.namaLatin.toLowerCase().includes(q) || 
+                s.arti.toLowerCase().includes(q)
+            );
             renderSurahList(filtered);
         }
 
@@ -212,31 +225,31 @@
 
                 document.getElementById('nav-title').textContent = s.namaLatin;
                 
-                // Render Header
                 document.getElementById('surah-header').innerHTML = `
-                    <h2 class="text-5xl font-arabic text-gold-gradient mb-2">${s.nama}</h2>
-                    <p class="text-primary-500 font-bold tracking-widest text-xs uppercase mb-6">${s.arti} — ${s.tempatTurun}</p>
-                    <button onclick="toggleSurahAudio()" id="btn-master-play" class="px-8 py-3 bg-primary-600 hover:bg-primary-500 text-white rounded-full font-bold flex items-center gap-3 mx-auto transition-all shadow-lg shadow-primary-500/20">
-                        <svg id="master-icon" width="20" height="20" fill="currentColor" viewBox="0 0 24 24"><polygon points="5 3 19 12 5 21 5 3"/></svg>
+                    <h2 class="text-5xl md:text-7xl font-arabic text-gold-gradient mb-4">${s.nama}</h2>
+                    <p class="text-primary-500 font-bold tracking-[0.2em] text-[10px] md:text-xs uppercase mb-8">${s.arti} — ${s.tempatTurun}</p>
+                    <button onclick="toggleSurahAudio()" id="btn-master-play" class="px-10 py-4 bg-primary-600 hover:bg-primary-500 text-white rounded-full font-bold flex items-center gap-3 mx-auto transition-all shadow-xl shadow-primary-500/30 active:scale-95">
+                        <svg id="master-icon" width="24" height="24" fill="currentColor" viewBox="0 0 24 24"><polygon points="5 3 19 12 5 21 5 3"/></svg>
                         <span id="master-text">Putar Surah</span>
                     </button>
                 `;
 
-                // Render Ayat
                 document.getElementById('ayat-container').innerHTML = s.ayat.map((a, i) => `
-                    <div id="card-${i}" class="ayah-card p-6 md:p-8 bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-3xl">
-                        <div class="flex justify-between items-center mb-6">
-                            <span class="text-xs font-bold text-slate-500 bg-slate-800 px-3 py-1 rounded-full">${s.nomor}:${a.nomorAyat}</span>
-                            <button onclick="playSingle(${i})" class="w-10 h-10 flex items-center justify-center rounded-full bg-slate-800 text-primary-500 hover:bg-primary-500 hover:text-white transition-all">
-                                <svg id="play-icon-${i}" width="18" height="18" fill="currentColor" viewBox="0 0 24 24"><polygon points="5 3 19 12 5 21 5 3"/></svg>
+                    <div id="card-${i}" class="ayah-card p-6 md:p-10 bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-[2rem] md:rounded-[3rem] overflow-hidden">
+                        <div class="flex justify-between items-center mb-8">
+                            <span class="text-[10px] font-bold text-slate-500 bg-slate-100 dark:bg-slate-800 px-4 py-1.5 rounded-full border border-slate-200 dark:border-slate-700">${s.nomor}:${a.nomorAyat}</span>
+                            <button onclick="playSingle(${i})" class="w-12 h-12 flex items-center justify-center rounded-full bg-slate-100 dark:bg-slate-800 text-primary-500 hover:bg-primary-500 hover:text-white transition-all active:scale-90">
+                                <svg id="play-icon-${i}" width="20" height="20" fill="currentColor" viewBox="0 0 24 24"><polygon points="5 3 19 12 5 21 5 3"/></svg>
                             </button>
                         </div>
-                        <p class="text-right font-arabic text-3xl md:text-4xl leading-relaxed dark:text-slate-100 mb-6">${a.teksArab}</p>
-                        <p class="text-primary-500 text-sm italic mb-3 font-medium">${a.teksLatin}</p>
-                        <p class="text-slate-600 dark:text-slate-400 text-sm leading-relaxed">${a.teksIndonesia}</p>
+                        <p class="text-right font-arabic text-3xl md:text-5xl leading-[3.5rem] md:leading-[5.5rem] dark:text-slate-100 mb-8">${a.teksArab}</p>
+                        <div class="space-y-4 max-w-3xl">
+                            <p class="text-primary-600 dark:text-primary-400 text-sm md:text-base font-medium leading-relaxed italic border-l-2 border-primary-500/30 pl-4">${a.teksLatin}</p>
+                            <p class="text-slate-600 dark:text-slate-400 text-sm md:text-base leading-relaxed pl-4">${a.teksIndonesia}</p>
+                        </div>
                     </div>
                 `).join('');
-                window.scrollTo(0,0);
+                window.scrollTo({ top: 0, behavior: 'smooth' });
             } catch (e) { console.error(e); }
         }
 
@@ -246,9 +259,9 @@
             document.getElementById('btn-back').classList.add('hidden');
             document.getElementById('view-home').classList.remove('hidden');
             document.getElementById('nav-title').textContent = "Al-Quran Digital";
+            window.scrollTo({ top: 0, behavior: 'smooth' });
         }
 
-        // Audio Engine
         function toggleSurahAudio() {
             if (isFullPlay) {
                 stopAudio();
@@ -273,13 +286,16 @@
             currentAyatIdx = idx;
             const ayat = currentAyatList[idx];
             audio.src = ayat.audio['05'];
-            audio.play();
+            audio.play().catch(e => console.warn("Audio play blocked atau gagal"));
 
-            // Update UI
             const card = document.getElementById(`card-${idx}`);
             if (card) {
                 card.classList.add('ayah-active');
-                card.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                const offset = window.innerHeight / 3;
+                window.scrollTo({
+                    top: card.offsetTop - offset,
+                    behavior: 'smooth'
+                });
             }
             
             const icon = document.getElementById(`play-icon-${idx}`);
