@@ -1,90 +1,505 @@
 <!DOCTYPE html>
-    <html lang="en">
-    <head>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<html lang="id" class="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Al-Quran Digital - Golden Edition</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        primary: {
+                            50: '#ecfdf5',
+                            100: '#d1fae5',
+                            500: '#10b981',
+                            600: '#059669',
+                            700: '#047857',
+                        },
+                        gold: {
+                            400: '#fbbf24',
+                            500: '#f59e0b',
+                            600: '#d97706',
+                        }
+                    },
+                    fontFamily: {
+                        arabic: ['Amiri', 'serif'],
+                        sans: ['Inter', 'sans-serif'],
+                    },
+                    boxShadow: {
+                        'soft': '0 4px 20px -2px rgba(0, 0, 0, 0.05)',
+                        'hover': '0 10px 30px -5px rgba(16, 185, 129, 0.15)',
+                    }
+                }
+            }
+        }
+    </script>
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        html { scroll-behavior: smooth; }
+        ::-webkit-scrollbar { width: 6px; }
+        ::-webkit-scrollbar-track { background: transparent; }
+        ::-webkit-scrollbar-thumb { background: #10b981; border-radius: 10px; }
+        
+        .fade-in { animation: fadeIn 0.5s ease-out forwards; }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(15px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
 
-        <!--=============== REMIXICONS ===============-->
-        <link href="https://cdn.jsdelivr.net/npm/remixicon@4.5.0/fonts/remixicon.css" rel="stylesheet">
+        /* Emas Halus (Soft Golden Shimmer) */
+        .text-gold-shimmer {
+            background: linear-gradient(
+                to right, 
+                #a67c00, 
+                #d9a327, 
+                #f2cf66, 
+                #d9a327, 
+                #a67c00
+            );
+            background-size: 200% auto;
+            color: transparent;
+            -webkit-background-clip: text;
+            background-clip: text;
+            animation: shine 8s linear infinite;
+            filter: drop-shadow(0 1px 2px rgba(0,0,0,0.05));
+        }
 
-        <!--=============== CSS ===============-->
-        <link rel="stylesheet" href="assets/css/styles.css">
+        @keyframes shine {
+            to {
+                background-position: 200% center;
+            }
+        }
 
-        <title>Antono - profile</title>
-    </head>
-  <head>
-<style>
-body {
-  background-image: url('https://i.pinimg.com/originals/bd/56/5d/bd565dcc0a556add0b0a0ed6b26d686e.gif');
-  background-repeat: no-repeat;
-  background-attachment: fixed; 
-  background-size: 100% 100%;
-}
-</style>
+        .dark .text-gold-shimmer {
+            filter: drop-shadow(0 2px 8px rgba(166, 124, 0, 0.2));
+        }
+
+        .ayah-card {
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .ayah-active {
+            border-color: #d9a327 !important;
+            background-color: rgba(217, 163, 39, 0.03);
+            transform: scale(1.005);
+        }
+        
+        .dark .ayah-active {
+            background-color: rgba(217, 163, 39, 0.05);
+        }
+
+        .glass {
+            background: rgba(255, 255, 255, 0.8);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+        }
+
+        .dark .glass {
+            background: rgba(17, 24, 39, 0.8);
+        }
+    </style>
 </head>
-    <body>
-    
-        <div class="container">
-            <!-- Card -->
-            <div class="card">
-                <div class="card__border">
-                    <div class="card__perfil">
-                        <img src="assets/img/antono.png" alt="card image" class="card__img">
-                    </div>
+<body class="bg-slate-50 text-slate-900 dark:bg-slate-950 dark:text-slate-100 transition-colors duration-500 font-sans antialiased min-h-screen">
+
+    <!-- Sticky Header -->
+    <header class="sticky top-0 z-50 glass border-b border-slate-200/50 dark:border-slate-800/50">
+        <div class="max-w-5xl mx-auto px-4 h-20 flex items-center justify-between">
+            <div class="flex items-center gap-4">
+                <button id="btn-back" class="hidden p-2.5 rounded-xl transition-all hover:bg-primary-50 dark:hover:bg-primary-900/20 text-primary-600" onclick="goHome()">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="m15 18-6-6 6-6"/></svg>
+                </button>
+                <div id="app-logo" class="bg-primary-600 p-2 rounded-xl shadow-lg shadow-primary-500/30">
+                    <svg class="text-white" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg>
                 </div>
-
-                <h3 class="card__name">Antono</h3>
-                <span class="card__profession">Frontend/Backend Developer</span>
-  
-                <!-- Card info -->
-                <div class="info">
-                    
-                    <div class="info__icon">
-                        <i class="ri-information-line"></i>
-                    </div>
-
-                    <div class="info__border">
-                        <div class="info__perfil">
-                            <img src="assets/img/dp.jpg" alt="card image" class="info__img">
-                        </div>
-                    </div>
-
-                    <div class="info__data">
-                        <h3 class="info__name">Antono</h3>
-                        <span class="info__profession">Master in Frontend/Backend Developer</span>
-                        <span class="info__location">West Java - Indonesia</span>
-                    </div>
-
-                    <div class="info__social">
-                        <a href="https://www.facebook.com/" target="_blank" class="info__social-link">
-                            <span class="info__social-icon">
-                                <i class="ri-facebook-box-line"></i>
-                            </span>
-                        </a>
-
-                        <a href="https://antonobekasi.github.io/" target="_blank" class="info__social-link">
-                            <span class="info__social-icon">
-                                <i class="ri-open-source-fill"></i>
-                            </span>
-                        </a>
-
-                        <a href="https://github.com/antono4/" target="_blank" class="info__social-link">
-                            <span class="info__social-icon">
-                                <i class="ri-github-fill"></i>
-                            </span>
-                        </a>
-                        
-                        <a href="https://gmail.com/" target="_blank" class="info__social-link">
-                            <span class="info__social-icon">
-                                <i class="ri-mail-fill"></i>
-                            </span>
-                        </a>
-                    </div>
-                   
+                <div>
+                    <h1 id="header-title" class="text-xl font-extrabold tracking-tight bg-gradient-to-r from-primary-600 to-teal-500 bg-clip-text text-transparent">Al-Quran Digital</h1>
+                    <p id="header-subtitle" class="text-[10px] uppercase tracking-[0.2em] font-bold text-slate-400 dark:text-slate-500">The Noble Qur'an Indonesia</p>
                 </div>
             </div>
-                
+            
+            <button onclick="toggleTheme()" class="p-3 rounded-2xl bg-slate-100 dark:bg-slate-900 text-slate-600 dark:text-yellow-400 transition-all hover:ring-2 ring-primary-500/20">
+                <svg id="icon-sun" class="hidden" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="4"/><path d="M12 2v2"/><path d="M12 20v2"/><path d="m4.93 4.93 1.41 1.41"/><path d="m17.66 17.66 1.41 1.41"/><path d="M2 12h2"/><path d="M20 12h2"/><path d="m6.34 17.66-1.41 1.41"/><path d="m19.07 4.93-1.41 1.41"/></svg>
+                <svg id="icon-moon" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z"/></svg>
+            </button>
         </div>
+    </header>
+
+    <main class="max-w-5xl mx-auto px-4 py-8">
         
-    </body>
+        <!-- Indikator Pemuatan -->
+        <div id="loading-indicator" class="flex flex-col items-center justify-center py-32">
+            <div class="relative w-16 h-16">
+                <div class="absolute inset-0 rounded-full border-4 border-primary-100 dark:border-primary-900/30"></div>
+                <div class="absolute inset-0 rounded-full border-4 border-primary-500 border-t-transparent animate-spin"></div>
+            </div>
+            <p class="mt-4 font-medium text-slate-400 animate-pulse">Memuat data...</p>
+        </div>
+
+        <!-- Tampilan Utama (Daftar Surah) -->
+        <div id="view-home" class="space-y-8 fade-in hidden">
+            <!-- Bagian Cari -->
+            <div class="relative group">
+                <div class="absolute inset-y-0 left-0 pl-5 flex items-center pointer-events-none">
+                    <svg class="text-slate-400 group-focus-within:text-primary-500 transition-colors" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg>
+                </div>
+                <input 
+                    type="text" 
+                    id="search-input"
+                    placeholder="Cari Surah..." 
+                    class="w-full py-5 pl-14 pr-6 rounded-3xl bg-white dark:bg-slate-900 border-none shadow-soft focus:ring-4 ring-primary-500/10 text-lg transition-all placeholder-slate-400 dark:placeholder-slate-600 outline-none"
+                    oninput="handleSearch()"
+                />
+            </div>
+
+            <div id="surah-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5"></div>
+            <div id="no-results" class="hidden text-center py-24 text-slate-400 font-medium">Ops! Surah yang Anda cari tidak tersedia.</div>
+        </div>
+
+        <!-- Tampilan Detail Surah -->
+        <div id="view-surah" class="hidden space-y-10 fade-in">
+            <div id="surah-content"></div>
+        </div>
+
+    </main>
+
+    <footer class="py-12 text-center text-slate-400 text-sm">
+        <p>© 2024 Al-Quran Digital • Terjemahan Kemenag RI</p>
+    </footer>
+
+    <script>
+        const API_BASE_URL = 'https://equran.id/api/v2';
+        
+        let state = {
+            surahs: [],
+            currentSurahData: null,
+            isDarkMode: localStorage.getItem('theme') === 'dark',
+            bookmarks: new Set(JSON.parse(localStorage.getItem('bookmarks') || '[]')),
+            notes: JSON.parse(localStorage.getItem('notes') || '{}'),
+            playingAudioId: null,
+            isFullSurahPlaying: false,
+            currentAyatIndex: 0,
+            audioElement: new Audio()
+        };
+
+        const elHome = document.getElementById('view-home');
+        const elSurah = document.getElementById('view-surah');
+        const elSurahGrid = document.getElementById('surah-grid');
+        const elSurahContent = document.getElementById('surah-content');
+        const elLoading = document.getElementById('loading-indicator');
+        const elNoResults = document.getElementById('no-results');
+        const elHeaderTitle = document.getElementById('header-title');
+        const elHeaderSubtitle = document.getElementById('header-subtitle');
+        const elBtnBack = document.getElementById('btn-back');
+        const elSearchInput = document.getElementById('search-input');
+
+        function applyTheme() {
+            document.documentElement.classList.toggle('dark', state.isDarkMode);
+            document.getElementById('icon-sun').classList.toggle('hidden', !state.isDarkMode);
+            document.getElementById('icon-moon').classList.toggle('hidden', state.isDarkMode);
+        }
+
+        function toggleTheme() {
+            state.isDarkMode = !state.isDarkMode;
+            localStorage.setItem('theme', state.isDarkMode ? 'dark' : 'light');
+            applyTheme();
+        }
+
+        function showLoading(show) {
+            if (show) {
+                elLoading.classList.remove('hidden');
+                elHome.classList.add('hidden');
+                elSurah.classList.add('hidden');
+            } else {
+                elLoading.classList.add('hidden');
+            }
+        }
+
+        function renderSurahGrid(surahs) {
+            if (surahs.length === 0) {
+                elNoResults.classList.remove('hidden');
+                elSurahGrid.innerHTML = '';
+                return;
+            }
+            elNoResults.classList.add('hidden');
+            elSurahGrid.innerHTML = surahs.map(s => `
+                <div onclick="loadSurah(${s.nomor})" class="group cursor-pointer rounded-[2rem] p-6 bg-white dark:bg-slate-900 border border-slate-100 dark:border-slate-800 shadow-soft transition-all duration-300 hover:shadow-hover hover:-translate-y-1">
+                    <div class="flex items-center justify-between">
+                        <div class="flex items-center gap-5">
+                            <div class="relative w-12 h-12 flex items-center justify-center font-bold text-sm">
+                                <svg class="absolute inset-0 text-primary-100 dark:text-primary-900/20 group-hover:text-primary-200 transition-colors" viewBox="0 0 100 100" fill="currentColor"><path d="M50 0 L93.3 25 L93.3 75 L50 100 L6.7 75 L6.7 25 Z"/></svg>
+                                <span class="relative z-10 text-primary-700 dark:text-primary-400 font-sans">${s.nomor}</span>
+                            </div>
+                            <div>
+                                <h3 class="font-bold text-slate-800 dark:text-white group-hover:text-primary-600 transition-colors font-sans">${s.namaLatin}</h3>
+                                <p class="text-[11px] font-semibold text-slate-400 uppercase tracking-wider font-sans">${s.arti}</p>
+                            </div>
+                        </div>
+                        <div class="font-arabic text-2xl font-bold text-gold-shimmer">${s.nama}</div>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        async function init() {
+            applyTheme();
+            state.audioElement.onended = () => handleAudioEnded();
+
+            showLoading(true);
+            try {
+                const res = await fetch(`${API_BASE_URL}/surat`);
+                const result = await res.json();
+                if (result.code === 200) {
+                    state.surahs = result.data;
+                    renderSurahGrid(state.surahs);
+                    showLoading(false);
+                    elHome.classList.remove('hidden');
+                } else {
+                    throw new Error("API mengembalikan kode non-200");
+                }
+            } catch (err) {
+                console.error(err);
+                showLoading(false);
+                elSurahGrid.innerHTML = `<div class="col-span-full text-center text-red-500 py-10 font-bold">Gagal memuat data. Silakan coba lagi nanti.</div>`;
+                elHome.classList.remove('hidden');
+            }
+        }
+
+        function handleSearch() {
+            const query = elSearchInput.value.toLowerCase();
+            const filtered = state.surahs.filter(s => 
+                s.namaLatin.toLowerCase().includes(query) || s.arti.toLowerCase().includes(query)
+            );
+            renderSurahGrid(filtered);
+        }
+
+        function goHome() {
+            stopAudio();
+            elSurah.classList.add('hidden');
+            elHome.classList.remove('hidden');
+            elBtnBack.classList.add('hidden');
+            elHeaderTitle.textContent = 'Al-Quran Digital';
+            elHeaderSubtitle.textContent = "The Noble Qur'an Indonesia";
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        async function loadSurah(nomor) {
+            stopAudio();
+            showLoading(true);
+            try {
+                const res = await fetch(`${API_BASE_URL}/surat/${nomor}`);
+                const result = await res.json();
+                if (result.code === 200) {
+                    state.currentSurahData = result.data;
+                    renderSurahDetail(state.currentSurahData);
+                    showLoading(false);
+                    elSurah.classList.remove('hidden');
+                    elBtnBack.classList.remove('hidden');
+                    elHeaderTitle.textContent = state.currentSurahData.namaLatin;
+                    elHeaderSubtitle.textContent = `Surah Ke-${state.currentSurahData.nomor}`;
+                    window.scrollTo({ top: 0, behavior: 'smooth' });
+                }
+            } catch (err) {
+                console.error(err);
+                showLoading(false);
+                alert("Gagal memuat surah. Periksa koneksi Anda.");
+                elHome.classList.remove('hidden');
+            }
+        }
+
+        function renderSurahDetail(surah) {
+            let html = `
+                <div class="relative rounded-[2.5rem] p-10 text-center bg-gradient-to-br from-primary-600 to-teal-700 text-white shadow-2xl shadow-primary-600/20 overflow-hidden mb-12">
+                    <div class="absolute -right-20 -top-20 w-64 h-64 bg-white/10 rounded-full blur-3xl"></div>
+                    <div class="relative z-10 space-y-4">
+                        <h2 class="text-7xl font-arabic drop-shadow-xl text-gold-shimmer pb-2">${surah.nama}</h2>
+                        <h3 class="text-3xl font-extrabold tracking-tight font-sans">${surah.namaLatin}</h3>
+                        <div class="flex flex-wrap justify-center gap-4 pt-4">
+                            <span class="px-5 py-2 rounded-full bg-white/10 backdrop-blur-md text-xs font-bold uppercase tracking-widest border border-white/20 font-sans">${surah.tempatTurun}</span>
+                            <span class="px-5 py-2 rounded-full bg-white/10 backdrop-blur-md text-xs font-bold uppercase tracking-widest border border-white/20 font-sans">${surah.jumlahAyat} Ayat</span>
+                        </div>
+                        <div class="pt-6">
+                            <button id="btn-play-surah" onclick="togglePlaySurah()" class="inline-flex items-center gap-3 px-8 py-4 rounded-2xl bg-white text-primary-700 font-bold hover:bg-gold-500 hover:text-white transition-all shadow-xl shadow-black/10 group">
+                                <span id="btn-play-surah-icon">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="currentColor"><polygon points="5 3 19 12 5 21 5 3"/></svg>
+                                </span>
+                                <span id="btn-play-surah-text">Putar Seluruh Surah</span>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            `;
+
+            if (surah.nomor !== 1 && surah.nomor !== 9) {
+                html += `<div class="text-center py-16 font-arabic text-5xl text-gold-shimmer tracking-wide drop-shadow-sm opacity-90">بِسْمِ اللَّهِ الرَّحْمَٰنِ الرَّحِيمِ</div>`;
+            }
+
+            html += `<div class="space-y-8">`;
+            surah.ayat.forEach((a, index) => {
+                const key = `${surah.nomor}:${a.nomorAyat}`;
+                const bookmarked = state.bookmarks.has(key);
+                const note = state.notes[key] || '';
+                
+                html += `
+                    <div id="container-${key}" data-index="${index}" class="ayah-card p-8 md:p-10 rounded-[2.5rem] bg-white dark:bg-slate-900 border border-slate-100 dark:border-slate-800 shadow-soft">
+                        <div class="flex items-center justify-between mb-10">
+                            <div class="px-4 py-2 rounded-2xl bg-slate-50 dark:bg-slate-800 text-slate-400 dark:text-slate-500 font-bold text-xs font-sans">Ayat ${a.nomorAyat}</div>
+                            <div class="flex gap-3">
+                                <button id="btn-play-${key}" onclick="toggleAudio('${a.audio['05']}', '${key}', ${index})" class="p-3 rounded-2xl bg-primary-50 dark:bg-primary-900/20 text-primary-600 dark:text-primary-400 hover:bg-primary-600 hover:text-white transition-all duration-300">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><polygon points="6 3 20 12 6 21 6 3"/></svg>
+                                </button>
+                                <button onclick="toggleBookmark('${key}')" class="p-3 rounded-2xl ${bookmarked ? 'bg-amber-500 text-white' : 'bg-slate-50 dark:bg-slate-800 text-slate-400 hover:text-amber-500'} transition-all duration-300">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="${bookmarked ? 'currentColor' : 'none'}" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="m19 21-7-4-7 4V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2v16z"/></svg>
+                                </button>
+                            </div>
+                        </div>
+                        <p class="font-arabic text-4xl md:text-6xl text-right leading-[4.5rem] md:leading-[6.5rem] mb-12 text-gold-shimmer">${a.teksArab}</p>
+                        <div class="space-y-6">
+                            <p class="text-primary-600 dark:text-primary-400 italic font-semibold leading-relaxed font-sans">${a.teksLatin}</p>
+                            <p class="text-slate-600 dark:text-slate-400 leading-loose text-lg font-sans">${a.teksIndonesia}</p>
+                        </div>
+                        <div class="mt-10 pt-8 border-t border-slate-50 dark:border-slate-800">
+                            <div class="flex items-center gap-2 mb-3 text-xs font-bold text-slate-400 uppercase tracking-tighter font-sans">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20h9"/><path d="M16.5 3.5a2.12 2.12 0 0 1 3 3L7 19l-4 1 1-4Z"/></svg>
+                                Tadabbur Pribadi
+                            </div>
+                            <textarea 
+                                placeholder="Tuliskan renungan Anda..." 
+                                oninput="saveNote('${key}', this.value)"
+                                class="w-full bg-transparent text-sm text-slate-600 dark:text-slate-400 outline-none focus:text-primary-600 transition-all resize-none min-h-[60px] font-sans"
+                            >${note}</textarea>
+                        </div>
+                    </div>
+                `;
+            });
+            html += `</div>`;
+            elSurahContent.innerHTML = html;
+        }
+
+        // Fungsi Baru: Toggle Putar Seluruh Surah
+        function togglePlaySurah() {
+            if (state.isFullSurahPlaying) {
+                stopAudio();
+            } else {
+                state.isFullSurahPlaying = true;
+                const btnIcon = document.getElementById('btn-play-surah-icon');
+                const btnText = document.getElementById('btn-play-surah-text');
+                if (btnIcon) btnIcon.innerHTML = `<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="currentColor"><rect width="18" height="18" x="3" y="3" rx="2"/></svg>`;
+                if (btnText) btnText.textContent = "Berhenti Memutar Surah";
+                
+                // Mulai dari ayat pertama
+                playAyatByIndex(0);
+            }
+        }
+
+        function playAyatByIndex(index) {
+            if (!state.currentSurahData || !state.currentSurahData.ayat[index]) {
+                stopAudio();
+                return;
+            }
+            
+            const ayat = state.currentSurahData.ayat[index];
+            const key = `${state.currentSurahData.nomor}:${ayat.nomorAyat}`;
+            state.currentAyatIndex = index;
+            
+            toggleAudio(ayat.audio['05'], key, index, true);
+        }
+
+        function handleAudioEnded() {
+            if (state.isFullSurahPlaying) {
+                const nextIndex = state.currentAyatIndex + 1;
+                if (nextIndex < state.currentSurahData.ayat.length) {
+                    playAyatByIndex(nextIndex);
+                } else {
+                    stopAudio();
+                }
+            } else {
+                stopAudio();
+            }
+        }
+
+        function toggleAudio(url, key, index, forcePlay = false) {
+            const btn = document.getElementById(`btn-play-${key}`);
+            const container = document.getElementById(`container-${key}`);
+
+            if (state.playingAudioId === key && !forcePlay) {
+                stopAudio();
+                return;
+            }
+
+            // Simpan status mode putar surah jika diputar manual dari tombol ayat
+            if (!forcePlay) {
+                state.isFullSurahPlaying = false;
+                updateFullSurahButton(false);
+            }
+
+            stopAudioNoState(); // Hentikan audio sebelumnya tanpa reset state global dulu
+            
+            state.audioElement.src = url;
+            state.audioElement.play().catch(() => alert("Gagal memutar audio."));
+            state.playingAudioId = key;
+            state.currentAyatIndex = index;
+
+            if (btn) {
+                btn.innerHTML = `<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><rect width="18" height="18" x="3" y="3" rx="2"/></svg>`;
+                btn.classList.add('bg-primary-600', 'text-white');
+            }
+            if (container) {
+                container.classList.add('ayah-active');
+                container.scrollIntoView({ behavior: 'smooth', block: 'center' });
+            }
+        }
+
+        function stopAudioNoState() {
+            if (state.playingAudioId) {
+                const prevBtn = document.getElementById(`btn-play-${state.playingAudioId}`);
+                const prevCont = document.getElementById(`container-${state.playingAudioId}`);
+                if (prevBtn) {
+                    prevBtn.innerHTML = `<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><polygon points="6 3 20 12 6 21 6 3"/></svg>`;
+                    prevBtn.classList.remove('bg-primary-600', 'text-white');
+                }
+                if (prevCont) prevCont.classList.remove('ayah-active');
+                state.audioElement.pause();
+            }
+        }
+
+        function stopAudio() {
+            stopAudioNoState();
+            state.playingAudioId = null;
+            state.isFullSurahPlaying = false;
+            updateFullSurahButton(false);
+        }
+
+        function updateFullSurahButton(isPlaying) {
+            const btnIcon = document.getElementById('btn-play-surah-icon');
+            const btnText = document.getElementById('btn-play-surah-text');
+            if (btnIcon) {
+                btnIcon.innerHTML = isPlaying 
+                    ? `<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="currentColor"><rect width="18" height="18" x="3" y="3" rx="2"/></svg>`
+                    : `<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="currentColor"><polygon points="5 3 19 12 5 21 5 3"/></svg>`;
+            }
+            if (btnText) btnText.textContent = isPlaying ? "Berhenti Memutar Surah" : "Putar Seluruh Surah";
+        }
+
+        function toggleBookmark(key) {
+            if (state.bookmarks.has(key)) state.bookmarks.delete(key);
+            else state.bookmarks.add(key);
+            localStorage.setItem('bookmarks', JSON.stringify([...state.bookmarks]));
+            renderSurahDetail(state.currentSurahData);
+        }
+
+        function saveNote(key, val) {
+            if (!val.trim()) delete state.notes[key];
+            else state.notes[key] = val;
+            localStorage.setItem('notes', JSON.stringify(state.notes));
+        }
+
+        // Jalankan inisialisasi
+        init();
+    </script>
+</body>
 </html>
