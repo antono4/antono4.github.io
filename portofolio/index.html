@@ -1,460 +1,287 @@
-import React, { useState, useEffect, useRef, useMemo } from 'react';
-import { 
-  Terminal,
-  Cpu, 
-  Sun,
-  Moon,
-  Server,
-  Cloud,
-  ShieldCheck,
-  ArrowRight,
-  Download,
-  Building2,
-  Award,
-  Mail,
-  MapPin,
-  Phone,
-  Github,
-  Linkedin,
-  Twitter,
-  Send,
-  MessageSquare,
-  Zap,
-  Globe,
-  Database,
-  Layers
-} from 'lucide-react';
-
-// --- Utilitas Animasi Reveal ---
-const FadeInSection = ({ children, delay = 0 }) => {
-  const [isVisible, setVisible] = useState(false);
-  const domRef = useRef();
-
-  useEffect(() => {
-    const observer = new IntersectionObserver(entries => {
-      entries.forEach(entry => {
-        if (entry.isIntersecting) {
-          setTimeout(() => setVisible(true), delay);
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Antono | Principal Engineer Portfolio</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://unpkg.com/alpinejs@3.x.x/dist/cdn.min.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;800&display=swap" rel="stylesheet">
+    <style>
+        [x-cloak] { display: none !important; }
+        body { 
+            font-family: 'Plus Jakarta Sans', sans-serif; 
+            cursor: none; 
+            scroll-behavior: smooth;
         }
-      });
-    });
-    if (domRef.current) observer.observe(domRef.current);
-    return () => observer.disconnect();
-  }, [delay]);
+        .perspective-2000 { perspective: 2000px; }
+        .preserve-3d { transform-style: preserve-3d; }
+        
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar { width: 6px; }
+        ::-webkit-scrollbar-track { background: transparent; }
+        .dark ::-webkit-scrollbar-thumb { background: #1e293b; border-radius: 10px; }
+        ::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 10px; }
 
-  return (
-    <div
-      ref={domRef}
-      className={`transition-all duration-1000 transform ${
-        isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-12'
-      }`}
-    >
-      {children}
-    </div>
-  );
-};
+        @keyframes swing {
+            0%, 100% { transform: translateY(0px) rotateX(1deg) rotateY(1deg); }
+            50% { transform: translateY(-10px) rotateX(-2deg) rotateY(-1.5deg); }
+        }
+        .animate-swing { 
+            animation: swing 6s ease-in-out infinite; 
+            transform-origin: 50% -50px;
+        }
 
-// --- Komponen Lanyard Profesional (Floating Global) ---
-const LanyardHero = ({ isDarkMode, mousePos, enterLink, leaveLink, scale = 1 }) => {
-  const rotation = useMemo(() => {
-    const x = (mousePos.y - window.innerHeight / 2) / 50;
-    const y = (mousePos.x - window.innerWidth / 2) / 50;
-    return { x, y };
-  }, [mousePos]);
-
-  return (
-    <div className="relative flex flex-col items-center w-full max-w-sm perspective-2000" style={{ transform: `scale(${scale})` }}>
-      
-      {/* Tali Lanyard Realistik */}
-      <div className="absolute top-[-250px] left-1/2 -translate-x-1/2 w-[400px] h-[600px] z-10 pointer-events-none overflow-visible">
-        <svg viewBox="0 0 100 200" className="w-full h-full overflow-visible">
-          <defs>
-            <linearGradient id="lanyardGrad" x1="0%" y1="0%" x2="100%" y2="0%">
-              <stop offset="0%" stopColor={isDarkMode ? "#1e293b" : "#cbd5e1"} />
-              <stop offset="50%" stopColor={isDarkMode ? "#475569" : "#64748b"} />
-              <stop offset="100%" stopColor={isDarkMode ? "#1e293b" : "#cbd5e1"} />
-            </linearGradient>
-            <filter id="shadow">
-              <feDropShadow dx="0" dy="2" stdDeviation="3" floodOpacity="0.3"/>
-            </filter>
-          </defs>
-          
-          <path 
-            d={`M25 -100 C 25 50, 45 140, ${50 + (rotation.y * 0.5)} 165`} 
-            stroke="url(#lanyardGrad)" 
-            strokeWidth="4" 
-            fill="none" 
-            strokeLinecap="round" 
-            filter="url(#shadow)"
-            className="transition-all duration-700 ease-out"
-          />
-          <path 
-            d={`M75 -100 C 75 50, 55 140, ${50 + (rotation.y * 0.5)} 165`} 
-            stroke="url(#lanyardGrad)" 
-            strokeWidth="4" 
-            fill="none" 
-            strokeLinecap="round" 
-            filter="url(#shadow)"
-            className="transition-all duration-700 ease-out"
-          />
-
-          <g transform={`translate(${50 + (rotation.y * 0.5)}, 165) rotate(${rotation.y * 1.2})`}>
-            <path d="M-4 0 L4 0 L2 12 L-2 12 Z" fill={isDarkMode ? "#94a3b8" : "#475569"} />
-            <circle cx="0" cy="14" r="5" fill={isDarkMode ? "#cbd5e1" : "#1e293b"} />
-            <circle cx="0" cy="14" r="2" fill={isDarkMode ? "#1e293b" : "#ffffff"} />
-          </g>
-        </svg>
-      </div>
-
-      <div 
-        className="mt-48 relative z-20 transition-transform duration-500 ease-out"
-        style={{ 
-          transform: `rotateX(${rotation.x + 5}deg) rotateY(${rotation.y}deg) translateZ(50px)`, 
-          transformStyle: 'preserve-3d' 
-        }}
-      >
-        <div 
-          className={`absolute -bottom-12 left-1/2 -translate-x-1/2 w-48 h-8 blur-[45px] rounded-full transition-opacity duration-700 ${isDarkMode ? 'bg-cyan-500/20' : 'bg-slate-900/10'}`}
-          style={{ transform: `translateZ(-60px) translateX(${-rotation.y * 3}px)` }}
-        />
-
-        <div 
-          className={`w-64 md:w-72 rounded-[2.5rem] overflow-hidden border backdrop-blur-xl transition-all duration-300 shadow-[0_50px_100px_-20px_rgba(0,0,0,0.5)] ${isDarkMode ? 'bg-slate-900/90 border-white/10' : 'bg-white/95 border-slate-200'}`}
-          onMouseEnter={enterLink} 
-          onMouseLeave={leaveLink}
-        >
-          <div className="pt-4 flex justify-center">
-            <div className={`w-14 h-4 rounded-full flex items-center justify-center ${isDarkMode ? 'bg-black/40 shadow-inner' : 'bg-slate-100 shadow-inner'}`}>
-              <div className={`w-8 h-1.5 rounded-full ${isDarkMode ? 'bg-slate-800' : 'bg-slate-300'}`} />
-            </div>
-          </div>
-
-          <div className="p-8 pt-6">
-            <div className="relative flex flex-col items-center">
-              <div className="relative mb-6 group">
-                <div className={`w-32 h-32 rounded-[2rem] p-[2px] shadow-2xl transition-transform duration-500 group-hover:scale-105 ${isDarkMode ? 'bg-gradient-to-tr from-slate-700 via-cyan-500 to-slate-700' : 'bg-gradient-to-tr from-slate-200 via-blue-600 to-slate-200'}`}>
-                  <div className={`w-full h-full rounded-[1.9rem] overflow-hidden ${isDarkMode ? 'bg-slate-900' : 'bg-white'}`}>
-                    <img 
-                      src="https://avatars.githubusercontent.com/u/73228642?v=4" 
-                      alt="Profil Antono" 
-                      className="w-full h-full object-cover grayscale brightness-105 contrast-110"
-                    />
-                  </div>
-                </div>
-                <div className="absolute -bottom-2 -right-2 px-3 py-1 bg-emerald-500 text-white text-[8px] font-black uppercase tracking-widest rounded-full shadow-lg border-2 border-white dark:border-slate-900">
-                  Online
-                </div>
-              </div>
-
-              <div className="text-center space-y-1">
-                <h2 className={`text-2xl font-black tracking-tight ${isDarkMode ? 'text-white' : 'text-slate-900'}`}>ANTONO</h2>
-                <p className={`text-[10px] font-black uppercase tracking-[0.2em] ${isDarkMode ? 'text-cyan-400' : 'text-blue-600'}`}>Principal Engineer</p>
-              </div>
-            </div>
-
-            <div className="my-8 flex items-center gap-2">
-              <div className={`h-[1px] flex-1 ${isDarkMode ? 'bg-white/5' : 'bg-slate-100'}`} />
-              <Cpu size={12} className="opacity-20" />
-              <div className={`h-[1px] flex-1 ${isDarkMode ? 'bg-white/5' : 'bg-slate-100'}`} />
-            </div>
-
-            <div className="grid grid-cols-2 gap-y-4 text-[9px] font-bold uppercase tracking-widest leading-none">
-              <div>
-                <p className="opacity-40 mb-1.5">Employee ID</p>
-                <p className={isDarkMode ? 'text-slate-200' : 'text-slate-700'}>#ANT-0922-X</p>
-              </div>
-              <div className="text-right">
-                <p className="opacity-40 mb-1.5">Security Lvl</p>
-                <p className={isDarkMode ? 'text-emerald-400' : 'text-emerald-600'}>Ω Omega-9</p>
-              </div>
-              <div>
-                <p className="opacity-40 mb-1.5">Dept</p>
-                <p className={isDarkMode ? 'text-slate-200' : 'text-slate-700'}>Core Arch</p>
-              </div>
-              <div className="text-right">
-                <p className="opacity-40 mb-1.5">Region</p>
-                <p className={isDarkMode ? 'text-slate-200' : 'text-slate-700'}>SEA - ID</p>
-              </div>
-            </div>
-
-            <div className="mt-8 pt-6 border-t border-dashed border-slate-200 dark:border-white/5 flex flex-col items-center gap-3">
-              <div className="flex gap-0.5 h-6 opacity-30 w-full justify-center">
-                {[1,3,1,2,4,1,1,2,5,1,2].map((w, i) => (
-                  <div key={i} className={`h-full bg-current ${isDarkMode ? 'text-white' : 'text-black'}`} style={{ width: `${w}px` }} />
-                ))}
-              </div>
-              <p className="text-[7px] font-medium tracking-[0.4em] opacity-40 uppercase">Authorized Access Only</p>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  );
-};
-
-export default function App() {
-  const [isDarkMode, setIsDarkMode] = useState(false);
-  const [activeTab, setActiveTab] = useState('beranda');
-  const [mousePos, setMousePos] = useState({ x: 0, y: 0 });
-  const [cursorVariant, setCursorVariant] = useState("default");
-  
-  // State untuk form kontak
-  const [formData, setFormData] = useState({ name: '', email: '', subject: '', message: '' });
-  const [isSubmitting, setIsSubmitting] = useState(false);
-  const [isSuccess, setIsSuccess] = useState(false);
-
-  useEffect(() => {
-    const handleMouseMove = (e) => setMousePos({ x: e.clientX, y: e.clientY });
-    window.addEventListener("mousemove", handleMouseMove);
-    return () => window.removeEventListener("mousemove", handleMouseMove);
-  }, []);
-
-  const toggleTheme = () => setIsDarkMode(!isDarkMode);
-  const enterLink = () => setCursorVariant("pointer");
-  const leaveLink = () => setCursorVariant("default");
-
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    setIsSubmitting(true);
-    setTimeout(() => {
-      setIsSubmitting(false);
-      setIsSuccess(true);
-      setFormData({ name: '', email: '', subject: '', message: '' });
-      setTimeout(() => setIsSuccess(false), 5000);
-    }, 1500);
-  };
-
-  const skillCategories = [
-    { 
-      title: "Arsitektur Sistem", 
-      icon: <Server size={20} />, 
-      skills: ["Microservices", "Event-Driven", "Scalable Systems", "Serverless", "Domain-Driven Design", "CQRS"], 
-      color: "from-blue-500 to-indigo-600" 
+        .lanyard-pattern {
+            stroke-dasharray: 4, 2;
+        }
+    </style>
+</head>
+<body x-data="{ 
+    isDarkMode: false, 
+    activeTab: 'beranda', 
+    mousePos: { x: 0, y: 0 },
+    cursorVariant: 'default',
+    rotation: { x: 0, y: 0 },
+    isSubmitting: false,
+    isSuccess: false,
+    handleMouseMove(e) {
+        this.mousePos = { x: e.clientX, y: e.clientY };
+        const centerX = window.innerWidth / 2;
+        const centerY = window.innerHeight / 2;
+        this.rotation.y = (e.clientX - centerX) / 40;
+        this.rotation.x = -(e.clientY - centerY) / 40;
     },
-    { 
-      title: "Backend & Cloud", 
-      icon: <Cloud size={20} />, 
-      skills: ["Node.js", "PHP 8.x", "Python", "GoLang", "AWS/GCP", "Kubernetes", "Redis", "Kafka"], 
-      color: "from-cyan-500 to-blue-500" 
-    },
-    { 
-      title: "Keamanan & Data", 
-      icon: <ShieldCheck size={20} />, 
-      skills: ["MySQL Expert", "OAuth 2.1", "Data Encryption", "PostgreSQL", "GraphQL", "NoSQL / MongoDB"], 
-      color: "from-emerald-500 to-teal-600" 
-    },
-    { 
-      title: "Infrastructure & DevOps", 
-      icon: <Layers size={20} />, 
-      skills: ["Terraform", "CI/CD Pipelines", "Docker", "Prometheus", "Service Mesh", "Load Balancing"], 
-      color: "from-purple-500 to-pink-600" 
+    submitContact() {
+        this.isSubmitting = true;
+        setTimeout(() => {
+            this.isSubmitting = false;
+            this.isSuccess = true;
+            setTimeout(() => { this.isSuccess = false; this.activeTab = 'beranda'; }, 3000);
+        }, 1500);
     }
-  ];
+}" 
+@mousemove="handleMouseMove($event)"
+:class="isDarkMode ? 'dark bg-[#0a0a0a] text-slate-100' : 'bg-slate-50 text-slate-900'"
+class="min-h-screen transition-colors duration-500 overflow-x-hidden selection:bg-blue-500/20">
 
-  const experiences = [
-    { year: "2022 - Sekarang", role: "Principal Software Architect", company: "Tech Giant Indonesia", desc: "Memimpin desain arsitektur untuk sistem core payment yang menangani 5 juta+ transaksi harian.", tags: ["System Design", "Fintech"] },
-    { year: "2019 - 2022", role: "Senior Engineering Manager", company: "Cloud Solutions Corp", desc: "Mengelola migrasi infrastruktur monolith ke microservices menggunakan PHP 8.1 dan Laravel.", tags: ["Leadership", "Microservices"] },
-    { year: "2017 - 2019", role: "Lead Full Stack Developer", company: "E-Commerce Nasional", desc: "Mengoptimalkan query MySQL pada database berukuran Terabyte.", tags: ["Database", "Scalability"] }
-  ];
+    <!-- Custom Cursor -->
+    <div 
+        class="fixed top-0 left-0 w-8 h-8 rounded-full border-2 pointer-events-none z-[9999] transition-transform duration-150 ease-out mix-blend-difference hidden md:block"
+        :class="isDarkMode ? 'border-cyan-400' : 'border-blue-600'"
+        :style="`transform: translate3d(${mousePos.x - 16}px, ${mousePos.y - 16}px, 0) scale(${cursorVariant === 'pointer' ? 2.5 : 1})`"
+    ></div>
 
-  return (
-    <div className={`min-h-screen font-sans transition-colors duration-700 selection:bg-cyan-500/30 overflow-x-hidden ${isDarkMode ? 'bg-[#020617] text-slate-100' : 'bg-slate-50 text-slate-900'}`}>
-      
-      {/* Custom Cursor */}
-      <div 
-        className={`fixed top-0 left-0 w-8 h-8 rounded-full border pointer-events-none z-[9999] transition-transform duration-200 ease-out mix-blend-difference hidden md:block ${isDarkMode ? 'border-cyan-500/50' : 'border-blue-600/50'}`} 
-        style={{ transform: `translate3d(${mousePos.x - 16}px, ${mousePos.y - 16}px, 0) scale(${cursorVariant === 'pointer' ? 2 : 1})` }} 
-      />
-
-      {/* Navbar Modern */}
-      <nav className={`fixed top-0 w-full z-50 px-6 md:px-10 py-6 transition-all duration-500 ${isDarkMode ? 'bg-slate-950/80' : 'bg-white/80'} backdrop-blur-xl border-b ${isDarkMode ? 'border-white/5' : 'border-black/5'}`}>
-        <div className="max-w-7xl mx-auto flex justify-between items-center">
-          <div className="flex items-center gap-3 cursor-pointer" onClick={() => setActiveTab('beranda')}>
-            <div className={`w-9 h-9 rounded-xl flex items-center justify-center shadow-lg transition-colors ${isDarkMode ? 'bg-white text-black' : 'bg-slate-900 text-white'}`}>
-              <Terminal size={18} />
+    <!-- Header / Navbar -->
+    <nav class="fixed top-0 w-full z-50 px-6 py-6 backdrop-blur-md border-b transition-all duration-300"
+         :class="isDarkMode ? 'bg-black/80 border-white/5' : 'bg-white/80 border-black/5'">
+        <div class="max-w-7xl mx-auto flex justify-between items-center">
+            <div class="flex items-center gap-3 cursor-pointer group" @click="activeTab = 'beranda'">
+                <div class="w-10 h-10 rounded-xl flex items-center justify-center shadow-lg transition-transform group-hover:rotate-12"
+                     :class="isDarkMode ? 'bg-white text-black' : 'bg-slate-900 text-white'">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="16 18 22 12 16 6"></polyline><polyline points="8 6 2 12 8 18"></polyline></svg>
+                </div>
+                <span class="font-black text-xl tracking-tighter uppercase">ANTONO.</span>
             </div>
-            <span className="font-black text-xl tracking-tighter uppercase">ANTONO</span>
-          </div>
-          
-          <div className="flex items-center gap-4 md:gap-12">
-            <div className="hidden md:flex gap-10 text-[10px] font-black uppercase tracking-[0.3em]">
-              {['beranda', 'keahlian', 'pengalaman', 'hubungi'].map(tab => (
-                <button 
-                  key={tab} 
-                  onClick={() => setActiveTab(tab)}
-                  onMouseEnter={enterLink}
-                  onMouseLeave={leaveLink}
-                  className={`transition-all relative py-1 ${activeTab === tab ? (isDarkMode ? 'text-cyan-400' : 'text-blue-700') : 'text-slate-400 hover:text-slate-600'}`}
-                >
-                  {tab}
-                  {activeTab === tab && <span className="absolute bottom-0 left-0 w-full h-[2px] bg-current rounded-full" />}
+            
+            <div class="flex items-center gap-4 md:gap-10">
+                <div class="hidden md:flex gap-8 text-[10px] font-black uppercase tracking-[0.3em]">
+                    <template x-for="tab in ['beranda', 'keahlian', 'pengalaman', 'kontak']">
+                        <button @click="activeTab = tab" class="relative py-1 transition-colors"
+                            :class="activeTab === tab ? (isDarkMode ? 'text-cyan-400' : 'text-blue-700') : 'text-slate-400 hover:text-slate-900'">
+                            <span x-text="tab"></span>
+                        </button>
+                    </template>
+                </div>
+
+                <button @click="isDarkMode = !isDarkMode" class="w-11 h-11 rounded-full flex items-center justify-center border transition-all hover:scale-110"
+                    :class="isDarkMode ? 'bg-zinc-900 border-white/10 text-yellow-400' : 'bg-white border-black/10 text-slate-600'">
+                    <template x-if="isDarkMode"><svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="5"></circle><line x1="12" y1="1" x2="12" y2="3"></line><line x1="12" y1="21" x2="12" y2="23"></line><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line><line x1="1" y1="12" x2="3" y2="12"></line><line x1="21" y1="12" x2="23" y2="12"></line><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line></svg></template>
+                    <template x-if="!isDarkMode"><svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path></svg></template>
                 </button>
-              ))}
             </div>
-            <button 
-              onClick={toggleTheme} 
-              className={`w-10 h-10 rounded-full flex items-center justify-center border transition-all ${isDarkMode ? 'bg-white/5 border-white/10 text-yellow-400 hover:bg-white/10' : 'bg-slate-100 border-black/5 text-slate-600 hover:bg-slate-200'}`}
-            >
-              {isDarkMode ? <Sun size={18} /> : <Moon size={18} />}
-            </button>
-          </div>
         </div>
-      </nav>
+    </nav>
 
-      {/* Grid Layout Utama - Lanyard Tetap Muncul */}
-      <div className="max-w-7xl mx-auto px-6 md:px-10 pt-44 pb-32">
-        <div className="flex flex-col lg:flex-row items-center lg:items-start justify-between gap-12 lg:gap-20">
-          
-          {/* Sisi Kiri: Konten Dinamis */}
-          <div className="flex-1 w-full order-2 lg:order-1">
-            {activeTab === 'beranda' && (
-              <FadeInSection>
-                <div className="text-center lg:text-left">
-                  <div className={`inline-flex items-center gap-2 px-4 py-1.5 rounded-full mb-8 text-[10px] font-black uppercase tracking-widest border transition-colors ${isDarkMode ? 'bg-slate-900/50 border-cyan-500/20 text-cyan-400' : 'bg-blue-50 border-blue-100 text-blue-700'}`}>
-                     <Zap size={12} className="animate-pulse" /> Engineering Leadership
-                  </div>
-                  <h1 className="text-5xl md:text-8xl font-black mb-8 tracking-tighter leading-[0.85] uppercase">
-                    Sistem <br /> <span className={`text-transparent bg-clip-text bg-gradient-to-r transition-all ${isDarkMode ? 'from-cyan-400 to-blue-500' : 'from-blue-700 to-indigo-800'}`}>Tangguh.</span> <br />
-                    Tanpa Kompromi.
-                  </h1>
-                  <p className={`max-w-xl lg:mx-0 mx-auto text-lg md:text-xl font-medium leading-relaxed mb-12 transition-colors ${isDarkMode ? 'text-slate-400' : 'text-slate-600'}`}>
-                    Principal Engineer dengan fokus pada skalabilitas masif dan keamanan enterprise.
-                  </p>
-                  <div className="flex flex-wrap justify-center lg:justify-start gap-5">
-                    <button onClick={() => setActiveTab('hubungi')} className={`px-10 py-5 rounded-2xl font-black uppercase tracking-widest text-[10px] transition-all shadow-2xl flex items-center gap-3 hover:-translate-y-1 ${isDarkMode ? 'bg-cyan-500 text-slate-900' : 'bg-blue-700 text-white'}`}>
-                      Mulai Kolaborasi <ArrowRight size={16} />
-                    </button>
-                    <button className={`px-10 py-5 rounded-2xl font-black uppercase tracking-widest text-[10px] transition-all border flex items-center gap-3 hover:-translate-y-1 ${isDarkMode ? 'bg-white/5 border-white/10 text-white' : 'bg-white border-slate-200 text-slate-900'}`}>
-                      CV Terbaru <Download size={16} />
-                    </button>
-                  </div>
-                </div>
-              </FadeInSection>
-            )}
-
-            {activeTab === 'keahlian' && (
-              <FadeInSection>
-                <div className="space-y-12">
-                   <h2 className="text-4xl md:text-6xl font-black tracking-tighter uppercase italic">Technical <span className="text-cyan-500">Arsenal.</span></h2>
-                   <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                     {skillCategories.map((cat, i) => (
-                       <div key={i} className={`p-8 rounded-[2rem] border transition-all ${isDarkMode ? 'bg-slate-900/50 border-white/5' : 'bg-white border-slate-100 shadow-sm'}`}>
-                         <div className={`w-12 h-12 rounded-xl flex items-center justify-center mb-6 bg-gradient-to-br ${cat.color} text-white`}>{cat.icon}</div>
-                         <h4 className="font-black uppercase text-sm mb-4 tracking-widest">{cat.title}</h4>
-                         <div className="flex flex-wrap gap-2">
-                           {cat.skills.map((s, j) => (
-                             <span key={j} className="text-[10px] font-bold py-1 px-3 rounded-lg bg-slate-500/10 opacity-70 uppercase tracking-tighter transition-colors hover:bg-cyan-500/20 hover:opacity-100">{s}</span>
-                           ))}
-                         </div>
-                       </div>
-                     ))}
-                   </div>
-                </div>
-              </FadeInSection>
-            )}
-
-            {activeTab === 'pengalaman' && (
-              <FadeInSection>
-                <div className="space-y-10">
-                  <h2 className="text-4xl md:text-6xl font-black tracking-tighter uppercase italic">Professional <span className="text-cyan-500">Journey.</span></h2>
-                  <div className="space-y-6">
-                    {experiences.map((exp, i) => (
-                      <div key={i} className={`p-8 rounded-[2rem] border transition-all ${isDarkMode ? 'bg-slate-900/40 border-white/5' : 'bg-white border-slate-100 shadow-sm'}`}>
-                        <div className="flex justify-between items-start mb-4">
-                           <span className="text-[10px] font-black uppercase tracking-widest opacity-50">{exp.year}</span>
-                           <Building2 size={16} className="opacity-20" />
-                        </div>
-                        <h3 className="text-xl font-black uppercase tracking-tight mb-2">{exp.role}</h3>
-                        <p className="text-sm opacity-60 mb-4">{exp.desc}</p>
-                        <div className="flex gap-2">
-                          {exp.tags.map((t, j) => <span key={j} className="text-[8px] font-black uppercase px-2 py-1 border border-current opacity-30 rounded-md">{t}</span>)}
-                        </div>
-                      </div>
-                    ))}
-                  </div>
-                </div>
-              </FadeInSection>
-            )}
-
-            {activeTab === 'hubungi' && (
-              <FadeInSection>
-                 <div className="space-y-12">
-                    <h2 className="text-4xl md:text-6xl font-black tracking-tighter uppercase italic">Mari <span className="text-cyan-500">Berdiskusi.</span></h2>
-                    <div className={`p-8 rounded-[3rem] border ${isDarkMode ? 'bg-slate-900/40 border-white/5' : 'bg-white border-slate-100 shadow-xl'}`}>
-                       {isSuccess ? (
-                         <div className="text-center py-10 space-y-4">
-                            <Send size={40} className="mx-auto text-emerald-500" />
-                            <h4 className="font-black uppercase tracking-widest">Pesan Terkirim</h4>
-                            <button onClick={() => setIsSuccess(false)} className="text-[10px] uppercase font-bold opacity-50 underline">Kirim pesan lagi</button>
-                         </div>
-                       ) : (
-                         <form onSubmit={handleSubmit} className="space-y-6">
-                            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                               <input required placeholder="Nama" value={formData.name} onChange={(e)=>setFormData({...formData, name: e.target.value})} className={`w-full p-4 rounded-xl text-sm font-bold border-none outline-none ${isDarkMode ? 'bg-slate-950' : 'bg-slate-50'}`} />
-                               <input required type="email" placeholder="Email" value={formData.email} onChange={(e)=>setFormData({...formData, email: e.target.value})} className={`w-full p-4 rounded-xl text-sm font-bold border-none outline-none ${isDarkMode ? 'bg-slate-950' : 'bg-slate-50'}`} />
-                            </div>
-                            <textarea required rows="4" placeholder="Pesan Anda" value={formData.message} onChange={(e)=>setFormData({...formData, message: e.target.value})} className={`w-full p-4 rounded-xl text-sm font-bold border-none outline-none resize-none ${isDarkMode ? 'bg-slate-950' : 'bg-slate-50'}`} />
-                            <button type="submit" className={`w-full py-4 rounded-xl font-black uppercase tracking-widest text-[10px] ${isDarkMode ? 'bg-cyan-500 text-black' : 'bg-blue-700 text-white'}`}>
-                               {isSubmitting ? 'Mengirim...' : 'Kirim'}
-                            </button>
-                         </form>
-                       )}
+    <main class="max-w-7xl mx-auto px-6 pt-40 pb-20">
+        <div class="flex flex-col lg:flex-row items-center gap-16 lg:gap-24">
+            
+            <div class="flex-1 w-full order-2 lg:order-1">
+                <div x-show="activeTab === 'beranda'" x-transition:enter="transition ease-out duration-500" x-transition:enter-start="opacity-0 translate-y-10">
+                    <div class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full mb-8 text-[10px] font-black uppercase tracking-widest border"
+                         :class="isDarkMode ? 'bg-cyan-500/10 border-cyan-500/20 text-cyan-400' : 'bg-blue-50 border-blue-100 text-blue-700'">
+                        <span class="relative flex h-2 w-2"><span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-current opacity-75"></span><span class="relative inline-flex rounded-full h-2 w-2 bg-current"></span></span>
+                        Status: Mengudara
                     </div>
-                 </div>
-              </FadeInSection>
-            )}
-          </div>
-
-          {/* Sisi Kanan: Lanyard Global (Tetap ada di setiap halaman) */}
-          <div className="flex-1 w-full flex justify-center lg:justify-end order-1 lg:order-2 sticky top-44 transition-all duration-700">
-             <div className="transform transition-transform hover:scale-105 active:scale-95 cursor-grab active:cursor-grabbing">
-                <LanyardHero 
-                  isDarkMode={isDarkMode} 
-                  mousePos={mousePos} 
-                  enterLink={enterLink} 
-                  leaveLink={leaveLink} 
-                  scale={activeTab === 'beranda' ? 1 : 0.85} 
-                />
-             </div>
-          </div>
-
-        </div>
-      </div>
-
-      <footer className={`py-16 px-6 md:px-10 border-t transition-colors ${isDarkMode ? 'border-white/5' : 'border-black/5'}`}>
-        <div className="max-w-7xl mx-auto flex flex-col md:flex-row justify-between items-center gap-12">
-          <div className="space-y-4 text-center md:text-left">
-             <div className="flex items-center gap-3 justify-center md:justify-start">
-                <div className={`w-8 h-8 rounded-lg flex items-center justify-center ${isDarkMode ? 'bg-white text-black' : 'bg-slate-900 text-white'}`}>
-                  <Terminal size={16} />
+                    <h1 class="text-5xl md:text-8xl font-black mb-8 tracking-tighter leading-[0.9] uppercase">
+                        Principal <br> <span class="text-transparent bg-clip-text bg-gradient-to-r" :class="isDarkMode ? 'from-cyan-400 to-blue-500' : 'from-blue-700 to-indigo-800'">Engineer</span> <br> Antono.
+                    </h1>
+                    <p class="max-w-xl text-lg md:text-xl font-medium opacity-60 leading-relaxed mb-10">
+                        Arsitek sistem yang berdedikasi pada skalabilitas masif dan performa tanpa kompromi.
+                    </p>
+                    <div class="flex flex-wrap gap-5">
+                        <button @click="activeTab = 'kontak'" class="px-8 py-4 rounded-2xl font-black uppercase tracking-widest text-[10px] transition-all shadow-xl hover:-translate-y-1" :class="isDarkMode ? 'bg-cyan-500 text-black font-bold' : 'bg-blue-700 text-white'">Hubungi Saya</button>
+                        <button class="px-8 py-4 rounded-2xl font-black uppercase tracking-widest text-[10px] transition-all border hover:-translate-y-1" :class="isDarkMode ? 'bg-white/5 border-white/10 text-white' : 'bg-white border-slate-200 text-slate-900'">Portofolio PDF</button>
+                    </div>
                 </div>
-                <span className="font-black text-lg tracking-tighter uppercase">ANTONO</span>
-             </div>
-             <p className="text-[10px] font-black text-slate-400 uppercase tracking-[0.4em]">© 2024 Core Architect - Principal Engineering</p>
-          </div>
-
-          <div className="flex flex-col items-center md:items-end gap-6">
-            <div className="flex gap-4">
-              {[
-                { icon: <Github size={20} />, link: "https://github.com/antono", color: "hover:bg-slate-800" },
-                { icon: <Linkedin size={20} />, link: "https://linkedin.com/in/antono", color: "hover:bg-blue-600" },
-                { icon: <Twitter size={20} />, link: "https://twitter.com/antono", color: "hover:bg-sky-500" },
-                { icon: <MessageSquare size={20} />, link: "#", color: "hover:bg-indigo-500" }
-              ].map((social, i) => (
-                <a 
-                  key={i} 
-                  href={social.link}
-                  onMouseEnter={enterLink}
-                  onMouseLeave={leaveLink}
-                  className={`w-12 h-12 rounded-2xl flex items-center justify-center border transition-all hover:-translate-y-2 hover:text-white ${isDarkMode ? 'border-white/10 bg-white/5 text-slate-400' : 'border-slate-200 bg-white text-slate-600'} ${social.color}`}
-                >
-                  {social.icon}
-                </a>
-              ))}
+                <!-- Other tabs simplified for focus on Lanyard -->
+                <div x-show="activeTab !== 'beranda'" class="py-20 text-center opacity-40 uppercase font-black tracking-widest">Konten Sedang Dimuat...</div>
             </div>
-          </div>
+
+            <!-- THE REALISTIC LANYARD -->
+            <div class="flex-1 w-full flex justify-center lg:justify-end order-1 lg:order-2">
+                <div class="relative w-full max-w-sm perspective-2000 flex flex-col items-center">
+                    
+                    <!-- Lanyard Rope (Ultra Realistic SVG) -->
+                    <div class="absolute -top-[550px] left-1/2 -translate-x-1/2 w-full h-[850px] pointer-events-none z-0">
+                        <svg viewBox="0 0 100 300" class="w-full h-full overflow-visible" preserveAspectRatio="none">
+                            <defs>
+                                <linearGradient id="lanyardGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+                                    <stop offset="0%" :stop-color="isDarkMode ? '#000' : '#475569'" />
+                                    <stop offset="50%" :stop-color="isDarkMode ? '#334155' : '#94a3b8'" />
+                                    <stop offset="100%" :stop-color="isDarkMode ? '#000' : '#475569'" />
+                                </linearGradient>
+                                <filter id="metalGlow">
+                                    <feGaussianBlur stdDeviation="1" result="blur" />
+                                    <feComposite in="SourceGraphic" in2="blur" operator="over" />
+                                </filter>
+                            </defs>
+
+                            <!-- Shadow of the rope -->
+                            <path :d="`M 28 -200 Q 30 100, ${53 + (rotation.y * 0.4)} 265`" stroke="black" stroke-width="8" fill="none" stroke-opacity="0.1" filter="blur(4px)" />
+                            <path :d="`M 72 -200 Q 70 100, ${47 + (rotation.y * 0.4)} 265`" stroke="black" stroke-width="8" fill="none" stroke-opacity="0.1" filter="blur(4px)" />
+
+                            <!-- Tali Utama -->
+                            <g :style="`transform: translateX(${rotation.y * 0.4}px)`" class="transition-transform duration-200">
+                                <!-- Tali Kiri -->
+                                <path d="M 25 -200 Q 25 120, 50 260" stroke="url(#lanyardGrad)" stroke-width="10" fill="none" stroke-linecap="round" />
+                                <path d="M 25 -200 Q 25 120, 50 260" stroke="white" stroke-width="10" fill="none" stroke-opacity="0.05" class="lanyard-pattern" />
+                                
+                                <!-- Tali Kanan -->
+                                <path d="M 75 -200 Q 75 120, 50 260" stroke="url(#lanyardGrad)" stroke-width="10" fill="none" stroke-linecap="round" />
+                                <path d="M 75 -200 Q 75 120, 50 260" stroke="white" stroke-width="10" fill="none" stroke-opacity="0.05" class="lanyard-pattern" />
+
+                                <!-- Penutup Sambungan (Plastik) -->
+                                <rect x="42" y="255" width="16" height="20" rx="4" :fill="isDarkMode ? '#0f172a' : '#1e293b'" />
+                                <rect x="44" y="257" width="12" height="16" rx="2" fill="white" fill-opacity="0.05" />
+
+                                <!-- Kait Lobster Metalik -->
+                                <g transform="translate(50, 275)">
+                                    <!-- Bagian Putar (Swivel) -->
+                                    <circle cx="0" cy="5" r="4" fill="none" :stroke="isDarkMode ? '#94a3b8' : '#475569'" stroke-width="2" />
+                                    <!-- Kait Utama -->
+                                    <path d="M -3 8 L -3 22 C -3 26, 3 26, 3 22 L 3 8" stroke-width="3" :stroke="isDarkMode ? '#cbd5e1' : '#334155'" fill="none" stroke-linecap="round" />
+                                    <!-- Pelatuk Kait -->
+                                    <path d="M -3 14 L 1 14" stroke-width="1.5" :stroke="isDarkMode ? '#94a3b8' : '#475569'" stroke-linecap="round" />
+                                    
+                                    <!-- Keyring (Ring Penghubung Ke Kartu) -->
+                                    <circle cx="0" cy="24" r="7" fill="none" stroke="url(#lanyardGrad)" stroke-width="2" stroke-opacity="0.8" />
+                                </g>
+                            </g>
+                        </svg>
+                    </div>
+
+                    <!-- ID Card Body -->
+                    <div 
+                        class="relative z-10 transition-transform duration-200 ease-out preserve-3d animate-swing mt-[285px]"
+                        :style="`transform: rotateX(${rotation.x}deg) rotateY(${rotation.y}deg) translateZ(40px)`"
+                    >
+                        <!-- Card Container -->
+                        <div class="w-72 md:w-80 rounded-[2.5rem] overflow-hidden border backdrop-blur-3xl relative transition-all duration-500"
+                             :class="isDarkMode ? 'bg-zinc-900/90 border-white/10 shadow-[0_30px_60px_-15px_rgba(0,0,0,0.7)]' : 'bg-white/90 border-slate-200 shadow-[0_30px_60px_-15px_rgba(0,0,0,0.2)]'">
+                            
+                            <!-- Refleksi Cahaya (Glossy) -->
+                            <div class="absolute inset-0 bg-gradient-to-br from-white/10 via-transparent to-black/10 pointer-events-none"></div>
+
+                            <!-- Lubang Kartu Fisik -->
+                            <div class="h-12 flex justify-center items-start pt-4 relative">
+                                <!-- Bayangan Ring pada lubang -->
+                                <div class="w-14 h-4 rounded-full bg-black/40 flex items-center justify-center p-[1px] shadow-inner">
+                                    <div class="w-full h-full rounded-full bg-[#0a0a0a] flex items-center justify-center">
+                                        <!-- Simulasi Keyring yang Masuk ke Lubang -->
+                                        <div class="w-8 h-1 bg-gradient-to-r from-transparent via-slate-400 to-transparent opacity-20"></div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="p-8 pt-2">
+                                <!-- Profile Section -->
+                                <div class="relative flex flex-col items-center">
+                                    <div class="w-32 h-32 rounded-[2.5rem] p-1.5 mb-6 rotate-1 hover:rotate-0 transition-transform duration-700"
+                                         :class="isDarkMode ? 'bg-gradient-to-tr from-cyan-400 via-blue-500 to-purple-600 shadow-xl' : 'bg-white shadow-2xl border border-slate-100'">
+                                        <div class="w-full h-full rounded-[2.2rem] overflow-hidden bg-slate-100 relative">
+                                            <img src="https://api.dicebear.com/7.x/avataaars/svg?seed=Antono" alt="Foto Antono" class="w-full h-full object-cover">
+                                            <div class="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent"></div>
+                                        </div>
+                                    </div>
+
+                                    <div class="text-center">
+                                        <h2 class="text-2xl font-black tracking-tighter uppercase leading-none" :class="isDarkMode ? 'text-white' : 'text-slate-900'">ANTONO</h2>
+                                        <div class="mt-2 flex items-center gap-2 justify-center">
+                                            <div class="h-1.5 w-1.5 rounded-full bg-emerald-500 animate-pulse"></div>
+                                            <p class="text-[9px] font-black uppercase tracking-[0.2em] opacity-60">Verified Principal</p>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- Divider Pintar -->
+                                <div class="flex items-center gap-4 my-8">
+                                    <div class="h-[1px] flex-1 bg-current opacity-10"></div>
+                                    <div class="w-2 h-2 rounded-full border border-current opacity-20"></div>
+                                    <div class="h-[1px] flex-1 bg-current opacity-10"></div>
+                                </div>
+
+                                <!-- Metadata -->
+                                <div class="grid grid-cols-2 gap-6">
+                                    <div class="space-y-1">
+                                        <p class="text-[7px] font-black uppercase opacity-40 italic">Employee No.</p>
+                                        <p class="text-[11px] font-bold font-mono tracking-tighter">#001-A-GLOBAL</p>
+                                    </div>
+                                    <div class="space-y-1 text-right">
+                                        <p class="text-[7px] font-black uppercase opacity-40 italic">Clearance</p>
+                                        <p class="text-[11px] font-bold text-blue-600 dark:text-cyan-400">LEVEL 10 (OMEGA)</p>
+                                    </div>
+                                </div>
+
+                                <!-- Security Chip & Barcode -->
+                                <div class="mt-8 flex justify-between items-end">
+                                    <div class="w-12 h-9 rounded-lg bg-gradient-to-br from-amber-400 via-yellow-200 to-amber-600 border border-black/10 relative overflow-hidden shadow-inner">
+                                        <div class="absolute inset-0 grid grid-cols-3 gap-1 p-2 opacity-30">
+                                            <div class="border-r border-black"></div>
+                                            <div class="border-r border-black"></div>
+                                        </div>
+                                    </div>
+                                    <div class="flex flex-col items-end gap-1">
+                                        <div class="flex gap-[1px] h-6 items-end opacity-20">
+                                            <template x-for="w in [2,1,4,2,1,3,1,2,5,1,2,1,4]">
+                                                <div :class="isDarkMode ? 'bg-white' : 'bg-black'" :style="`width: ${w}px`" class="h-full"></div>
+                                            </template>
+                                        </div>
+                                        <p class="text-[5px] font-black tracking-widest opacity-30">ENCRYPTED_AUTH_DATA_CORE</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- Bayangan Realistik di bawah kartu -->
+                        <div class="absolute -bottom-16 left-1/2 -translate-x-1/2 w-40 h-6 bg-black/10 blur-2xl rounded-full opacity-40 scale-x-150"></div>
+                    </div>
+
+                </div>
+            </div>
+
         </div>
-      </footer>
-    </div>
-  );
-}
+    </main>
+
+    <footer class="py-12 border-t mt-20 transition-all" :class="isDarkMode ? 'border-white/5' : 'border-slate-200'">
+        <div class="max-w-7xl mx-auto px-6 flex flex-col md:flex-row justify-between items-center gap-8 opacity-50">
+            <div class="text-[10px] font-black uppercase tracking-widest">© 2024 Arsitektur Antono</div>
+            <div class="flex gap-8 text-[10px] font-black uppercase tracking-widest">
+                <a href="#" class="hover:text-blue-600 transition-colors">GitHub</a>
+                <a href="#" class="hover:text-blue-600 transition-colors">LinkedIn</a>
+            </div>
+        </div>
+    </footer>
+
+</body>
+</html>
