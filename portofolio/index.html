@@ -36,7 +36,7 @@
 
         /* Custom Cursor */
         #custom-cursor {
-            transition: transform 0.3s ease-out;
+            transition: transform 0.1s ease-out;
         }
 
         /* Tab Transition */
@@ -46,6 +46,15 @@
         .tab-content.active {
             display: block;
         }
+
+        /* Mobile Menu Animation */
+        #mobile-menu {
+            transform: translateX(100%);
+            transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        #mobile-menu.open {
+            transform: translateX(0);
+        }
     </style>
 </head>
 <body class="min-h-screen transition-colors duration-700 selection:bg-blue-500/30 overflow-x-hidden bg-slate-50 text-slate-900" id="body-root">
@@ -54,15 +63,19 @@
     <div id="custom-cursor" class="fixed top-0 left-0 w-12 h-12 rounded-full border border-cyan-500/50 pointer-events-none z-[9999] mix-blend-difference hidden md:block"></div>
 
     <!-- Navigation -->
-    <nav id="navbar" class="fixed top-0 w-full z-50 px-8 py-6 backdrop-blur-xl border-b transition-all duration-500 bg-white/80 border-black/5 shadow-sm">
+    <nav id="navbar" class="fixed top-0 w-full z-50 px-6 md:px-8 py-4 md:py-6 backdrop-blur-xl border-b transition-all duration-500 bg-white/80 border-black/5 shadow-sm">
         <div class="max-w-7xl mx-auto flex justify-between items-center">
+            <!-- Logo -->
             <div class="flex items-center gap-2 cursor-pointer" onclick="setActiveTab('beranda')">
                 <div id="nav-logo-box" class="w-8 h-8 rounded-lg flex items-center justify-center bg-black text-white">
                     <i data-lucide="terminal" size="18"></i>
                 </div>
                 <span class="font-black text-lg tracking-tighter uppercase">ANTONO</span>
             </div>
-            <div class="flex items-center gap-10">
+
+            <!-- Right Nav Items -->
+            <div class="flex items-center gap-4 md:gap-10">
+                <!-- Desktop Links -->
                 <div class="hidden md:flex gap-10 text-[10px] font-black uppercase tracking-[0.25em]">
                     <button onclick="setActiveTab('beranda')" class="nav-link relative pb-1 transition-colors hover:text-cyan-500 active-link text-blue-700" data-tab="beranda">
                         Beranda
@@ -81,12 +94,45 @@
                         <span class="indicator absolute bottom-0 left-0 w-full h-[2px] rounded-full bg-blue-700 hidden"></span>
                     </button>
                 </div>
+
+                <!-- Theme Toggle -->
                 <button onclick="toggleTheme()" id="theme-toggle" class="w-10 h-10 rounded-full flex items-center justify-center border transition-all bg-slate-900 border-black/10 text-white">
                     <i data-lucide="moon" size="18" id="theme-icon"></i>
+                </button>
+
+                <!-- Mobile Menu Button -->
+                <button onclick="toggleMobileMenu()" class="md:hidden w-10 h-10 rounded-lg flex items-center justify-center border border-black/5 bg-black/5 text-slate-900" id="mobile-toggle">
+                    <i data-lucide="menu" size="20" id="menu-icon"></i>
                 </button>
             </div>
         </div>
     </nav>
+
+    <!-- Mobile Menu Overlay -->
+    <div id="mobile-menu" class="fixed inset-y-0 right-0 w-[80%] max-w-sm z-[60] shadow-2xl flex flex-col p-8 transition-colors bg-white">
+        <div class="flex justify-between items-center mb-16">
+            <span class="font-black text-sm tracking-widest uppercase opacity-40">Navigasi</span>
+            <button onclick="toggleMobileMenu()" class="w-10 h-10 rounded-full flex items-center justify-center bg-slate-100">
+                <i data-lucide="x" size="20"></i>
+            </button>
+        </div>
+        <div class="flex flex-col gap-8 text-2xl font-black uppercase tracking-tighter">
+            <button onclick="setActiveTab('beranda'); toggleMobileMenu();" class="text-left hover:text-blue-700 transition-colors">Beranda</button>
+            <button onclick="setActiveTab('keahlian'); toggleMobileMenu();" class="text-left hover:text-blue-700 transition-colors">Keahlian</button>
+            <button onclick="setActiveTab('pengalaman'); toggleMobileMenu();" class="text-left hover:text-blue-700 transition-colors">Pengalaman</button>
+            <button onclick="setActiveTab('hubungi'); toggleMobileMenu();" class="text-left hover:text-blue-700 transition-colors">Hubungi</button>
+        </div>
+        <div class="mt-auto pt-12 border-t border-black/5">
+            <p class="text-[9px] font-black uppercase tracking-widest opacity-40 mb-4">Sosial Media</p>
+            <div class="flex gap-4">
+                <div class="w-10 h-10 rounded-xl bg-slate-100 flex items-center justify-center"><i data-lucide="github" size="18"></i></div>
+                <div class="w-10 h-10 rounded-xl bg-slate-100 flex items-center justify-center"><i data-lucide="linkedin" size="18"></i></div>
+                <div class="w-10 h-10 rounded-xl bg-slate-100 flex items-center justify-center"><i data-lucide="twitter" size="18"></i></div>
+            </div>
+        </div>
+    </div>
+    <!-- Mobile Menu Backdrop -->
+    <div id="menu-backdrop" class="fixed inset-0 bg-black/20 backdrop-blur-sm z-[55] hidden transition-opacity" onclick="toggleMobileMenu()"></div>
 
     <!-- Content Area -->
     <main class="relative pt-32 lg:pt-48 pb-20 px-6 max-w-7xl mx-auto flex flex-col min-h-screen">
@@ -100,7 +146,7 @@
                         STRATEGI TEKNIS <br> 
                         <span class="hero-gradient text-transparent bg-clip-text bg-gradient-to-r from-blue-700 via-indigo-700 to-blue-900">TANPA BATAS.</span>
                     </h1>
-                    <p class="hero-desc max-w-xl lg:mx-0 mx-auto text-lg md:text-xl font-medium leading-relaxed mb-10 text-slate-600">Membangun fondasi sistem yang tangguh, memimpin tim teknik elit, dan merancang infrastruktur digital berskala global untuk masa depan.</p>
+                    <p class="hero-desc max-w-xl lg:mx-0 mx-auto text-lg md:text-xl font-medium leading-relaxed mb-10 text-slate-600">Membangun fondasi sistem yang tangguh, memimpin tim teknik elit, dan merancang infrastruktur digital berskala global.</p>
                     
                     <div class="flex flex-wrap justify-center lg:justify-start gap-4">
                         <button onclick="setActiveTab('pengalaman')" class="primary-btn px-8 md:px-10 py-4 rounded-2xl font-black uppercase tracking-widest text-[10px] transition-all shadow-2xl flex items-center gap-3 hover:-translate-y-1 bg-blue-700 text-white shadow-blue-900/20">
@@ -122,12 +168,12 @@
             <div class="fade-in-section flex flex-col lg:flex-row items-center justify-between gap-12 lg:gap-20">
                 <div class="flex-1">
                     <div class="section-label text-[11px] font-black uppercase tracking-[0.3em] mb-4 text-blue-700">Technical Arsenal</div>
-                    <h2 class="text-4xl md:text-6xl font-black tracking-tighter mb-8 leading-tight">KEAHLIAN DAN <br> EKOSISTEM TEKNIS.</h2>
-                    <div class="grid grid-cols-2 gap-6" id="metrics-grid">
+                    <h2 class="text-4xl md:text-6xl font-black tracking-tighter mb-8 leading-tight text-center lg:text-left">KEAHLIAN DAN <br> EKOSISTEM TEKNIS.</h2>
+                    <div class="grid grid-cols-2 gap-4 md:gap-6" id="metrics-grid">
                         <!-- Metrics injected via JS -->
                     </div>
                 </div>
-                <div class="flex-1 flex justify-center lg:justify-end items-start w-full opacity-60" id="lanyard-container-keahlian"></div>
+                <div class="flex-1 flex justify-center lg:justify-end items-start w-full opacity-60 pointer-events-none" id="lanyard-container-keahlian"></div>
             </div>
             <div class="grid grid-cols-1 md:grid-cols-2 gap-8" id="skills-grid">
                 <!-- Skills injected via JS -->
@@ -144,7 +190,7 @@
                         <!-- Experiences injected via JS -->
                     </div>
                 </div>
-                <div class="flex-1 flex justify-center lg:justify-end items-start w-full order-1 lg:order-2" id="lanyard-container-pengalaman"></div>
+                <div class="flex-1 flex justify-center lg:justify-end items-start w-full order-1 lg:order-2 opacity-50 pointer-events-none" id="lanyard-container-pengalaman"></div>
             </div>
         </section>
 
@@ -163,15 +209,6 @@
                             <div>
                                 <p class="text-[8px] font-black uppercase tracking-widest opacity-40 mb-1">Email Resmi</p>
                                 <p class="text-md font-bold">antono@engineers.sys</p>
-                            </div>
-                        </div>
-                        <div class="contact-item flex items-center gap-6 group cursor-pointer">
-                            <div class="icon-box w-12 h-12 rounded-2xl flex items-center justify-center transition-all bg-slate-100 group-hover:bg-blue-100 text-blue-700">
-                                <i data-lucide="linkedin" size="20"></i>
-                            </div>
-                            <div>
-                                <p class="text-[8px] font-black uppercase tracking-widest opacity-40 mb-1">Profil Profesional</p>
-                                <p class="text-md font-bold">linkedin.com/in/antono-sys</p>
                             </div>
                         </div>
                     </div>
@@ -198,7 +235,6 @@
                         </form>
                     </div>
                 </div>
-                <div class="flex-1 flex justify-center lg:justify-end items-start w-full min-h-[500px]" id="lanyard-container-hubungi"></div>
             </div>
         </section>
 
@@ -212,38 +248,38 @@
                     <i data-lucide="terminal" size="24" class="text-blue-700" id="footer-logo"></i>
                     <span class="font-black text-2xl tracking-tighter">ANTONO</span>
                 </div>
-                <p class="footer-text text-sm leading-relaxed font-medium text-slate-500">Berfokus pada efisiensi operasional dan inovasi arsitektur. Mari berkolaborasi.</p>
+                <p class="footer-text text-sm leading-relaxed font-medium text-slate-500">Berfokus pada efisiensi operasional dan inovasi arsitektur.</p>
             </div>
             <button onclick="setActiveTab('hubungi')" class="footer-btn px-8 py-4 rounded-xl font-black uppercase tracking-widest text-[10px] transition-all border bg-slate-900 text-white hover:bg-blue-700">Hubungi Saya</button>
         </div>
-        <div class="mt-20 text-center text-[9px] font-black tracking-[1em] uppercase opacity-30">&copy; MMXXIV // SYSTEM.ANTONO // ALL RIGHTS RESERVED</div>
+        <div class="mt-20 text-center text-[9px] font-black tracking-[1em] uppercase opacity-30">&copy; MMXXIV // SYSTEM.ANTONO</div>
     </footer>
 
     <script>
         // --- State ---
         let isDarkMode = false;
         let activeTab = 'beranda';
+        let isMobileMenuOpen = false;
         let mouseX = 0, mouseY = 0;
 
         // --- Data ---
         const skills = [
-            { title: "Arsitektur Sistem", icon: "server", skills: ["Microservices", "Event-Driven", "Scalable Systems", "Serverless"], color: "from-blue-500 to-indigo-600" },
-            { title: "Backend & Cloud", icon: "cloud", skills: ["Node.js", "Python", "AWS/GCP", "Kubernetes", "Redis"], color: "from-cyan-500 to-blue-500" },
-            { title: "Frontend Engineering", icon: "layout", skills: ["React/Next.js", "TypeScript", "Performance Tuning", "WASM"], color: "from-purple-500 to-pink-500" },
-            { title: "Keamanan & Data", icon: "shield-check", skills: ["OAuth 2.1", "Data Encryption", "PostgreSQL", "NoSQL"], color: "from-emerald-500 to-teal-600" }
+            { title: "Arsitektur Sistem", icon: "server", skills: ["Microservices", "Event-Driven", "Scalable Systems"], color: "from-blue-500 to-indigo-600" },
+            { title: "Backend & Cloud", icon: "cloud", skills: ["Node.js", "AWS/GCP", "Kubernetes", "Redis"], color: "from-cyan-500 to-blue-500" },
+            { title: "Frontend Engineering", icon: "layout", skills: ["React/Next.js", "TypeScript", "Performance"], color: "from-purple-500 to-pink-500" },
+            { title: "Keamanan & Data", icon: "shield-check", skills: ["OAuth 2.1", "Data Encryption", "PostgreSQL"], color: "from-emerald-500 to-teal-600" }
         ];
 
         const metrics = [
             { label: "Tim Dipimpin", value: "25+", icon: "users" },
-            { label: "Ketersediaan Sistem", value: "99.99%", icon: "zap" },
-            { label: "Proyek Skala Global", value: "12", icon: "globe" },
-            { label: "Optimalisasi Biaya", value: "40%", icon: "settings" }
+            { label: "Ketersediaan", value: "99.99%", icon: "zap" },
+            { label: "Skala Global", value: "12", icon: "globe" },
+            { label: "Optimalisasi", value: "40%", icon: "settings" }
         ];
 
         const experiences = [
-            { company: "Tech Giant Global", role: "VP of Engineering", period: "2021 - Sekarang", description: "Memimpin transformasi arsitektur cloud untuk melayani 50jt+ pengguna aktif bulanan.", tags: ["Scale", "Leadership", "Cloud Native"] },
-            { company: "Innovate AI", role: "Lead Solution Architect", period: "2018 - 2021", description: "Merancang pipeline data real-time untuk pemrosesan LLM skala enterprise.", tags: ["AI/ML", "Architecture", "Data"] },
-            { company: "Future FinTech", role: "Senior Backend Engineer", period: "2015 - 2018", description: "Membangun sistem pembayaran core yang menangani ribuan transaksi per detik.", tags: ["FinTech", "High Performance", "NodeJS"] }
+            { company: "Tech Giant Global", role: "VP of Engineering", period: "2021 - Sekarang", description: "Memimpin transformasi arsitektur cloud untuk melayani 50jt+ pengguna aktif.", tags: ["Scale", "Leadership"] },
+            { company: "Innovate AI", role: "Lead Architect", period: "2018 - 2021", description: "Merancang pipeline data real-time untuk pemrosesan LLM skala enterprise.", tags: ["AI/ML", "Architecture"] }
         ];
 
         // --- Initialization ---
@@ -255,6 +291,24 @@
             renderLanyards();
             setupIntersectionObserver();
         };
+
+        // --- Mobile Menu Toggle ---
+        function toggleMobileMenu() {
+            isMobileMenuOpen = !isMobileMenuOpen;
+            const menu = document.getElementById('mobile-menu');
+            const backdrop = document.getElementById('menu-backdrop');
+            const icon = document.getElementById('menu-icon');
+
+            if (isMobileMenuOpen) {
+                menu.classList.add('open');
+                backdrop.classList.remove('hidden');
+                setTimeout(() => backdrop.classList.add('opacity-100'), 10);
+            } else {
+                menu.classList.remove('open');
+                backdrop.classList.remove('opacity-100');
+                setTimeout(() => backdrop.classList.add('hidden'), 400);
+            }
+        }
 
         // --- Tab Logic ---
         function setActiveTab(tabId) {
@@ -285,7 +339,8 @@
             const nav = document.getElementById('navbar');
             const footer = document.getElementById('footer');
             const themeBtn = document.getElementById('theme-toggle');
-            const themeIcon = document.getElementById('theme-icon');
+            const mobileMenu = document.getElementById('mobile-menu');
+            const mobileToggle = document.getElementById('mobile-toggle');
 
             if (isDarkMode) {
                 root.classList.replace('bg-slate-50', 'bg-[#020617]');
@@ -294,10 +349,12 @@
                 nav.classList.replace('border-black/5', 'border-white/5');
                 footer.classList.replace('bg-slate-100', 'bg-black');
                 footer.classList.replace('border-black/5', 'border-white/5');
-                themeBtn.classList.replace('bg-slate-900', 'bg-white/5');
+                themeBtn.classList.replace('bg-slate-900', 'bg-white/10');
                 themeBtn.classList.replace('text-white', 'text-yellow-400');
-                themeBtn.classList.add('border-white/10');
-                themeIcon.setAttribute('data-lucide', 'sun');
+                mobileMenu.classList.replace('bg-white', 'bg-slate-950');
+                mobileMenu.classList.add('text-white');
+                mobileToggle.classList.replace('text-slate-900', 'text-white');
+                mobileToggle.classList.replace('bg-black/5', 'bg-white/10');
             } else {
                 root.classList.replace('bg-[#020617]', 'bg-slate-50');
                 root.classList.replace('text-slate-100', 'text-slate-900');
@@ -305,32 +362,29 @@
                 nav.classList.replace('border-white/5', 'border-black/5');
                 footer.classList.replace('bg-black', 'bg-slate-100');
                 footer.classList.replace('border-white/5', 'border-black/5');
-                themeBtn.classList.replace('bg-white/5', 'bg-slate-900');
+                themeBtn.classList.replace('bg-white/10', 'bg-slate-900');
                 themeBtn.classList.replace('text-yellow-400', 'text-white');
-                themeBtn.classList.remove('border-white/10');
-                themeIcon.setAttribute('data-lucide', 'moon');
+                mobileMenu.classList.replace('bg-slate-950', 'bg-white');
+                mobileMenu.classList.remove('text-white');
+                mobileToggle.classList.replace('text-white', 'text-slate-900');
+                mobileToggle.classList.replace('bg-white/10', 'bg-black/5');
             }
 
-            // Update specific dynamic elements
             updateComponentThemes();
-            renderLanyards(); // Re-render SVGs with new theme colors
+            renderLanyards();
             lucide.createIcons();
         }
 
         function updateComponentThemes() {
-            // Hero Gradient
             const h1 = document.querySelector('.hero-gradient');
             if (h1) {
                 if (isDarkMode) h1.classList.replace('from-blue-700', 'from-cyan-400');
                 else h1.classList.replace('from-cyan-400', 'from-blue-700');
             }
-            
-            // Buttons and Labels
             document.querySelectorAll('.primary-btn').forEach(el => {
                 if (isDarkMode) el.classList.replace('bg-blue-700', 'bg-cyan-600');
                 else el.classList.replace('bg-cyan-600', 'bg-blue-700');
             });
-
             document.querySelectorAll('.section-label').forEach(el => {
                 if (isDarkMode) el.classList.replace('text-blue-700', 'text-cyan-400');
                 else el.classList.replace('text-cyan-400', 'text-blue-700');
@@ -349,7 +403,7 @@
                         <h3 class="text-2xl font-black mb-6 tracking-tight">${cat.title}</h3>
                         <div class="flex flex-wrap gap-3">
                             ${cat.skills.map(s => `
-                                <span class="px-4 py-2 rounded-xl text-[10px] font-bold uppercase tracking-widest border transition-all ${isDarkMode ? 'bg-white/5 border-white/10 text-slate-300 hover:text-cyan-400 hover:border-cyan-400' : 'bg-black/5 border-black/5 text-slate-600 hover:text-blue-700 hover:border-blue-700'}">
+                                <span class="px-4 py-2 rounded-xl text-[10px] font-bold uppercase tracking-widest border transition-all ${isDarkMode ? 'bg-white/5 border-white/10 text-slate-300' : 'bg-black/5 border-black/5 text-slate-600'}">
                                     ${s}
                                 </span>
                             `).join('')}
@@ -362,12 +416,12 @@
         function renderMetrics() {
             const grid = document.getElementById('metrics-grid');
             grid.innerHTML = metrics.map(m => `
-                <div class="p-6 rounded-2xl border ${isDarkMode ? 'bg-white/5 border-white/5' : 'bg-white border-black/5 shadow-sm'}">
+                <div class="p-4 md:p-6 rounded-2xl border ${isDarkMode ? 'bg-white/5 border-white/5' : 'bg-white border-black/5 shadow-sm'}">
                     <div class="mb-3 ${isDarkMode ? 'text-cyan-400' : 'text-blue-600'}">
                         <i data-lucide="${m.icon}" size="18"></i>
                     </div>
-                    <div class="text-2xl font-black tracking-tight">${m.value}</div>
-                    <div class="text-[9px] font-bold uppercase tracking-widest opacity-50">${m.label}</div>
+                    <div class="text-xl md:text-2xl font-black tracking-tight">${m.value}</div>
+                    <div class="text-[8px] md:text-[9px] font-bold uppercase tracking-widest opacity-50">${m.label}</div>
                 </div>
             `).join('');
         }
@@ -375,8 +429,8 @@
         function renderExperiences() {
             const list = document.getElementById('experience-list');
             list.innerHTML = experiences.map(exp => `
-                <div class="p-8 rounded-3xl border transition-all hover:scale-[1.02] ${isDarkMode ? 'bg-white/5 border-white/5 hover:bg-white/10' : 'bg-white border-black/5 shadow-sm hover:shadow-md'}">
-                    <div class="flex justify-between items-start mb-4">
+                <div class="p-8 rounded-3xl border transition-all hover:scale-[1.01] ${isDarkMode ? 'bg-white/5 border-white/5' : 'bg-white border-black/5 shadow-sm'}">
+                    <div class="flex flex-col md:flex-row justify-between items-start mb-4 gap-2">
                         <div>
                             <h3 class="text-xl font-black tracking-tight">${exp.company}</h3>
                             <p class="text-xs font-bold uppercase tracking-widest ${isDarkMode ? 'text-cyan-400' : 'text-blue-700'}">${exp.role}</p>
@@ -391,9 +445,8 @@
             `).join('');
         }
 
-        // --- Lanyard SVG Generator ---
         function renderLanyards() {
-            const containers = ['lanyard-container', 'lanyard-container-keahlian', 'lanyard-container-pengalaman', 'lanyard-container-hubungi'];
+            const containers = ['lanyard-container', 'lanyard-container-keahlian', 'lanyard-container-pengalaman'];
             const lanyardHTML = generateLanyardSVG();
             containers.forEach(id => {
                 const el = document.getElementById(id);
@@ -404,12 +457,9 @@
         function generateLanyardSVG() {
             const primary = isDarkMode ? "#0e7490" : "#1e40af";
             const accent = isDarkMode ? "#22d3ee" : "#60a5fa";
-            const cardBg = isDarkMode ? "#020617" : "#ffffff";
-            const cardBorder = isDarkMode ? "rgba(255,255,255,0.1)" : "rgba(0,0,0,0.05)";
-            const textMain = isDarkMode ? "#ffffff" : "#0f172a";
             
             return `
-            <div class="lanyard-wrapper relative flex flex-col items-center w-full max-w-sm perspective-2000">
+            <div class="lanyard-wrapper relative flex flex-col items-center w-full max-w-[280px] md:max-w-sm perspective-2000">
                 <div class="absolute top-[-160px] left-1/2 -translate-x-1/2 w-80 h-[500px] z-10 pointer-events-none overflow-visible">
                     <svg viewBox="0 0 100 200" class="w-full h-full overflow-visible lanyard-svg">
                         <defs>
@@ -424,7 +474,6 @@
                         <g class="lanyard-clip" transform="translate(50, 140)">
                             <rect x="-8" y="0" width="16" height="22" rx="3" fill="${isDarkMode ? '#475569' : '#94a3b8'}" />
                             <circle cx="0" cy="22" r="5" fill="${isDarkMode ? '#334155' : '#64748b'}" />
-                            <circle cx="0" cy="22" r="2" fill="${isDarkMode ? '#020617' : '#f1f5f9'}" />
                         </g>
                     </svg>
                 </div>
@@ -461,65 +510,46 @@
         window.addEventListener('mousemove', (e) => {
             mouseX = e.clientX;
             mouseY = e.clientY;
-
-            // Update Cursor
             const cursor = document.getElementById('custom-cursor');
             cursor.style.transform = `translate3d(${mouseX - 24}px, ${mouseY - 24}px, 0)`;
 
-            // Update Lanyard 3D Effect
             const cards = document.querySelectorAll('.id-card');
-            const rotX = (mouseY - window.innerHeight / 2) / 45;
-            const rotY = (mouseX - window.innerWidth / 2) / 45;
+            const rotX = (mouseY - window.innerHeight / 2) / 60;
+            const rotY = (mouseX - window.innerWidth / 2) / 60;
 
             cards.forEach(card => {
-                card.style.transform = `rotateX(${rotX + 8}deg) rotateY(${rotY}deg) translateZ(50px)`;
+                card.style.transform = `rotateX(${rotX + 8}deg) rotateY(${rotY}deg) translateZ(30px)`;
             });
 
-            // Update Lanyard Path
             const pathsL = document.querySelectorAll('.lanyard-path-left');
             const pathsR = document.querySelectorAll('.lanyard-path-right');
             const clips = document.querySelectorAll('.lanyard-clip');
-
             pathsL.forEach(p => p.setAttribute('d', `M30 -20 Q 35 80 ${50 + (rotY * 0.4)} 140`));
             pathsR.forEach(p => p.setAttribute('d', `M70 -20 Q 65 80 ${50 + (rotY * 0.4)} 140`));
             clips.forEach(c => c.setAttribute('transform', `translate(${50 + (rotY * 0.4)}, 140) rotate(${rotY * 2})`));
         });
 
-        // --- Intersection Observer for Animations ---
         function setupIntersectionObserver() {
             const observer = new IntersectionObserver((entries) => {
                 entries.forEach(entry => {
-                    if (entry.isIntersecting) {
-                        entry.target.classList.add('is-visible');
-                    }
+                    if (entry.isIntersecting) entry.target.classList.add('is-visible');
                 });
             }, { threshold: 0.1 });
-
-            document.querySelectorAll('.fade-in-section').forEach(section => {
-                observer.observe(section);
-            });
+            document.querySelectorAll('.fade-in-section').forEach(section => observer.observe(section));
         }
 
-        // --- Form Handling ---
         const contactForm = document.getElementById('contact-form');
         if (contactForm) {
             contactForm.addEventListener('submit', (e) => {
                 e.preventDefault();
-                const container = document.getElementById('contact-form-container');
                 const btn = e.target.querySelector('button');
                 btn.innerText = 'MEMPROSES...';
-                
                 setTimeout(() => {
-                    container.innerHTML = `
-                        <div class="min-h-[300px] flex flex-col items-center justify-center text-center p-10 rounded-[2.5rem] border animate-in fade-in zoom-in duration-500 ${isDarkMode ? 'bg-slate-950 border-cyan-500/30' : 'bg-white border-blue-200'}">
-                            <div class="w-16 h-16 rounded-full flex items-center justify-center mb-6 ${isDarkMode ? 'bg-cyan-500/20 text-cyan-400' : 'bg-blue-100 text-blue-700'}">
-                                <i data-lucide="shield-check" size="32"></i>
-                            </div>
-                            <h3 class="text-xl font-black mb-3 uppercase tracking-tight">Pesan Terenkripsi</h3>
-                            <p class="text-xs font-medium ${isDarkMode ? 'text-slate-400' : 'text-slate-600'}">Pesan Anda telah berhasil dikirim ke server pusat.</p>
-                            <button onclick="location.reload()" class="mt-8 text-[9px] font-black uppercase tracking-widest flex items-center gap-2 hover:gap-3 transition-all underline decoration-2 underline-offset-8 decoration-cyan-500">Kirim Pesan Lain</button>
-                        </div>
-                    `;
+                    document.getElementById('contact-form-container').innerHTML = `
+                        <div class="py-12 text-center rounded-[2.5rem] border ${isDarkMode ? 'bg-slate-950 border-cyan-500/30' : 'bg-white border-blue-200'}">
+                            <i data-lucide="shield-check" size="32" class="mx-auto mb-4 text-blue-700"></i>
+                            <h3 class="text-xl font-black uppercase">Pesan Terkirim</h3>
+                        </div>`;
                     lucide.createIcons();
                 }, 1500);
             });
