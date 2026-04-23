@@ -1,0 +1,529 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Portofolio - Antono</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700;900&display=swap');
+        
+        body {
+            font-family: 'Inter', sans-serif;
+            scroll-behavior: smooth;
+        }
+
+        .perspective-2000 {
+            perspective: 2000px;
+        }
+
+        .preserve-3d {
+            transform-style: preserve-3d;
+        }
+
+        /* Animasi Fade In */
+        .fade-in-section {
+            opacity: 0;
+            transform: translateY(3rem);
+            transition: all 1s ease-out;
+        }
+
+        .fade-in-section.is-visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* Custom Cursor */
+        #custom-cursor {
+            transition: transform 0.3s ease-out;
+        }
+
+        /* Tab Transition */
+        .tab-content {
+            display: none;
+        }
+        .tab-content.active {
+            display: block;
+        }
+    </style>
+</head>
+<body class="min-h-screen transition-colors duration-700 selection:bg-blue-500/30 overflow-x-hidden bg-slate-50 text-slate-900" id="body-root">
+    
+    <!-- Custom Cursor -->
+    <div id="custom-cursor" class="fixed top-0 left-0 w-12 h-12 rounded-full border border-cyan-500/50 pointer-events-none z-[9999] mix-blend-difference hidden md:block"></div>
+
+    <!-- Navigation -->
+    <nav id="navbar" class="fixed top-0 w-full z-50 px-8 py-6 backdrop-blur-xl border-b transition-all duration-500 bg-white/80 border-black/5 shadow-sm">
+        <div class="max-w-7xl mx-auto flex justify-between items-center">
+            <div class="flex items-center gap-2 cursor-pointer" onclick="setActiveTab('beranda')">
+                <div id="nav-logo-box" class="w-8 h-8 rounded-lg flex items-center justify-center bg-black text-white">
+                    <i data-lucide="terminal" size="18"></i>
+                </div>
+                <span class="font-black text-lg tracking-tighter uppercase">ANTONO</span>
+            </div>
+            <div class="flex items-center gap-10">
+                <div class="hidden md:flex gap-10 text-[10px] font-black uppercase tracking-[0.25em]">
+                    <button onclick="setActiveTab('beranda')" class="nav-link relative pb-1 transition-colors hover:text-cyan-500 active-link text-blue-700" data-tab="beranda">
+                        Beranda
+                        <span class="indicator absolute bottom-0 left-0 w-full h-[2px] rounded-full bg-blue-700"></span>
+                    </button>
+                    <button onclick="setActiveTab('keahlian')" class="nav-link relative pb-1 transition-colors hover:text-cyan-500" data-tab="keahlian">
+                        Keahlian
+                        <span class="indicator absolute bottom-0 left-0 w-full h-[2px] rounded-full bg-blue-700 hidden"></span>
+                    </button>
+                    <button onclick="setActiveTab('pengalaman')" class="nav-link relative pb-1 transition-colors hover:text-cyan-500" data-tab="pengalaman">
+                        Pengalaman
+                        <span class="indicator absolute bottom-0 left-0 w-full h-[2px] rounded-full bg-blue-700 hidden"></span>
+                    </button>
+                    <button onclick="setActiveTab('hubungi')" class="nav-link relative pb-1 transition-colors hover:text-cyan-500" data-tab="hubungi">
+                        Hubungi
+                        <span class="indicator absolute bottom-0 left-0 w-full h-[2px] rounded-full bg-blue-700 hidden"></span>
+                    </button>
+                </div>
+                <button onclick="toggleTheme()" id="theme-toggle" class="w-10 h-10 rounded-full flex items-center justify-center border transition-all bg-slate-900 border-black/10 text-white">
+                    <i data-lucide="moon" size="18" id="theme-icon"></i>
+                </button>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Content Area -->
+    <main class="relative pt-32 lg:pt-48 pb-20 px-6 max-w-7xl mx-auto flex flex-col min-h-screen">
+        
+        <!-- --- Tab: Beranda --- -->
+        <section id="tab-beranda" class="tab-content active fade-in-section">
+            <div class="flex flex-col lg:flex-row items-center lg:items-start justify-between gap-12 lg:gap-20">
+                <div class="flex-1 text-center lg:text-left z-10">
+                    <div class="badge inline-block px-4 py-1 rounded-full mb-8 text-[11px] font-black uppercase tracking-widest border bg-white border-black/5 text-slate-600">Navigating Complex Architectures</div>
+                    <h1 class="text-5xl md:text-7xl xl:text-8xl font-black mb-8 tracking-tighter leading-[0.9] lg:leading-none">
+                        STRATEGI TEKNIS <br> 
+                        <span class="hero-gradient text-transparent bg-clip-text bg-gradient-to-r from-blue-700 via-indigo-700 to-blue-900">TANPA BATAS.</span>
+                    </h1>
+                    <p class="hero-desc max-w-xl lg:mx-0 mx-auto text-lg md:text-xl font-medium leading-relaxed mb-10 text-slate-600">Membangun fondasi sistem yang tangguh, memimpin tim teknik elit, dan merancang infrastruktur digital berskala global untuk masa depan.</p>
+                    
+                    <div class="flex flex-wrap justify-center lg:justify-start gap-4">
+                        <button onclick="setActiveTab('pengalaman')" class="primary-btn px-8 md:px-10 py-4 rounded-2xl font-black uppercase tracking-widest text-[10px] transition-all shadow-2xl flex items-center gap-3 hover:-translate-y-1 bg-blue-700 text-white shadow-blue-900/20">
+                            Riwayat Kerja <i data-lucide="briefcase" size="18"></i>
+                        </button>
+                        <button onclick="window.open('#', '_blank')" class="secondary-btn px-8 md:px-10 py-4 rounded-2xl font-black uppercase tracking-widest text-[10px] transition-all border flex items-center gap-3 hover:-translate-y-1 bg-white border-slate-200 text-slate-900 hover:bg-slate-50 shadow-md">
+                            Download CV <i data-lucide="download" size="18"></i>
+                        </button>
+                    </div>
+                </div>
+                <div class="flex-1 flex justify-center lg:justify-end items-start w-full" id="lanyard-container">
+                    <!-- Lanyard injected via JS -->
+                </div>
+            </div>
+        </section>
+
+        <!-- --- Tab: Keahlian --- -->
+        <section id="tab-keahlian" class="tab-content space-y-32">
+            <div class="fade-in-section flex flex-col lg:flex-row items-center justify-between gap-12 lg:gap-20">
+                <div class="flex-1">
+                    <div class="section-label text-[11px] font-black uppercase tracking-[0.3em] mb-4 text-blue-700">Technical Arsenal</div>
+                    <h2 class="text-4xl md:text-6xl font-black tracking-tighter mb-8 leading-tight">KEAHLIAN DAN <br> EKOSISTEM TEKNIS.</h2>
+                    <div class="grid grid-cols-2 gap-6" id="metrics-grid">
+                        <!-- Metrics injected via JS -->
+                    </div>
+                </div>
+                <div class="flex-1 flex justify-center lg:justify-end items-start w-full opacity-60" id="lanyard-container-keahlian"></div>
+            </div>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8" id="skills-grid">
+                <!-- Skills injected via JS -->
+            </div>
+        </section>
+
+        <!-- --- Tab: Pengalaman --- -->
+        <section id="tab-pengalaman" class="tab-content fade-in-section">
+            <div class="flex flex-col lg:flex-row gap-16 lg:gap-20 items-start">
+                <div class="flex-1 w-full order-2 lg:order-1">
+                    <div class="section-label text-[11px] font-black uppercase tracking-[0.3em] mb-4 text-blue-700">Professional Journey</div>
+                    <h2 class="text-4xl md:text-6xl font-black tracking-tighter mb-12 leading-tight">RIWAYAT <br> EKSEKUSI TEKNIS.</h2>
+                    <div class="space-y-8" id="experience-list">
+                        <!-- Experiences injected via JS -->
+                    </div>
+                </div>
+                <div class="flex-1 flex justify-center lg:justify-end items-start w-full order-1 lg:order-2" id="lanyard-container-pengalaman"></div>
+            </div>
+        </section>
+
+        <!-- --- Tab: Hubungi --- -->
+        <section id="tab-hubungi" class="tab-content fade-in-section">
+            <div class="flex flex-col lg:flex-row gap-16 lg:gap-20 items-start">
+                <div class="flex-1 w-full">
+                    <div class="section-label text-[11px] font-black uppercase tracking-[0.3em] mb-4 text-blue-700">Secure Transmission</div>
+                    <h2 class="text-4xl md:text-6xl font-black tracking-tighter mb-10 leading-tight">MULAI <br>KOLABORASI.</h2>
+                    
+                    <div class="space-y-6 mb-12">
+                        <div class="contact-item flex items-center gap-6 group cursor-pointer">
+                            <div class="icon-box w-12 h-12 rounded-2xl flex items-center justify-center transition-all bg-slate-100 group-hover:bg-blue-100 text-blue-700">
+                                <i data-lucide="mail" size="20"></i>
+                            </div>
+                            <div>
+                                <p class="text-[8px] font-black uppercase tracking-widest opacity-40 mb-1">Email Resmi</p>
+                                <p class="text-md font-bold">antono@engineers.sys</p>
+                            </div>
+                        </div>
+                        <div class="contact-item flex items-center gap-6 group cursor-pointer">
+                            <div class="icon-box w-12 h-12 rounded-2xl flex items-center justify-center transition-all bg-slate-100 group-hover:bg-blue-100 text-blue-700">
+                                <i data-lucide="linkedin" size="20"></i>
+                            </div>
+                            <div>
+                                <p class="text-[8px] font-black uppercase tracking-widest opacity-40 mb-1">Profil Profesional</p>
+                                <p class="text-md font-bold">linkedin.com/in/antono-sys</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div id="contact-form-container">
+                        <form id="contact-form" class="space-y-4 max-w-lg">
+                            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                                <div class="space-y-1">
+                                    <label class="text-[9px] font-black uppercase tracking-widest opacity-50 ml-2">Nama</label>
+                                    <input required type="text" placeholder="IDENTITAS" class="form-input w-full px-5 py-4 rounded-xl border bg-transparent font-bold text-xs focus:outline-none focus:ring-1 transition-all border-black/5 focus:ring-blue-700/20 text-slate-900 placeholder:text-slate-300">
+                                </div>
+                                <div class="space-y-1">
+                                    <label class="text-[9px] font-black uppercase tracking-widest opacity-50 ml-2">Email</label>
+                                    <input required type="email" placeholder="ALAMAT@DOMAIN" class="form-input w-full px-5 py-4 rounded-xl border bg-transparent font-bold text-xs focus:outline-none focus:ring-1 transition-all border-black/5 focus:ring-blue-700/20 text-slate-900 placeholder:text-slate-300">
+                                </div>
+                            </div>
+                            <div class="space-y-1">
+                                <label class="text-[9px] font-black uppercase tracking-widest opacity-50 ml-2">Detail Transmisi</label>
+                                <textarea required rows="4" placeholder="CERITAKAN PROYEK ANDA..." class="form-input w-full px-5 py-4 rounded-xl border bg-transparent font-bold text-xs focus:outline-none focus:ring-1 transition-all resize-none border-black/5 focus:ring-blue-700/20 text-slate-900 placeholder:text-slate-300"></textarea>
+                            </div>
+                            <button type="submit" class="primary-btn w-full py-5 rounded-xl font-black uppercase tracking-[0.2em] text-[10px] flex items-center justify-center gap-3 transition-all shadow-lg group bg-blue-700 hover:bg-blue-800 text-white shadow-blue-900/20">
+                                KIRIM TRANSMISI <i data-lucide="send" size="16" class="group-hover:translate-x-1 transition-transform"></i>
+                            </button>
+                        </form>
+                    </div>
+                </div>
+                <div class="flex-1 flex justify-center lg:justify-end items-start w-full min-h-[500px]" id="lanyard-container-hubungi"></div>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- Footer -->
+    <footer id="footer" class="mt-40 py-20 px-8 border-t transition-colors border-black/5 bg-slate-100">
+        <div class="max-w-7xl mx-auto flex flex-col md:flex-row justify-between items-end gap-10">
+            <div class="text-left max-w-lg">
+                <div class="flex items-center gap-2 mb-8">
+                    <i data-lucide="terminal" size="24" class="text-blue-700" id="footer-logo"></i>
+                    <span class="font-black text-2xl tracking-tighter">ANTONO</span>
+                </div>
+                <p class="footer-text text-sm leading-relaxed font-medium text-slate-500">Berfokus pada efisiensi operasional dan inovasi arsitektur. Mari berkolaborasi.</p>
+            </div>
+            <button onclick="setActiveTab('hubungi')" class="footer-btn px-8 py-4 rounded-xl font-black uppercase tracking-widest text-[10px] transition-all border bg-slate-900 text-white hover:bg-blue-700">Hubungi Saya</button>
+        </div>
+        <div class="mt-20 text-center text-[9px] font-black tracking-[1em] uppercase opacity-30">&copy; MMXXIV // SYSTEM.ANTONO // ALL RIGHTS RESERVED</div>
+    </footer>
+
+    <script>
+        // --- State ---
+        let isDarkMode = false;
+        let activeTab = 'beranda';
+        let mouseX = 0, mouseY = 0;
+
+        // --- Data ---
+        const skills = [
+            { title: "Arsitektur Sistem", icon: "server", skills: ["Microservices", "Event-Driven", "Scalable Systems", "Serverless"], color: "from-blue-500 to-indigo-600" },
+            { title: "Backend & Cloud", icon: "cloud", skills: ["Node.js", "Python", "AWS/GCP", "Kubernetes", "Redis"], color: "from-cyan-500 to-blue-500" },
+            { title: "Frontend Engineering", icon: "layout", skills: ["React/Next.js", "TypeScript", "Performance Tuning", "WASM"], color: "from-purple-500 to-pink-500" },
+            { title: "Keamanan & Data", icon: "shield-check", skills: ["OAuth 2.1", "Data Encryption", "PostgreSQL", "NoSQL"], color: "from-emerald-500 to-teal-600" }
+        ];
+
+        const metrics = [
+            { label: "Tim Dipimpin", value: "25+", icon: "users" },
+            { label: "Ketersediaan Sistem", value: "99.99%", icon: "zap" },
+            { label: "Proyek Skala Global", value: "12", icon: "globe" },
+            { label: "Optimalisasi Biaya", value: "40%", icon: "settings" }
+        ];
+
+        const experiences = [
+            { company: "Tech Giant Global", role: "VP of Engineering", period: "2021 - Sekarang", description: "Memimpin transformasi arsitektur cloud untuk melayani 50jt+ pengguna aktif bulanan.", tags: ["Scale", "Leadership", "Cloud Native"] },
+            { company: "Innovate AI", role: "Lead Solution Architect", period: "2018 - 2021", description: "Merancang pipeline data real-time untuk pemrosesan LLM skala enterprise.", tags: ["AI/ML", "Architecture", "Data"] },
+            { company: "Future FinTech", role: "Senior Backend Engineer", period: "2015 - 2018", description: "Membangun sistem pembayaran core yang menangani ribuan transaksi per detik.", tags: ["FinTech", "High Performance", "NodeJS"] }
+        ];
+
+        // --- Initialization ---
+        window.onload = () => {
+            lucide.createIcons();
+            renderSkills();
+            renderMetrics();
+            renderExperiences();
+            renderLanyards();
+            setupIntersectionObserver();
+        };
+
+        // --- Tab Logic ---
+        function setActiveTab(tabId) {
+            activeTab = tabId;
+            document.querySelectorAll('.tab-content').forEach(el => el.classList.remove('active'));
+            document.getElementById(`tab-${tabId}`).classList.add('active');
+
+            // Update Nav UI
+            document.querySelectorAll('.nav-link').forEach(el => {
+                const indicator = el.querySelector('.indicator');
+                if (el.getAttribute('data-tab') === tabId) {
+                    el.classList.add(isDarkMode ? 'text-cyan-400' : 'text-blue-700');
+                    indicator.classList.remove('hidden');
+                } else {
+                    el.classList.remove('text-cyan-400', 'text-blue-700');
+                    indicator.classList.add('hidden');
+                }
+            });
+
+            window.scrollTo(0, 0);
+            lucide.createIcons();
+        }
+
+        // --- Theme Logic ---
+        function toggleTheme() {
+            isDarkMode = !isDarkMode;
+            const root = document.getElementById('body-root');
+            const nav = document.getElementById('navbar');
+            const footer = document.getElementById('footer');
+            const themeBtn = document.getElementById('theme-toggle');
+            const themeIcon = document.getElementById('theme-icon');
+
+            if (isDarkMode) {
+                root.classList.replace('bg-slate-50', 'bg-[#020617]');
+                root.classList.replace('text-slate-900', 'text-slate-100');
+                nav.classList.replace('bg-white/80', 'bg-slate-950/80');
+                nav.classList.replace('border-black/5', 'border-white/5');
+                footer.classList.replace('bg-slate-100', 'bg-black');
+                footer.classList.replace('border-black/5', 'border-white/5');
+                themeBtn.classList.replace('bg-slate-900', 'bg-white/5');
+                themeBtn.classList.replace('text-white', 'text-yellow-400');
+                themeBtn.classList.add('border-white/10');
+                themeIcon.setAttribute('data-lucide', 'sun');
+            } else {
+                root.classList.replace('bg-[#020617]', 'bg-slate-50');
+                root.classList.replace('text-slate-100', 'text-slate-900');
+                nav.classList.replace('bg-slate-950/80', 'bg-white/80');
+                nav.classList.replace('border-white/5', 'border-black/5');
+                footer.classList.replace('bg-black', 'bg-slate-100');
+                footer.classList.replace('border-white/5', 'border-black/5');
+                themeBtn.classList.replace('bg-white/5', 'bg-slate-900');
+                themeBtn.classList.replace('text-yellow-400', 'text-white');
+                themeBtn.classList.remove('border-white/10');
+                themeIcon.setAttribute('data-lucide', 'moon');
+            }
+
+            // Update specific dynamic elements
+            updateComponentThemes();
+            renderLanyards(); // Re-render SVGs with new theme colors
+            lucide.createIcons();
+        }
+
+        function updateComponentThemes() {
+            // Hero Gradient
+            const h1 = document.querySelector('.hero-gradient');
+            if (h1) {
+                if (isDarkMode) h1.classList.replace('from-blue-700', 'from-cyan-400');
+                else h1.classList.replace('from-cyan-400', 'from-blue-700');
+            }
+            
+            // Buttons and Labels
+            document.querySelectorAll('.primary-btn').forEach(el => {
+                if (isDarkMode) el.classList.replace('bg-blue-700', 'bg-cyan-600');
+                else el.classList.replace('bg-cyan-600', 'bg-blue-700');
+            });
+
+            document.querySelectorAll('.section-label').forEach(el => {
+                if (isDarkMode) el.classList.replace('text-blue-700', 'text-cyan-400');
+                else el.classList.replace('text-cyan-400', 'text-blue-700');
+            });
+        }
+
+        // --- Render Helpers ---
+        function renderSkills() {
+            const grid = document.getElementById('skills-grid');
+            grid.innerHTML = skills.map((cat, idx) => `
+                <div class="fade-in-section group p-1 rounded-3xl h-full bg-gradient-to-br opacity-90 hover:opacity-100 transition-all ${cat.color}">
+                    <div class="p-10 rounded-[22px] h-full transition-colors ${isDarkMode ? 'bg-slate-950' : 'bg-white'}">
+                        <div class="mb-8 p-4 rounded-2xl w-fit ${isDarkMode ? 'bg-slate-900 text-white' : 'bg-slate-50 text-slate-900'}">
+                            <i data-lucide="${cat.icon}" size="24"></i>
+                        </div>
+                        <h3 class="text-2xl font-black mb-6 tracking-tight">${cat.title}</h3>
+                        <div class="flex flex-wrap gap-3">
+                            ${cat.skills.map(s => `
+                                <span class="px-4 py-2 rounded-xl text-[10px] font-bold uppercase tracking-widest border transition-all ${isDarkMode ? 'bg-white/5 border-white/10 text-slate-300 hover:text-cyan-400 hover:border-cyan-400' : 'bg-black/5 border-black/5 text-slate-600 hover:text-blue-700 hover:border-blue-700'}">
+                                    ${s}
+                                </span>
+                            `).join('')}
+                        </div>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        function renderMetrics() {
+            const grid = document.getElementById('metrics-grid');
+            grid.innerHTML = metrics.map(m => `
+                <div class="p-6 rounded-2xl border ${isDarkMode ? 'bg-white/5 border-white/5' : 'bg-white border-black/5 shadow-sm'}">
+                    <div class="mb-3 ${isDarkMode ? 'text-cyan-400' : 'text-blue-600'}">
+                        <i data-lucide="${m.icon}" size="18"></i>
+                    </div>
+                    <div class="text-2xl font-black tracking-tight">${m.value}</div>
+                    <div class="text-[9px] font-bold uppercase tracking-widest opacity-50">${m.label}</div>
+                </div>
+            `).join('');
+        }
+
+        function renderExperiences() {
+            const list = document.getElementById('experience-list');
+            list.innerHTML = experiences.map(exp => `
+                <div class="p-8 rounded-3xl border transition-all hover:scale-[1.02] ${isDarkMode ? 'bg-white/5 border-white/5 hover:bg-white/10' : 'bg-white border-black/5 shadow-sm hover:shadow-md'}">
+                    <div class="flex justify-between items-start mb-4">
+                        <div>
+                            <h3 class="text-xl font-black tracking-tight">${exp.company}</h3>
+                            <p class="text-xs font-bold uppercase tracking-widest ${isDarkMode ? 'text-cyan-400' : 'text-blue-700'}">${exp.role}</p>
+                        </div>
+                        <span class="text-[10px] font-black opacity-40">${exp.period}</span>
+                    </div>
+                    <p class="text-sm mb-6 leading-relaxed ${isDarkMode ? 'text-slate-400' : 'text-slate-600'}">${exp.description}</p>
+                    <div class="flex flex-wrap gap-2">
+                        ${exp.tags.map(tag => `<span class="px-3 py-1 rounded-full text-[8px] font-black uppercase tracking-tighter border ${isDarkMode ? 'border-white/10 text-white/50' : 'border-black/5 text-black/50'}">${tag}</span>`).join('')}
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        // --- Lanyard SVG Generator ---
+        function renderLanyards() {
+            const containers = ['lanyard-container', 'lanyard-container-keahlian', 'lanyard-container-pengalaman', 'lanyard-container-hubungi'];
+            const lanyardHTML = generateLanyardSVG();
+            containers.forEach(id => {
+                const el = document.getElementById(id);
+                if (el) el.innerHTML = lanyardHTML;
+            });
+        }
+
+        function generateLanyardSVG() {
+            const primary = isDarkMode ? "#0e7490" : "#1e40af";
+            const accent = isDarkMode ? "#22d3ee" : "#60a5fa";
+            const cardBg = isDarkMode ? "#020617" : "#ffffff";
+            const cardBorder = isDarkMode ? "rgba(255,255,255,0.1)" : "rgba(0,0,0,0.05)";
+            const textMain = isDarkMode ? "#ffffff" : "#0f172a";
+            
+            return `
+            <div class="lanyard-wrapper relative flex flex-col items-center w-full max-w-sm perspective-2000">
+                <div class="absolute top-[-160px] left-1/2 -translate-x-1/2 w-80 h-[500px] z-10 pointer-events-none overflow-visible">
+                    <svg viewBox="0 0 100 200" class="w-full h-full overflow-visible lanyard-svg">
+                        <defs>
+                            <linearGradient id="lanyardGradient" x1="0%" y1="0%" x2="100%" y2="0%">
+                                <stop offset="0%" stop-color="${primary}" />
+                                <stop offset="50%" stop-color="${accent}" />
+                                <stop offset="100%" stop-color="${primary}" />
+                            </linearGradient>
+                        </defs>
+                        <path class="lanyard-path-left" d="M30 -20 Q 35 80 50 140" stroke="url(#lanyardGradient)" stroke-width="4" fill="none" stroke-linecap="round" />
+                        <path class="lanyard-path-right" d="M70 -20 Q 65 80 50 140" stroke="url(#lanyardGradient)" stroke-width="4" fill="none" stroke-linecap="round" />
+                        <g class="lanyard-clip" transform="translate(50, 140)">
+                            <rect x="-8" y="0" width="16" height="22" rx="3" fill="${isDarkMode ? '#475569' : '#94a3b8'}" />
+                            <circle cx="0" cy="22" r="5" fill="${isDarkMode ? '#334155' : '#64748b'}" />
+                            <circle cx="0" cy="22" r="2" fill="${isDarkMode ? '#020617' : '#f1f5f9'}" />
+                        </g>
+                    </svg>
+                </div>
+                <div class="id-card mt-36 relative z-20 transition-transform duration-500 ease-out preserve-3d">
+                    <div class="w-64 md:w-72 p-[1px] rounded-[2rem] shadow-2xl bg-gradient-to-br from-white/30 via-white/5 to-transparent backdrop-blur-sm border border-white/10">
+                        <div class="rounded-[1.9rem] p-8 overflow-hidden relative border ${isDarkMode ? 'bg-slate-950/95 border-white/10' : 'bg-white border-slate-200'}">
+                            <div class="relative z-10 flex flex-col items-center">
+                                <div class="relative w-28 h-28 mb-6 rounded-2xl p-[3px] -rotate-1 shadow-xl ${isDarkMode ? 'bg-gradient-to-br from-cyan-400 to-blue-600' : 'bg-gradient-to-br from-blue-600 to-indigo-600'}">
+                                    <div class="w-full h-full rounded-[13px] overflow-hidden bg-slate-900">
+                                        <img src="https://avatars.githubusercontent.com/u/73228642?v=4" class="w-full h-full object-cover grayscale brightness-110">
+                                    </div>
+                                </div>
+                                <h2 class="text-2xl font-black tracking-tight mb-1 ${isDarkMode ? 'text-white' : 'text-slate-900'}">ANTONO</h2>
+                                <p class="text-[9px] font-bold tracking-[0.3em] uppercase mb-6 ${isDarkMode ? 'text-cyan-400' : 'text-blue-600'}">Principal Engineer</p>
+                                <div class="w-full h-[1px] mb-6 ${isDarkMode ? 'bg-white/10' : 'bg-slate-200'}"></div>
+                                <div class="grid grid-cols-2 gap-6 w-full text-[8px] font-black uppercase tracking-widest">
+                                    <div class="space-y-1">
+                                        <p class="opacity-40">System UID</p>
+                                        <p>ANT-0922-X</p>
+                                    </div>
+                                    <div class="space-y-1 text-right">
+                                        <p class="opacity-40">Access Level</p>
+                                        <p class="text-emerald-500">Lvl. Omega</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>`;
+        }
+
+        // --- Event Listeners ---
+        window.addEventListener('mousemove', (e) => {
+            mouseX = e.clientX;
+            mouseY = e.clientY;
+
+            // Update Cursor
+            const cursor = document.getElementById('custom-cursor');
+            cursor.style.transform = `translate3d(${mouseX - 24}px, ${mouseY - 24}px, 0)`;
+
+            // Update Lanyard 3D Effect
+            const cards = document.querySelectorAll('.id-card');
+            const rotX = (mouseY - window.innerHeight / 2) / 45;
+            const rotY = (mouseX - window.innerWidth / 2) / 45;
+
+            cards.forEach(card => {
+                card.style.transform = `rotateX(${rotX + 8}deg) rotateY(${rotY}deg) translateZ(50px)`;
+            });
+
+            // Update Lanyard Path
+            const pathsL = document.querySelectorAll('.lanyard-path-left');
+            const pathsR = document.querySelectorAll('.lanyard-path-right');
+            const clips = document.querySelectorAll('.lanyard-clip');
+
+            pathsL.forEach(p => p.setAttribute('d', `M30 -20 Q 35 80 ${50 + (rotY * 0.4)} 140`));
+            pathsR.forEach(p => p.setAttribute('d', `M70 -20 Q 65 80 ${50 + (rotY * 0.4)} 140`));
+            clips.forEach(c => c.setAttribute('transform', `translate(${50 + (rotY * 0.4)}, 140) rotate(${rotY * 2})`));
+        });
+
+        // --- Intersection Observer for Animations ---
+        function setupIntersectionObserver() {
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('is-visible');
+                    }
+                });
+            }, { threshold: 0.1 });
+
+            document.querySelectorAll('.fade-in-section').forEach(section => {
+                observer.observe(section);
+            });
+        }
+
+        // --- Form Handling ---
+        const contactForm = document.getElementById('contact-form');
+        if (contactForm) {
+            contactForm.addEventListener('submit', (e) => {
+                e.preventDefault();
+                const container = document.getElementById('contact-form-container');
+                const btn = e.target.querySelector('button');
+                btn.innerText = 'MEMPROSES...';
+                
+                setTimeout(() => {
+                    container.innerHTML = `
+                        <div class="min-h-[300px] flex flex-col items-center justify-center text-center p-10 rounded-[2.5rem] border animate-in fade-in zoom-in duration-500 ${isDarkMode ? 'bg-slate-950 border-cyan-500/30' : 'bg-white border-blue-200'}">
+                            <div class="w-16 h-16 rounded-full flex items-center justify-center mb-6 ${isDarkMode ? 'bg-cyan-500/20 text-cyan-400' : 'bg-blue-100 text-blue-700'}">
+                                <i data-lucide="shield-check" size="32"></i>
+                            </div>
+                            <h3 class="text-xl font-black mb-3 uppercase tracking-tight">Pesan Terenkripsi</h3>
+                            <p class="text-xs font-medium ${isDarkMode ? 'text-slate-400' : 'text-slate-600'}">Pesan Anda telah berhasil dikirim ke server pusat.</p>
+                            <button onclick="location.reload()" class="mt-8 text-[9px] font-black uppercase tracking-widest flex items-center gap-2 hover:gap-3 transition-all underline decoration-2 underline-offset-8 decoration-cyan-500">Kirim Pesan Lain</button>
+                        </div>
+                    `;
+                    lucide.createIcons();
+                }, 1500);
+            });
+        }
+    </script>
+</body>
+</html>
