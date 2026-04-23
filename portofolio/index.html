@@ -1,438 +1,460 @@
-<!DOCTYPE html>
-<html lang="id">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Portofolio Antono</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <script src="https://unpkg.com/lucide@latest"></script>
-    <style>
-        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700;900&family=JetBrains+Mono:wght@400;700&display=swap');
-        
-        body {
-            font-family: 'Inter', sans-serif;
-            scroll-behavior: smooth;
-            overflow-x: hidden;
-        }
+import React, { useState, useEffect, useRef, useMemo } from 'react';
+import { 
+  Terminal,
+  Cpu, 
+  Sun,
+  Moon,
+  Server,
+  Cloud,
+  ShieldCheck,
+  ArrowRight,
+  Download,
+  Building2,
+  Award,
+  Mail,
+  MapPin,
+  Phone,
+  Github,
+  Linkedin,
+  Twitter,
+  Send,
+  MessageSquare,
+  Zap,
+  Globe,
+  Database,
+  Layers
+} from 'lucide-react';
 
-        .perspective-2000 { perspective: 2000px; }
-        
-        .fade-in-section {
-            opacity: 0;
-            transform: translateY(2rem);
-            transition: all 0.8s cubic-bezier(0.16, 1, 0.3, 1);
-        }
+// --- Utilitas Animasi Reveal ---
+const FadeInSection = ({ children, delay = 0 }) => {
+  const [isVisible, setVisible] = useState(false);
+  const domRef = useRef();
 
-        .fade-in-section.is-visible {
-            opacity: 1;
-            transform: translateY(0);
+  useEffect(() => {
+    const observer = new IntersectionObserver(entries => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          setTimeout(() => setVisible(true), delay);
         }
+      });
+    });
+    if (domRef.current) observer.observe(domRef.current);
+    return () => observer.disconnect();
+  }, [delay]);
 
-        .tab-content {
-            display: none;
-            animation: fadeInTab 0.5s cubic-bezier(0.16, 1, 0.3, 1) forwards;
-        }
-        
-        .tab-content.active { display: block; }
+  return (
+    <div
+      ref={domRef}
+      className={`transition-all duration-1000 transform ${
+        isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-12'
+      }`}
+    >
+      {children}
+    </div>
+  );
+};
 
-        @keyframes fadeInTab {
-            from { opacity: 0; transform: translateY(10px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
+// --- Komponen Lanyard Profesional (Floating Global) ---
+const LanyardHero = ({ isDarkMode, mousePos, enterLink, leaveLink, scale = 1 }) => {
+  const rotation = useMemo(() => {
+    const x = (mousePos.y - window.innerHeight / 2) / 50;
+    const y = (mousePos.x - window.innerWidth / 2) / 50;
+    return { x, y };
+  }, [mousePos]);
 
-        /* --- ANIMASI JATUH (DROP EFFECT) --- */
-        @keyframes cardFall {
-            0% { transform: translateY(-1000px) rotateX(-20deg); opacity: 0; }
-            60% { transform: translateY(20px) rotateX(10deg); opacity: 1; }
-            80% { transform: translateY(-10px) rotateX(-5deg); }
-            100% { transform: translateY(0) rotateX(0deg); }
-        }
+  return (
+    <div className="relative flex flex-col items-center w-full max-w-sm perspective-2000" style={{ transform: `scale(${scale})` }}>
+      
+      {/* Tali Lanyard Realistik */}
+      <div className="absolute top-[-250px] left-1/2 -translate-x-1/2 w-[400px] h-[600px] z-10 pointer-events-none overflow-visible">
+        <svg viewBox="0 0 100 200" className="w-full h-full overflow-visible">
+          <defs>
+            <linearGradient id="lanyardGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+              <stop offset="0%" stopColor={isDarkMode ? "#1e293b" : "#cbd5e1"} />
+              <stop offset="50%" stopColor={isDarkMode ? "#475569" : "#64748b"} />
+              <stop offset="100%" stopColor={isDarkMode ? "#1e293b" : "#cbd5e1"} />
+            </linearGradient>
+            <filter id="shadow">
+              <feDropShadow dx="0" dy="2" stdDeviation="3" floodOpacity="0.3"/>
+            </filter>
+          </defs>
+          
+          <path 
+            d={`M25 -100 C 25 50, 45 140, ${50 + (rotation.y * 0.5)} 165`} 
+            stroke="url(#lanyardGrad)" 
+            strokeWidth="4" 
+            fill="none" 
+            strokeLinecap="round" 
+            filter="url(#shadow)"
+            className="transition-all duration-700 ease-out"
+          />
+          <path 
+            d={`M75 -100 C 75 50, 55 140, ${50 + (rotation.y * 0.5)} 165`} 
+            stroke="url(#lanyardGrad)" 
+            strokeWidth="4" 
+            fill="none" 
+            strokeLinecap="round" 
+            filter="url(#shadow)"
+            className="transition-all duration-700 ease-out"
+          />
 
-        /* --- ANIMASI AYUNAN RINGAN (IDLE) --- */
-        @keyframes idleSway {
-            0% { transform: rotate(-0.5deg); }
-            50% { transform: rotate(0.5deg); }
-            100% { transform: rotate(-0.5deg); }
-        }
+          <g transform={`translate(${50 + (rotation.y * 0.5)}, 165) rotate(${rotation.y * 1.2})`}>
+            <path d="M-4 0 L4 0 L2 12 L-2 12 Z" fill={isDarkMode ? "#94a3b8" : "#475569"} />
+            <circle cx="0" cy="14" r="5" fill={isDarkMode ? "#cbd5e1" : "#1e293b"} />
+            <circle cx="0" cy="14" r="2" fill={isDarkMode ? "#1e293b" : "#ffffff"} />
+          </g>
+        </svg>
+      </div>
 
-        /* --- ANIMASI TERTIUP ANGIN (WIND GUST) --- */
-        @keyframes windGust {
-            0% { transform: rotate(0deg); }
-            15% { transform: rotate(15deg) translateX(20px) translateZ(30px); }
-            30% { transform: rotate(-10deg) translateX(-15px); }
-            45% { transform: rotate(6deg) translateX(8px); }
-            60% { transform: rotate(-3deg) translateX(-3px); }
-            100% { transform: rotate(0deg); }
-        }
+      <div 
+        className="mt-48 relative z-20 transition-transform duration-500 ease-out"
+        style={{ 
+          transform: `rotateX(${rotation.x + 5}deg) rotateY(${rotation.y}deg) translateZ(50px)`, 
+          transformStyle: 'preserve-3d' 
+        }}
+      >
+        <div 
+          className={`absolute -bottom-12 left-1/2 -translate-x-1/2 w-48 h-8 blur-[45px] rounded-full transition-opacity duration-700 ${isDarkMode ? 'bg-cyan-500/20' : 'bg-slate-900/10'}`}
+          style={{ transform: `translateZ(-60px) translateX(${-rotation.y * 3}px)` }}
+        />
 
-        @keyframes cardTilt {
-            0% { transform: rotateX(5deg) rotateY(-3deg); }
-            50% { transform: rotateX(8deg) rotateY(3deg); }
-            100% { transform: rotateX(5deg) rotateY(-3deg); }
-        }
-        
-        .lanyard-group {
-            transform-origin: top center;
-            /* Efek jatuh saat pertama kali muncul */
-            animation: cardFall 1.2s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
-        }
+        <div 
+          className={`w-64 md:w-72 rounded-[2.5rem] overflow-hidden border backdrop-blur-xl transition-all duration-300 shadow-[0_50px_100px_-20px_rgba(0,0,0,0.5)] ${isDarkMode ? 'bg-slate-900/90 border-white/10' : 'bg-white/95 border-slate-200'}`}
+          onMouseEnter={enterLink} 
+          onMouseLeave={leaveLink}
+        >
+          <div className="pt-4 flex justify-center">
+            <div className={`w-14 h-4 rounded-full flex items-center justify-center ${isDarkMode ? 'bg-black/40 shadow-inner' : 'bg-slate-100 shadow-inner'}`}>
+              <div className={`w-8 h-1.5 rounded-full ${isDarkMode ? 'bg-slate-800' : 'bg-slate-300'}`} />
+            </div>
+          </div>
 
-        .lanyard-group.is-idle {
-            animation: idleSway 4s ease-in-out infinite;
-        }
-
-        .lanyard-group.is-windy {
-            animation: windGust 4s cubic-bezier(0.45, 0, 0.55, 1) forwards !important;
-        }
-
-        .id-card {
-            transform-style: preserve-3d;
-            background: rgba(255, 255, 255, 0.9);
-            backdrop-filter: blur(20px);
-            border: 1px solid rgba(255, 255, 255, 0.4);
-            animation: cardTilt 7s ease-in-out infinite;
-        }
-
-        .dark .id-card {
-            background: rgba(15, 23, 42, 0.85);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-        }
-
-        .hologram-shine {
-            position: absolute;
-            inset: 0;
-            pointer-events: none;
-            background: linear-gradient(135deg, transparent 0%, rgba(59, 130, 246, 0.1) 50%, transparent 100%);
-            background-size: 200% 200%;
-            animation: shineMove 8s linear infinite;
-        }
-
-        @keyframes shineMove {
-            0% { background-position: 200% 0%; }
-            100% { background-position: -200% 0%; }
-        }
-
-        .nav-btn.active {
-            color: #2563eb;
-            font-weight: 900;
-        }
-        
-        .nav-btn.active::after {
-            content: '';
-            position: absolute;
-            bottom: -4px;
-            left: 0;
-            width: 100%;
-            height: 3px;
-            background: #2563eb;
-            border-radius: 2px;
-        }
-
-        .skill-progress {
-            height: 6px;
-            background: rgba(0,0,0,0.05);
-            border-radius: 10px;
-            overflow: hidden;
-        }
-
-        .skill-progress-fill {
-            height: 100%;
-            width: 0;
-            transition: width 1.5s cubic-bezier(0.19, 1, 0.22, 1);
-        }
-
-        .dark .skill-progress { background: rgba(255,255,255,0.1); }
-
-        .glass-card {
-            background: white;
-            border: 1px solid rgba(0,0,0,0.05);
-            transition: all 0.3s ease;
-        }
-        .dark .glass-card {
-            background: rgba(30, 41, 59, 0.5);
-            border: 1px solid rgba(255,255,255,0.05);
-        }
-        .glass-card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 20px 40px -15px rgba(0,0,0,0.1);
-            border-color: #3b82f6;
-        }
-    </style>
-</head>
-<body class="min-h-screen bg-slate-50 text-slate-900 transition-colors duration-500" id="body-root">
-    
-    <!-- Navigasi -->
-    <nav class="fixed top-0 w-full z-50 px-6 py-4 backdrop-blur-xl border-b bg-white/70 border-black/5 dark:bg-slate-950/80 dark:border-white/5">
-        <div class="max-w-7xl mx-auto flex justify-between items-center">
-            <div class="flex items-center gap-3 cursor-pointer group" onclick="setActiveTab('beranda')">
-                <div class="w-10 h-10 rounded-xl flex items-center justify-center bg-blue-600 text-white shadow-lg">
-                    <i data-lucide="terminal" size="20"></i>
+          <div className="p-8 pt-6">
+            <div className="relative flex flex-col items-center">
+              <div className="relative mb-6 group">
+                <div className={`w-32 h-32 rounded-[2rem] p-[2px] shadow-2xl transition-transform duration-500 group-hover:scale-105 ${isDarkMode ? 'bg-gradient-to-tr from-slate-700 via-cyan-500 to-slate-700' : 'bg-gradient-to-tr from-slate-200 via-blue-600 to-slate-200'}`}>
+                  <div className={`w-full h-full rounded-[1.9rem] overflow-hidden ${isDarkMode ? 'bg-slate-900' : 'bg-white'}`}>
+                    <img 
+                      src="https://avatars.githubusercontent.com/u/73228642?v=4" 
+                      alt="Profil Antono" 
+                      className="w-full h-full object-cover grayscale brightness-105 contrast-110"
+                    />
+                  </div>
                 </div>
-                <div class="flex flex-col leading-none">
-                    <span class="font-black text-lg tracking-tighter uppercase italic dark:text-white">ANTONO</span>
-                    <span class="text-[8px] font-bold text-blue-600 uppercase tracking-widest">Principal Engineer</span>
+                <div className="absolute -bottom-2 -right-2 px-3 py-1 bg-emerald-500 text-white text-[8px] font-black uppercase tracking-widest rounded-full shadow-lg border-2 border-white dark:border-slate-900">
+                  Online
                 </div>
+              </div>
+
+              <div className="text-center space-y-1">
+                <h2 className={`text-2xl font-black tracking-tight ${isDarkMode ? 'text-white' : 'text-slate-900'}`}>ANTONO</h2>
+                <p className={`text-[10px] font-black uppercase tracking-[0.2em] ${isDarkMode ? 'text-cyan-400' : 'text-blue-600'}`}>Principal Engineer</p>
+              </div>
             </div>
 
-            <div class="flex items-center gap-6">
-                <div class="hidden md:flex gap-8 text-[10px] font-black uppercase tracking-widest dark:text-slate-400">
-                    <button onclick="setActiveTab('beranda')" class="nav-btn py-1 relative transition-all active">Beranda</button>
-                    <button onclick="setActiveTab('tentang')" class="nav-btn py-1 relative transition-all">Tentang</button>
-                    <button onclick="setActiveTab('keahlian')" class="nav-btn py-1 relative transition-all">Kemahiran</button>
-                    <button onclick="setActiveTab('pengalaman')" class="nav-btn py-1 relative transition-all">Pengalaman</button>
-                    <button onclick="setActiveTab('hubungi')" class="nav-btn py-1 relative transition-all">Hubungi</button>
-                </div>
-                <button onclick="toggleTheme()" class="w-10 h-10 rounded-full flex items-center justify-center border bg-slate-900 text-white transition-transform hover:scale-110 active:scale-95">
-                    <i data-lucide="moon" size="18" id="theme-icon"></i>
+            <div className="my-8 flex items-center gap-2">
+              <div className={`h-[1px] flex-1 ${isDarkMode ? 'bg-white/5' : 'bg-slate-100'}`} />
+              <Cpu size={12} className="opacity-20" />
+              <div className={`h-[1px] flex-1 ${isDarkMode ? 'bg-white/5' : 'bg-slate-100'}`} />
+            </div>
+
+            <div className="grid grid-cols-2 gap-y-4 text-[9px] font-bold uppercase tracking-widest leading-none">
+              <div>
+                <p className="opacity-40 mb-1.5">Employee ID</p>
+                <p className={isDarkMode ? 'text-slate-200' : 'text-slate-700'}>#ANT-0922-X</p>
+              </div>
+              <div className="text-right">
+                <p className="opacity-40 mb-1.5">Security Lvl</p>
+                <p className={isDarkMode ? 'text-emerald-400' : 'text-emerald-600'}>Ω Omega-9</p>
+              </div>
+              <div>
+                <p className="opacity-40 mb-1.5">Dept</p>
+                <p className={isDarkMode ? 'text-slate-200' : 'text-slate-700'}>Core Arch</p>
+              </div>
+              <div className="text-right">
+                <p className="opacity-40 mb-1.5">Region</p>
+                <p className={isDarkMode ? 'text-slate-200' : 'text-slate-700'}>SEA - ID</p>
+              </div>
+            </div>
+
+            <div className="mt-8 pt-6 border-t border-dashed border-slate-200 dark:border-white/5 flex flex-col items-center gap-3">
+              <div className="flex gap-0.5 h-6 opacity-30 w-full justify-center">
+                {[1,3,1,2,4,1,1,2,5,1,2].map((w, i) => (
+                  <div key={i} className={`h-full bg-current ${isDarkMode ? 'text-white' : 'text-black'}`} style={{ width: `${w}px` }} />
+                ))}
+              </div>
+              <p className="text-[7px] font-medium tracking-[0.4em] opacity-40 uppercase">Authorized Access Only</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+};
+
+export default function App() {
+  const [isDarkMode, setIsDarkMode] = useState(false);
+  const [activeTab, setActiveTab] = useState('beranda');
+  const [mousePos, setMousePos] = useState({ x: 0, y: 0 });
+  const [cursorVariant, setCursorVariant] = useState("default");
+  
+  // State untuk form kontak
+  const [formData, setFormData] = useState({ name: '', email: '', subject: '', message: '' });
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [isSuccess, setIsSuccess] = useState(false);
+
+  useEffect(() => {
+    const handleMouseMove = (e) => setMousePos({ x: e.clientX, y: e.clientY });
+    window.addEventListener("mousemove", handleMouseMove);
+    return () => window.removeEventListener("mousemove", handleMouseMove);
+  }, []);
+
+  const toggleTheme = () => setIsDarkMode(!isDarkMode);
+  const enterLink = () => setCursorVariant("pointer");
+  const leaveLink = () => setCursorVariant("default");
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    setIsSubmitting(true);
+    setTimeout(() => {
+      setIsSubmitting(false);
+      setIsSuccess(true);
+      setFormData({ name: '', email: '', subject: '', message: '' });
+      setTimeout(() => setIsSuccess(false), 5000);
+    }, 1500);
+  };
+
+  const skillCategories = [
+    { 
+      title: "Arsitektur Sistem", 
+      icon: <Server size={20} />, 
+      skills: ["Microservices", "Event-Driven", "Scalable Systems", "Serverless", "Domain-Driven Design", "CQRS"], 
+      color: "from-blue-500 to-indigo-600" 
+    },
+    { 
+      title: "Backend & Cloud", 
+      icon: <Cloud size={20} />, 
+      skills: ["Node.js", "PHP 8.x", "Python", "GoLang", "AWS/GCP", "Kubernetes", "Redis", "Kafka"], 
+      color: "from-cyan-500 to-blue-500" 
+    },
+    { 
+      title: "Keamanan & Data", 
+      icon: <ShieldCheck size={20} />, 
+      skills: ["MySQL Expert", "OAuth 2.1", "Data Encryption", "PostgreSQL", "GraphQL", "NoSQL / MongoDB"], 
+      color: "from-emerald-500 to-teal-600" 
+    },
+    { 
+      title: "Infrastructure & DevOps", 
+      icon: <Layers size={20} />, 
+      skills: ["Terraform", "CI/CD Pipelines", "Docker", "Prometheus", "Service Mesh", "Load Balancing"], 
+      color: "from-purple-500 to-pink-600" 
+    }
+  ];
+
+  const experiences = [
+    { year: "2022 - Sekarang", role: "Principal Software Architect", company: "Tech Giant Indonesia", desc: "Memimpin desain arsitektur untuk sistem core payment yang menangani 5 juta+ transaksi harian.", tags: ["System Design", "Fintech"] },
+    { year: "2019 - 2022", role: "Senior Engineering Manager", company: "Cloud Solutions Corp", desc: "Mengelola migrasi infrastruktur monolith ke microservices menggunakan PHP 8.1 dan Laravel.", tags: ["Leadership", "Microservices"] },
+    { year: "2017 - 2019", role: "Lead Full Stack Developer", company: "E-Commerce Nasional", desc: "Mengoptimalkan query MySQL pada database berukuran Terabyte.", tags: ["Database", "Scalability"] }
+  ];
+
+  return (
+    <div className={`min-h-screen font-sans transition-colors duration-700 selection:bg-cyan-500/30 overflow-x-hidden ${isDarkMode ? 'bg-[#020617] text-slate-100' : 'bg-slate-50 text-slate-900'}`}>
+      
+      {/* Custom Cursor */}
+      <div 
+        className={`fixed top-0 left-0 w-8 h-8 rounded-full border pointer-events-none z-[9999] transition-transform duration-200 ease-out mix-blend-difference hidden md:block ${isDarkMode ? 'border-cyan-500/50' : 'border-blue-600/50'}`} 
+        style={{ transform: `translate3d(${mousePos.x - 16}px, ${mousePos.y - 16}px, 0) scale(${cursorVariant === 'pointer' ? 2 : 1})` }} 
+      />
+
+      {/* Navbar Modern */}
+      <nav className={`fixed top-0 w-full z-50 px-6 md:px-10 py-6 transition-all duration-500 ${isDarkMode ? 'bg-slate-950/80' : 'bg-white/80'} backdrop-blur-xl border-b ${isDarkMode ? 'border-white/5' : 'border-black/5'}`}>
+        <div className="max-w-7xl mx-auto flex justify-between items-center">
+          <div className="flex items-center gap-3 cursor-pointer" onClick={() => setActiveTab('beranda')}>
+            <div className={`w-9 h-9 rounded-xl flex items-center justify-center shadow-lg transition-colors ${isDarkMode ? 'bg-white text-black' : 'bg-slate-900 text-white'}`}>
+              <Terminal size={18} />
+            </div>
+            <span className="font-black text-xl tracking-tighter uppercase">ANTONO</span>
+          </div>
+          
+          <div className="flex items-center gap-4 md:gap-12">
+            <div className="hidden md:flex gap-10 text-[10px] font-black uppercase tracking-[0.3em]">
+              {['beranda', 'keahlian', 'pengalaman', 'hubungi'].map(tab => (
+                <button 
+                  key={tab} 
+                  onClick={() => setActiveTab(tab)}
+                  onMouseEnter={enterLink}
+                  onMouseLeave={leaveLink}
+                  className={`transition-all relative py-1 ${activeTab === tab ? (isDarkMode ? 'text-cyan-400' : 'text-blue-700') : 'text-slate-400 hover:text-slate-600'}`}
+                >
+                  {tab}
+                  {activeTab === tab && <span className="absolute bottom-0 left-0 w-full h-[2px] bg-current rounded-full" />}
                 </button>
+              ))}
             </div>
+            <button 
+              onClick={toggleTheme} 
+              className={`w-10 h-10 rounded-full flex items-center justify-center border transition-all ${isDarkMode ? 'bg-white/5 border-white/10 text-yellow-400 hover:bg-white/10' : 'bg-slate-100 border-black/5 text-slate-600 hover:bg-slate-200'}`}
+            >
+              {isDarkMode ? <Sun size={18} /> : <Moon size={18} />}
+            </button>
+          </div>
         </div>
-    </nav>
+      </nav>
 
-    <main class="relative pt-32 pb-20 px-6 max-w-7xl mx-auto flex flex-col lg:flex-row gap-16 min-h-screen">
-        
-        <!-- Konten Kiri -->
-        <div class="flex-1 order-2 lg:order-1">
-            <section id="tab-beranda" class="tab-content active">
-                <div class="fade-in-section pt-12">
-                    <div class="inline-flex items-center gap-2 px-3 py-1.5 rounded-full mb-6 text-[9px] font-black uppercase tracking-widest bg-blue-100 dark:bg-blue-900/30 text-blue-600">
-                        <span class="w-2 h-2 bg-blue-600 rounded-full animate-pulse"></span>
-                        <span>Sistem Aktif & Terverifikasi</span>
-                    </div>
-                    <h1 class="text-6xl md:text-8xl font-black mb-8 tracking-tighter leading-[0.85] dark:text-white">
-                        DIGITAL <br> <span class="text-blue-600 italic underline decoration-blue-200/50">ARCHITECT.</span>
-                    </h1>
-                    <p class="max-w-lg text-lg text-slate-500 dark:text-slate-400 mb-10 leading-relaxed font-medium">Membangun ekosistem teknologi masa depan dengan fokus pada skalabilitas tinggi, keamanan berlapis, dan performa tanpa kompromi.</p>
-                    <div class="flex flex-wrap gap-4">
-                        <button onclick="setActiveTab('pengalaman')" class="px-8 py-4 rounded-2xl font-black uppercase tracking-widest text-[10px] bg-blue-600 text-white shadow-xl hover:bg-blue-700 hover:-translate-y-1 transition-all">Mulai Penjelajahan</button>
-                        <button class="px-8 py-4 rounded-2xl font-black uppercase tracking-widest text-[10px] border border-black/10 dark:border-white/10 dark:text-white hover:bg-slate-100 dark:hover:bg-slate-800 transition-all">Unduh Resume (PDF)</button>
-                    </div>
+      {/* Grid Layout Utama - Lanyard Tetap Muncul */}
+      <div className="max-w-7xl mx-auto px-6 md:px-10 pt-44 pb-32">
+        <div className="flex flex-col lg:flex-row items-center lg:items-start justify-between gap-12 lg:gap-20">
+          
+          {/* Sisi Kiri: Konten Dinamis */}
+          <div className="flex-1 w-full order-2 lg:order-1">
+            {activeTab === 'beranda' && (
+              <FadeInSection>
+                <div className="text-center lg:text-left">
+                  <div className={`inline-flex items-center gap-2 px-4 py-1.5 rounded-full mb-8 text-[10px] font-black uppercase tracking-widest border transition-colors ${isDarkMode ? 'bg-slate-900/50 border-cyan-500/20 text-cyan-400' : 'bg-blue-50 border-blue-100 text-blue-700'}`}>
+                     <Zap size={12} className="animate-pulse" /> Engineering Leadership
+                  </div>
+                  <h1 className="text-5xl md:text-8xl font-black mb-8 tracking-tighter leading-[0.85] uppercase">
+                    Sistem <br /> <span className={`text-transparent bg-clip-text bg-gradient-to-r transition-all ${isDarkMode ? 'from-cyan-400 to-blue-500' : 'from-blue-700 to-indigo-800'}`}>Tangguh.</span> <br />
+                    Tanpa Kompromi.
+                  </h1>
+                  <p className={`max-w-xl lg:mx-0 mx-auto text-lg md:text-xl font-medium leading-relaxed mb-12 transition-colors ${isDarkMode ? 'text-slate-400' : 'text-slate-600'}`}>
+                    Principal Engineer dengan fokus pada skalabilitas masif dan keamanan enterprise.
+                  </p>
+                  <div className="flex flex-wrap justify-center lg:justify-start gap-5">
+                    <button onClick={() => setActiveTab('hubungi')} className={`px-10 py-5 rounded-2xl font-black uppercase tracking-widest text-[10px] transition-all shadow-2xl flex items-center gap-3 hover:-translate-y-1 ${isDarkMode ? 'bg-cyan-500 text-slate-900' : 'bg-blue-700 text-white'}`}>
+                      Mulai Kolaborasi <ArrowRight size={16} />
+                    </button>
+                    <button className={`px-10 py-5 rounded-2xl font-black uppercase tracking-widest text-[10px] transition-all border flex items-center gap-3 hover:-translate-y-1 ${isDarkMode ? 'bg-white/5 border-white/10 text-white' : 'bg-white border-slate-200 text-slate-900'}`}>
+                      CV Terbaru <Download size={16} />
+                    </button>
+                  </div>
                 </div>
-            </section>
+              </FadeInSection>
+            )}
 
-            <!-- Tab lainnya tetap sama strukturnya -->
-            <section id="tab-tentang" class="tab-content">
-                <div class="fade-in-section pt-12">
-                    <h2 class="text-5xl font-black italic mb-2 dark:text-white">PROFIL <span class="text-blue-600">INTI.</span></h2>
-                    <p class="text-[10px] font-bold tracking-[0.3em] uppercase text-slate-400 mb-12">Filosofi Kerja & Visi</p>
-                    <div class="grid grid-cols-1 md:grid-cols-2 gap-8 mb-12">
-                        <div class="glass-card p-8 rounded-[2.5rem]">
-                            <h4 class="font-black text-blue-600 text-xs uppercase mb-4 tracking-widest">Visi Strategis</h4>
-                            <p class="text-slate-600 dark:text-slate-400 leading-relaxed font-medium">
-                                "Teknologi bukan hanya tentang kode, tetapi tentang menyelesaikan masalah manusia pada skala yang sebelumnya tidak mungkin dicapai."
-                            </p>
-                        </div>
-                        <div class="grid grid-cols-2 gap-4">
-                            <div class="p-6 rounded-3xl bg-slate-100 dark:bg-slate-800/50 border border-black/5 dark:border-white/5">
-                                <span class="block font-black text-3xl dark:text-white">10+</span>
-                                <span class="text-[9px] font-bold uppercase text-slate-400">Tahun Pengalaman</span>
-                            </div>
-                            <div class="p-6 rounded-3xl bg-slate-100 dark:bg-slate-800/50 border border-black/5 dark:border-white/5">
-                                <span class="block font-black text-3xl dark:text-white">50+</span>
-                                <span class="text-[9px] font-bold uppercase text-slate-400">Proyek Skala Besar</span>
-                            </div>
-                        </div>
-                    </div>
+            {activeTab === 'keahlian' && (
+              <FadeInSection>
+                <div className="space-y-12">
+                   <h2 className="text-4xl md:text-6xl font-black tracking-tighter uppercase italic">Technical <span className="text-cyan-500">Arsenal.</span></h2>
+                   <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                     {skillCategories.map((cat, i) => (
+                       <div key={i} className={`p-8 rounded-[2rem] border transition-all ${isDarkMode ? 'bg-slate-900/50 border-white/5' : 'bg-white border-slate-100 shadow-sm'}`}>
+                         <div className={`w-12 h-12 rounded-xl flex items-center justify-center mb-6 bg-gradient-to-br ${cat.color} text-white`}>{cat.icon}</div>
+                         <h4 className="font-black uppercase text-sm mb-4 tracking-widest">{cat.title}</h4>
+                         <div className="flex flex-wrap gap-2">
+                           {cat.skills.map((s, j) => (
+                             <span key={j} className="text-[10px] font-bold py-1 px-3 rounded-lg bg-slate-500/10 opacity-70 uppercase tracking-tighter transition-colors hover:bg-cyan-500/20 hover:opacity-100">{s}</span>
+                           ))}
+                         </div>
+                       </div>
+                     ))}
+                   </div>
                 </div>
-            </section>
+              </FadeInSection>
+            )}
 
-            <section id="tab-keahlian" class="tab-content">
-                <div class="fade-in-section pt-12">
-                    <h2 class="text-5xl font-black italic mb-2 dark:text-white">ARSENAL <span class="text-blue-600">TEKNIS.</span></h2>
-                    <p class="text-[10px] font-bold tracking-[0.3em] uppercase text-slate-400 mb-12">Spektrum Teknologi yang Dikuasai</p>
-                    <div class="glass-card p-8 rounded-[2.5rem]">
-                        <div class="flex items-center gap-4 mb-8">
-                            <div class="w-12 h-12 rounded-2xl bg-blue-100 dark:bg-blue-900/30 text-blue-600 flex items-center justify-center">
-                                <i data-lucide="cloud" size="24"></i>
-                            </div>
-                            <div>
-                                <h3 class="font-black text-xl dark:text-white uppercase italic">Infrastruktur & Cloud</h3>
-                                <p class="text-[9px] font-bold text-slate-400 uppercase tracking-widest">Back-end, AWS, GCP, DevOps</p>
-                            </div>
+            {activeTab === 'pengalaman' && (
+              <FadeInSection>
+                <div className="space-y-10">
+                  <h2 className="text-4xl md:text-6xl font-black tracking-tighter uppercase italic">Professional <span className="text-cyan-500">Journey.</span></h2>
+                  <div className="space-y-6">
+                    {experiences.map((exp, i) => (
+                      <div key={i} className={`p-8 rounded-[2rem] border transition-all ${isDarkMode ? 'bg-slate-900/40 border-white/5' : 'bg-white border-slate-100 shadow-sm'}`}>
+                        <div className="flex justify-between items-start mb-4">
+                           <span className="text-[10px] font-black uppercase tracking-widest opacity-50">{exp.year}</span>
+                           <Building2 size={16} className="opacity-20" />
                         </div>
-                        <div class="space-y-6">
-                            <div>
-                                <div class="flex justify-between items-end mb-2">
-                                    <span class="text-[10px] font-black uppercase dark:text-slate-200">Node.js / Go / Rust</span>
-                                    <span class="text-[10px] font-mono text-blue-600 font-bold">95%</span>
-                                </div>
-                                <div class="skill-progress"><div class="skill-progress-fill bg-blue-600" style="width: 95%"></div></div>
-                            </div>
-                            <div>
-                                <div class="flex justify-between items-end mb-2">
-                                    <span class="text-[10px] font-black uppercase dark:text-slate-200">Kubernetes & Docker</span>
-                                    <span class="text-[10px] font-mono text-blue-600 font-bold">90%</span>
-                                </div>
-                                <div class="skill-progress"><div class="skill-progress-fill bg-blue-600" style="width: 90%"></div></div>
-                            </div>
+                        <h3 className="text-xl font-black uppercase tracking-tight mb-2">{exp.role}</h3>
+                        <p className="text-sm opacity-60 mb-4">{exp.desc}</p>
+                        <div className="flex gap-2">
+                          {exp.tags.map((t, j) => <span key={j} className="text-[8px] font-black uppercase px-2 py-1 border border-current opacity-30 rounded-md">{t}</span>)}
                         </div>
-                    </div>
+                      </div>
+                    ))}
+                  </div>
                 </div>
-            </section>
+              </FadeInSection>
+            )}
 
-            <section id="tab-pengalaman" class="tab-content">
-                <div class="fade-in-section pt-12">
-                    <h2 class="text-5xl font-black italic mb-2 dark:text-white">REKAM <span class="text-blue-600">JEJAK.</span></h2>
-                    <p class="text-[10px] font-bold tracking-[0.3em] uppercase text-slate-400 mb-12">Evolusi Karir Profesional</p>
-                    <div class="relative border-l-2 border-slate-200 dark:border-slate-800 ml-4 space-y-12 pb-8">
-                        <div class="relative pl-10 group">
-                            <div class="absolute w-5 h-5 bg-blue-600 rounded-full -left-[11px] top-1 border-4 border-slate-50 dark:border-slate-950 group-hover:scale-125 transition-transform"></div>
-                            <span class="text-[9px] font-black text-blue-600 uppercase tracking-widest mb-1 block">2021 — SEKARANG</span>
-                            <h3 class="text-2xl font-black dark:text-white italic">VP of Engineering</h3>
-                            <p class="text-slate-400 font-bold text-[11px] uppercase tracking-wider mb-4">CyberGlobal Infrastructure</p>
-                            <p class="text-slate-500 dark:text-slate-400 text-sm leading-relaxed mb-4 max-w-xl">
-                                Merancang ulang arsitektur sistem inti yang melayani 50jt+ pengguna bulanan.
-                            </p>
-                        </div>
-                    </div>
-                </div>
-            </section>
-
-            <section id="tab-hubungi" class="tab-content">
-                <div class="fade-in-section pt-12">
-                    <h2 class="text-5xl font-black italic mb-2 dark:text-white">HUBUNGI <span class="text-blue-600">SAYA.</span></h2>
-                    <p class="text-[10px] font-bold tracking-[0.3em] uppercase text-slate-400 mb-12">Bangun Masa Depan Digital Bersama</p>
-                    <div class="glass-card p-8 rounded-[2.5rem]">
-                        <form class="space-y-4" onsubmit="event.preventDefault()">
-                            <div class="grid md:grid-cols-2 gap-4">
-                                <input type="text" class="w-full px-5 py-4 rounded-2xl bg-slate-100 dark:bg-slate-800 outline-none focus:ring-2 focus:ring-blue-600 transition-all dark:text-white text-sm" placeholder="Nama">
-                                <input type="email" class="w-full px-5 py-4 rounded-2xl bg-slate-100 dark:bg-slate-800 outline-none focus:ring-2 focus:ring-blue-600 transition-all dark:text-white text-sm" placeholder="Email">
+            {activeTab === 'hubungi' && (
+              <FadeInSection>
+                 <div className="space-y-12">
+                    <h2 className="text-4xl md:text-6xl font-black tracking-tighter uppercase italic">Mari <span className="text-cyan-500">Berdiskusi.</span></h2>
+                    <div className={`p-8 rounded-[3rem] border ${isDarkMode ? 'bg-slate-900/40 border-white/5' : 'bg-white border-slate-100 shadow-xl'}`}>
+                       {isSuccess ? (
+                         <div className="text-center py-10 space-y-4">
+                            <Send size={40} className="mx-auto text-emerald-500" />
+                            <h4 className="font-black uppercase tracking-widest">Pesan Terkirim</h4>
+                            <button onClick={() => setIsSuccess(false)} className="text-[10px] uppercase font-bold opacity-50 underline">Kirim pesan lagi</button>
+                         </div>
+                       ) : (
+                         <form onSubmit={handleSubmit} className="space-y-6">
+                            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                               <input required placeholder="Nama" value={formData.name} onChange={(e)=>setFormData({...formData, name: e.target.value})} className={`w-full p-4 rounded-xl text-sm font-bold border-none outline-none ${isDarkMode ? 'bg-slate-950' : 'bg-slate-50'}`} />
+                               <input required type="email" placeholder="Email" value={formData.email} onChange={(e)=>setFormData({...formData, email: e.target.value})} className={`w-full p-4 rounded-xl text-sm font-bold border-none outline-none ${isDarkMode ? 'bg-slate-950' : 'bg-slate-50'}`} />
                             </div>
-                            <textarea rows="4" class="w-full px-5 py-4 rounded-2xl bg-slate-100 dark:bg-slate-800 outline-none focus:ring-2 focus:ring-blue-600 transition-all dark:text-white text-sm" placeholder="Pesan"></textarea>
-                            <button class="w-full py-4 rounded-2xl bg-blue-600 text-white font-black uppercase tracking-widest text-[10px] hover:bg-blue-700 transition-all shadow-lg">Kirim Transmisi</button>
-                        </form>
+                            <textarea required rows="4" placeholder="Pesan Anda" value={formData.message} onChange={(e)=>setFormData({...formData, message: e.target.value})} className={`w-full p-4 rounded-xl text-sm font-bold border-none outline-none resize-none ${isDarkMode ? 'bg-slate-950' : 'bg-slate-50'}`} />
+                            <button type="submit" className={`w-full py-4 rounded-xl font-black uppercase tracking-widest text-[10px] ${isDarkMode ? 'bg-cyan-500 text-black' : 'bg-blue-700 text-white'}`}>
+                               {isSubmitting ? 'Mengirim...' : 'Kirim'}
+                            </button>
+                         </form>
+                       )}
                     </div>
-                </div>
-            </section>
+                 </div>
+              </FadeInSection>
+            )}
+          </div>
+
+          {/* Sisi Kanan: Lanyard Global (Tetap ada di setiap halaman) */}
+          <div className="flex-1 w-full flex justify-center lg:justify-end order-1 lg:order-2 sticky top-44 transition-all duration-700">
+             <div className="transform transition-transform hover:scale-105 active:scale-95 cursor-grab active:cursor-grabbing">
+                <LanyardHero 
+                  isDarkMode={isDarkMode} 
+                  mousePos={mousePos} 
+                  enterLink={enterLink} 
+                  leaveLink={leaveLink} 
+                  scale={activeTab === 'beranda' ? 1 : 0.85} 
+                />
+             </div>
+          </div>
+
         </div>
+      </div>
 
-        <!-- Bagian Lanyard (Kanan) -->
-        <div class="w-full lg:w-[350px] order-1 lg:order-2 flex justify-center lg:block relative min-h-[500px]">
-            <div class="lanyard-wrapper w-full max-w-[300px]">
-                <div id="lanyard-group" class="lanyard-group relative flex flex-col items-center w-full">
-                    <!-- Rope SVG -->
-                    <svg viewBox="0 0 100 400" class="w-full h-[350px] overflow-visible z-10 pointer-events-none">
-                        <defs>
-                            <linearGradient id="ropeGrad" x1="0%" y1="0%" x2="0%" y2="100%">
-                                <stop offset="0%" style="stop-color:#1e3a8a;stop-opacity:1" />
-                                <stop offset="100%" style="stop-color:#3b82f6;stop-opacity:1" />
-                            </linearGradient>
-                        </defs>
-                        <path d="M30 -200 C 30 50, 40 300, 50 360 M70 -200 C 70 50, 60 300, 50 360" stroke="url(#ropeGrad)" stroke-width="8" fill="none" />
-                        <g transform="translate(50, 360)">
-                            <rect x="-12" y="-4" width="24" height="18" rx="5" fill="#334155" />
-                            <circle r="5" fill="#94a3b8" />
-                        </g>
-                    </svg>
-
-                    <!-- ID Card UI -->
-                    <div class="id-card -mt-[40px] relative z-20 w-full p-0 rounded-[2.5rem] border shadow-2xl overflow-hidden group">
-                        <div class="hologram-shine"></div>
-                        <div class="p-10">
-                            <div class="flex justify-between items-center mb-10">
-                                <div class="px-3 py-1 bg-blue-600 text-[8px] font-black text-white rounded-lg uppercase tracking-tighter italic">ArsenTech</div>
-                                <div class="text-[8px] font-mono opacity-40 dark:text-white">USR-09X22</div>
-                            </div>
-
-                            <div class="flex flex-col items-center text-center">
-                                <div class="relative mb-6">
-                                    <div class="w-24 h-24 rounded-3xl overflow-hidden bg-slate-900 border-4 border-white/50 shadow-xl p-[2px]">
-                                        <div class="w-full h-full rounded-[1.2rem] overflow-hidden grayscale">
-                                            <img src="https://avatars.githubusercontent.com/u/73228642?v=4" alt="Antono" class="w-full h-full object-cover">
-                                        </div>
-                                    </div>
-                                    <div class="absolute -bottom-1 -right-1 w-5 h-5 bg-green-500 rounded-full border-4 border-white dark:border-slate-950"></div>
-                                </div>
-
-                                <h3 class="text-2xl font-black tracking-tighter uppercase italic dark:text-white leading-none mb-1">ANTONO</h3>
-                                <p class="text-[8px] font-black text-blue-600 tracking-[0.3em] uppercase mb-10">Principal Systems Engineer</p>
-                                
-                                <div class="w-full flex items-center justify-between border-t border-black/5 dark:border-white/5 py-8 opacity-60">
-                                    <i data-lucide="cpu" size="14"></i>
-                                    <i data-lucide="shield" size="14"></i>
-                                    <i data-lucide="zap" size="14"></i>
-                                    <i data-lucide="code-2" size="14"></i>
-                                </div>
-
-                                <div class="w-full p-5 bg-slate-100 dark:bg-white/5 rounded-2xl">
-                                    <div class="flex justify-between items-center mb-2">
-                                        <span class="text-[7px] font-black uppercase text-slate-400 tracking-wider">Security Clearance</span>
-                                        <span class="text-[7px] font-black text-emerald-500 uppercase tracking-wider">Lvl OMEGA</span>
-                                    </div>
-                                    <div class="h-1.5 w-full bg-slate-200 dark:bg-white/10 rounded-full overflow-hidden">
-                                        <div class="h-full w-[88%] bg-emerald-500"></div>
-                                    </div>
-                                </div>
-                                <p class="mt-4 text-[6px] font-bold opacity-30 uppercase tracking-[0.4em]">Proprietary Technology Portfolio</p>
-                            </div>
-                        </div>
-                    </div>
+      <footer className={`py-16 px-6 md:px-10 border-t transition-colors ${isDarkMode ? 'border-white/5' : 'border-black/5'}`}>
+        <div className="max-w-7xl mx-auto flex flex-col md:flex-row justify-between items-center gap-12">
+          <div className="space-y-4 text-center md:text-left">
+             <div className="flex items-center gap-3 justify-center md:justify-start">
+                <div className={`w-8 h-8 rounded-lg flex items-center justify-center ${isDarkMode ? 'bg-white text-black' : 'bg-slate-900 text-white'}`}>
+                  <Terminal size={16} />
                 </div>
+                <span className="font-black text-lg tracking-tighter uppercase">ANTONO</span>
+             </div>
+             <p className="text-[10px] font-black text-slate-400 uppercase tracking-[0.4em]">© 2024 Core Architect - Principal Engineering</p>
+          </div>
+
+          <div className="flex flex-col items-center md:items-end gap-6">
+            <div className="flex gap-4">
+              {[
+                { icon: <Github size={20} />, link: "https://github.com/antono", color: "hover:bg-slate-800" },
+                { icon: <Linkedin size={20} />, link: "https://linkedin.com/in/antono", color: "hover:bg-blue-600" },
+                { icon: <Twitter size={20} />, link: "https://twitter.com/antono", color: "hover:bg-sky-500" },
+                { icon: <MessageSquare size={20} />, link: "#", color: "hover:bg-indigo-500" }
+              ].map((social, i) => (
+                <a 
+                  key={i} 
+                  href={social.link}
+                  onMouseEnter={enterLink}
+                  onMouseLeave={leaveLink}
+                  className={`w-12 h-12 rounded-2xl flex items-center justify-center border transition-all hover:-translate-y-2 hover:text-white ${isDarkMode ? 'border-white/10 bg-white/5 text-slate-400' : 'border-slate-200 bg-white text-slate-600'} ${social.color}`}
+                >
+                  {social.icon}
+                </a>
+              ))}
             </div>
+          </div>
         </div>
-
-    </main>
-
-    <script>
-        let isDarkMode = false;
-        const lanyardElement = document.getElementById('lanyard-group');
-        
-        function triggerWindGust() {
-            lanyardElement.classList.remove('is-idle');
-            lanyardElement.classList.add('is-windy');
-            
-            setTimeout(() => {
-                lanyardElement.classList.remove('is-windy');
-                lanyardElement.classList.add('is-idle');
-            }, 4100); 
-        }
-
-        function setActiveTab(tabId) {
-            document.querySelectorAll('.tab-content').forEach(t => t.classList.remove('active'));
-            const target = document.getElementById(`tab-${tabId}`);
-            if (target) {
-                target.classList.add('active');
-                const section = target.querySelector('.fade-in-section');
-                section.classList.remove('is-visible');
-                setTimeout(() => {
-                    section.classList.add('is-visible');
-                }, 50);
-            }
-
-            document.querySelectorAll('.nav-btn').forEach(btn => {
-                btn.classList.remove('active');
-                if(btn.textContent.toLowerCase() === tabId || (tabId === 'beranda' && btn.textContent === 'Beranda')) {
-                    btn.classList.add('active');
-                }
-            });
-            window.scrollTo({ top: 0, behavior: 'smooth' });
-        }
-
-        function toggleTheme() {
-            isDarkMode = !isDarkMode;
-            document.getElementById('body-root').classList.toggle('dark', isDarkMode);
-            document.getElementById('theme-icon').setAttribute('data-lucide', isDarkMode ? 'sun' : 'moon');
-            lucide.createIcons();
-        }
-
-        window.onload = () => {
-            lucide.createIcons();
-            const observer = new IntersectionObserver((entries) => {
-                entries.forEach(entry => {
-                    if (entry.isIntersecting) {
-                        entry.target.classList.add('is-visible');
-                    }
-                });
-            }, { threshold: 0.1 });
-            document.querySelectorAll('.fade-in-section').forEach(s => observer.observe(s));
-            
-            // Berpindah ke animasi idle setelah animasi jatuh selesai
-            setTimeout(() => {
-                lanyardElement.classList.add('is-idle');
-                // Mulai interval angin hanya setelah jatuh
-                setInterval(triggerWindGust, 40000);
-            }, 1200);
-        };
-    </script>
-</body>
-</html>
+      </footer>
+    </div>
+  );
+}
