@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Antono | Principal Engineer Portfolio</title>
+    <title>Antono |  Portfolio</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://unpkg.com/alpinejs@3.x.x/dist/cdn.min.js"></script>
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;600;800&display=swap" rel="stylesheet">
@@ -34,16 +34,52 @@
                 radial-gradient(at 50% 50%, rgba(255, 255, 255, 1) 0px, transparent 100%);
         }
 
-        /* Physical Lanyard Animation */
-        @keyframes physicalSwing {
-            0%, 100% { transform: rotate(0.6deg); }
-            50% { transform: rotate(-0.6deg); }
+        /* Animasi Jatuh (Drop) */
+        @keyframes lanyardDrop {
+            0% { transform: translateY(-500px) rotate(0deg); opacity: 0; }
+            60% { transform: translateY(20px) rotate(2deg); opacity: 1; }
+            80% { transform: translateY(-10px) rotate(-1deg); }
+            100% { transform: translateY(0) rotate(0deg); }
+        }
+
+        /* Animasi Ayunan Fisik & Angin */
+        @keyframes windBreeze {
+            0%, 100% { transform: rotate(0.4deg) skewX(0.2deg); }
+            25% { transform: rotate(-0.6deg) skewX(-0.1deg); }
+            50% { transform: rotate(0.8deg) skewX(0.3deg); }
+            75% { transform: rotate(-0.3deg) skewX(-0.2deg); }
+        }
+
+        /* Animasi Rotasi 360 Derajat Setiap 30 Detik */
+        @keyframes periodicSpin {
+            0% { transform: rotateY(0deg); }
+            5% { transform: rotateY(360deg); }
+            100% { transform: rotateY(360deg); }
+        }
+
+        /* Kelenturan Tali (Waving effect) */
+        @keyframes stringWave {
+            0%, 100% { stroke-dashoffset: 0; transform: scaleX(1); }
+            50% { stroke-dashoffset: 2; transform: scaleX(1.01); }
+        }
+
+        .lanyard-drop-anim {
+            animation: lanyardDrop 1.2s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
         }
 
         .lanyard-container {
-            transform-origin: 50% -20%; /* Titik putar lebih ke atas */
-            animation: physicalSwing 7s ease-in-out infinite;
-            filter: drop-shadow(0 25px 40px rgba(0,0,0,0.15));
+            transform-origin: 50% -20%;
+        }
+
+        /* Efek Tertiup Angin */
+        .wind-effect {
+            animation: windBreeze 8s ease-in-out infinite;
+            animation-delay: 1.2s;
+        }
+
+        .periodic-spin-effect {
+            animation: periodicSpin 30s cubic-bezier(0.45, 0.05, 0.55, 0.95) infinite;
+            animation-delay: 5s;
         }
 
         .premium-card {
@@ -52,13 +88,15 @@
         }
 
         .premium-card:hover {
-            transform: translateY(-5px);
+            transform: translateY(-8px) scale(1.02);
             box-shadow: 0 30px 60px -15px rgba(0,0,0,0.1);
         }
 
-        .fabric-pattern {
-            stroke-dasharray: 2, 1;
+        /* Tekstur Kain Lanyard */
+        .fabric-texture {
+            stroke-dasharray: 4, 2;
             stroke-opacity: 0.15;
+            animation: stringWave 5s ease-in-out infinite;
         }
 
         .nav-active {
@@ -77,220 +115,325 @@
             box-shadow: 0 0 10px #f43f5e;
         }
 
-        ::-webkit-scrollbar { width: 6px; }
-        ::-webkit-scrollbar-track { background: transparent; }
-        ::-webkit-scrollbar-thumb { 
-            background: rgba(100, 116, 139, 0.15); 
-            border-radius: 10px;
+        /* Corporate Holo Effect */
+        .holo-shimmer {
+            background: linear-gradient(
+                135deg,
+                rgba(255, 255, 255, 0) 0%,
+                rgba(255, 255, 255, 0.05) 45%,
+                rgba(255, 255, 255, 0.2) 50%,
+                rgba(255, 255, 255, 0.05) 55%,
+                rgba(255, 255, 255, 0) 100%
+            );
+            background-size: 200% 200%;
+            animation: holoFlow 15s linear infinite;
         }
 
-        .card-glow-indigo {
-            background: radial-gradient(circle at 50% 0%, rgba(79, 70, 229, 0.15), transparent 70%);
+        @keyframes holoFlow {
+            0% { background-position: -200% -200%; }
+            100% { background-position: 200% 200%; }
         }
-        .card-glow-rose {
-            background: radial-gradient(circle at 50% 100%, rgba(244, 63, 94, 0.1), transparent 70%);
+
+        .perspective-2000 {
+            perspective: 2000px;
         }
     </style>
 </head>
 <body x-data="{ 
     isDarkMode: false, 
     activeTab: 'dashboard',
+    isLoaded: false,
     rotation: { x: 0, y: 0 },
+    init() {
+        setTimeout(() => { this.isLoaded = true }, 100);
+    },
     handleMouseMove(e) {
         const centerX = window.innerWidth / 2;
         const centerY = window.innerHeight / 2;
-        this.rotation.y = (e.clientX - centerX) / 90;
-        this.rotation.x = -(e.clientY - centerY) / 90;
+        this.rotation.y = (e.clientX - centerX) / 100;
+        this.rotation.x = -(e.clientY - centerY) / 100;
     }
 }" 
 @mousemove="handleMouseMove($event)"
 :class="isDarkMode ? 'bg-mesh-dark text-slate-200' : 'bg-mesh-light text-slate-900'"
 class="min-h-screen transition-colors duration-1000">
 
-    <!-- Efek Cahaya Latar -->
-    <div x-show="!isDarkMode" class="fixed top-0 left-1/2 -translate-x-1/2 w-[1000px] h-[400px] bg-indigo-500/5 blur-[150px] pointer-events-none"></div>
-    <div x-show="isDarkMode" class="fixed top-0 left-1/2 -translate-x-1/2 w-[800px] h-[300px] bg-indigo-600/10 blur-[120px] pointer-events-none"></div>
-
-    <!-- Navigasi (Padding dikurangi sedikit untuk efisiensi ruang) -->
-    <nav class="fixed top-0 w-full z-[100] px-10 py-6 transition-all duration-500">
-        <div class="max-w-7xl mx-auto flex justify-between items-center px-8 py-4 rounded-[2rem] border backdrop-blur-3xl"
-             :class="isDarkMode ? 'bg-black/40 border-white/5' : 'bg-white/60 border-slate-200/50 shadow-sm'">
+    <!-- Navigasi -->
+    <nav class="fixed top-0 w-full z-[100] px-6 py-6 transition-all duration-500">
+        <div class="max-w-7xl mx-auto flex justify-between items-center px-8 py-4 rounded-[2.5rem] border backdrop-blur-3xl"
+             :class="isDarkMode ? 'bg-black/40 border-white/5' : 'bg-white/70 border-slate-200/50 shadow-sm'">
             
+            <!-- Logo -->
             <div class="flex items-center gap-4 cursor-pointer group" @click="activeTab = 'dashboard'">
-                <div class="w-11 h-11 rounded-2xl bg-indigo-600 flex items-center justify-center text-white font-black italic shadow-[0_10px_20px_rgba(79,70,229,0.3)] group-hover:scale-110 transition-transform">A.</div>
+                <div class="w-10 h-10 rounded-2xl bg-slate-900 flex items-center justify-center text-white font-black italic shadow-lg group-hover:scale-110 transition-transform">A.</div>
                 <div class="flex flex-col">
                     <span class="font-black text-lg tracking-tighter uppercase leading-none italic">ANTONO<span class="text-rose-500">.</span></span>
                     <span class="text-[8px] font-bold tracking-[0.4em] opacity-40 uppercase">Principal Eng.</span>
                 </div>
             </div>
             
-            <div class="flex gap-10 items-center">
+            <!-- Menu Utama & Action -->
+            <div class="flex gap-6 lg:gap-10 items-center">
                 <div class="hidden md:flex gap-10 text-[9px] font-extrabold uppercase tracking-[0.25em] opacity-50">
-                    <button @click="activeTab = 'dashboard'" :class="activeTab === 'dashboard' && 'text-rose-500 opacity-100 nav-active transition-all'">Dashboard</button>
-                    <button @click="activeTab = 'keahlian'" :class="activeTab === 'keahlian' && 'text-rose-500 opacity-100 nav-active transition-all'">Keahlian</button>
+                    <button @click="activeTab = 'dashboard'" :class="activeTab === 'dashboard' && 'text-rose-500 opacity-100 nav-active transition-all'">Beranda</button>
+                    <button @click="activeTab = 'keahlian'" :class="activeTab === 'keahlian' && 'text-rose-500 opacity-100 nav-active transition-all'">Teknologi</button>
                     <button @click="activeTab = 'pengalaman'" :class="activeTab === 'pengalaman' && 'text-rose-500 opacity-100 nav-active transition-all'">Pengalaman</button>
                     <button @click="activeTab = 'kontak'" :class="activeTab === 'kontak' && 'text-rose-500 opacity-100 nav-active transition-all'">Kontak</button>
                 </div>
-                <div class="h-4 w-[1px] bg-current opacity-10 hidden md:block"></div>
-                <button @click="isDarkMode = !isDarkMode" class="w-10 h-10 rounded-xl border border-current/10 flex items-center justify-center hover:bg-current/5 transition-all shadow-sm">
-                    <span x-text="isDarkMode ? '🌙' : '☀️'" class="text-xs"></span>
-                </button>
+
+                <div class="flex items-center gap-3 border-l pl-6" :class="isDarkMode ? 'border-white/10' : 'border-slate-200'">
+                    <!-- Tombol Download CV -->
+                    <a href="#" class="hidden sm:flex items-center gap-3 px-5 py-2.5 rounded-xl bg-rose-500 text-white hover:bg-rose-600 transition-all shadow-lg shadow-rose-500/20 group">
+                        <span class="text-[9px] font-black uppercase tracking-widest">Download CV</span>
+                        <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" class="group-hover:translate-y-0.5 transition-transform"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" x2="12" y1="15" y2="3"/></svg>
+                    </a>
+
+                    <!-- Toggle Tema -->
+                    <button @click="isDarkMode = !isDarkMode" class="w-10 h-10 rounded-xl border border-current/10 flex items-center justify-center hover:bg-current/5 transition-all">
+                        <span x-text="isDarkMode ? '🌙' : '☀️'" class="text-xs"></span>
+                    </button>
+                </div>
             </div>
         </div>
     </nav>
 
-    <!-- Main Content (pt dikurangi dari 48 ke 32 agar naik) -->
-    <main class="max-w-7xl mx-auto px-10 pt-32 pb-32 flex flex-col lg:flex-row gap-24 items-start">
+    <!-- Layout Utama -->
+    <main class="max-w-7xl mx-auto px-6 md:px-10 pt-36 pb-32 flex flex-col lg:flex-row gap-16 items-start">
         
-        <!-- Konten Kiri -->
-        <div class="flex-1 w-full order-2 lg:order-1 pt-8">
+        <!-- Konten Utama (70%) -->
+        <div class="w-full lg:w-[70%] order-2 lg:order-1">
+            
+            <!-- Tab Beranda -->
             <div x-show="activeTab === 'dashboard'" x-transition:enter="transition ease-out duration-500" x-transition:enter-start="opacity-0 translate-y-8">
-                <div class="mb-12">
-                    <h2 class="text-6xl font-black uppercase italic mb-6 leading-[0.9] tracking-tighter">
-                        Membangun Arsitektur <br>
-                        <span class="text-transparent bg-clip-text bg-gradient-to-r from-indigo-600 to-rose-500">Sistem Skala Global.</span>
+                <div class="mb-16">
+                    <h2 class="text-5xl md:text-7xl font-black uppercase italic mb-8 leading-[0.85] tracking-tighter">
+                        Engineering <br>
+                        <span class="text-transparent bg-clip-text bg-gradient-to-r from-slate-900 via-slate-600 to-slate-400" :class="isDarkMode && 'from-white via-slate-400 to-slate-600'">At Scale.</span>
                     </h2>
-                    <p class="text-lg opacity-60 max-w-lg font-medium leading-relaxed">
-                        Saya adalah seorang Principal Engineer yang berdedikasi pada performa, keamanan, dan desain sistem yang bersih.
+                    <p class="text-xl opacity-60 max-w-2xl font-medium leading-relaxed italic">
+                        "Membangun bukan sekadar menulis kode, tapi merancang ekosistem yang bernapas dan berkembang."
                     </p>
                 </div>
-                <div class="grid grid-cols-2 gap-6">
-                    <div class="p-10 rounded-[3rem] bg-indigo-600 text-white shadow-[0_25px_50px_-12px_rgba(79,70,229,0.4)] relative overflow-hidden group">
-                        <div class="absolute -right-4 -bottom-4 w-32 h-32 bg-white/10 rounded-full blur-3xl group-hover:scale-150 transition-transform duration-700"></div>
-                        <div class="text-5xl font-black mb-2 tracking-tighter italic">15+</div>
-                        <div class="text-[10px] font-black uppercase tracking-[0.3em] opacity-70">Tahun Pengalaman</div>
+                
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                    <div class="p-10 rounded-[3.5rem] bg-slate-900 text-white shadow-2xl relative overflow-hidden group">
+                        <div class="text-6xl font-black mb-2 italic">12</div>
+                        <div class="text-[10px] font-black uppercase tracking-[0.3em] opacity-70">Tahun Karir</div>
                     </div>
-                    <div class="p-10 rounded-[3rem] border premium-card shadow-sm" :class="isDarkMode ? 'bg-white/5 border-white/5' : 'bg-white border-slate-200/60'">
-                        <div class="text-5xl font-black mb-2 tracking-tighter italic opacity-80">200+</div>
-                        <div class="text-[10px] font-black uppercase tracking-[0.3em] opacity-40">Proyek Enterprise</div>
+                    <div class="md:col-span-2 p-10 rounded-[3.5rem] border premium-card shadow-sm" :class="isDarkMode ? 'bg-white/5 border-white/5' : 'bg-white border-slate-200/60'">
+                        <div class="text-6xl font-black mb-2 italic opacity-80">06</div>
+                        <div class="text-[10px] font-black uppercase tracking-[0.3em] opacity-40">Perusahaan Teknologi</div>
                     </div>
                 </div>
             </div>
 
-            <!-- Bagian Keahlian -->
-            <div x-show="activeTab === 'keahlian'" x-cloak x-transition>
-                <div class="mb-12">
-                    <h2 class="text-5xl font-black uppercase italic mb-2 tracking-tighter">Technical <span class="text-rose-500">Stack.</span></h2>
-                    <p class="text-[10px] font-black opacity-30 uppercase tracking-[0.5em]">Lini Senjata Teknologi Utama</p>
+            <!-- Tab Keahlian (PREMIUM UPDATE dengan Ikon Putih) -->
+            <div x-show="activeTab === 'keahlian'" x-cloak x-transition:enter="transition ease-out duration-700" x-transition:enter-start="opacity-0 translate-y-12">
+                <div class="mb-16">
+                    <div class="flex items-center gap-4 mb-4">
+                        <span class="h-px w-12 bg-rose-500"></span>
+                        <span class="text-[10px] font-black uppercase tracking-[0.5em] text-rose-500">Technical Stack</span>
+                    </div>
+                    <h2 class="text-5xl md:text-6xl font-black uppercase italic mb-4 tracking-tighter leading-none">
+                        Penguasaan <span class="text-transparent bg-clip-text bg-gradient-to-r from-rose-500 to-orange-500">Teknologi.</span>
+                    </h2>
+                    <p class="text-sm opacity-50 font-medium max-w-xl italic">Keahlian mendalam dalam membangun sistem terdistribusi, otomasi skala besar, dan arsitektur yang tahan banting.</p>
                 </div>
+
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                    <template x-for="skill in [
-                        { t: 'System Arch', s: ['Microservices', 'Event-Driven', 'DDD'], i: '🏗️' },
-                        { t: 'Backend Tech', s: ['Node.js', 'Go', 'PHP 8', 'Python'], i: '⚙️' },
-                        { t: 'Infra & Cloud', s: ['AWS', 'Kubernetes', 'Terraform'], i: '☁️' },
-                        { t: 'Data Management', s: ['PostgreSQL', 'Redis', 'Kafka'], i: '💾' }
+                    <template x-for="category in [
+                        { 
+                            title: 'Core Backend', 
+                            skills: ['Golang (Advanced)', 'Rust', 'Node.js/TypeScript', 'Java Spring Boot'],
+                            svg: `<path d='M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4' />`,
+                            color: 'from-blue-500/20 to-indigo-500/20'
+                        },
+                        { 
+                            title: 'Cloud & DevOps', 
+                            skills: ['Kubernetes & Helm', 'AWS/GCP Architecture', 'Terraform (IaC)', 'CI/CD Pipelines'],
+                            svg: `<path d='M3 15a4 4 0 004 4h9a5 5 0 10-.1-9.999 5.002 5.002 0 10-9.78 2.096A4.001 4.001 0 003 15z' />`,
+                            color: 'from-sky-500/20 to-blue-500/20'
+                        },
+                        { 
+                            title: 'Data & Analytics', 
+                            skills: ['PostgreSQL & MongoDB', 'Apache Kafka', 'Redis Caching', 'Elasticsearch'],
+                            svg: `<path d='M4 7v10c0 2.21 3.582 4 8 4s8-1.79 8-4V7M4 7c0 2.21 3.582 4 8 4s8-1.79 8-4M4 7c0-2.21 3.582-4 8-4s8 1.79 8 4' />`,
+                            color: 'from-emerald-500/20 to-teal-500/20'
+                        },
+                        { 
+                            title: 'System Architecture', 
+                            skills: ['Microservices Patterns', 'Event-Sourcing', 'DDD (Domain Driven)', 'Security & IAM'],
+                            svg: `<path d='M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z' />`,
+                            color: 'from-orange-500/20 to-rose-500/20'
+                        }
                     ]">
-                        <div class="p-10 rounded-[3rem] border premium-card group shadow-sm" :class="isDarkMode ? 'bg-white/5 border-white/5' : 'bg-white border-slate-200/60'">
-                            <div class="text-4xl mb-6 transform group-hover:scale-125 transition-transform" x-text="skill.i"></div>
-                            <h4 class="font-black uppercase text-[10px] tracking-[0.3em] mb-6 opacity-40" x-text="skill.t"></h4>
-                            <div class="flex flex-wrap gap-3">
-                                <template x-for="item in skill.s">
-                                    <span class="px-4 py-2 rounded-xl text-[9px] font-black uppercase border border-current/10 opacity-70 bg-current/[0.03]" x-text="item"></span>
-                                </template>
+                        <div class="relative group">
+                            <!-- Background Glow -->
+                            <div class="absolute -inset-1 bg-gradient-to-r rounded-[2.5rem] blur opacity-0 group-hover:opacity-100 transition duration-500" :class="category.color"></div>
+                            
+                            <!-- Card Content -->
+                            <div class="relative p-10 rounded-[2.5rem] border premium-card h-full" :class="isDarkMode ? 'bg-slate-900/50 border-white/5' : 'bg-white border-slate-200/60'">
+                                <div class="flex items-center gap-5 mb-8">
+                                    <!-- Ikon dengan Warna Putih -->
+                                    <div class="w-14 h-14 rounded-2xl flex items-center justify-center bg-slate-900 shadow-xl group-hover:scale-110 group-hover:bg-rose-600 transition-all duration-500">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" x-html="category.svg"></svg>
+                                    </div>
+                                    <h3 class="text-lg font-black uppercase italic tracking-tighter" x-text="category.title"></h3>
+                                </div>
+                                
+                                <div class="space-y-3">
+                                    <template x-for="skill in category.skills">
+                                        <div class="flex items-center gap-3">
+                                            <div class="w-1.5 h-1.5 rounded-full bg-rose-500"></div>
+                                            <span class="text-[11px] font-bold uppercase tracking-widest opacity-60 group-hover:opacity-100 transition-opacity" x-text="skill"></span>
+                                        </div>
+                                    </template>
+                                </div>
                             </div>
                         </div>
                     </template>
                 </div>
             </div>
 
-            <!-- Placeholder bagian lain -->
-            <div x-show="activeTab !== 'dashboard' && activeTab !== 'keahlian'" x-cloak class="py-32 text-center opacity-20 italic font-black uppercase tracking-widest">
-                Modul <span x-text="activeTab"></span> dalam tahap enkripsi...
+            <!-- Tab Pengalaman -->
+            <div x-show="activeTab === 'pengalaman'" x-cloak x-transition>
+                <div class="mb-12">
+                    <h2 class="text-5xl font-black uppercase italic mb-4 tracking-tighter">Jejak <span class="text-rose-500">Karir.</span></h2>
+                    <p class="text-[10px] font-bold opacity-40 uppercase tracking-[0.4em]">12 Tahun Evolusi Rekayasa Perangkat Lunak</p>
+                </div>
+                <div class="space-y-6">
+                    <template x-for="exp in [
+                        { year: '2022 - Sekarang', role: 'Principal Engineer', comp: 'TechGiant Solutions', desc: 'Mengarahkan visi teknis untuk infrastruktur cloud-native yang melayani 50jt+ pengguna aktif bulanan.' },
+                        { year: '2019 - 2022', role: 'Staff Software Engineer', comp: 'Fintech Nexus', desc: 'Memodernisasi sistem monolitik ke arsitektur microservices berbasis event, mengurangi latensi sistem sebesar 40%.' },
+                        { year: '2017 - 2019', role: 'Senior Backend Engineer', comp: 'E-Commerce Horizon', desc: 'Mengoptimalkan mesin pencarian dan sistem inventaris real-time menggunakan Go dan Elasticsearch.' },
+                        { year: '2015 - 2017', role: 'Lead Web Developer', comp: 'Creative Stream Agency', desc: 'Memimpin tim pengembang dalam membangun platform manajemen konten kustom untuk klien Fortune 500.' },
+                        { year: '2013 - 2015', role: 'Software Developer', comp: 'Innova Softworks', desc: 'Bertanggung jawab atas pengembangan fitur core dan integrasi API pihak ketiga pada aplikasi enterprise.' },
+                        { year: '2012 - 2013', role: 'Junior Programmer', comp: 'StartUp Alpha', desc: 'Mempelajari dasar-dasar siklus hidup pengembangan perangkat lunak (SDLC) dan berkontribusi pada modul front-end.' }
+                    ]">
+                        <div class="p-8 rounded-[2.5rem] border premium-card flex flex-col md:flex-row gap-6 md:gap-12" :class="isDarkMode ? 'bg-white/5 border-white/5' : 'bg-white border-slate-200/60'">
+                            <div class="md:w-32 text-[10px] font-black uppercase tracking-widest text-rose-500 shrink-0" x-text="exp.year"></div>
+                            <div class="flex-1">
+                                <h4 class="text-xl font-black uppercase italic leading-none mb-1" x-text="exp.role"></h4>
+                                <p class="text-[9px] font-bold opacity-40 uppercase tracking-[0.3em] mb-4" x-text="exp.comp"></p>
+                                <p class="text-sm opacity-60 leading-relaxed font-medium italic" x-text="exp.desc"></p>
+                            </div>
+                        </div>
+                    </template>
+                </div>
+            </div>
+
+            <!-- Tab Kontak -->
+            <div x-show="activeTab === 'kontak'" x-cloak x-transition>
+                <div class="mb-12">
+                    <h2 class="text-5xl font-black uppercase italic mb-4 tracking-tighter">Hubungi <span class="text-rose-500">Saya.</span></h2>
+                </div>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-10">
+                    <div class="space-y-4">
+                        <input type="text" placeholder="NAMA" class="w-full px-8 py-5 rounded-2xl border bg-transparent text-xs font-black tracking-widest outline-none transition-all focus:ring-2 focus:ring-indigo-500" :class="isDarkMode ? 'border-white/10' : 'border-slate-200'">
+                        <textarea rows="4" placeholder="PESAN" class="w-full px-8 py-5 rounded-2xl border bg-transparent text-xs font-black tracking-widest outline-none transition-all focus:ring-2 focus:ring-indigo-500" :class="isDarkMode ? 'border-white/10' : 'border-slate-200'">
+                        </textarea>
+                        <button class="w-full py-5 rounded-2xl bg-slate-900 text-white text-[10px] font-black uppercase tracking-[0.5em] shadow-xl hover:bg-slate-800 transition-all">Kirim</button>
+                    </div>
+                </div>
             </div>
         </div>
 
-        <!-- Kolom Kanan: Lanyard (Sticky dikurangi top-nya agar nempel navigasi) -->
-        <div class="w-full lg:w-[480px] flex justify-center sticky top-20 order-1 lg:order-2">
-            <!-- Container Lanyard ditarik ke atas dengan negative margin -->
-            <div class="lanyard-container relative w-full h-[650px] flex flex-col items-center pointer-events-none -mt-20">
+        <!-- Kolom Lanyard (30%) -->
+        <div class="w-full lg:w-[30%] order-1 lg:order-2 sticky top-20 flex justify-center">
+            <!-- Container Lanyard -->
+            <div class="lanyard-container relative w-full h-[350px] flex flex-col items-center pointer-events-none transition-all duration-1000"
+                 :class="isLoaded ? 'lanyard-drop-anim wind-effect' : 'opacity-0 -translate-y-[500px]'">
                 
-                <!-- SVG Lanyard Kain -->
-                <svg class="absolute inset-0 w-full h-full overflow-visible" viewBox="0 0 400 650" fill="none">
+                <!-- SVG Tali Lanyard -->
+                <svg class="absolute inset-0 w-full h-full overflow-visible" viewBox="0 0 300 350" fill="none">
                     <defs>
-                        <linearGradient id="lanyardFabric" x1="0%" y1="0%" x2="100%" y2="0%">
-                            <stop offset="0%" stop-color="#1e1b4b" />
-                            <stop offset="50%" stop-color="#3730a3" />
-                            <stop offset="100%" stop-color="#1e1b4b" />
+                        <linearGradient id="lanyardGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+                            <stop offset="0%" stop-color="#0f172a" />
+                            <stop offset="50%" stop-color="#1e293b" />
+                            <stop offset="100%" stop-color="#0f172a" />
                         </linearGradient>
-                        <pattern id="weavePattern" x="0" y="0" width="4" height="4" patternUnits="userSpaceOnUse">
-                            <path d="M0 0 L4 4 M4 0 L0 4" stroke="white" stroke-width="0.6" stroke-opacity="0.12" />
-                        </pattern>
+                        <filter id="shadowLanyard">
+                            <feDropShadow dx="0" dy="10" stdDeviation="5" flood-opacity="0.2"/>
+                        </filter>
                     </defs>
 
-                    <!-- Bayangan Tali -->
-                    <path d="M 120 -50 Q 120 250, 200 320" stroke="#000" stroke-width="22" stroke-opacity="0.08" filter="blur(12px)" />
-                    <path d="M 280 -50 Q 280 250, 200 320" stroke="#000" stroke-width="22" stroke-opacity="0.08" filter="blur(12px)" />
+                    <!-- Jalur Tali -->
+                    <path d="M 90 -120 C 90 20, 100 80, 150 100" stroke="url(#lanyardGrad)" stroke-width="18" stroke-linecap="round" filter="url(#shadowLanyard)" />
+                    <path d="M 90 -120 C 90 20, 100 80, 150 100" stroke="white" stroke-width="18" class="fabric-texture" />
 
-                    <!-- Tali Kiri -->
-                    <path d="M 120 -100 Q 120 250, 200 320" stroke="url(#lanyardFabric)" stroke-width="20" stroke-linecap="butt" />
-                    <path d="M 120 -100 Q 120 250, 200 320" stroke="url(#weavePattern)" stroke-width="20" />
-                    <path d="M 120 -100 Q 120 250, 200 320" stroke="white" stroke-width="20" class="fabric-pattern" />
+                    <path d="M 210 -120 C 210 20, 200 80, 150 100" stroke="url(#lanyardGrad)" stroke-width="18" stroke-linecap="round" filter="url(#shadowLanyard)" />
+                    <path d="M 210 -120 C 210 20, 200 80, 150 100" stroke="white" stroke-width="18" class="fabric-texture" />
 
-                    <!-- Tali Kanan -->
-                    <path d="M 280 -100 Q 280 250, 200 320" stroke="url(#lanyardFabric)" stroke-width="20" stroke-linecap="butt" />
-                    <path d="M 280 -100 Q 280 250, 200 320" stroke="url(#weavePattern)" stroke-width="20" />
-                    <path d="M 280 -100 Q 280 250, 200 320" stroke="white" stroke-width="20" class="fabric-pattern" />
-
-                    <!-- Buckle/Pengait -->
-                    <g transform="translate(182, 310)">
-                        <rect width="36" height="45" rx="10" fill="#0f172a" />
-                        <rect x="4" y="4" width="28" height="37" rx="8" fill="#1e293b" />
-                        <circle cx="18" cy="16" r="9" fill="#020617" />
-                        <circle cx="18" cy="16" r="3" fill="#f43f5e" />
-                        <path d="M 18 45 L 18 65" stroke="#cbd5e1" stroke-width="5" stroke-linecap="round" />
+                    <!-- Mekanisme Klip -->
+                    <g transform="translate(138, 95)">
+                        <rect width="24" height="35" rx="4" fill="#94a3b8" />
+                        <rect x="2" y="2" width="20" height="31" rx="3" fill="#cbd5e1" />
+                        <circle cx="12" cy="10" r="3" fill="#64748b" />
+                        <path d="M 12 35 L 12 50" stroke="#94a3b8" stroke-width="5" stroke-linecap="round" />
                     </g>
                 </svg>
 
-                <!-- Kartu ID -->
-                <div 
-                    class="mt-[370px] pointer-events-auto transition-all duration-700 ease-out"
-                    :style="`transform: rotateX(${rotation.x}deg) rotateY(${rotation.y}deg)`"
-                >
-                    <div class="w-[320px] rounded-[3.5rem] p-[2px] relative bg-gradient-to-br from-indigo-500 via-rose-500 to-indigo-600 shadow-[0_40px_100px_-20px_rgba(0,0,0,0.25)]">
-                        <div class="w-full h-full rounded-[3.4rem] overflow-hidden relative"
-                             :class="isDarkMode ? 'bg-slate-900/95' : 'bg-white/95'">
-                            
-                            <div class="absolute inset-0 card-glow-indigo"></div>
-                            <div class="absolute inset-0 card-glow-rose"></div>
-
-                            <div class="h-16 flex justify-center pt-6 relative z-10">
-                                <div class="w-16 h-3 rounded-full bg-slate-200/50 flex items-center justify-center">
-                                    <div class="w-8 h-1 bg-indigo-500/30 rounded-full"></div>
+                <!-- Wrapper untuk rotasi otomatis 30 detik -->
+                <div class="mt-[145px] pointer-events-auto perspective-2000"
+                     :class="isLoaded && 'periodic-spin-effect'">
+                    
+                    <!-- Kartu ID -->
+                    <div 
+                        class="transition-transform duration-300"
+                        :style="`transform: rotateX(${rotation.x}deg) rotateY(${rotation.y}deg)`"
+                    >
+                        <div class="w-[260px] h-[360px] rounded-[1.5rem] bg-white/10 border border-white/20 backdrop-blur-sm p-3 shadow-2xl relative">
+                            <div class="w-full h-full rounded-[0.8rem] overflow-hidden relative shadow-inner flex flex-col transition-colors duration-500"
+                                 :class="isDarkMode ? 'bg-slate-900 border border-white/5' : 'bg-white border border-slate-200'">
+                                
+                                <!-- Header Kartu -->
+                                <div class="h-16 bg-slate-900 flex items-center px-6 justify-between">
+                                    <div class="text-white">
+                                        <div class="font-black italic text-[11px] tracking-tighter">ANTONO.</div>
+                                        <div class="text-[5px] font-bold tracking-[0.3em] opacity-50 uppercase">Sec. Clearance</div>
+                                    </div>
+                                    <div class="w-6 h-6 rounded-full border border-white/20 flex items-center justify-center">
+                                        <div class="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse"></div>
+                                    </div>
                                 </div>
-                            </div>
 
-                            <div class="px-8 pb-12 flex flex-col items-center relative z-10">
-                                <div class="relative mb-8 group">
-                                    <div class="w-32 h-32 rounded-[2.8rem] bg-gradient-to-tr from-indigo-600 to-rose-500 p-[3px] shadow-2xl transform transition-transform group-hover:scale-105 duration-500">
-                                        <div class="w-full h-full rounded-[2.65rem] overflow-hidden bg-white">
-                                            <img src="https://avatars.githubusercontent.com/u/73228642?v=4" alt="Antono" class="w-full h-full object-cover">
+                                <!-- Body Kartu -->
+                                <div class="flex-1 p-4 flex flex-col items-center justify-center">
+                                    <div class="w-24 h-24 rounded-full bg-slate-100 p-1 border border-slate-200 mb-3 shadow-sm">
+                                        <img src="https://avatars.githubusercontent.com/u/73228642?v=4" alt="Antono" class="w-full h-full object-cover rounded-full filter contrast-110 grayscale-[0.2]">
+                                    </div>
+
+                                    <div class="text-center mb-4">
+                                        <h3 class="text-lg font-black uppercase tracking-tighter" :class="isDarkMode ? 'text-white' : 'text-slate-900'">ANTONO</h3>
+                                        <p class="text-[7px] font-black uppercase tracking-[0.4em] text-rose-600 mt-1">Principal Engineer</p>
+                                    </div>
+
+                                    <div class="w-full grid grid-cols-2 gap-2 border-t border-slate-100 dark:border-white/5 pt-4">
+                                        <div>
+                                            <p class="text-[5px] font-bold opacity-30 uppercase tracking-widest">ID</p>
+                                            <p class="text-[8px] font-black font-mono">0902-ARCH</p>
+                                        </div>
+                                        <div class="text-right">
+                                            <p class="text-[5px] font-bold opacity-30 uppercase tracking-widest">Access</p>
+                                            <p class="text-[8px] font-black text-indigo-600">L-04</p>
                                         </div>
                                     </div>
-                                    <div class="absolute -bottom-2 -right-2 w-8 h-8 rounded-full bg-emerald-500 border-4 border-white flex items-center justify-center shadow-lg">
-                                        <div class="w-2 h-2 rounded-full bg-white animate-pulse"></div>
+                                </div>
+
+                                <!-- Footer Kartu -->
+                                <div class="p-4 bg-slate-50 dark:bg-black/20 flex items-center justify-between">
+                                    <div class="text-[7px] font-black uppercase opacity-60">Dec 2028</div>
+                                    <div class="w-10 h-10 p-1 bg-white border border-slate-200 rounded-md">
+                                        <div class="w-full h-full grid grid-cols-4 grid-rows-4 gap-px bg-slate-100">
+                                            <template x-for="i in 16">
+                                                <div :class="Math.random() > 0.4 ? 'bg-black' : 'bg-white'"></div>
+                                            </template>
+                                        </div>
                                     </div>
                                 </div>
 
-                                <div class="text-center space-y-1 mb-10">
-                                    <h3 class="text-3xl font-black italic tracking-tighter uppercase leading-none bg-clip-text text-transparent bg-gradient-to-r from-indigo-600 to-rose-600">ANTONO</h3>
-                                    <p class="text-[9px] font-black uppercase tracking-[0.4em] opacity-50">Principal Engineer</p>
-                                </div>
-
-                                <div class="w-full space-y-5 pt-6 border-t border-slate-200/50">
-                                    <div class="flex justify-between items-center">
-                                        <span class="text-[8px] font-bold opacity-40 uppercase tracking-widest">Departemen</span>
-                                        <span class="text-[9px] font-black uppercase tracking-widest text-indigo-600 bg-indigo-50 px-2 py-0.5 rounded-md">Core Architecture</span>
-                                    </div>
-                                    <div class="flex justify-between items-center">
-                                        <span class="text-[8px] font-bold opacity-40 uppercase tracking-widest">ID System</span>
-                                        <span class="text-[9px] font-black uppercase tracking-widest opacity-80 font-mono text-rose-600">#902-XJ2</span>
-                                    </div>
-                                    <div class="w-full h-10 flex gap-0.5 items-end justify-center opacity-20">
-                                        <template x-for="i in 18">
-                                            <div :class="i % 3 === 0 ? 'bg-indigo-600' : 'bg-rose-500'" :style="`width: ${[1,2,3,1,2][i % 5]}px; height: ${30 + (i%3)*20}%` "></div>
-                                        </template>
-                                    </div>
-                                </div>
+                                <!-- Efek Hologram -->
+                                <div class="absolute inset-0 holo-shimmer pointer-events-none opacity-20"></div>
                             </div>
                         </div>
                     </div>
@@ -301,8 +444,8 @@ class="min-h-screen transition-colors duration-1000">
 
     <footer class="max-w-7xl mx-auto px-10 py-16 border-t border-slate-200/50">
         <div class="flex flex-col md:flex-row justify-between items-center gap-8">
-            <span class="text-[10px] font-black uppercase tracking-[0.6em] opacity-30">Antono Secure Core v5.2</span>
-            <div class="flex gap-10 text-[10px] font-black uppercase tracking-[0.4em] opacity-40">
+            <span class="text-[9px] font-black uppercase tracking-[0.5em] opacity-30 italic">Antono Portfolio — Elevated Lanyard System</span>
+            <div class="flex gap-8 text-[9px] font-black uppercase tracking-[0.4em] opacity-50">
                 <a href="#" class="hover:text-rose-500 transition-colors">GitHub</a>
                 <a href="#" class="hover:text-rose-500 transition-colors">LinkedIn</a>
             </div>
