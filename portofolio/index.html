@@ -34,7 +34,39 @@
                 radial-gradient(at 50% 50%, rgba(255, 255, 255, 1) 0px, transparent 100%);
         }
 
-        /* Animasi Jatuh (Drop) */
+        /* Efek Daun Jatuh */
+        .leaf {
+            position: fixed;
+            top: -50px;
+            pointer-events: none;
+            z-index: 1;
+            opacity: 0.6;
+        }
+
+        @keyframes falling {
+            0% { transform: translateY(0) rotate(0deg) translateX(0); }
+            25% { transform: translateY(25vh) rotate(90deg) translateX(50px); }
+            50% { transform: translateY(50vh) rotate(180deg) translateX(-50px); }
+            75% { transform: translateY(75vh) rotate(270deg) translateX(50px); }
+            100% { transform: translateY(105vh) rotate(360deg) translateX(0); }
+        }
+
+        /* Animasi Sulur Pohon di Menu */
+        .vine-path {
+            stroke-dasharray: 1000;
+            stroke-dashoffset: 1000;
+        }
+
+        .animate-vine {
+            animation: growVine 1.5s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+        }
+
+        @keyframes growVine {
+            from { stroke-dashoffset: 1000; }
+            to { stroke-dashoffset: 0; }
+        }
+
+        /* Animasi Lanyard */
         @keyframes lanyardDrop {
             0% { transform: translateY(-800px); opacity: 0; }
             60% { transform: translateY(30px); opacity: 1; }
@@ -122,13 +154,12 @@
             background: linear-gradient(135deg, #fef08a 0%, #eab308 45%, #fde047 50%, #ca8a04 55%, #fef08a 100%);
         }
 
-        /* Update: Posisikan lanyard jauh lebih ke kanan (right: 5% dari sebelumnya 12%) */
         .lanyard-anchor {
             position: fixed;
             top: 48px;
-            right: 5%; 
+            right: 4%; 
             z-index: 90;
-            width: 300px;
+            width: 330px; 
             display: flex;
             flex-direction: column;
             align-items: center;
@@ -146,8 +177,33 @@
     activeTab: 'dashboard',
     isLoaded: false,
     rotation: { x: 0, y: 0 },
+    leaves: [],
+    vineTrigger: false,
     init() {
-        setTimeout(() => { this.isLoaded = true }, 200);
+        setTimeout(() => { 
+            this.isLoaded = true;
+            this.triggerVine();
+        }, 200);
+        // Inisialisasi daun
+        for(let i=0; i<15; i++) {
+            this.leaves.push({
+                id: i,
+                left: Math.random() * 100 + '%',
+                duration: (Math.random() * 5 + 7) + 's',
+                delay: (Math.random() * 10) + 's',
+                size: (Math.random() * 20 + 10) + 'px'
+            });
+        }
+    },
+    triggerVine() {
+        this.vineTrigger = false;
+        this.$nextTick(() => {
+            this.vineTrigger = true;
+        });
+    },
+    switchTab(tab) {
+        this.activeTab = tab;
+        this.triggerVine();
     },
     handleMouseMove(e) {
         const centerX = window.innerWidth / 2;
@@ -158,33 +214,66 @@
 }" 
 @mousemove="handleMouseMove($event)"
 :class="isDarkMode ? 'bg-mesh-dark text-slate-200' : 'bg-mesh-light text-slate-900'"
-class="min-h-screen transition-colors duration-1000 relative">
+class="min-h-screen transition-colors duration-1000 relative overflow-x-hidden">
+
+    <!-- Container Daun Jatuh -->
+    <template x-for="leaf in leaves" :key="leaf.id">
+        <div class="leaf" 
+             :style="{ 
+                left: leaf.left, 
+                animation: 'falling ' + leaf.duration + ' linear infinite',
+                animationDelay: leaf.delay
+             }">
+            <svg :width="leaf.size" :height="leaf.size" viewBox="0 0 24 24" fill="none" :stroke="isDarkMode ? '#0891b2' : '#155e75'" stroke-width="1.5" opacity="0.4">
+                <path d="M2 12C2 12 7 2 12 2C17 2 22 12 22 12C22 12 17 22 12 22C7 22 2 12 2 12Z" />
+                <path d="M12 2V22" />
+            </svg>
+        </div>
+    </template>
 
     <!-- Navigasi Utama -->
     <nav class="fixed top-0 w-full z-[100] px-6 py-6 transition-all duration-500">
-        <div class="max-w-7xl mx-auto flex justify-between items-center px-8 py-4 rounded-[2.5rem] border backdrop-blur-3xl"
-             :class="isDarkMode ? 'bg-black/60 border-white/10 shadow-2xl' : 'bg-white/80 border-cyan-200/50 shadow-xl shadow-cyan-900/5'">
+        <div class="max-w-7xl mx-auto relative group">
             
-            <div class="flex items-center gap-4 cursor-pointer group" @click="activeTab = 'dashboard'">
-                <div class="w-10 h-10 rounded-2xl bg-slate-900 flex items-center justify-center text-white font-black italic shadow-lg group-hover:scale-110 transition-transform">A.</div>
-                <div class="flex flex-col">
-                    <span class="font-black text-lg tracking-tighter uppercase leading-none italic">ANTONO<span class="text-cyan-600">.</span></span>
-                    <span class="text-[8px] font-bold tracking-[0.4em] opacity-40 uppercase">Principal Eng.</span>
-                </div>
-            </div>
-            
-            <div class="flex gap-6 lg:gap-10 items-center relative z-10">
-                <div class="hidden md:flex gap-10 text-[9px] font-extrabold uppercase tracking-[0.25em] opacity-50">
-                    <button @click="activeTab = 'dashboard'" :class="activeTab === 'dashboard' && 'text-cyan-700 opacity-100 nav-active transition-all'">Beranda</button>
-                    <button @click="activeTab = 'keahlian'" :class="activeTab === 'keahlian' && 'text-cyan-700 opacity-100 nav-active transition-all'">Teknologi</button>
-                    <button @click="activeTab = 'pengalaman'" :class="activeTab === 'pengalaman' && 'text-cyan-700 opacity-100 nav-active transition-all'">Pengalaman</button>
-                    <button @click="activeTab = 'kontak'" :class="activeTab === 'kontak' && 'text-cyan-700 opacity-100 nav-active transition-all'">Kontak</button>
-                </div>
+            <!-- Elemen Pohon Menjalar (SVG Vine) -->
+            <svg class="absolute -top-4 -left-4 w-[calc(100%+32px)] h-[calc(100%+32px)] pointer-events-none z-0" viewBox="0 0 1000 100" preserveAspectRatio="none">
+                <path :class="vineTrigger ? 'animate-vine' : ''" class="vine-path" d="M0,50 Q150,10 300,50 T600,50 T900,50 L1000,50" 
+                      fill="none" :stroke="isDarkMode ? 'rgba(8, 145, 178, 0.3)' : 'rgba(21, 94, 117, 0.15)'" 
+                      stroke-width="2.5" stroke-linecap="round" />
+                <path :class="vineTrigger ? 'animate-vine' : ''" class="vine-path" style="animation-delay: 0.2s" d="M10,60 Q200,90 400,60 T700,60 T980,60" 
+                      fill="none" :stroke="isDarkMode ? 'rgba(8, 145, 178, 0.2)' : 'rgba(21, 94, 117, 0.1)'" 
+                      stroke-width="1.5" stroke-dasharray="5,10" />
+            </svg>
 
-                <div class="flex items-center gap-3 border-l pl-6" :class="isDarkMode ? 'border-white/10' : 'border-cyan-200'">
-                    <button @click="isDarkMode = !isDarkMode" class="w-10 h-10 rounded-xl border border-current/10 flex items-center justify-center hover:bg-current/5 transition-all">
-                        <span x-text="isDarkMode ? '🌙' : '☀️'" class="text-xs"></span>
-                    </button>
+            <div class="flex justify-between items-center px-8 py-4 rounded-[2.5rem] border backdrop-blur-3xl relative z-10"
+                 :class="isDarkMode ? 'bg-black/60 border-white/10 shadow-2xl' : 'bg-white/80 border-cyan-200/50 shadow-xl shadow-cyan-900/5'">
+                
+                <div class="flex items-center gap-4 cursor-pointer group/logo" @click="switchTab('dashboard')">
+                    <div class="w-10 h-10 rounded-2xl bg-slate-900 flex items-center justify-center text-white font-black italic shadow-lg group-hover/logo:scale-110 transition-transform">A.</div>
+                    <div class="flex flex-col">
+                        <span class="font-black text-lg tracking-tighter uppercase leading-none italic">ANTONO<span class="text-cyan-600">.</span></span>
+                        <span class="text-[8px] font-bold tracking-[0.4em] opacity-40 uppercase">Principal Eng.</span>
+                    </div>
+                </div>
+                
+                <div class="flex gap-6 lg:gap-10 items-center">
+                    <div class="hidden md:flex gap-10 text-[9px] font-extrabold uppercase tracking-[0.25em] opacity-50">
+                        <button @click="switchTab('dashboard')" :class="activeTab === 'dashboard' && 'text-cyan-700 opacity-100 nav-active transition-all'">Beranda</button>
+                        <button @click="switchTab('keahlian')" :class="activeTab === 'keahlian' && 'text-cyan-700 opacity-100 nav-active transition-all'">Teknologi</button>
+                        <button @click="switchTab('pengalaman')" :class="activeTab === 'pengalaman' && 'text-cyan-700 opacity-100 nav-active transition-all'">Pengalaman</button>
+                        <button @click="switchTab('kontak')" :class="activeTab === 'kontak' && 'text-cyan-700 opacity-100 nav-active transition-all'">Kontak</button>
+                    </div>
+
+                    <div class="flex items-center gap-4 border-l pl-6" :class="isDarkMode ? 'border-white/10' : 'border-cyan-200'">
+                        <a href="#" class="hidden sm:flex items-center gap-2 px-5 py-2.5 bg-cyan-900 hover:bg-cyan-800 text-white rounded-2xl transition-all shadow-lg shadow-cyan-900/20 active:scale-95">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" x2="12" y1="15" y2="3"/></svg>
+                            <span class="text-[10px] font-black uppercase tracking-widest">CV</span>
+                        </a>
+                        
+                        <button @click="isDarkMode = !isDarkMode" class="w-10 h-10 rounded-xl border border-current/10 flex items-center justify-center hover:bg-current/5 transition-all">
+                            <span x-text="isDarkMode ? '🌙' : '☀️'" class="text-xs"></span>
+                        </button>
+                    </div>
                 </div>
             </div>
         </div>
@@ -193,7 +282,8 @@ class="min-h-screen transition-colors duration-1000 relative">
     <!-- LANYARD ANCHOR -->
     <div class="lanyard-anchor" :class="isLoaded ? 'lanyard-drop-anim' : 'opacity-0'">
         <div class="wind-effect flex flex-col items-center">
-            <svg width="220" height="180" viewBox="0 0 220 180" fill="none" class="overflow-visible">
+            <!-- SVG String diperbesar -->
+            <svg width="242" height="198" viewBox="0 0 220 180" fill="none" class="overflow-visible">
                 <defs>
                     <linearGradient id="lanyardGrad" x1="0%" y1="0%" x2="100%" y2="0%">
                         <stop offset="0%" :stop-color="isDarkMode ? '#083344' : '#155e75'" />
@@ -218,8 +308,8 @@ class="min-h-screen transition-colors duration-1000 relative">
 
             <div class="perspective-2000 -mt-10">
                 <div class="periodic-spin-effect" :style="`transform: rotateX(${rotation.x}deg) rotateY(${rotation.y}deg)`">
-                    <div class="w-[240px] h-[340px] rounded-[1.5rem] bg-white/20 border border-white/40 backdrop-blur-md p-2.5 shadow-2xl relative">
-                        <div class="w-full h-full rounded-[0.9rem] overflow-hidden relative flex flex-col transition-colors duration-500 shadow-xl"
+                    <div class="w-[264px] h-[374px] rounded-[1.65rem] bg-white/20 border border-white/40 backdrop-blur-md p-2.5 shadow-2xl relative">
+                        <div class="w-full h-full rounded-[1rem] overflow-hidden relative flex flex-col transition-colors duration-500 shadow-xl"
                              :class="isDarkMode ? 'bg-slate-900 border border-white/10' : 'bg-white border border-cyan-200'">
                             <div class="h-14 bg-cyan-950 flex items-center px-5 justify-between">
                                 <div class="text-white">
@@ -230,20 +320,20 @@ class="min-h-screen transition-colors duration-1000 relative">
                                     <div class="w-2 h-2 rounded-full bg-cyan-400 animate-pulse"></div>
                                 </div>
                             </div>
-                            <div class="flex-1 p-5 flex flex-col items-center">
-                                <div class="w-24 h-24 rounded-full bg-slate-100 p-1 border-2 border-cyan-600 mb-4 shadow-lg overflow-hidden">
+                            <div class="flex-1 p-6 flex flex-col items-center">
+                                <div class="w-28 h-28 rounded-full bg-slate-100 p-1 border-2 border-cyan-600 mb-4 shadow-lg overflow-hidden">
                                     <img src="https://avatars.githubusercontent.com/u/73228642?v=4" alt="Antono" class="w-full h-full object-cover rounded-full contrast-125">
                                 </div>
                                 <div class="text-center mb-5">
-                                    <h3 class="text-xl font-black uppercase tracking-tighter" :class="isDarkMode ? 'text-white' : 'text-slate-900'">ANTONO</h3>
-                                    <span class="text-[7px] font-black uppercase tracking-[0.3em] text-cyan-600 bg-cyan-50 px-2 py-0.5 rounded">Principal Engineer</span>
+                                    <h3 class="text-2xl font-black uppercase tracking-tighter" :class="isDarkMode ? 'text-white' : 'text-slate-900'">ANTONO</h3>
+                                    <span class="text-[8px] font-black uppercase tracking-[0.3em] text-cyan-600 bg-cyan-50 px-2.5 py-1 rounded">Principal Engineer</span>
                                 </div>
                                 <div class="w-full border-t border-dashed border-slate-200 dark:border-white/10 pt-4 space-y-3">
                                     <div class="flex justify-between items-center">
-                                        <div class="w-8 h-6 rounded chip-metallic"></div>
+                                        <div class="w-9 h-7 rounded chip-metallic"></div>
                                         <div class="text-right">
-                                            <div class="text-[5px] font-bold opacity-40 uppercase">Serial Number</div>
-                                            <div class="text-[8px] font-black font-mono">0902-ARCH-2024</div>
+                                            <div class="text-[6px] font-bold opacity-40 uppercase">Serial Number</div>
+                                            <div class="text-[9px] font-black font-mono">0902-ARCH-2024</div>
                                         </div>
                                     </div>
                                     <div class="h-1 w-full bg-slate-100 dark:bg-white/5 rounded-full overflow-hidden">
@@ -251,14 +341,14 @@ class="min-h-screen transition-colors duration-1000 relative">
                                     </div>
                                 </div>
                             </div>
-                            <div class="p-3 bg-slate-50 dark:bg-black/30 border-t border-slate-100 dark:border-white/5 flex items-center justify-between">
+                            <div class="p-4 bg-slate-50 dark:bg-black/30 border-t border-slate-100 dark:border-white/5 flex items-center justify-between">
                                 <div class="flex flex-col">
-                                    <span class="text-[5px] font-bold opacity-40 uppercase">Expiration</span>
-                                    <span class="text-[8px] font-black">PERPETUAL</span>
+                                    <span class="text-[6px] font-bold opacity-40 uppercase">Expiration</span>
+                                    <span class="text-[9px] font-black">PERPETUAL</span>
                                 </div>
                                 <div class="flex gap-0.5">
-                                    <template x-for="i in 12">
-                                        <div :class="Math.random() > 0.5 ? 'h-5 w-[1px] bg-black dark:bg-white' : 'h-5 w-[2px] bg-black dark:bg-white'"></div>
+                                    <template x-for="i in 14">
+                                        <div :class="Math.random() > 0.5 ? 'h-6 w-[1px] bg-black dark:bg-white' : 'h-6 w-[2px] bg-black dark:bg-white'"></div>
                                     </template>
                                 </div>
                             </div>
@@ -274,7 +364,7 @@ class="min-h-screen transition-colors duration-1000 relative">
     <main class="max-w-7xl mx-auto px-6 md:px-10 pt-48 pb-32 flex flex-col lg:flex-row gap-16 items-start relative z-10">
         
         <!-- Konten Utama -->
-        <div class="w-full lg:w-[75%]">
+        <div class="w-full lg:w-[70%]">
             
             <!-- Tab Beranda -->
             <div x-show="activeTab === 'dashboard'" x-transition:enter="transition ease-out duration-500" x-transition:enter-start="opacity-0 translate-y-8">
@@ -300,7 +390,7 @@ class="min-h-screen transition-colors duration-1000 relative">
                 </div>
             </div>
 
-            <!-- Tab Keahlian (Restored & Improved) -->
+            <!-- Tab Keahlian -->
             <div x-show="activeTab === 'keahlian'" x-cloak x-transition:enter="transition ease-out duration-500" x-transition:enter-start="opacity-0 translate-y-8">
                 <div class="mb-12">
                     <h2 class="text-5xl font-black uppercase italic mb-4 tracking-tighter">Stack <span class="text-cyan-700">Teknologi.</span></h2>
@@ -347,7 +437,7 @@ class="min-h-screen transition-colors duration-1000 relative">
                 </div>
             </div>
 
-            <!-- Tab Pengalaman (Restored) -->
+            <!-- Tab Pengalaman -->
             <div x-show="activeTab === 'pengalaman'" x-cloak x-transition:enter="transition ease-out duration-500" x-transition:enter-start="opacity-0 translate-y-8">
                 <div class="mb-12">
                     <h2 class="text-5xl font-black uppercase italic mb-4 tracking-tighter">Jejak <span class="text-cyan-700">Kerjaya.</span></h2>
@@ -387,7 +477,7 @@ class="min-h-screen transition-colors duration-1000 relative">
     <footer class="max-w-7xl mx-auto px-10 py-16 border-t border-cyan-200/20 relative z-10">
         <div class="flex flex-col md:flex-row justify-between items-center gap-8">
             <span class="text-[9px] font-black uppercase tracking-[0.5em] opacity-30 italic">© 2024 Antono — Engineered Excellence</span>
-            <div class="flex gap-8 text-[9px] font-black uppercase tracking-[0.4em] opacity-50">
+            <div class="flex gap-8 text-[9px] font-black uppercase tracking-widest opacity-50">
                 <a href="#" class="hover:text-cyan-700 transition-colors">GitHub</a>
                 <a href="#" class="hover:text-cyan-700 transition-colors">LinkedIn</a>
                 <a href="#" class="hover:text-cyan-700 transition-colors">Emel</a>
