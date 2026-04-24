@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Antono | Principal Engineer Portfolio</title>
     <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;600;800&family=JetBrains+Mono:wght@400;500;800&display=swap" rel="stylesheet">
     <style>
         [x-cloak] { display: none !important; }
@@ -135,21 +136,37 @@
             border: 1px solid rgba(255, 255, 255, 0.08);
         }
 
-        /* Mobile Tab Bar */
-        .mobile-tab-active {
-            color: #10b981;
+        /* Efek Daun Jatuh Realistis */
+        #leaves-container {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 5;
+            overflow: hidden;
         }
-        .mobile-tab-active::after {
-            content: '';
+        
+        .leaf {
             position: absolute;
-            top: -12px;
-            left: 50%;
-            transform: translateX(-50%);
-            width: 4px;
-            height: 4px;
-            background: #10b981;
-            border-radius: 50%;
-            box-shadow: 0 0 10px #10b981;
+            top: -10%;
+            background-size: contain;
+            background-repeat: no-repeat;
+            animation: fall linear infinite, sway ease-in-out infinite alternate;
+            filter: drop-shadow(0 2px 4px rgba(0,0,0,0.1));
+        }
+        
+        @keyframes fall {
+            0% { top: -10%; opacity: 0; }
+            10% { opacity: var(--leaf-opacity); }
+            80% { opacity: var(--leaf-opacity); }
+            100% { top: 110%; opacity: 0; }
+        }
+        
+        @keyframes sway {
+            0% { transform: translateX(calc(var(--sway-start) * 1px)) rotate(calc(var(--rot-start) * 1deg)); }
+            100% { transform: translateX(calc(var(--sway-end) * 1px)) rotate(calc(var(--rot-end) * 1deg)); }
         }
     </style>
 </head>
@@ -171,6 +188,9 @@
     :class="isDarkMode ? 'bg-mesh-dark text-emerald-100 dark' : 'bg-mesh-light text-emerald-950'"
     class="min-h-screen transition-colors duration-1000 relative pb-24 md:pb-0">
 
+    <!-- Container Daun Jatuh -->
+    <div id="leaves-container"></div>
+
     <!-- Navigasi Desktop -->
     <nav class="fixed top-0 w-full z-[100] px-4 py-6">
         <div id="main-nav" class="max-w-6xl mx-auto flex justify-between items-center px-6 py-3 rounded-2xl glass-nav backdrop-blur-2xl shadow-xl">
@@ -183,59 +203,27 @@
             </div>
             
             <div class="flex gap-3 items-center">
-                <!-- Desktop Menu Items -->
+                <!-- Menu Desktop -->
                 <div class="hidden md:flex gap-8 text-[11px] font-bold uppercase tracking-[0.2em] opacity-60 mr-6">
                     <button @click="activeTab = 'dashboard'" class="hover:text-emerald-600 transition-all" :class="activeTab === 'dashboard' ? 'text-emerald-600 opacity-100' : ''">Beranda</button>
-                    <button @click="activeTab = 'keahlian'" class="hover:text-emerald-600 transition-all" :class="activeTab === 'keahlian' ? 'text-emerald-600 opacity-100' : ''">Teknologi</button>
+                    <button @click="activeTab = 'keahlian'" class="hover:text-emerald-600 transition-all" :class="activeTab === 'keahlian' ? 'text-emerald-600 opacity-100' : ''">Kemampuan</button>
                     <button @click="activeTab = 'pengalaman'" class="hover:text-emerald-600 transition-all" :class="activeTab === 'pengalaman' ? 'text-emerald-600 opacity-100' : ''">Karir</button>
                     <button @click="activeTab = 'kontak'" class="hover:text-emerald-600 transition-all" :class="activeTab === 'kontak' ? 'text-emerald-600 opacity-100' : ''">Kontak</button>
                 </div>
 
-                <!-- Tombol Download CV -->
                 <a href="#" class="flex items-center gap-2 px-4 py-2 rounded-xl bg-emerald-600 text-white text-[10px] font-black uppercase tracking-widest hover:bg-emerald-500 transition-all shadow-lg hover:shadow-emerald-500/20 active:scale-95">
                     <svg xmlns="http://www.w3.org/2000/svg" class="h-3 w-3" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M4 16v1a2 2 0 002 2h12a2 2 0 002-2v-1m-4-4l-4 4m0 0l-4-4m4 4V4" />
                     </svg>
-                    <span class="hidden sm:inline">Download CV</span>
-                    <span class="sm:hidden">CV</span>
+                    <span>Download CV</span>
                 </a>
 
                 <button @click="isDarkMode = !isDarkMode" class="w-10 h-10 rounded-xl border border-current/10 flex items-center justify-center hover:bg-current/5 transition-all text-sm">
-                    <span x-text="isDarkMode ? '🌙' : '☀️'"></span>
+                    <span x-text="isDarkMode ? '☀️' : '🌙'"></span>
                 </button>
             </div>
         </div>
     </nav>
-
-    <!-- Mobile Bottom Navigation -->
-    <div class="fixed bottom-6 left-1/2 -translate-x-1/2 w-[90%] max-w-md z-[100] md:hidden">
-        <div class="glass-nav backdrop-blur-2xl rounded-3xl shadow-2xl flex justify-around items-center p-3 border border-white/10">
-            <button @click="activeTab = 'dashboard'" class="relative flex flex-col items-center gap-1 transition-all duration-300" :class="activeTab === 'dashboard' ? 'mobile-tab-active' : 'opacity-40'">
-                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6" />
-                </svg>
-                <span class="text-[8px] font-black uppercase tracking-tighter">Beranda</span>
-            </button>
-            <button @click="activeTab = 'keahlian'" class="relative flex flex-col items-center gap-1 transition-all duration-300" :class="activeTab === 'keahlian' ? 'mobile-tab-active' : 'opacity-40'">
-                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4" />
-                </svg>
-                <span class="text-[8px] font-black uppercase tracking-tighter">Tech</span>
-            </button>
-            <button @click="activeTab = 'pengalaman'" class="relative flex flex-col items-center gap-1 transition-all duration-300" :class="activeTab === 'pengalaman' ? 'mobile-tab-active' : 'opacity-40'">
-                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 13.255A23.931 23.931 0 0112 15c-3.183 0-6.22-.62-9-1.745M16 6V4a2 2 0 00-2-2h-4a2 2 0 00-2 2v2m4 6h.01M5 20h14a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
-                </svg>
-                <span class="text-[8px] font-black uppercase tracking-tighter">Karir</span>
-            </button>
-            <button @click="activeTab = 'kontak'" class="relative flex flex-col items-center gap-1 transition-all duration-300" :class="activeTab === 'kontak' ? 'mobile-tab-active' : 'opacity-40'">
-                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z" />
-                </svg>
-                <span class="text-[8px] font-black uppercase tracking-tighter">Kontak</span>
-            </button>
-        </div>
-    </div>
 
     <!-- Konten Utama -->
     <main class="max-w-7xl mx-auto px-6 pt-32 pb-32 relative z-10">
@@ -243,7 +231,7 @@
             
             <!-- Sisi Kiri: Konten Teks -->
             <div class="w-full lg:w-3/5 xl:w-1/2 pt-4 md:pt-12">
-                <!-- Dashboard Content -->
+                <!-- Konten Beranda -->
                 <div x-show="activeTab === 'dashboard'" x-transition:enter="transition ease-out duration-700" x-transition:enter-start="opacity-0 translate-y-12">
                     <header class="mb-12">
                         <div class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-emerald-600/10 border border-emerald-600/20 text-emerald-700 dark:text-emerald-400 text-[10px] font-black uppercase tracking-widest mb-8">
@@ -262,37 +250,40 @@
                         </p>
                         
                         <div class="flex flex-wrap gap-4">
-                            <button @click="activeTab = 'keahlian'" class="px-6 md:px-8 py-3 md:py-4 rounded-2xl bg-emerald-600 text-white font-black uppercase italic tracking-widest shadow-2xl hover:scale-105 transition-transform active:scale-95 text-xs md:text-sm">Lihat Stack</button>
-                            <button @click="activeTab = 'kontak'" class="px-6 md:px-8 py-3 md:py-4 rounded-2xl bg-white dark:bg-white/5 border border-slate-200 dark:border-white/10 font-black uppercase italic tracking-widest hover:bg-slate-50 transition-colors text-xs md:text-sm">Hubungi Saya</button>
+                            <button @click="activeTab = 'keahlian'" class="px-8 py-4 rounded-2xl bg-emerald-600 text-white font-black uppercase italic tracking-widest shadow-2xl hover:scale-105 transition-transform active:scale-95 text-sm">Lihat Stack</button>
+                            <button @click="activeTab = 'kontak'" class="px-8 py-4 rounded-2xl bg-white dark:bg-white/5 border border-slate-200 dark:border-white/10 font-black uppercase italic tracking-widest hover:bg-slate-50 dark:hover:bg-white/10 transition-colors text-sm">Hubungi Saya</button>
                         </div>
                     </header>
 
                     <div class="grid grid-cols-2 gap-8 border-t border-slate-200 dark:border-white/5 pt-12">
                         <div>
-                            <span class="text-2xl md:text-3xl font-black italic block mb-1">10+</span>
-                            <span class="text-[9px] md:text-[10px] font-bold opacity-40 uppercase tracking-widest">Tahun Pengalaman</span>
+                            <span class="text-3xl font-black italic block mb-1">10+</span>
+                            <span class="text-[10px] font-bold opacity-40 uppercase tracking-widest">Tahun Pengalaman</span>
                         </div>
                         <div>
-                            <span class="text-2xl md:text-3xl font-black italic block mb-1">50+</span>
-                            <span class="text-[9px] md:text-[10px] font-bold opacity-40 uppercase tracking-widest">Sistem Arsitektur</span>
+                            <span class="text-3xl font-black italic block mb-1">50+</span>
+                            <span class="text-[10px] font-bold opacity-40 uppercase tracking-widest">Sistem Arsitektur</span>
                         </div>
                     </div>
                 </div>
 
-                <!-- Tech Stack Tab -->
+                <!-- Tab Kemampuan -->
                 <div x-show="activeTab === 'keahlian'" x-cloak x-transition:enter="transition ease-out duration-500" x-transition:enter-start="opacity-0 translate-y-12">
-                    <h2 class="text-4xl md:text-5xl font-black uppercase italic mb-10 tracking-tighter">Arsenal <span class="text-emerald-600">Teknologi.</span></h2>
-                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 md:gap-6">
+                    <h2 class="text-5xl font-black uppercase italic mb-4 tracking-tighter"><span class="text-emerald-600">Kemampuan</span> & Produk.</h2>
+                    <p class="text-sm opacity-50 uppercase font-bold tracking-widest mb-10 italic">Integrasi estetika visual dengan fungsionalitas teknis.</p>
+                    
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
                         <template x-for="category in [
-                            { title: 'Core Backend', skills: ['Golang', 'Rust', 'Node.js'] },
-                            { title: 'Infrastructure', skills: ['Terraform', 'Kubernetes', 'AWS'] },
-                            { title: 'Data Management', skills: ['Postgres', 'Redis', 'Kafka'] }
+                            { title: 'Frontend Stack', skills: ['React.js', 'Vue.js', 'Tailwind CSS', 'Alpine.js', 'Next.js'] },
+                            { title: 'Design & Prototyping', skills: ['Figma', 'Adobe XD', 'Protopie', 'Framermotion'] },
+                            { title: 'UX Engineering', skills: ['Micro-interactions', 'Design Systems', 'Web Accessibility', 'State Management'] },
+                            { title: 'Modern UI Workflow', skills: ['Atomic Design', 'Responsive Architecture', 'PWA', 'Headless UI'] }
                         ]" :key="category.title">
-                            <div class="p-6 md:p-8 rounded-[2rem] glass-nav shadow-lg">
-                                <h3 class="text-[10px] md:text-[11px] font-black uppercase tracking-[0.3em] mb-4 md:mb-6 text-emerald-600" x-text="category.title"></h3>
+                            <div class="p-8 rounded-[2rem] glass-nav shadow-lg border border-white/20">
+                                <h3 class="text-[11px] font-black uppercase tracking-[0.3em] mb-6 text-emerald-600" x-text="category.title"></h3>
                                 <div class="flex flex-wrap gap-2">
                                     <template x-for="skill in category.skills" :key="skill">
-                                        <span class="px-3 py-1.5 rounded-xl bg-emerald-500/5 border border-emerald-500/10 text-[9px] md:text-[10px] font-bold uppercase tracking-wider" x-text="skill"></span>
+                                        <span class="px-3 py-1.5 rounded-xl bg-emerald-500/5 border border-emerald-500/10 text-[10px] font-bold uppercase tracking-wider" x-text="skill"></span>
                                     </template>
                                 </div>
                             </div>
@@ -300,68 +291,54 @@
                     </div>
                 </div>
 
-                <!-- Experience Tab -->
+                <!-- Tab Karir -->
                 <div x-show="activeTab === 'pengalaman'" x-cloak x-transition:enter="transition ease-out duration-500" x-transition:enter-start="opacity-0 translate-y-12">
-                    <h2 class="text-4xl md:text-5xl font-black uppercase italic mb-10 tracking-tighter">Rekam <span class="text-emerald-600">Jejak.</span></h2>
-                    <div class="space-y-4 md:space-y-6">
+                    <h2 class="text-5xl font-black uppercase italic mb-10 tracking-tighter">Rekam <span class="text-emerald-600">Jejak.</span></h2>
+                    <div class="space-y-6">
                         <template x-for="(exp, index) in [
                             { year: '2022 - SEKARANG', role: 'Principal Backend Engineer', comp: 'Fintech Solutions Indonesia' },
-                            { year: '2019 - 2022', role: 'Senior Systems Architect', comp: 'Global Tech Corp' }
+                            { year: '2019 - 2022', role: 'Senior Systems Architect', comp: 'Global Tech Corp' },
+                            { year: '2015 - 2019', role: 'Backend Developer', comp: 'Innovation Lab' }
                         ]" :key="index">
-                            <div class="p-6 md:p-8 rounded-[2rem] md:rounded-[2.5rem] glass-nav shadow-lg border border-transparent hover:border-emerald-500/20 transition-all">
-                                <span class="text-[8px] md:text-[9px] font-black tracking-widest text-emerald-600 bg-emerald-600/10 px-4 py-1.5 rounded-full" x-text="exp.year"></span>
-                                <h4 class="text-xl md:text-2xl font-black uppercase italic mt-6 mb-2" x-text="exp.role"></h4>
-                                <p class="text-[9px] md:text-[10px] font-bold opacity-30 uppercase tracking-[0.4em]" x-text="exp.comp"></p>
+                            <div class="p-8 rounded-[2.5rem] glass-nav shadow-lg border border-transparent hover:border-emerald-500/20 transition-all">
+                                <span class="text-[9px] font-black tracking-widest text-emerald-600 bg-emerald-600/10 px-4 py-1.5 rounded-full" x-text="exp.year"></span>
+                                <h4 class="text-2xl font-black uppercase italic mt-6 mb-2" x-text="exp.role"></h4>
+                                <p class="text-[10px] font-bold opacity-30 uppercase tracking-[0.4em]" x-text="exp.comp"></p>
                             </div>
                         </template>
                     </div>
                 </div>
 
-                <!-- Contact Tab -->
+                <!-- Tab Kontak -->
                 <div x-show="activeTab === 'kontak'" x-cloak x-transition:enter="transition ease-out duration-500" x-transition:enter-start="opacity-0 translate-y-12">
-                    <h2 class="text-4xl md:text-5xl font-black uppercase italic mb-4 tracking-tighter">Hubungkan <span class="text-emerald-600">Sistem.</span></h2>
-                    <p class="text-xs md:text-sm opacity-50 uppercase font-bold tracking-widest mb-10 italic">Mari berkolaborasi membangun masa depan digital.</p>
+                    <h2 class="text-5xl font-black uppercase italic mb-4 tracking-tighter">Hubungkan <span class="text-emerald-600">Sistem.</span></h2>
+                    <p class="text-sm opacity-50 uppercase font-bold tracking-widest mb-10 italic">Mari berkolaborasi membangun masa depan digital.</p>
                     
                     <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                        <a href="mailto:hello@antono.dev" class="group p-5 md:p-6 rounded-[2rem] glass-nav shadow-lg flex items-center gap-4 md:gap-5 hover:bg-emerald-600 hover:scale-[1.02] transition-all duration-300">
-                            <div class="w-10 h-10 md:w-12 md:h-12 rounded-2xl bg-emerald-600/10 group-hover:bg-white/20 flex items-center justify-center text-lg md:text-xl">📧</div>
+                        <a href="mailto:hello@antono.dev" class="group p-6 rounded-[2rem] glass-nav shadow-lg flex items-center gap-5 hover:bg-emerald-600 hover:scale-[1.02] transition-all duration-300">
+                            <div class="w-12 h-12 rounded-2xl bg-emerald-600/10 group-hover:bg-white/20 flex items-center justify-center text-xl">📧</div>
                             <div>
-                                <span class="block text-[8px] md:text-[10px] font-black uppercase tracking-widest opacity-40 group-hover:text-white">Email</span>
-                                <span class="text-sm md:text-base font-black italic group-hover:text-white">hello@antono.dev</span>
+                                <span class="block text-[10px] font-black uppercase tracking-widest opacity-40 group-hover:text-white">Email</span>
+                                <span class="text-base font-black italic group-hover:text-white">hello@antono.dev</span>
                             </div>
                         </a>
-                        <a href="https://wa.me/628123456789" target="_blank" class="group p-5 md:p-6 rounded-[2rem] glass-nav shadow-lg flex items-center gap-4 md:gap-5 hover:bg-emerald-600 hover:scale-[1.02] transition-all duration-300">
-                            <div class="w-10 h-10 md:w-12 md:h-12 rounded-2xl bg-emerald-600/10 group-hover:bg-white/20 flex items-center justify-center text-lg md:text-xl">💬</div>
+                        <a href="#" class="group p-6 rounded-[2rem] glass-nav shadow-lg flex items-center gap-5 hover:bg-emerald-600 hover:scale-[1.02] transition-all duration-300">
+                            <div class="w-12 h-12 rounded-2xl bg-emerald-600/10 group-hover:bg-white/20 flex items-center justify-center text-xl">💬</div>
                             <div>
-                                <span class="block text-[8px] md:text-[10px] font-black uppercase tracking-widest opacity-40 group-hover:text-white">WhatsApp</span>
-                                <span class="text-sm md:text-base font-black italic group-hover:text-white">+62 812 3456 789</span>
-                            </div>
-                        </a>
-                        <a href="#" class="group p-5 md:p-6 rounded-[2rem] glass-nav shadow-lg flex items-center gap-4 md:gap-5 hover:bg-[#0077b5] hover:scale-[1.02] transition-all duration-300">
-                            <div class="w-10 h-10 md:w-12 md:h-12 rounded-2xl bg-slate-500/10 group-hover:bg-white/20 flex items-center justify-center text-lg italic font-black text-[#0077b5] group-hover:text-white">in</div>
-                            <div>
-                                <span class="block text-[8px] md:text-[10px] font-black uppercase tracking-widest opacity-40 group-hover:text-white">Professional</span>
-                                <span class="text-sm md:text-base font-black italic group-hover:text-white">linkedin/in/antono</span>
-                            </div>
-                        </a>
-                        <a href="#" class="group p-5 md:p-6 rounded-[2rem] glass-nav shadow-lg flex items-center gap-4 md:gap-5 hover:bg-slate-950 hover:scale-[1.02] transition-all duration-300">
-                            <div class="w-10 h-10 md:w-12 md:h-12 rounded-2xl bg-slate-500/10 group-hover:bg-white/20 flex items-center justify-center text-lg md:text-xl">🐙</div>
-                            <div>
-                                <span class="block text-[8px] md:text-[10px] font-black uppercase tracking-widest opacity-40 group-hover:text-white">Source Code</span>
-                                <span class="text-sm md:text-base font-black italic group-hover:text-white">github.com/antono</span>
+                                <span class="block text-[10px] font-black uppercase tracking-widest opacity-40 group-hover:text-white">WhatsApp</span>
+                                <span class="text-base font-black italic group-hover:text-white">+62 812 3456 789</span>
                             </div>
                         </a>
                     </div>
                 </div>
             </div>
 
-            <!-- Sisi Kanan: Lanyard (Kartu ID) dengan Efek Angin -->
+            <!-- Sisi Kanan: Lanyard (Kartu ID) -->
             <div class="w-full lg:w-2/5 flex justify-center lg:justify-end mt-12 lg:mt-0">
-                <div class="lanyard-container-side w-full max-w-[280px] md:max-w-[320px]" :class="isLoaded ? 'lanyard-drop-anim' : 'opacity-0'">
+                <div class="lanyard-container-side w-full max-w-[320px]" :class="isLoaded ? 'lanyard-drop-anim' : 'opacity-0'">
                     <div class="flex flex-col items-center w-full">
-                        
-                        <!-- Ribbon SVG dengan Animasi Wave Path -->
-                        <svg class="w-40 md:w-48 h-[120px] md:h-[160px] overflow-visible" viewBox="0 0 100 160" preserveAspectRatio="none">
+                        <!-- Tali Lanyard -->
+                        <svg class="w-48 h-[160px] overflow-visible" viewBox="0 0 100 160" preserveAspectRatio="none">
                             <defs>
                                 <pattern id="nylonWeave" width="4" height="4" patternUnits="userSpaceOnUse">
                                     <path d="M-1,1 l2,-2 M0,4 l4,-4 M3,5 l2,-2" stroke="rgba(0,0,0,0.2)" stroke-width="0.5" />
@@ -373,15 +350,11 @@
                                 </linearGradient>
                             </defs>
                             <g filter="drop-shadow(0px 4px 4px rgba(0,0,0,0.3))">
-                                <!-- Path Kiri -->
                                 <path class="ribbon-wave-1" d="M 46 -50 L 46 100 Q 46 130, 50 148" stroke="url(#ribbonMain)" stroke-width="7" fill="none" />
-                                <!-- Path Kanan -->
                                 <path class="ribbon-wave-2" d="M 54 -50 L 54 100 Q 54 130, 50 148" stroke="url(#ribbonMain)" stroke-width="7" fill="none" />
-                                <!-- Tekstur Anyaman -->
                                 <path class="ribbon-wave-1" d="M 46 -50 L 46 100 Q 46 130, 50 148" stroke="url(#nylonWeave)" stroke-width="7" fill="none" />
                                 <path class="ribbon-wave-2" d="M 54 -50 L 54 100 Q 54 130, 50 148" stroke="url(#nylonWeave)" stroke-width="7" fill="none" />
                             </g>
-                            <!-- Gantungan Metal -->
                             <g transform="translate(42, 144)">
                                 <rect width="16" height="14" rx="2" fill="#334155" />
                                 <rect x="1" y="1" width="14" height="12" rx="1.5" fill="#475569" />
@@ -391,81 +364,44 @@
                             </g>
                         </svg>
 
-                        <!-- Kartu ID Futuristik dengan Animasi Ayunan -->
+                        <!-- Kartu ID -->
                         <div class="lanyard-card-interactive wind-effect-card">
                             <div class="perspective-2000">
                                 <div class="transition-transform duration-500 ease-out" 
                                      :style="`transform: rotateX(${rotation.x}deg) rotateY(${rotation.y}deg)`">
                                     
-                                    <div class="w-[240px] md:w-[280px] h-[360px] md:h-[410px] rounded-[1.5rem] md:rounded-[2rem] bg-slate-900/5 dark:bg-white/5 border border-white/40 backdrop-blur-xl p-1 md:p-1.5 shadow-[0_35px_60px_-15px_rgba(0,0,0,0.3)] relative overflow-hidden flex items-center justify-center">
-                                        
-                                        <div class="w-[96%] h-[97%] rounded-[1.2rem] md:rounded-[1.6rem] overflow-hidden relative flex flex-col transition-colors duration-500 id-card-texture border border-slate-200/50"
+                                    <div class="w-[280px] h-[410px] rounded-[2rem] bg-slate-900/5 dark:bg-white/5 border border-white/40 backdrop-blur-xl p-1.5 shadow-[0_35px_60px_-15px_rgba(0,0,0,0.3)] relative overflow-hidden flex items-center justify-center">
+                                        <div class="w-[96%] h-[97%] rounded-[1.6rem] overflow-hidden relative flex flex-col transition-colors duration-500 id-card-texture border border-slate-200/50"
                                              :class="isDarkMode ? 'bg-slate-900 text-white' : 'bg-white text-slate-900'">
-                                            
                                             <div class="absolute inset-0 holo-shimmer pointer-events-none opacity-40"></div>
-
-                                            <div class="h-12 md:h-16 bg-emerald-950 flex flex-col items-center justify-center relative">
-                                                <span class="relative z-10 text-[7px] md:text-[9px] font-black tracking-[0.4em] text-emerald-400 uppercase italic">IDENTITY ACCESS</span>
+                                            <div class="h-16 bg-emerald-950 flex flex-col items-center justify-center relative">
+                                                <span class="relative z-10 text-[9px] font-black tracking-[0.4em] text-emerald-400 uppercase italic">IDENTITY ACCESS</span>
                                             </div>
-
-                                            <div class="flex-1 p-4 md:p-5 flex flex-col items-center relative">
-                                                <div class="relative mb-3 md:mb-4 mt-1 md:mt-2">
+                                            <div class="flex-1 p-5 flex flex-col items-center relative">
+                                                <div class="relative mb-4 mt-2">
                                                     <div class="absolute -inset-2 rounded-2xl bg-gradient-to-br from-emerald-500/20 to-transparent blur-sm"></div>
-                                                    <div class="w-20 h-24 md:w-24 md:h-28 rounded-2xl bg-slate-100 p-1 border-2 border-emerald-950/5 shadow-xl overflow-hidden">
+                                                    <div class="w-24 h-28 rounded-2xl bg-slate-100 p-1 border-2 border-emerald-950/5 shadow-xl overflow-hidden">
                                                         <img src="https://avatars.githubusercontent.com/u/73228642?v=4" alt="Antono" class="w-full h-full object-cover rounded-xl">
                                                     </div>
                                                 </div>
-                                                
                                                 <div class="text-center w-full">
-                                                    <h3 class="text-lg md:text-xl font-black uppercase tracking-tighter leading-none mb-1">ANTONO</h3>
-                                                    <p class="text-[7px] md:text-[8px] font-black text-emerald-600 uppercase tracking-[0.2em] bg-emerald-50 px-3 py-1 rounded-full inline-block mb-3 md:mb-4">PRINCIPAL ARCHITECT</p>
+                                                    <h3 class="text-xl font-black uppercase tracking-tighter leading-none mb-1">ANTONO</h3>
+                                                    <p class="text-[8px] font-black text-emerald-600 uppercase tracking-[0.2em] bg-emerald-50 px-3 py-1 rounded-full inline-block mb-4">PRINCIPAL ARCHITECT</p>
                                                     
-                                                    <div class="flex justify-center items-center gap-4 md:gap-6 py-3 md:py-4 mb-3 md:mb-4 border-y border-slate-100 dark:border-white/5">
-                                                        <div class="w-8 md:w-10 h-6 md:h-8 rounded-md bg-gradient-to-br from-amber-400 via-yellow-200 to-amber-500 border border-amber-600/30 flex flex-col items-center justify-center p-1">
-                                                            <div class="w-full h-full grid grid-cols-2 grid-rows-3 gap-0.5 opacity-60">
-                                                                <div class="border-b border-r border-amber-900/30"></div>
-                                                                <div class="border-b border-amber-900/30"></div>
-                                                                <div class="border-b border-r border-amber-900/30"></div>
-                                                                <div class="border-b border-amber-900/30"></div>
-                                                                <div class="border-r border-amber-900/30"></div>
-                                                                <div></div>
-                                                            </div>
-                                                        </div>
-
-                                                        <div class="w-8 md:w-10 h-8 md:h-10 bg-slate-900 dark:bg-emerald-500/20 rounded p-1 flex flex-col gap-0.5">
-                                                            <div class="flex gap-0.5 justify-between">
-                                                                <div class="w-2 md:w-3 h-2 md:h-3 border border-emerald-400"></div>
-                                                                <div class="w-2 md:w-3 h-2 md:h-3 border border-emerald-400"></div>
-                                                            </div>
-                                                            <div class="flex-1 flex items-center justify-center">
-                                                                <div class="w-full h-[1px] bg-emerald-400/30"></div>
-                                                            </div>
-                                                            <div class="flex gap-0.5 justify-between">
-                                                                <div class="w-2 md:w-3 h-2 md:h-3 border border-emerald-400"></div>
-                                                                <div class="w-1 md:w-1.5 h-1 md:h-1.5 bg-emerald-400"></div>
-                                                            </div>
-                                                        </div>
+                                                    <div class="grid grid-cols-2 gap-y-3 text-left font-mono-custom px-2 mt-4">
+                                                        <div><span class="text-[5px] opacity-40 uppercase block mb-1">Sektor</span><span class="text-[9px] font-bold uppercase">Alpha_7</span></div>
+                                                        <div><span class="text-[5px] opacity-40 uppercase block mb-1">Clearance</span><span class="text-[9px] font-bold uppercase text-emerald-500">Level 9</span></div>
+                                                        <div><span class="text-[5px] opacity-40 uppercase block mb-1">Status</span><span class="text-[9px] font-bold uppercase text-emerald-500">Aktif</span></div>
+                                                        <div><span class="text-[5px] opacity-40 uppercase block mb-1">No. ID</span><span class="text-[9px] font-bold uppercase">ANT-001X</span></div>
                                                     </div>
 
-                                                    <div class="grid grid-cols-2 gap-y-2 md:gap-y-3 text-left font-mono-custom px-2">
-                                                        <div>
-                                                            <span class="text-[4px] md:text-[5px] opacity-40 uppercase block leading-none mb-1">Sector</span>
-                                                            <span class="text-[8px] md:text-[9px] font-bold uppercase">Alpha_7</span>
-                                                        </div>
-                                                        <div>
-                                                            <span class="text-[4px] md:text-[5px] opacity-40 uppercase block leading-none mb-1">UID Code</span>
-                                                            <span class="text-[8px] md:text-[9px] font-bold uppercase">#A9901X</span>
-                                                        </div>
+                                                    <div class="mt-8 w-full flex flex-col items-center opacity-60">
+                                                        <svg class="w-full h-10" preserveAspectRatio="none" viewBox="0 0 100 20">
+                                                            <rect x="0" y="0" width="2" height="20" fill="currentColor"/><rect x="4" y="0" width="1" height="20" fill="currentColor"/><rect x="7" y="0" width="3" height="20" fill="currentColor"/><rect x="12" y="0" width="1" height="20" fill="currentColor"/><rect x="15" y="0" width="4" height="20" fill="currentColor"/><rect x="22" y="0" width="2" height="20" fill="currentColor"/><rect x="26" y="0" width="1" height="20" fill="currentColor"/><rect x="30" y="0" width="5" height="20" fill="currentColor"/><rect x="37" y="0" width="2" height="20" fill="currentColor"/><rect x="41" y="0" width="1" height="20" fill="currentColor"/><rect x="44" y="0" width="3" height="20" fill="currentColor"/><rect x="50" y="0" width="2" height="20" fill="currentColor"/><rect x="54" y="0" width="4" height="20" fill="currentColor"/><rect x="60" y="0" width="1" height="20" fill="currentColor"/><rect x="63" y="0" width="2" height="20" fill="currentColor"/><rect x="68" y="0" width="3" height="20" fill="currentColor"/><rect x="74" y="0" width="1" height="20" fill="currentColor"/><rect x="78" y="0" width="4" height="20" fill="currentColor"/><rect x="84" y="0" width="2" height="20" fill="currentColor"/><rect x="88" y="0" width="1" height="20" fill="currentColor"/><rect x="91" y="0" width="5" height="20" fill="currentColor"/><rect x="98" y="0" width="2" height="20" fill="currentColor"/>
+                                                        </svg>
+                                                        <span class="text-[5px] font-mono-custom tracking-[0.3em] mt-1">SYS.ARCH.OP.99</span>
                                                     </div>
                                                 </div>
-                                            </div>
-
-                                            <div class="px-5 py-2 md:py-3 bg-slate-50 dark:bg-emerald-950/40 flex justify-between items-center mt-auto">
-                                                <div class="flex flex-col">
-                                                    <span class="text-[4px] md:text-[5px] font-mono opacity-40 tracking-widest">VERIFIED IDENTITY</span>
-                                                    <span class="text-[6px] md:text-[7px] font-mono font-bold text-emerald-600">SECURE_ID_v4</span>
-                                                </div>
-                                                <div class="w-1 h-1 md:w-1.5 md:h-1.5 rounded-full bg-emerald-500 animate-pulse"></div>
                                             </div>
                                         </div>
                                     </div>
@@ -478,16 +414,35 @@
         </div>
     </main>
 
-    <footer class="max-w-7xl mx-auto px-6 py-12 md:py-16 border-t border-slate-200 dark:border-white/5 opacity-40">
-        <div class="flex flex-col md:flex-row justify-between items-center gap-4 text-[9px] md:text-[10px] font-bold uppercase tracking-widest">
-            <span>© 2024 ANTONO — PRINCIPAL ARCHITECT</span>
-            <div class="flex gap-6">
-                <a href="#" class="hover:text-emerald-600 transition-colors">GITHUB</a>
-                <a href="#" class="hover:text-emerald-600 transition-colors">LINKEDIN</a>
-            </div>
-        </div>
-    </footer>
-
-    <script src="https://unpkg.com/alpinejs@3.x.x/dist/cdn.min.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const container = document.getElementById('leaves-container');
+            const leafCount = 25;
+            const leafColors = ['%2310b981', '%23059669', '%2334d399', '%23047857'];
+            
+            for (let i = 0; i < leafCount; i++) {
+                let leaf = document.createElement('div');
+                leaf.className = 'leaf';
+                let size = Math.random() * 20 + 15;
+                let fallDuration = Math.random() * 8 + 6;
+                let swayDuration = Math.random() * 4 + 3;
+                let delay = Math.random() * -15;
+                let color = leafColors[Math.floor(Math.random() * leafColors.length)];
+                let svg = `data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="${color}"><path d="M17,8C8,10 5.9,16.17 3.82,21.34L5.71,22L6.66,19.7C7.14,19.87 7.64,20 8,20C19,20 22,3 22,3C21,5 14,5.25 9,6.25C4,7.25 2,11.5 2,13.5C2,15.5 3.75,17.25 3.75,17.25C7,8 17,8 17,8Z"/></svg>`;
+                leaf.style.width = size + 'px';
+                leaf.style.height = size + 'px';
+                leaf.style.left = Math.random() * 100 + 'vw';
+                leaf.style.backgroundImage = `url('${svg}')`;
+                leaf.style.animationDuration = `${fallDuration}s, ${swayDuration}s`;
+                leaf.style.animationDelay = `${delay}s, ${delay}s`;
+                leaf.style.setProperty('--leaf-opacity', (Math.random() * 0.4 + 0.2).toFixed(2)); 
+                leaf.style.setProperty('--sway-start', Math.random() * -60 - 20);
+                leaf.style.setProperty('--sway-end', Math.random() * 60 + 20);
+                leaf.style.setProperty('--rot-start', Math.random() * 180 - 90);
+                leaf.style.setProperty('--rot-end', Math.random() * 360 + 90);
+                container.appendChild(leaf);
+            }
+        });
+    </script>
 </body>
 </html>
