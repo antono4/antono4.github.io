@@ -15,6 +15,8 @@
     <style>
         :root {
             --primary: #f2ba42;
+            --primary-rgb: 242, 186, 66;
+            --bg-dark: #0c0a09;
         }
 
         * {
@@ -25,7 +27,7 @@
 
         body {
             font-family: 'Plus Jakarta Sans', sans-serif;
-            background-color: #0c0a09;
+            background-color: var(--bg-dark);
             color: #f3f4f6;
             margin: 0;
             overflow-x: hidden;
@@ -58,7 +60,7 @@
             max-width: 1200px;
             height: 64px;
             background: rgba(28, 25, 23, 0.6);
-            backdrop-filter: blur(12px);
+            backdrop-filter: blur(16px);
             border: 1px solid rgba(255, 255, 255, 0.08);
             border-radius: 24px;
             display: flex;
@@ -68,7 +70,7 @@
 
         .nav-links {
             display: flex;
-            gap: 8px;
+            gap: 4px;
             margin-left: 30px;
         }
 
@@ -77,33 +79,37 @@
             color: #a8a29e;
             font-size: 13px;
             font-weight: 600;
-            transition: all 0.3s ease;
-            border-radius: 12px;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            border-radius: 14px;
             cursor: pointer;
         }
 
-        .nav-item:hover, .nav-item.active {
+        .nav-item:hover {
             color: #fff;
-            background: rgba(245, 158, 11, 0.1);
+            background: rgba(255, 255, 255, 0.05);
         }
 
         .nav-item.active {
-            color: #f2ba42;
+            color: var(--primary);
+            background: rgba(242, 186, 66, 0.1);
+        }
+
+        @media (max-width: 640px) {
+            .nav-links { display: none; }
         }
 
         /* --- PAGE TRANSITIONS --- */
         .page {
             display: none;
-            animation: fadeIn 0.8s cubic-bezier(0.2, 0, 0, 1) forwards;
+            opacity: 0;
+            transform: translateY(20px);
+            transition: all 0.6s cubic-bezier(0.2, 0, 0, 1);
         }
 
         .page.active {
             display: block;
-        }
-
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(20px); }
-            to { opacity: 1; transform: translateY(0); }
+            opacity: 1;
+            transform: translateY(0);
         }
 
         .content-main {
@@ -118,6 +124,7 @@
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             font-family: 'Sora', sans-serif;
+            letter-spacing: -0.04em;
         }
 
         .glass-card {
@@ -126,37 +133,57 @@
             backdrop-filter: blur(8px);
             border-radius: 24px;
             padding: 24px;
-            transition: all 0.3s ease;
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            position: relative;
+            overflow: hidden;
+            text-decoration: none;
+            display: block;
         }
 
         .glass-card:hover {
             background: rgba(255, 255, 255, 0.04);
-            border-color: rgba(245, 158, 11, 0.3);
-            transform: translateY(-5px);
+            border-color: rgba(242, 186, 66, 0.3);
+            transform: translateY(-8px);
+            box-shadow: 0 20px 40px -20px rgba(0,0,0,0.5);
         }
 
         .skill-badge {
             background: rgba(255, 255, 255, 0.03);
             border: 1px solid rgba(255, 255, 255, 0.08);
-            padding: 6px 12px;
-            border-radius: 10px;
+            padding: 6px 14px;
+            border-radius: 12px;
             font-size: 11px;
             font-weight: 600;
             color: #d6d3d1;
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+
+        .skill-badge.active-filter {
+            background: rgba(242, 186, 66, 0.2);
+            color: var(--primary);
+            border-color: rgba(242, 186, 66, 0.3);
+        }
+
+        .glass-card:hover .skill-badge {
+            border-color: rgba(242, 186, 66, 0.2);
+            color: #fff;
         }
 
         .social-icon {
-            width: 45px; height: 45px;
+            width: 48px; height: 48px;
             display: flex; align-items: center; justify-content: center;
             background: rgba(255, 255, 255, 0.03);
             border: 1px solid rgba(255, 255, 255, 0.08);
-            border-radius: 12px; color: #a8a29e;
-            transition: all 0.3s ease;
+            border-radius: 16px; color: #a8a29e;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
         }
 
         .social-icon:hover {
-            color: #f2ba42; background: rgba(245, 158, 11, 0.1);
-            transform: translateY(-5px);
+            color: var(--primary); 
+            background: rgba(242, 186, 66, 0.1);
+            transform: translateY(-5px) rotate(8deg);
+            border-color: var(--primary);
         }
 
         /* --- CAROUSEL --- */
@@ -183,24 +210,19 @@
 
         @media (min-width: 768px) {
             .project-card { flex: 0 0 450px; }
-            .project-card:first-child { margin-left: 0; }
         }
 
         .carousel-btn {
             position: absolute;
             top: 50%;
             transform: translateY(-50%);
-            width: 50px;
-            height: 50px;
+            width: 54px; height: 54px;
             background: rgba(28, 25, 23, 0.8);
             border: 1px solid rgba(255, 255, 255, 0.1);
-            border-radius: 50%;
+            border-radius: 18px;
             color: white;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            cursor: pointer;
-            z-index: 10;
+            display: flex; align-items: center; justify-content: center;
+            cursor: pointer; z-index: 10;
             backdrop-filter: blur(8px);
             transition: all 0.3s ease;
         }
@@ -208,30 +230,44 @@
         .carousel-btn:hover {
             background: var(--primary);
             border-color: transparent;
+            color: #000;
             transform: translateY(-50%) scale(1.1);
         }
 
-        .carousel-btn.prev { left: -25px; }
-        .carousel-btn.next { right: -25px; }
+        .carousel-btn.prev { left: -27px; }
+        .carousel-btn.next { right: -27px; }
 
-        @media (max-width: 1024px) {
+        @media (max-width: 1100px) {
             .carousel-btn { display: none; }
         }
 
-        /* --- EKSPLORASI SPECIFIC --- */
         .skill-icon-box {
-            width: 48px;
-            height: 48px;
-            background: linear-gradient(135deg, rgba(245, 158, 11, 0.2), rgba(245, 158, 11, 0.05));
-            border-radius: 12px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            border: 1px solid rgba(245, 158, 11, 0.2);
+            width: 56px; height: 56px;
+            background: linear-gradient(135deg, rgba(242, 186, 66, 0.15), rgba(242, 186, 66, 0.05));
+            border-radius: 16px;
+            display: flex; align-items: center; justify-content: center;
+            border: 1px solid rgba(242, 186, 66, 0.2);
             color: var(--primary);
-            font-size: 20px;
-            margin-bottom: 20px;
+            font-size: 24px;
+            margin-bottom: 24px;
+            transition: all 0.5s ease;
         }
+
+        .glass-card:hover .skill-icon-box {
+            background: var(--primary);
+            color: #000;
+            transform: rotateY(180deg);
+        }
+
+        /* --- CUSTOM SCROLLBAR --- */
+        ::-webkit-scrollbar { width: 6px; }
+        ::-webkit-scrollbar-track { background: var(--bg-dark); }
+        ::-webkit-scrollbar-thumb { 
+            background: #27272a; 
+            border-radius: 10px;
+        }
+        ::-webkit-scrollbar-thumb:hover { background: #3f3f46; }
+
     </style>
 </head>
 <body>
@@ -240,11 +276,11 @@
 
     <div class="top-bar-container">
         <div class="top-bar">
-            <div class="flex items-center gap-3 cursor-pointer" onclick="showPage('home')">
-                <div class="w-8 h-8 bg-amber-600 rounded-lg flex items-center justify-center rotate-3 shadow-lg">
-                    <i class="fa-solid fa-leaf text-white text-xs"></i>
+            <div class="flex items-center gap-3 cursor-pointer group" onclick="showPage('home')">
+                <div class="w-9 h-9 bg-amber-500 rounded-xl flex items-center justify-center rotate-3 shadow-lg group-hover:rotate-12 transition-transform duration-300">
+                    <i class="fa-solid fa-leaf text-stone-900 text-sm"></i>
                 </div>
-                <span class="font-bold tracking-tighter text-sm uppercase">Antono</span>
+                <span class="font-black tracking-tighter text-base uppercase">Antono</span>
             </div>
 
             <nav class="nav-links">
@@ -254,8 +290,9 @@
                 <div onclick="showPage('profil')" class="nav-item" data-page="profil">Profil</div>
             </nav>
 
-            <div class="ml-auto">
-                <div class="w-9 h-9 rounded-xl overflow-hidden border border-white/10 cursor-pointer" onclick="showPage('profil')">
+            <div class="ml-auto flex items-center gap-4">
+                <!-- Status "Available" telah dihapus -->
+                <div class="w-10 h-10 rounded-xl overflow-hidden border border-white/10 cursor-pointer hover:border-amber-500/50 transition-colors" onclick="showPage('profil')">
                     <img src="https://avatars.githubusercontent.com/u/73228642?v=4" alt="Profil">
                 </div>
             </div>
@@ -266,36 +303,35 @@
         <div class="max-w-6xl mx-auto px-6 py-12">
             
             <!-- HOME PAGE -->
-            <div id="page-home" class="page active space-y-24">
-                <header class="text-center space-y-8 pt-12">
+            <div id="page-home" class="page active space-y-32">
+                <header class="text-center space-y-10 pt-16">
                     <div class="relative inline-block">
-                        <div class="absolute -inset-6 bg-amber-600 rounded-full blur-3xl opacity-10"></div>
-                        <img class="relative w-32 h-32 md:w-40 md:h-40 rounded-full object-cover p-1 bg-gradient-to-tr from-amber-600 to-orange-400" 
+                        <div class="absolute -inset-8 bg-amber-500 rounded-full blur-[80px] opacity-20"></div>
+                        <img class="relative w-36 h-36 md:w-48 md:h-48 rounded-full object-cover p-1.5 bg-gradient-to-tr from-amber-500 to-orange-400 shadow-2xl" 
                              src="https://avatars.githubusercontent.com/u/73228642?v=4" alt="Profil Antono">
                     </div>
                     <div class="space-y-6">
-                        <h1 class="text-5xl md:text-7xl font-black tracking-tighter hero-title">Digital Architect.</h1>
-                        <p class="text-stone-400 text-lg max-w-2xl mx-auto font-light leading-relaxed">
-                            Membangun ekosistem digital yang efisien bukan sekadar mengadopsi teknologi terbaru, melainkan menciptakan jaringan yang saling terhubung antara teknologi, data,
-                            dan manusia untuk menciptakan nilai yang konsisten. Efisiensi tercapai ketika seluruh elemen dapat beroperasi secara otomatis, terintegrasi, dan adaptif terhadap perubahan..
+                        <h1 class="text-6xl md:text-8xl font-black hero-title leading-[1.1]">Digital<br>Architect.</h1>
+                        <p class="text-stone-400 text-lg md:text-xl max-w-3xl mx-auto font-light leading-relaxed">
+                            Membangun ekosistem digital yang efisien bukan sekadar mengadopsi teknologi terbaru, melainkan menciptakan jaringan yang saling terhubung antara teknologi, data, dan manusia.
                         </p>
-                        <div class="flex justify-center gap-4 pt-4">
-                            <a href="https://github.com/antono4" class="social-icon"><i class="fa-brands fa-github"></i></a>
-                            <a href="https://www.linkedin.com/in/antono-40aa4b93/" class="social-icon"><i class="fa-brands fa-linkedin-in"></i></a>
-
+                        <div class="flex justify-center gap-5 pt-4">
+                            <a href="https://github.com/antono4" target="_blank" class="social-icon"><i class="fa-brands fa-github text-xl"></i></a>
+                            <a href="https://www.linkedin.com/in/antono-40aa4b93/" target="_blank" class="social-icon"><i class="fa-brands fa-linkedin-in text-xl"></i></a>
+                            <a href="mailto:Antonockr1@gmail.com" class="social-icon"><i class="fa-solid fa-envelope text-xl"></i></a>
                         </div>
                     </div>
                 </header>
 
-                <section class="space-y-8">
+                <section class="space-y-10">
                     <div class="flex justify-between items-end px-2">
                         <div>
-                            <h2 class="text-2xl font-bold text-white">Proyek Terpilih</h2>
-                            <p class="text-stone-500 text-sm">Karya yang mendefinisikan standar saya.</p>
+                            <h2 class="text-3xl font-bold text-white tracking-tight">Proyek Terpilih</h2>
+                            <p class="text-stone-500 text-sm mt-1">Karya yang mendefinisikan standar kualitas saya.</p>
                         </div>
-                        <div class="flex items-center gap-4">
-                             <button onclick="showPage('koleksi')" class="text-amber-500 text-xs font-bold hover:underline">LIHAT SEMUA</button>
-                        </div>
+                        <button onclick="showPage('koleksi')" class="group flex items-center gap-2 text-amber-500 text-xs font-bold tracking-widest uppercase hover:text-white transition-colors">
+                            Lihat Semua <i class="fa-solid fa-arrow-right group-hover:translate-x-1 transition-transform"></i>
+                        </button>
                     </div>
                     
                     <div class="carousel-container">
@@ -303,71 +339,83 @@
                         <button class="carousel-btn next" onclick="moveCarousel(1)"><i class="fa-solid fa-chevron-right"></i></button>
                         
                         <div class="carousel-viewport" id="project-carousel">
-                            <!-- Proyek akan diisi via JS -->
+                            <!-- Populated via JS -->
                         </div>
                     </div>
                 </section>
             </div>
 
             <!-- EKSPLORASI PAGE -->
-            <div id="page-eksplorasi" class="page space-y-16">
-                <header class="space-y-4">
-                    <span class="text-amber-500 font-bold text-xs tracking-[0.3em] uppercase">Tech Stack & Mastery</span>
-                    <h2 class="text-4xl md:text-5xl font-bold hero-title">Eksplorasi Teknologi</h2>
+            <div id="page-eksplorasi" class="page space-y-20">
+                <header class="space-y-4 pt-10">
+                    <div class="flex items-center gap-3">
+                        <div class="h-px w-12 bg-amber-500/50"></div>
+                        <span class="text-amber-500 font-bold text-xs tracking-[0.4em] uppercase">Tech Stack & Mastery</span>
+                    </div>
+                    <h2 class="text-5xl md:text-6xl font-black hero-title">Eksplorasi Teknologi</h2>
                     <p class="text-stone-400 max-w-2xl text-lg leading-relaxed font-light">
-                        Saya tidak hanya menulis kode; saya merancang arsitektur. Dari keindahan antarmuka hingga skalabilitas infrastruktur, berikut adalah instrumen yang saya gunakan.
+                        Saya tidak hanya menulis kode; saya merancang arsitektur. Dari keindahan antarmuka hingga skalabilitas infrastruktur.
                     </p>
                 </header>
                 
                 <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8" id="skills-container">
-                    <!-- Keahlian diisi via JS -->
+                    <!-- Populated via JS -->
                 </div>
 
-                <div class="glass-card mt-12 p-8 md:p-12 border-amber-600/10 relative overflow-hidden group">
-                    <div class="absolute top-0 right-0 w-64 h-64 bg-amber-600/5 blur-3xl rounded-full -mr-20 -mt-20"></div>
-                    <div class="relative z-10 grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
-                        <div class="space-y-6">
-                            <h3 class="text-2xl font-bold text-white">Metodologi Kerja</h3>
-                            <ul class="space-y-4">
-                                <li class="flex items-start gap-3">
-                                    <i class="fa-solid fa-check-circle text-amber-500 mt-1"></i>
+                <div class="glass-card mt-12 p-8 md:p-16 border-amber-500/10 relative group">
+                    <div class="absolute top-0 right-0 w-96 h-96 bg-amber-500/5 blur-[100px] rounded-full -mr-32 -mt-32"></div>
+                    <div class="relative z-10 grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
+                        <div class="space-y-8">
+                            <div>
+                                <h3 class="text-3xl font-bold text-white mb-2">Metodologi Kerja</h3>
+                                <p class="text-stone-500">Standar profesional yang saya terapkan pada setiap proyek.</p>
+                            </div>
+                            <ul class="space-y-6">
+                                <li class="flex items-start gap-4">
+                                    <div class="mt-1 w-6 h-6 rounded-full bg-amber-500/20 flex items-center justify-center shrink-0">
+                                        <i class="fa-solid fa-check text-[10px] text-amber-500"></i>
+                                    </div>
                                     <div>
-                                        <p class="text-white font-semibold">User-Centric Design</p>
-                                        <p class="text-sm text-stone-400">Setiap keputusan desain berawal dari kebutuhan pengguna akhir.</p>
+                                        <p class="text-white font-bold">User-Centric Design</p>
+                                        <p class="text-sm text-stone-400 mt-1 leading-relaxed">Keputusan desain berawal dari kebutuhan pengguna akhir dan efisiensi navigasi.</p>
                                     </div>
                                 </li>
-                                <li class="flex items-start gap-3">
-                                    <i class="fa-solid fa-check-circle text-amber-500 mt-1"></i>
+                                <li class="flex items-start gap-4">
+                                    <div class="mt-1 w-6 h-6 rounded-full bg-amber-500/20 flex items-center justify-center shrink-0">
+                                        <i class="fa-solid fa-bolt text-[10px] text-amber-500"></i>
+                                    </div>
                                     <div>
-                                        <p class="text-white font-semibold">Agile Development</p>
-                                        <p class="text-sm text-stone-400">Iterasi cepat dengan fokus pada kualitas dan pengiriman tepat waktu.</p>
+                                        <p class="text-white font-bold">Agile Development</p>
+                                        <p class="text-sm text-stone-400 mt-1 leading-relaxed">Iterasi cepat dengan fokus pada pengiriman fitur bernilai tinggi secara berkala.</p>
                                     </div>
                                 </li>
-                                <li class="flex items-start gap-3">
-                                    <i class="fa-solid fa-check-circle text-amber-500 mt-1"></i>
+                                <li class="flex items-start gap-4">
+                                    <div class="mt-1 w-6 h-6 rounded-full bg-amber-500/20 flex items-center justify-center shrink-0">
+                                        <i class="fa-solid fa-code text-[10px] text-amber-500"></i>
+                                    </div>
                                     <div>
-                                        <p class="text-white font-semibold">Clean Code & Docs</p>
-                                        <p class="text-sm text-stone-400">Kode yang mudah dipelihara dan dokumentasi teknis yang komprehensif.</p>
+                                        <p class="text-white font-bold">Scalable Architecture</p>
+                                        <p class="text-sm text-stone-400 mt-1 leading-relaxed">Kode yang bersih, modular, dan siap untuk berkembang seiring kebutuhan bisnis.</p>
                                     </div>
                                 </li>
                             </ul>
                         </div>
-                        <div class="bg-black/40 border border-white/5 p-6 rounded-2xl">
-                             <div class="flex items-center gap-4 mb-6">
-                                <div class="w-3 h-3 rounded-full bg-red-500/50"></div>
-                                <div class="w-3 h-3 rounded-full bg-amber-500/50"></div>
-                                <div class="w-3 h-3 rounded-full bg-green-500/50"></div>
+                        <div class="bg-black/60 border border-white/5 p-8 rounded-3xl shadow-inner relative group">
+                             <div class="flex items-center gap-2.5 mb-8">
+                                <div class="w-3 h-3 rounded-full bg-red-500/30"></div>
+                                <div class="w-3 h-3 rounded-full bg-amber-500/30"></div>
+                                <div class="w-3 h-3 rounded-full bg-green-500/30"></div>
+                                <div class="ml-auto text-[10px] text-stone-600 font-mono">architecture.js</div>
                              </div>
-                             <div class="space-y-3 font-mono text-xs text-stone-500">
-                                <p><span class="text-amber-500">const</span> skills = [</p>
-                                <p class="pl-4">"Continuous Integration",</p>
-                                <p class="pl-4">"Cloud Architecture",</p>
-                                <p class="pl-4">"Performance Optimization",</p>
-                                <p class="pl-4">"Accessibility Standard"</p>
-                                <p>];</p>
-                                <p><span class="text-amber-500">if</span> (project.needsSuccess) {</p>
-                                <p class="pl-4">applyMastery(skills);</p>
-                                <p>}</p>
+                             <div class="space-y-4 font-mono text-sm">
+                                <p class="text-stone-500"><span class="text-amber-500">const</span> <span class="text-blue-400">vision</span> = {</p>
+                                <p class="pl-6 text-stone-400">performance: <span class="text-green-400">"optimal"</span>,</p>
+                                <p class="pl-6 text-stone-400">scalability: <span class="text-green-400">"infinite"</span>,</p>
+                                <p class="pl-6 text-stone-400">aesthetics: <span class="text-green-400">"minimalist"</span></p>
+                                <p class="text-stone-500">};</p>
+                                <p class="text-stone-500 mt-6"><span class="text-purple-400">function</span> <span class="text-yellow-200">buildFuture</span>(vision) {</p>
+                                <p class="pl-6 text-stone-400">return vision.implement();</p>
+                                <p class="text-stone-500">}</p>
                              </div>
                         </div>
                     </div>
@@ -375,142 +423,216 @@
             </div>
 
             <!-- KOLEKSI PAGE -->
-            <div id="page-koleksi" class="page space-y-16">
-                <div class="flex flex-col md:flex-row md:items-center justify-between gap-6">
-                    <h2 class="text-4xl font-bold hero-title">Seluruh Koleksi</h2>
-                    <div class="flex gap-2 overflow-x-auto pb-2 md:pb-0">
-                        <button class="skill-badge bg-amber-600/20 text-amber-500 border-amber-600/30">Semua</button>
-                        <button class="skill-badge">Web</button>
-                        <button class="skill-badge">Mobile</button>
-                        <button class="skill-badge">Design</button>
+            <div id="page-koleksi" class="page space-y-16 pt-10">
+                <div class="flex flex-col md:flex-row md:items-end justify-between gap-8">
+                    <div class="space-y-4">
+                        <h2 class="text-5xl font-black hero-title">Seluruh Koleksi</h2>
+                        <p class="text-stone-500 max-w-xl">Kumpulan eksplorasi desain dan pengembangan perangkat lunak dalam beberapa tahun terakhir.</p>
+                    </div>
+                    <div class="flex gap-2 overflow-x-auto pb-4 no-scrollbar" id="project-filters">
+                        <button class="skill-badge active-filter" data-filter="Semua">Semua</button>
+                        <button class="skill-badge" data-filter="WEB APP">Web App</button>
+                        <button class="skill-badge" data-filter="BACKEND">Backend</button>
+                        <button class="skill-badge" data-filter="SAAS">SaaS</button>
+                        <button class="skill-badge" data-filter="MOBILE">Mobile</button>
+                        <button class="skill-badge" data-filter="3D WEB">3D Web</button>
+                        <button class="skill-badge" data-filter="AI TOOLS">AI Tools</button>
                     </div>
                 </div>
-                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8" id="full-koleksi-grid">
-                    <!-- Semua proyek diisi via JS -->
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 transition-all duration-500" id="full-koleksi-grid">
+                    <!-- Populated via JS -->
                 </div>
             </div>
 
             <!-- PROFIL PAGE -->
-            <div id="page-profil" class="page max-w-4xl mx-auto space-y-16">
-                <div class="flex flex-col md:flex-row gap-12 items-start">
-                    <div class="w-full md:w-1/3">
-                        <img class="w-full rounded-3xl object-cover ring-1 ring-white/10" src="https://avatars.githubusercontent.com/u/73228642?v=4" alt="Profil Lengkap">
-                        <div class="mt-6 p-6 glass-card space-y-4">
-                            <h4 class="text-sm font-bold text-amber-500 uppercase">Kontak</h4>
-                            <p class="text-xs text-stone-400">Email: Antonockr1@gmail.com</p>
-                            <p class="text-xs text-stone-400">Lokasi: Bekasi, Indonesia</p>
+            <div id="page-profil" class="page max-w-5xl mx-auto space-y-20 pt-10">
+                <div class="flex flex-col lg:flex-row gap-16 items-start">
+                    <div class="w-full lg:w-2/5 sticky top-32">
+                        <div class="relative group">
+                            <div class="absolute -inset-4 bg-amber-500/10 blur-2xl rounded-[40px] opacity-0 group-hover:opacity-100 transition duration-700"></div>
+                            <img class="relative w-full rounded-[40px] aspect-[4/5] object-cover ring-1 ring-white/10 shadow-2xl" src="https://avatars.githubusercontent.com/u/73228642?v=4" alt="Antono Profile">
+                        </div>
+                        <div class="mt-10 p-8 glass-card space-y-6">
+                            <div class="space-y-4">
+                                <h4 class="text-xs font-black text-amber-500 uppercase tracking-widest">Informasi Kontak</h4>
+                                <div class="space-y-3">
+                                    <div class="flex items-center gap-3 text-stone-400">
+                                        <i class="fa-solid fa-envelope w-5 text-amber-500/60"></i>
+                                        <span class="text-sm">Antonockr1@gmail.com</span>
+                                    </div>
+                                    <div class="flex items-center gap-3 text-stone-400">
+                                        <i class="fa-solid fa-location-dot w-5 text-amber-500/60"></i>
+                                        <span class="text-sm">Bekasi, Indonesia</span>
+                                    </div>
+                                    <div class="flex items-center gap-3 text-stone-400">
+                                        <i class="fa-brands fa-whatsapp w-5 text-amber-500/60"></i>
+                                        <span class="text-sm">+62 8xx xxxx xxxx</span>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                     </div>
-                    <div class="w-full md:w-2/3 space-y-8">
-                        <h2 class="text-5xl font-bold text-white">Antono</h2>
-                        <h3 class="text-xl text-amber-500 font-medium">Senior Fullstack Developer & Designer</h3>
-                        <div class="space-y-6 text-stone-400 leading-relaxed">
-                            <p>Dengan pengalaman lebih dari 6 tahun di industri kreatif digital, saya fokus pada pembuatan antarmuka yang intuitif dan arsitektur backend yang tangguh.</p>
-                            <p>Filosofi desain saya sederhana: fungsionalitas di atas segalanya, namun estetika adalah jiwa yang membuat pengguna merasa betah. Seperti daun yang jatuh, teknologi harus bergerak dengan ritme yang alami dan tidak mengganggu.</p>
+                    <div class="w-full lg:w-3/5 space-y-12">
+                        <div class="space-y-6">
+                            <h2 class="text-6xl font-black text-white leading-tight">Antono</h2>
+                            <h3 class="text-2xl text-amber-500 font-medium">Senior Fullstack Developer & Digital Strategist</h3>
+                            <div class="h-1 w-20 bg-amber-500 rounded-full"></div>
+                        </div>
+                        
+                        <div class="space-y-8 text-stone-400 text-lg leading-relaxed font-light">
+                            <p>Dengan pengalaman lebih dari 6 tahun di industri teknologi, saya mengkhususkan diri dalam membangun solusi digital yang menjembatani antara kompleksitas teknis dan kemudahan penggunaan.</p>
+                            <p>Filosofi saya berakar pada efisiensi. Seperti alam yang selalu menemukan cara paling optimal untuk tumbuh, perangkat lunak seharusnya tidak membebani pengguna dengan kerumitan yang tidak perlu. Saya percaya pada kekuatan minimalisme yang fungsional.</p>
                         </div>
 
+                        <div class="grid grid-cols-2 gap-8">
+                            <div class="space-y-2">
+                                <p class="text-3xl font-bold text-white">40+</p>
+                                <p class="text-xs text-stone-500 uppercase tracking-widest">Proyek Selesai</p>
+                            </div>
+                            <div class="space-y-2">
+                                <p class="text-3xl font-bold text-white">15+</p>
+                                <p class="text-xs text-stone-500 uppercase tracking-widest">Klien Puas</p>
+                            </div>
+                        </div>
+
+                        <div class="pt-8">
+                            <button onclick="window.location.href='mailto:Antonockr1@gmail.com'" class="px-10 py-5 bg-amber-500 text-stone-900 font-black rounded-2xl hover:bg-white hover:scale-105 transition-all shadow-xl shadow-amber-500/10">
+                                MULAI KOLABORASI
+                            </button>
                         </div>
                     </div>
                 </div>
             </div>
 
-            <footer class="text-center pt-32 pb-12 border-t border-white/5 mt-32">
-                <p class="text-[10px] text-stone-500 uppercase tracking-[0.5em]">&copy; 2024 Antono &mdash; Estetika Musim Gugur</p>
+            <footer class="text-center pt-48 pb-12 border-t border-white/5 mt-32 opacity-50 hover:opacity-100 transition-opacity">
+                <div class="mb-8 flex justify-center gap-6">
+                    <a href="#" class="text-stone-500 hover:text-amber-500 transition-colors text-xl"><i class="fa-brands fa-github"></i></a>
+                    <a href="#" class="text-stone-500 hover:text-amber-500 transition-colors text-xl"><i class="fa-brands fa-linkedin"></i></a>
+                    <a href="#" class="text-stone-500 hover:text-amber-500 transition-colors text-xl"><i class="fa-brands fa-instagram"></i></a>
+                </div>
+                <p class="text-[11px] text-stone-500 uppercase tracking-[0.6em] font-bold">&copy; 2024 Antono &mdash; Designed for the Future</p>
             </footer>
         </div>
     </div>
 
     <script>
-        // Data Proyek
+        // --- DATA ---
         const projects = [
-            { id: 1, title: "Web portofolio", tag: "DASHBOARD", desc: "Sistem desain berbasis komponen alam yang sangat responsif dan minimalis.", img: "https://69eeba9cabe5326bdb41b94e.imgix.net/website/portofolio.png?auto=format&fit=crop&w=1200&q=80" },
-            { id: 2, title: "TV Online with API Engine", tag: "WEB3", desc: "Mesin API RESTful berperforma tinggi dengan manajemen cache cerdas.", img: "https://69eeba9cabe5326bdb41b94e.imgix.net/website/tvonline.png?auto=format&fit=crop&w=1200&q=80" },
-            { id: 3, title: "Portofolio website", tag: "WEB3", desc: "Dasbord website portofolio dengan UI yang profesional.", img: "https://69eeba9cabe5326bdb41b94e.imgix.net/website/portofolioAntono.png?auto=format&fit=crop&w=1200&q=80" },
-            { id: 4, title: "Alquran Digital With AI", tag: "MOBILE", desc: "Aplikasi ALQURAN mobile lintas Menggunakan API AI.", img: "https://69eeba9cabe5326bdb41b94e.imgix.net/website/AlquranDigital.png?auto=format&fit=crop&w=1200&q=80" },
-            { id: 5, title: "SCENERY", tag: "DASHBOARD", desc: "Anime scenery.", img: "https://69eeba9cabe5326bdb41b94e.imgix.net/website/AnimeScenery.png?auto=format&fit=crop&w=1200&q=80" },
-            { id: 6, title: "Auto Content Generator", tag: "AI", desc: "Auto content Generator with AI for Social Media Content.", img: "https://69eeba9cabe5326bdb41b94e.imgix.net/website/acg.png?auto=format&fit=crop&w=1200&q=80" }
+            { id: 1, title: "Modern Portfolio", tag: "WEB APP", desc: "Sistem desain berbasis komponen alam yang sangat responsif dan minimalis.", img: "https://images.unsplash.com/photo-1460925895917-afdab827c52f?q=80&w=1200", link: "https://github.com/antono4" },
+            { id: 2, title: "TV Online Engine", tag: "BACKEND", desc: "Mesin API RESTful berperforma tinggi dengan manajemen cache cerdas.", img: "https://images.unsplash.com/photo-1550745165-9bc0b252726f?q=80&w=1200", link: "https://github.com/antono4" },
+            { id: 3, title: "Enterprise Dashboard", tag: "SAAS", desc: "Dashboard monitoring real-time dengan integrasi berbagai source data.", img: "https://images.unsplash.com/photo-1551288049-bbda48658a7d?q=80&w=1200", link: "https://github.com/antono4" },
+            { id: 4, title: "Alquran Digital AI", tag: "MOBILE", desc: "Aplikasi mobile lintas platform dengan fitur pencarian berbasis AI.", img: "https://images.unsplash.com/photo-1512428559083-a401a30c9550?q=80&w=1200", link: "https://github.com/antono4" },
+            { id: 5, title: "Visual Scenery", tag: "3D WEB", desc: "Eksplorasi visual scenery interaktif menggunakan Three.js dan GLSL.", img: "https://images.unsplash.com/photo-1478760329108-5c3ed9d495a0?q=80&w=1200", link: "https://github.com/antono4" },
+            { id: 6, title: "Content Gen AI", tag: "AI TOOLS", desc: "Otomatisasi pembuatan konten media sosial dengan model bahasa besar.", img: "https://images.unsplash.com/photo-1677442136019-21780ecad995?q=80&w=1200", link: "https://github.com/antono4" }
         ];
 
-        // Data Keahlian Terupdate
         const skills = [
-            { 
-                name: "Frontend Mastery", 
-                icon: "fa-solid fa-code", 
-                tech: ["React.js", "Next.js", "Vue.js", "GSAP"], 
-                desc: "Membangun antarmuka yang cair dengan fokus pada performa runtime dan pengalaman pengguna yang seamless." 
-            },
-            { 
-                name: "Backend Architecture", 
-                icon: "fa-solid fa-server", 
-                tech: ["Node.js", "Golang", "PostgreSQL", "Redis"], 
-                desc: "Merancang sistem terdistribusi yang tangguh menghadapi beban tinggi dan menjaga integritas data." 
-            },
-            { 
-                name: "Creative Design", 
-                icon: "fa-solid fa-bezier-curve", 
-                tech: ["Figma", "Framer", "Spline 3D", "After Effects"], 
-                desc: "Menerjemahkan konsep abstrak menjadi visual yang fungsional dan estetis sesuai brand identity." 
-            },
-            { 
-                name: "Mobile Ecosystem", 
-                icon: "fa-solid fa-mobile-screen-button", 
-                tech: ["React Native", "Flutter", "Swift UI"], 
-                desc: "Pengembangan aplikasi native dan hybrid dengan fokus pada efisiensi daya dan UI yang adaptif." 
-            },
-            { 
-                name: "DevOps & Cloud", 
-                icon: "fa-solid fa-cloud-arrow-up", 
-                tech: ["Docker", "Kubernetes", "AWS", "CI/CD"], 
-                desc: "Otomatisasi deployment dan manajemen infrastruktur awan untuk skalabilitas yang fleksibel." 
-            },
-            { 
-                name: "Blockchain & Web3", 
-                icon: "fa-solid fa-link", 
-                tech: ["Solidity", "Ethers.js", "Smart Contracts"], 
-                desc: "Eksplorasi ekonomi digital baru melalui teknologi desentralisasi yang aman dan transparan." 
-            }
+            { name: "Frontend Mastery", icon: "fa-solid fa-code", tech: ["React", "Next.js", "Three.js", "Tailwind"], desc: "Membangun antarmuka cair dengan fokus pada performa runtime dan pengalaman pengguna." },
+            { name: "Backend Architecture", icon: "fa-solid fa-server", tech: ["Node.js", "Go", "PostgreSQL", "Redis"], desc: "Merancang sistem terdistribusi yang tangguh menghadapi beban tinggi dan menjaga integritas data." },
+            { name: "Creative Design", icon: "fa-solid fa-bezier-curve", tech: ["Figma", "Framer", "Adobe Suite"], desc: "Menerjemahkan konsep abstrak menjadi visual fungsional dan estetis sesuai identitas brand." },
+            { name: "Mobile Ecosystem", icon: "fa-solid fa-mobile-screen", tech: ["React Native", "Flutter"], desc: "Pengembangan aplikasi native dan hybrid dengan fokus pada efisiensi daya dan UI adaptif." },
+            { name: "DevOps & Cloud", icon: "fa-solid fa-cloud", tech: ["Docker", "K8s", "AWS", "GitHub Actions"], desc: "Otomatisasi deployment dan manajemen infrastruktur awan untuk skalabilitas fleksibel." },
+            { name: "AI Integration", icon: "fa-solid fa-brain", tech: ["OpenAI", "LangChain", "Python"], desc: "Implementasi kecerdasan buatan untuk meningkatkan efisiensi alur kerja dan fitur produk." }
         ];
 
-        // --- CAROUSEL LOGIC ---
-        const carousel = document.getElementById('project-carousel');
-        let slideInterval;
-
-        function renderCarousel() {
-            carousel.innerHTML = '';
-            projects.forEach(proj => {
-                const card = document.createElement('div');
-                card.className = 'project-card glass-card group cursor-pointer';
-                card.innerHTML = `
-                    <div class="h-64 rounded-xl overflow-hidden mb-6 relative">
-                        <img src="${proj.img}" class="w-full h-full object-cover transition duration-1000 group-hover:scale-110">
-                        <div class="absolute inset-0 bg-black/30 group-hover:bg-transparent transition duration-500"></div>
+        // --- RENDER FUNCTIONS ---
+        function renderProjectCard(proj, isSmall = false) {
+            return `
+                <a href="${proj.link}" target="_blank" rel="noopener noreferrer" class="${isSmall ? 'glass-card' : 'project-card glass-card'} group cursor-pointer" data-category="${proj.tag}">
+                    <div class="${isSmall ? 'h-48' : 'h-72'} rounded-2xl overflow-hidden mb-6 relative">
+                        <img src="${proj.img}" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110">
+                        <div class="absolute inset-0 bg-black/40 group-hover:bg-black/10 transition-colors duration-500"></div>
                         <div class="absolute top-4 left-4">
-                             <span class="px-3 py-1 bg-black/50 backdrop-blur-md rounded-full text-[10px] font-bold text-amber-500 tracking-widest uppercase border border-white/10">${proj.tag}</span>
+                             <span class="px-4 py-1.5 bg-black/60 backdrop-blur-md rounded-xl text-[10px] font-black text-amber-500 tracking-[0.2em] uppercase border border-white/10 shadow-lg">${proj.tag}</span>
                         </div>
                     </div>
                     <div class="space-y-3">
-                        <h3 class="text-2xl font-bold text-white group-hover:text-amber-500 transition">${proj.title}</h3>
-                        <p class="text-stone-400 text-sm leading-relaxed">${proj.desc}</p>
+                        <h3 class="${isSmall ? 'text-xl' : 'text-2xl'} font-black text-white group-hover:text-amber-500 transition-colors">${proj.title}</h3>
+                        <p class="text-stone-400 text-sm leading-relaxed line-clamp-2">${proj.desc}</p>
+                        <div class="pt-2 flex items-center gap-2 text-amber-500/0 group-hover:text-amber-500 transition-all duration-500 text-xs font-bold uppercase tracking-widest">
+                            Detail Project <i class="fa-solid fa-chevron-right text-[10px]"></i>
+                        </div>
                     </div>
-                `;
-                carousel.appendChild(card);
+                </a>
+            `;
+        }
+
+        function initContent() {
+            // Home Carousel
+            const carousel = document.getElementById('project-carousel');
+            if (carousel) carousel.innerHTML = projects.map(p => renderProjectCard(p)).join('');
+
+            // Skills Grid
+            const skillsContainer = document.getElementById('skills-container');
+            if (skillsContainer) skillsContainer.innerHTML = skills.map(s => `
+                <div class="glass-card group">
+                    <div class="skill-icon-box">
+                        <i class="${s.icon}"></i>
+                    </div>
+                    <h3 class="font-bold text-white text-xl mb-3 group-hover:text-amber-500 transition-colors">${s.name}</h3>
+                    <p class="text-stone-400 text-sm leading-relaxed mb-6">${s.desc}</p>
+                    <div class="flex flex-wrap gap-2">
+                        ${s.tech.map(t => `<span class="skill-badge">${t}</span>`).join('')}
+                    </div>
+                </div>
+            `).join('');
+
+            // Collection Grid (Initial All)
+            filterProjects('Semua');
+
+            // Setup Filter Listeners
+            document.querySelectorAll('#project-filters button').forEach(btn => {
+                btn.onclick = () => {
+                    document.querySelectorAll('#project-filters button').forEach(b => b.classList.remove('active-filter'));
+                    btn.classList.add('active-filter');
+                    filterProjects(btn.getAttribute('data-filter'));
+                };
             });
         }
 
+        function filterProjects(category) {
+            const grid = document.getElementById('full-koleksi-grid');
+            if (!grid) return;
+            
+            // Filter logic
+            const filtered = category === 'Semua' 
+                ? projects 
+                : projects.filter(p => p.tag === category);
+            
+            // Animate transition
+            grid.style.opacity = '0';
+            grid.style.transform = 'translateY(10px)';
+            
+            setTimeout(() => {
+                grid.innerHTML = filtered.length > 0 
+                    ? filtered.map(p => renderProjectCard(p, true)).join('')
+                    : `<div class="col-span-full py-20 text-center text-stone-500 font-medium">Belum ada project di kategori ini.</div>`;
+                
+                grid.style.opacity = '1';
+                grid.style.transform = 'translateY(0)';
+            }, 300);
+        }
+
+        // --- CAROUSEL LOGIC ---
+        let slideInterval;
+        const carouselEl = document.getElementById('project-carousel');
+
         function moveCarousel(direction) {
-            const scrollAmount = carousel.offsetWidth * 0.8;
-            carousel.scrollBy({ left: direction * scrollAmount, behavior: 'smooth' });
+            if (!carouselEl) return;
+            const scrollAmount = carouselEl.offsetWidth * 0.8;
+            carouselEl.scrollBy({ left: direction * scrollAmount, behavior: 'smooth' });
             resetAutoSlide();
         }
 
         function startAutoSlide() {
+            if (!carouselEl) return;
             slideInterval = setInterval(() => {
-                if (carousel.scrollLeft + carousel.offsetWidth >= carousel.scrollWidth - 10) {
-                    carousel.scrollTo({ left: 0, behavior: 'smooth' });
+                if (carouselEl.scrollLeft + carouselEl.offsetWidth >= carouselEl.scrollWidth - 10) {
+                    carouselEl.scrollTo({ left: 0, behavior: 'smooth' });
                 } else {
-                    carousel.scrollBy({ left: 300, behavior: 'smooth' });
+                    carouselEl.scrollBy({ left: 400, behavior: 'smooth' });
                 }
-            }, 4000);
+            }, 5000);
         }
 
         function resetAutoSlide() {
@@ -520,62 +642,37 @@
 
         // --- NAVIGATION ---
         function showPage(pageId) {
-            document.querySelectorAll('.page').forEach(page => page.classList.remove('active'));
-            const targetPage = document.getElementById(`page-${pageId}`);
-            if (targetPage) targetPage.classList.add('active');
-            
+            const currentActive = document.querySelector('.page.active');
+            if (currentActive) {
+                currentActive.style.opacity = '0';
+                currentActive.style.transform = 'translateY(20px)';
+                setTimeout(() => {
+                    currentActive.classList.remove('active');
+                    const targetPage = document.getElementById(`page-${pageId}`);
+                    if (targetPage) {
+                        targetPage.classList.add('active');
+                        // Small delay for reflow
+                        setTimeout(() => {
+                            targetPage.style.opacity = '1';
+                            targetPage.style.transform = 'translateY(0)';
+                        }, 50);
+                    }
+                }, 300);
+            }
+
             document.querySelectorAll('.nav-item').forEach(item => {
                 item.classList.toggle('active', item.getAttribute('data-page') === pageId);
             });
+            
             window.scrollTo({ top: 0, behavior: 'smooth' });
             
-            if (pageId === 'home') {
-                 resetAutoSlide();
-            } else {
-                 clearInterval(slideInterval);
-            }
+            if (pageId === 'home') resetAutoSlide();
+            else clearInterval(slideInterval);
         }
 
-        // Render Keahlian di Halaman Eksplorasi
-        const skillsContainer = document.getElementById('skills-container');
-        skills.forEach(skill => {
-            const card = document.createElement('div');
-            card.className = 'glass-card group';
-            card.innerHTML = `
-                <div class="skill-icon-box group-hover:bg-amber-600 group-hover:text-white transition-colors duration-500">
-                    <i class="${skill.icon}"></i>
-                </div>
-                <h3 class="font-bold text-white text-xl mb-3 group-hover:text-amber-500 transition-colors">${skill.name}</h3>
-                <p class="text-stone-400 text-sm leading-relaxed mb-6">${skill.desc}</p>
-                <div class="flex flex-wrap gap-2">
-                    ${skill.tech.map(t => `<span class="skill-badge">${t}</span>`).join('')}
-                </div>
-            `;
-            skillsContainer.appendChild(card);
-        });
-
-        // Render Koleksi Lengkap
-        const koleksiGrid = document.getElementById('full-koleksi-grid');
-        projects.forEach(proj => {
-            const card = document.createElement('div');
-            card.className = 'glass-card group cursor-pointer';
-            card.innerHTML = `
-                <div class="h-48 rounded-xl overflow-hidden mb-6 relative">
-                    <img src="${proj.img}" class="w-full h-full object-cover transition group-hover:scale-105">
-                </div>
-                <div class="space-y-2">
-                    <span class="text-[10px] font-bold text-stone-500 tracking-widest uppercase">${proj.tag}</span>
-                    <h3 class="text-lg font-bold text-white">${proj.title}</h3>
-                    <p class="text-stone-400 text-xs">${proj.desc}</p>
-                </div>
-            `;
-            koleksiGrid.appendChild(card);
-        });
-
-        // --- BACKGROUND ENGINE (Three.js - Falling Leaves) ---
+        // --- BACKGROUND ENGINE (Three.js) ---
         let scene, camera, renderer, leaves = [];
         let mouse = new THREE.Vector2(0, 0);
-        const leafCount = 50;
 
         function initBackground() {
             scene = new THREE.Scene();
@@ -590,6 +687,7 @@
             renderer.setSize(window.innerWidth, window.innerHeight);
             renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
 
+            // Leaf Geometry
             const leafShape = new THREE.Shape();
             leafShape.moveTo(0, 0);
             leafShape.bezierCurveTo(0.2, 0.1, 0.3, 0.5, 0, 0.8);
@@ -597,21 +695,21 @@
             const geometry = new THREE.ShapeGeometry(leafShape);
             const colors = [0xd97706, 0xb45309, 0xf59e0b, 0x78350f, 0x92400e];
 
-            for (let i = 0; i < leafCount; i++) {
+            for (let i = 0; i < 60; i++) {
                 const material = new THREE.MeshBasicMaterial({ 
                     color: colors[Math.floor(Math.random() * colors.length)],
                     side: THREE.DoubleSide,
                     transparent: true,
-                    opacity: 0.3 + Math.random() * 0.4
+                    opacity: 0.2 + Math.random() * 0.3
                 });
                 const leaf = new THREE.Mesh(geometry, material);
                 resetLeaf(leaf);
                 leaf.userData = {
-                    speedY: 0.005 + Math.random() * 0.01,
-                    speedX: (Math.random() - 0.5) * 0.005,
-                    rotationSpeed: { x: Math.random() * 0.02, y: Math.random() * 0.02, z: Math.random() * 0.02 },
+                    speedY: 0.003 + Math.random() * 0.008,
+                    speedX: (Math.random() - 0.5) * 0.004,
+                    rotationSpeed: { x: Math.random() * 0.015, y: Math.random() * 0.015, z: Math.random() * 0.015 },
                     sway: Math.random() * Math.PI * 2,
-                    swaySpeed: 0.01 + Math.random() * 0.02
+                    swaySpeed: 0.005 + Math.random() * 0.015
                 };
                 leaves.push(leaf);
                 scene.add(leaf);
@@ -626,10 +724,10 @@
         }
 
         function resetLeaf(leaf) {
-            leaf.position.y = 7 + Math.random() * 5;
+            leaf.position.y = 8 + Math.random() * 5;
             leaf.position.x = (Math.random() - 0.5) * 15;
-            leaf.position.z = (Math.random() - 0.5) * 5;
-            leaf.scale.setScalar(0.3 + Math.random() * 0.6);
+            leaf.position.z = (Math.random() - 0.5) * 6;
+            leaf.scale.setScalar(0.2 + Math.random() * 0.5);
             leaf.rotation.set(Math.random() * Math.PI, Math.random() * Math.PI, Math.random() * Math.PI);
         }
 
@@ -639,34 +737,46 @@
                 const d = leaf.userData;
                 leaf.position.y -= d.speedY;
                 d.sway += d.swaySpeed;
-                leaf.position.x += Math.sin(d.sway) * 0.005 + d.speedX;
+                leaf.position.x += Math.sin(d.sway) * 0.003 + d.speedX;
                 leaf.rotation.x += d.rotationSpeed.x;
                 leaf.rotation.y += d.rotationSpeed.y;
                 leaf.rotation.z += d.rotationSpeed.z;
 
+                // Subtle Mouse Interaction
                 const mousePos = new THREE.Vector3(mouse.x * 5, mouse.y * 3, 0);
                 const dist = leaf.position.distanceTo(mousePos);
-                if (dist < 2) {
-                    leaf.position.x += (leaf.position.x - mousePos.x) * 0.02;
-                    leaf.position.y += (leaf.position.y - mousePos.y) * 0.02;
+                if (dist < 2.5) {
+                    leaf.position.x += (leaf.position.x - mousePos.x) * 0.015;
+                    leaf.position.y += (leaf.position.y - mousePos.y) * 0.015;
                 }
-                if (leaf.position.y < -7) resetLeaf(leaf);
+                if (leaf.position.y < -8) resetLeaf(leaf);
             });
             renderer.render(scene, camera);
         }
 
+        // --- INIT ---
         window.onload = () => {
             initBackground();
-            renderCarousel();
+            initContent();
             startAutoSlide();
+            
+            // Initial animation for the first page
+            const home = document.getElementById('page-home');
+            if (home) {
+                home.style.opacity = '1';
+                home.style.transform = 'translateY(0)';
+            }
+
             window.addEventListener('resize', () => {
                 camera.aspect = window.innerWidth / window.innerHeight;
                 camera.updateProjectionMatrix();
                 renderer.setSize(window.innerWidth, window.innerHeight);
             });
-            
-            carousel.addEventListener('mouseenter', () => clearInterval(slideInterval));
-            carousel.addEventListener('mouseleave', () => startAutoSlide());
+
+            if (carouselEl) {
+                carouselEl.addEventListener('mouseenter', () => clearInterval(slideInterval));
+                carouselEl.addEventListener('mouseleave', () => startAutoSlide());
+            }
         };
     </script>
 </body>
