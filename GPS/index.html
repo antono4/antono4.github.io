@@ -1,0 +1,301 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Gerabah Prayogi | Kerajinan Tanah Liat Purbalingga</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;600;700&family=Cormorant+Garamond:ital,wght@0,600;1,600&display=swap');
+
+        :root {
+            --ios-bg: #fdfdfc;
+            --clay-primary: #7c4422;
+            --clay-muted: #a67c52;
+            --clay-dark: #1a1614;
+            --safe-area-bottom: env(safe-area-inset-bottom);
+        }
+
+        body {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            background-color: var(--ios-bg);
+            color: var(--clay-dark);
+            -webkit-tap-highlight-color: transparent;
+            overflow-x: hidden;
+        }
+
+        .serif { font-family: 'Cormorant Garamond', serif; }
+
+        .page {
+            display: none;
+            animation: fadeIn 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+        }
+        .page.active { display: block; }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(30px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .app-header {
+            background: rgba(253, 253, 252, 0.8);
+            backdrop-filter: blur(24px);
+            -webkit-backdrop-filter: blur(24px);
+            z-index: 100;
+            border-bottom: 1px solid rgba(26, 22, 20, 0.04);
+        }
+
+        .bottom-nav {
+            background: rgba(255, 255, 255, 0.85);
+            backdrop-filter: blur(24px);
+            -webkit-backdrop-filter: blur(24px);
+            padding-bottom: calc(0.8rem + var(--safe-area-bottom));
+            border-top: 1px solid rgba(0,0,0,0.03);
+        }
+
+        .artisan-card {
+            background: #ffffff;
+            border-radius: 24px;
+            overflow: hidden;
+            transition: all 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        .img-zoom {
+            transition: transform 1.2s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+        .group:hover .img-zoom {
+            transform: scale(1.08);
+        }
+        
+        .hero-gradient {
+            background: linear-gradient(to top, rgba(26, 22, 20, 0.9) 0%, rgba(26, 22, 20, 0.2) 60%, transparent 100%);
+        }
+
+        .nav-link-desktop.active {
+            color: var(--clay-primary);
+        }
+    </style>
+</head>
+<body class="pb-24 md:pb-0">
+
+    <header class="app-header fixed top-0 w-full px-8 py-6">
+        <div class="max-w-7xl mx-auto flex justify-between items-center">
+            <div class="flex items-center space-x-3 cursor-pointer group" onclick="showPage('home')">
+                <div class="w-10 h-10 bg-[#1a1614] rounded-full flex items-center justify-center text-white shadow-lg">
+                    <i class="fa-solid fa-leaf text-sm"></i>
+                </div>
+                <div>
+                    <h1 class="font-bold text-xl tracking-tighter leading-none">PRAYOGI</h1>
+                    <span class="text-[7px] tracking-[0.5em] font-bold text-orange-900 uppercase">Gerabah Sambirata</span>
+                </div>
+            </div>
+
+            <nav class="hidden md:flex items-center space-x-12">
+                <button onclick="showPage('home')" class="nav-link-desktop text-[10px] font-bold uppercase active" data-page="home">Beranda</button>
+                <button onclick="showPage('catalog')" class="nav-link-desktop text-[10px] font-bold uppercase" data-page="catalog">Koleksi</button>
+                <button onclick="showPage('story')" class="nav-link-desktop text-[10px] font-bold uppercase" data-page="story">Cerita</button>
+                <button onclick="showPage('contact')" class="nav-link-desktop text-[10px] font-bold uppercase" data-page="contact">Kontak</button>
+            </nav>
+
+            <div class="flex items-center space-x-5">
+                <button class="text-gray-400 hover:text-black transition"><i class="fa-solid fa-magnifying-glass text-sm"></i></button>
+                <button class="relative text-gray-400 hover:text-black transition">
+                    <i class="fa-solid fa-bag-shopping text-sm"></i>
+                    <span class="absolute -top-2 -right-2 bg-orange-900 text-[8px] text-white w-4 h-4 rounded-full flex items-center justify-center">0</span>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <!-- Halaman: BERANDA -->
+    <main id="home-page" class="page active mt-24 md:mt-32">
+        <section class="max-w-7xl mx-auto px-6">
+            <div class="relative h-[75vh] md:h-[80vh] rounded-[48px] overflow-hidden group shadow-2xl bg-stone-100">
+                <img src="https://images.unsplash.com/photo-1493106819501-66d381c466f1?auto=format&fit=crop&q=80&w=1600" class="absolute inset-0 w-full h-full object-cover img-zoom transition-transform duration-1000" alt="Produk Gerabah Premium">
+                <div class="absolute inset-0 hero-gradient"></div>
+                
+                <div class="absolute inset-0 flex flex-col justify-end p-10 md:p-24 text-white">
+                    <span class="text-[10px] font-bold tracking-[0.6em] uppercase mb-4 opacity-80">Warisan Budaya Sambirata</span>
+                    <h2 class="text-6xl md:text-9xl font-light serif leading-none mb-10">
+                        Sanubari <span class="italic font-normal">Tanah Liat</span>
+                    </h2>
+                    <div class="flex flex-col md:flex-row md:items-center gap-8">
+                        <button onclick="showPage('catalog')" class="bg-white text-black px-12 py-5 rounded-full text-[10px] font-bold tracking-[0.2em] uppercase hover:bg-orange-50 transition">Jelajahi Koleksi</button>
+                        <p class="text-sm md:text-base text-white/60 max-w-sm leading-relaxed border-l border-white/20 pl-8">
+                            Penghormatan terhadap keaslian material tanah liat Sambirata. Setiap karya adalah manifestasi ketenangan alam.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Koleksi Pilihan -->
+        <section class="max-w-7xl mx-auto mt-32 px-6 pb-24">
+            <div class="flex flex-col md:flex-row md:items-end justify-between mb-16 gap-8">
+                <div class="max-w-xl">
+                    <h3 class="text-[10px] font-bold text-orange-900 tracking-[0.4em] uppercase mb-4">Pilihan Kurasi</h3>
+                    <h4 class="text-5xl serif italic leading-tight">Sentuhan Khas Prayogi</h4>
+                </div>
+            </div>
+            
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-12">
+                <div class="group cursor-pointer" onclick="showPage('catalog')">
+                    <div class="aspect-[3/4] overflow-hidden rounded-[32px] mb-8 bg-stone-50">
+                        <img src="https://images.unsplash.com/photo-1578749553858-1d1d995c22ad?auto=format&fit=crop&q=80&w=800" class="w-full h-full object-cover img-zoom transition-transform duration-1000" alt="Kendi Tanah Liat Tekstur">
+                    </div>
+                    <div class="flex justify-between items-end">
+                        <div>
+                            <p class="text-[9px] font-bold text-gray-400 uppercase tracking-widest mb-2">Seri Sambirata</p>
+                            <h5 class="text-xl serif font-medium">Kendi Tradisional</h5>
+                        </div>
+                    </div>
+                </div>
+                <div class="group cursor-pointer mt-0 md:mt-12" onclick="showPage('catalog')">
+                    <div class="aspect-[3/4] overflow-hidden rounded-[32px] mb-8 bg-stone-50">
+                        <img src="https://images.unsplash.com/photo-1610701596007-11502861dcfa?auto=format&fit=crop&q=80&w=800" class="w-full h-full object-cover img-zoom transition-transform duration-1000" alt="Mangkuk Makan Alami">
+                    </div>
+                    <div class="flex justify-between items-end">
+                        <div>
+                            <p class="text-[9px] font-bold text-gray-400 uppercase tracking-widest mb-2">Peralatan Makan</p>
+                            <h5 class="text-xl serif font-medium">Mangkuk Saji</h5>
+                        </div>
+                    </div>
+                </div>
+                <div class="group cursor-pointer" onclick="showPage('catalog')">
+                    <div class="aspect-[3/4] overflow-hidden rounded-[32px] mb-8 bg-stone-50">
+                        <img src="https://images.unsplash.com/photo-1525498128493-380d1990a112?auto=format&fit=crop&q=80&w=800" class="w-full h-full object-cover img-zoom transition-transform duration-1000" alt="Vas Tanah Liat Minimalis">
+                    </div>
+                    <div class="flex justify-between items-end">
+                        <div>
+                            <p class="text-[9px] font-bold text-gray-400 uppercase tracking-widest mb-2">Elemen Dekorasi</p>
+                            <h5 class="text-xl serif font-medium">Vas Antik</h5>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Halaman: KATALOG -->
+    <main id="catalog-page" class="page mt-28 md:mt-40 max-w-7xl mx-auto px-6 mb-24">
+        <div class="text-center mb-24">
+            <h3 class="text-xs font-bold text-orange-900 tracking-[0.5em] uppercase mb-6">Etalase Sambirata</h3>
+            <h4 class="text-6xl md:text-8xl serif italic font-light">Katalog Studio</h4>
+        </div>
+        <div id="catalog-grid" class="grid grid-cols-2 md:grid-cols-4 gap-x-8 gap-y-16">
+            <div class="group cursor-pointer">
+                <div class="aspect-square overflow-hidden rounded-3xl mb-6 bg-stone-50">
+                    <img src="https://images.unsplash.com/photo-1514228742587-6b1558fcca3d?auto=format&fit=crop&q=80&w=800" class="w-full h-full object-cover img-zoom transition-transform duration-1000" alt="Set Poci Teh Tanah Liat">
+                </div>
+                <h5 class="text-xs font-bold uppercase tracking-widest mb-1">Set Poci</h5>
+            </div>
+            <div class="group cursor-pointer">
+                <div class="aspect-square overflow-hidden rounded-3xl mb-6 bg-stone-50">
+                    <img src="https://images.unsplash.com/photo-1563242694-811634720e8b?auto=format&fit=crop&q=80&w=800" class="w-full h-full object-cover img-zoom transition-transform duration-1000" alt="Piring Makan Artisan">
+                </div>
+                <h5 class="text-xs font-bold uppercase tracking-widest mb-1">Piring Makan</h5>
+            </div>
+            <div class="group cursor-pointer">
+                <div class="aspect-square overflow-hidden rounded-3xl mb-6 bg-stone-50">
+                    <img src="https://images.unsplash.com/photo-1520408222757-6f9f95d87d5d?auto=format&fit=crop&q=80&w=800" class="w-full h-full object-cover img-zoom transition-transform duration-1000" alt="Guci Tanah Liat">
+                </div>
+                <h5 class="text-xs font-bold uppercase tracking-widest mb-1">Pasu Hias</h5>
+            </div>
+            <div class="group cursor-pointer">
+                <div class="aspect-square overflow-hidden rounded-3xl mb-6 bg-stone-50">
+                    <img src="https://images.unsplash.com/photo-1544476072-be721345465e?auto=format&fit=crop&q=80&w=800" class="w-full h-full object-cover img-zoom transition-transform duration-1000" alt="Celengan Keramik">
+                </div>
+                <h5 class="text-xs font-bold uppercase tracking-widest mb-1">Celengan</h5>
+            </div>
+        </div>
+    </main>
+
+    <!-- Halaman: CERITA -->
+    <main id="story-page" class="page mt-28 md:mt-40 max-w-7xl mx-auto px-6 mb-32">
+        <div class="grid md:grid-cols-2 gap-24 items-center">
+            <div class="relative">
+                <div class="aspect-[4/5] overflow-hidden rounded-[48px] shadow-3xl bg-stone-50">
+                    <img src="https://images.unsplash.com/photo-1463100099107-aa0980c362e6?auto=format&fit=crop&q=80&w=1000" class="w-full h-full object-cover transition-transform duration-1000" alt="Proses Pembuatan Tanah Liat">
+                </div>
+            </div>
+            <div class="space-y-10">
+                <h3 class="text-xs font-bold text-orange-900 tracking-[0.5em] uppercase">Filosofi</h3>
+                <h4 class="text-6xl md:text-7xl serif italic leading-tight">Napas Tanah Sambirata.</h4>
+                <p class="text-lg text-gray-500 leading-relaxed font-light">Lahir dari elemen bumi yang murni, setiap produk kami melewati proses pembakaran tradisional yang menjaga kekuatan dan keindahan alami material lempung lokal.</p>
+            </div>
+        </div>
+    </main>
+
+    <!-- Halaman: KONTAK -->
+    <main id="contact-page" class="page mt-28 md:mt-40 max-w-5xl mx-auto px-6 mb-24 text-center">
+        <h3 class="text-xs font-bold text-orange-900 tracking-[0.5em] uppercase mb-10">Hubungi Kami</h3>
+        <h4 class="text-5xl md:text-8xl serif italic mb-20 leading-tight">Miliki Keaslian Sambirata.</h4>
+        
+        <div class="grid md:grid-cols-2 gap-12 text-left">
+            <div class="p-10 artisan-card border border-gray-50">
+                <i class="fa-solid fa-location-dot text-2xl mb-8 text-orange-900"></i>
+                <h5 class="font-bold text-xs uppercase tracking-widest mb-2">Lokasi Studio</h5>
+                <p class="text-lg font-light">Desa Sambirata, Kec. Cilongok, Kab. Purbalingga</p>
+            </div>
+            <div class="p-10 artisan-card border border-gray-50">
+                <i class="fa-brands fa-whatsapp text-2xl mb-8 text-green-600"></i>
+                <h5 class="font-bold text-xs uppercase tracking-widest mb-2">WhatsApp Kami</h5>
+                <p class="text-lg font-light">+62 812-7722-1984</p>
+            </div>
+        </div>
+    </main>
+
+    <nav class="bottom-nav fixed bottom-0 left-0 right-0 h-20 flex items-center justify-around px-4 z-[110] md:hidden">
+        <button onclick="showPage('home')" class="nav-btn flex flex-col items-center text-orange-900" data-page="home">
+            <i class="fa-solid fa-house text-lg mb-1"></i>
+            <span class="text-[8px] font-bold uppercase tracking-widest">Beranda</span>
+        </button>
+        <button onclick="showPage('catalog')" class="nav-btn flex flex-col items-center text-gray-300" data-page="catalog">
+            <i class="fa-solid fa-shapes text-lg mb-1"></i>
+            <span class="text-[8px] font-bold uppercase tracking-widest">Katalog</span>
+        </button>
+        <button onclick="showPage('story')" class="nav-btn flex flex-col items-center text-gray-300" data-page="story">
+            <i class="fa-solid fa-bookmark text-lg mb-1"></i>
+            <span class="text-[8px] font-bold uppercase tracking-widest">Cerita</span>
+        </button>
+        <button onclick="showPage('contact')" class="nav-btn flex flex-col items-center text-gray-300" data-page="contact">
+            <i class="fa-solid fa-paper-plane text-lg mb-1"></i>
+            <span class="text-[8px] font-bold uppercase tracking-widest">Kontak</span>
+        </button>
+    </nav>
+
+    <footer class="hidden md:block py-32 border-t border-gray-50 mt-32">
+        <div class="max-w-7xl mx-auto px-6 flex flex-col items-center">
+            <div class="flex items-center space-x-4 mb-12 grayscale opacity-50">
+                <div class="w-8 h-8 bg-black rounded-full"></div>
+                <h2 class="font-bold text-xl tracking-tighter serif italic">PRAYOGI STUDIO.</h2>
+            </div>
+            <p class="text-[10px] font-bold text-gray-300 uppercase tracking-[0.5em]">&copy; 2024 Wanogara Kulon, Purbalingga | Hak Cipta Dilindungi.</p>
+        </div>
+    </footer>
+
+    <script>
+        function showPage(pageId) {
+            document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+            const targetPage = document.getElementById(pageId + '-page');
+            if (targetPage) targetPage.classList.add('active');
+            
+            document.querySelectorAll('.nav-btn').forEach(btn => {
+                btn.classList.toggle('text-orange-900', btn.dataset.page === pageId);
+                btn.classList.toggle('text-gray-300', btn.dataset.page !== pageId);
+            });
+
+            document.querySelectorAll('.nav-link-desktop').forEach(link => {
+                link.classList.toggle('active', link.dataset.page === pageId);
+            });
+
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        window.onload = () => {
+            showPage('home');
+        };
+    </script>
+</body>
+</html>
