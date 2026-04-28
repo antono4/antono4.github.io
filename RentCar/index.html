@@ -1,516 +1,333 @@
 <!DOCTYPE html>
-<html lang="id" class="scroll-smooth">
+<html lang="id">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>LuxDrive | Rental Mobil Premium & Profesional</title>
+    <title>LuxuryDrive | Sewa Mobil Premium & Eksklusif</title>
     <script src="https://cdn.tailwindcss.com"></script>
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,200;0,400;0,700;0,800;1,800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Playfair+Display:wght@700;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Plus Jakarta Sans', 'sans-serif'],
+                        serif: ['Playfair Display', 'serif'],
+                    },
+                    colors: {
+                        brand: '#3B82F6', // Biru Cerah (Blue-500)
+                        brandDark: '#1D4ED8', // Biru Tua (Blue-700)
+                        premium: '#0F172A', // Navy Gelap (Slate-900)
+                        accent: '#60A5FA', // Biru Muda (Blue-400)
+                    }
+                }
+            }
+        }
+    </script>
     <style>
-        body { 
-            font-family: 'Plus Jakarta Sans', sans-serif; 
-            perspective: 1000px;
+        .glass-nav {
+            background: rgba(15, 23, 42, 0.8);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border-bottom: 1px solid rgba(59, 130, 246, 0.2);
         }
         
-        /* 3D Glassmorphism & Depth */
-        .text-glow { text-shadow: 0 10px 20px rgba(59, 130, 246, 0.4); }
-        
-        .glass { 
-            background: rgba(255, 255, 255, 0.03); 
-            backdrop-filter: blur(10px); 
-            border: 1px solid rgba(255, 255, 255, 0.08); 
-            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+        .hero-gradient {
+            background: linear-gradient(rgba(15, 23, 42, 0.7), rgba(15, 23, 42, 0.7)), url('https://images.unsplash.com/photo-1503376780353-7e6692767b70?auto=format&fit=crop&w=1920&q=80');
+            background-size: cover;
+            background-position: center;
         }
 
-        /* 3D Car Card Effect */
-        .car-card {
-            transition: all 0.6s cubic-bezier(0.23, 1, 0.32, 1);
-            transform-style: preserve-3d;
-        }
-        
         .car-card:hover {
-            transform: rotateX(5deg) rotateY(-5deg) translateY(-15px);
-            box-shadow: 20px 20px 60px rgba(0, 0, 0, 0.7);
+            transform: translateY(-10px);
+            box-shadow: 0 20px 40px rgba(59, 130, 246, 0.15);
         }
 
-        .car-card-content {
-            transform: translateZ(30px);
+        .transition-custom {
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
         }
 
-        .car-image-3d {
-            transition: transform 0.8s ease;
-        }
-
-        .car-card:hover .car-image-3d {
-            transform: scale(1.1) translateZ(50px);
-        }
-
-        /* Floating Animation */
-        @keyframes floating {
-            0% { transform: translateY(0px) rotate(0deg); }
-            50% { transform: translateY(-20px) rotate(2deg); }
-            100% { transform: translateY(0px) rotate(0deg); }
-        }
-        
-        .float-3d {
-            animation: floating 6s ease-in-out infinite;
-        }
-
-        .nav-scrolled { 
-            background: rgba(255, 255, 255, 0.8); 
-            backdrop-filter: blur(12px); 
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1); 
-            padding-top: 0.75rem; 
-            padding-bottom: 0.75rem; 
-        }
-
-        @keyframes fadeIn { 
-            from { opacity: 0; transform: translateZ(-100px) translateY(50px); } 
-            to { opacity: 1; transform: translateZ(0) translateY(0); } 
-        }
-        .animate-fade { animation: fadeIn 1s cubic-bezier(0.16, 1, 0.3, 1) forwards; }
-        
-        /* Custom Toast Notification Styles */
-        #toast-container { position: fixed; top: 20px; right: 20px; z-index: 100; }
-        .toast { 
-            background: white; 
-            color: #171717; 
-            padding: 16px 24px; 
-            border-radius: 16px; 
-            box-shadow: 0 20px 40px rgba(0,0,0,0.2); 
-            border-left: 4px solid #2563eb; 
-            margin-bottom: 10px; 
-            transform: translateX(120%) translateZ(50px); 
-            transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275); 
-            font-weight: 700; 
-            display: flex; 
-            items-center: center; 
-            gap: 12px; 
-        }
-        .toast.show { transform: translateX(0) translateZ(50px); }
-
-        /* Hover Tilt Section */
-        .feature-card {
-            transition: transform 0.5s ease;
-            transform-style: preserve-3d;
-        }
-        .feature-card:hover {
-            transform: translateZ(20px) rotateX(10deg);
-        }
+        ::-webkit-scrollbar { width: 8px; }
+        ::-webkit-scrollbar-track { background: #0F172A; }
+        ::-webkit-scrollbar-thumb { background: #3B82F6; border-radius: 10px; }
     </style>
 </head>
-<body class="bg-neutral-50 text-neutral-900 overflow-x-hidden">
+<body class="bg-[#020617] text-white font-sans overflow-x-hidden">
 
-    <!-- Toast Container for Notifications -->
-    <div id="toast-container"></div>
-
-    <!-- Navigation -->
-    <nav id="navbar" class="fixed w-full z-50 transition-all duration-500 py-6">
-        <div class="max-w-7xl mx-auto px-6 flex justify-between items-center">
-            <div class="flex items-center gap-2 group cursor-pointer" onclick="window.scrollTo({top: 0, behavior: 'smooth'})">
-                <div class="w-10 h-10 bg-blue-600 rounded-xl flex items-center justify-center text-white shadow-lg shadow-blue-200 group-hover:rotate-[360deg] transition-all duration-700">
-                    <i class="fa-solid fa-car-side text-xl"></i>
-                </div>
-                <span id="logo-text" class="text-2xl font-black tracking-tighter text-white">LUXDRIVE</span>
+    <!-- Navigasi -->
+    <nav class="fixed w-full z-50 glass-nav">
+        <div class="max-w-7xl mx-auto px-6 py-4 flex justify-between items-center">
+            <div class="flex items-center gap-2">
+                <i class="fa-solid fa-crown text-brand text-2xl"></i>
+                <span class="text-2xl font-extrabold tracking-tighter font-serif italic text-brand">LuxuryDrive</span>
             </div>
-
-            <!-- Desktop Menu -->
-            <div id="nav-links" class="hidden md:flex gap-10 font-bold text-white/90">
-                <a href="#" class="hover:text-blue-500 transition-colors">Beranda</a>
-                <a href="#koleksi" class="hover:text-blue-500 transition-colors">Koleksi</a>
-                <a href="#layanan" class="hover:text-blue-500 transition-colors">Layanan</a>
-                <a href="#kontak" class="hover:text-blue-500 transition-colors">Kontak</a>
+            <div class="hidden md:flex items-center space-x-8 font-medium">
+                <a href="#beranda" class="hover:text-brand transition-colors">Beranda</a>
+                <a href="#koleksi" class="hover:text-brand transition-colors">Koleksi</a>
+                <a href="#layanan" class="hover:text-brand transition-colors">Layanan</a>
+                <a href="https://wa.me/6281234567890" class="bg-brand text-white px-6 py-2.5 rounded-full font-bold hover:bg-white hover:text-brand transition-all transform hover:scale-105 active:scale-95">
+                    Hubungi Kami
+                </a>
             </div>
-
-            <button onclick="handleBooking('Umum')" class="hidden md:block bg-blue-600 hover:bg-blue-700 text-white px-8 py-3 rounded-full font-extrabold transition-all transform hover:scale-105 hover:translate-z-10 active:scale-95 shadow-xl shadow-blue-600/20">
-                Booking Sekarang
-            </button>
-
-            <!-- Mobile Toggle -->
-            <button class="md:hidden text-white text-2xl" onclick="toggleMenu()">
-                <i id="menu-icon" class="fa-solid fa-bars"></i>
-            </button>
         </div>
     </nav>
 
-    <!-- Mobile Menu Overlay -->
-    <div id="mobile-menu" class="fixed inset-0 z-40 bg-white hidden flex-col items-center justify-center gap-8 text-2xl font-black italic uppercase">
-        <a href="#" onclick="toggleMenu()">Beranda</a>
-        <a href="#koleksi" onclick="toggleMenu()">Koleksi</a>
-        <a href="#layanan" onclick="toggleMenu()">Layanan</a>
-        <a href="#kontak" onclick="toggleMenu()">Kontak</a>
-        <button onclick="handleBooking('Mobile'); toggleMenu();" class="bg-blue-600 text-white px-10 py-4 rounded-full mt-4">Booking Sekarang</button>
-    </div>
-
     <!-- Hero Section -->
-    <section class="relative h-screen flex items-center justify-center bg-neutral-900 overflow-hidden" style="perspective: 2000px;">
-        <div class="absolute inset-0 z-0">
-            <img src="https://images.unsplash.com/photo-1503376780353-7e6692767b70?auto=format&fit=crop&q=80&w=1920" 
-                 class="w-full h-full object-cover opacity-40 scale-110 motion-safe:animate-[pulse_10s_infinite]" alt="Mobil Mewah">
-            <div class="absolute inset-0 bg-gradient-to-b from-black/70 via-transparent to-neutral-900"></div>
-        </div>
-
-        <div class="relative z-10 text-center px-6 max-w-5xl animate-fade">
-            <div class="float-3d">
-                <span class="inline-block py-2 px-5 rounded-full bg-blue-600/20 text-blue-400 border border-blue-500/30 text-xs font-black tracking-[0.2em] mb-8 uppercase backdrop-blur-sm">
-                    Premium Car Rental Experience
-                </span>
-                <h1 class="text-5xl md:text-8xl font-black text-white mb-8 tracking-tighter leading-[0.9] italic uppercase">
-                    Definisi Baru <br> <span class="text-blue-500 text-glow inline-block hover:scale-110 transition-transform cursor-default">Kemewahan</span>
-                </h1>
-                <p class="text-lg md:text-xl text-neutral-300 mb-12 max-w-2xl mx-auto font-medium leading-relaxed">
-                    Nikmati perjalanan tak terlupakan dengan armada eksklusif kami. Layanan profesional kelas dunia untuk setiap momen istimewa Anda.
-                </p>
-            </div>
-            
-            <!-- Search Box Form -->
-            <form onsubmit="handleSearch(event)" class="bg-white p-3 rounded-3xl md:rounded-full shadow-[0_30px_60px_rgba(0,0,0,0.3)] flex flex-col md:flex-row items-stretch md:items-center gap-2 max-w-4xl mx-auto border border-white/20 transform hover:scale-[1.02] transition-transform duration-500">
-                <div class="flex-1 flex items-center gap-4 px-8 py-4 border-b md:border-b-0 md:border-r border-neutral-100">
-                    <i class="fa-solid fa-location-dot text-blue-600 text-xl"></i>
-                    <div class="text-left flex-1">
-                        <p class="text-[10px] uppercase font-black text-neutral-400 tracking-wider">Lokasi Penjemputan</p>
-                        <input type="text" id="loc-input" required placeholder="Bandara Soekarno Hatta" class="w-full font-bold outline-none text-neutral-800 placeholder:text-neutral-300 bg-transparent">
-                    </div>
-                </div>
-                <div class="flex-1 flex items-center gap-4 px-8 py-4 border-b md:border-b-0 md:border-r border-neutral-100">
-                    <i class="fa-solid fa-calendar-days text-blue-600 text-xl"></i>
-                    <div class="text-left flex-1">
-                        <p class="text-[10px] uppercase font-black text-neutral-400 tracking-wider">Tanggal & Waktu</p>
-                        <input type="text" id="date-input" required placeholder="Pilih Jadwal" class="w-full font-bold outline-none text-neutral-800 placeholder:text-neutral-300 bg-transparent">
-                    </div>
-                </div>
-                <button type="submit" class="bg-blue-600 hover:bg-blue-700 text-white px-10 py-5 rounded-2xl md:rounded-full flex items-center justify-center gap-3 font-black transition-all group shadow-lg">
-                    <i class="fa-solid fa-magnifying-glass group-hover:scale-110 transition-transform"></i>
-                    CARI MOBIL
-                </button>
-            </form>
-        </div>
-    </section>
-
-    <!-- Features -->
-    <section id="layanan" class="py-32 px-6 bg-white overflow-hidden">
-        <div class="max-w-7xl mx-auto">
-            <div class="flex flex-col md:flex-row justify-between items-end mb-20 gap-8">
-                <div class="max-w-xl">
-                    <h2 class="text-blue-600 font-black tracking-widest text-sm uppercase mb-4">Mengapa LuxDrive?</h2>
-                    <h3 class="text-4xl md:text-6xl font-black text-neutral-900 italic uppercase leading-[0.9]">Kenyamanan Anda Adalah Prioritas Kami</h3>
-                </div>
-                <p class="text-neutral-500 font-medium md:max-w-xs">Kami menggabungkan teknologi mutakhir dengan keramahan tradisional untuk layanan terbaik.</p>
-            </div>
-            
-            <div class="grid grid-cols-1 md:grid-cols-3 gap-10">
-                <div onclick="showDetail('Proteksi Maksimal')" class="feature-card cursor-pointer p-10 rounded-[3rem] bg-neutral-50 border border-neutral-100 hover:shadow-2xl hover:shadow-blue-600/10 transition-all group">
-                    <div class="w-20 h-20 bg-blue-100 text-blue-600 rounded-[2rem] flex items-center justify-center mb-10 group-hover:bg-blue-600 group-hover:text-white transition-all transform group-hover:translate-z-20 group-hover:rotate-6">
-                        <i class="fa-solid fa-shield-halved text-3xl"></i>
-                    </div>
-                    <h4 class="text-2xl font-black mb-4 uppercase italic">Proteksi Maksimal</h4>
-                    <p class="text-neutral-500 leading-relaxed font-medium">Asuransi All-Risk yang memberikan ketenangan pikiran di setiap kilometer perjalanan Anda.</p>
-                </div>
-                <div onclick="showDetail('Bantuan 24/7')" class="feature-card cursor-pointer p-10 rounded-[3rem] bg-neutral-50 border border-neutral-100 hover:shadow-2xl hover:shadow-blue-600/10 transition-all group">
-                    <div class="w-20 h-20 bg-blue-100 text-blue-600 rounded-[2rem] flex items-center justify-center mb-10 group-hover:bg-blue-600 group-hover:text-white transition-all transform group-hover:translate-z-20 group-hover:-rotate-6">
-                        <i class="fa-solid fa-headset text-3xl"></i>
-                    </div>
-                    <h4 class="text-2xl font-black mb-4 uppercase italic">Bantuan 24/7</h4>
-                    <p class="text-neutral-500 leading-relaxed font-medium">Tim kami siap siaga kapanpun Anda membutuhkan bantuan darurat atau informasi lainnya.</p>
-                </div>
-                <div onclick="showDetail('Kondisi Prima')" class="feature-card cursor-pointer p-10 rounded-[3rem] bg-neutral-50 border border-neutral-100 hover:shadow-2xl hover:shadow-blue-600/10 transition-all group">
-                    <div class="w-20 h-20 bg-blue-100 text-blue-600 rounded-[2rem] flex items-center justify-center mb-10 group-hover:bg-blue-600 group-hover:text-white transition-all transform group-hover:translate-z-20 group-hover:rotate-6">
-                        <i class="fa-solid fa-spray-can-sparkles text-3xl"></i>
-                    </div>
-                    <h4 class="text-2xl font-black mb-4 uppercase italic">Kondisi Prima</h4>
-                    <p class="text-neutral-500 leading-relaxed font-medium">Setiap unit dirawat secara berkala dan disterilisasi sebelum diserahkan kepada penyewa.</p>
-                </div>
+    <header id="beranda" class="h-screen hero-gradient flex items-center justify-center relative">
+        <div class="text-center px-6 max-w-4xl">
+            <h4 class="text-brand font-bold tracking-[0.3em] uppercase mb-4 animate-pulse">Definisi Kemewahan Modern</h4>
+            <h1 class="text-5xl md:text-8xl font-black font-serif mb-8 leading-tight">
+                Berkendara Dengan <span class="text-brand italic">Elegansi.</span>
+            </h1>
+            <p class="text-lg md:text-xl text-slate-300 mb-10 max-w-2xl mx-auto leading-relaxed">
+                Nikmati pengalaman berkendara tak terlupakan dengan koleksi mobil mewah terbaik di Indonesia. Pelayanan bintang lima, kenyamanan tanpa batas.
+            </p>
+            <div class="flex flex-col md:flex-row gap-4 justify-center">
+                <a href="#koleksi" class="bg-brand text-white px-10 py-4 rounded-full font-bold text-lg hover:bg-brandDark transition-custom shadow-lg shadow-brand/20">
+                    Eksplor Armada
+                </a>
+                <a href="#" class="border-2 border-white/30 backdrop-blur-md px-10 py-4 rounded-full font-bold text-lg hover:bg-white hover:text-premium transition-custom">
+                    Lihat Paket VVIP
+                </a>
             </div>
         </div>
-    </section>
+        <div class="absolute bottom-10 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2 text-brand/50">
+            <span class="text-[10px] tracking-widest uppercase font-bold">Scroll ke bawah</span>
+            <div class="w-px h-12 bg-gradient-to-b from-brand to-transparent"></div>
+        </div>
+    </header>
 
-    <!-- Car Collection -->
-    <section id="koleksi" class="py-32 bg-neutral-900 text-white overflow-hidden">
-        <div class="max-w-7xl mx-auto px-6">
-            <div class="text-center mb-24">
-                <h2 class="text-blue-500 font-black tracking-[0.3em] text-xs uppercase mb-6 text-glow">The Elite Fleet</h2>
-                <h3 class="text-5xl md:text-7xl font-black italic uppercase tracking-tighter">Armada Terpopuler</h3>
-            </div>
+    <!-- Koleksi Armada -->
+    <section id="koleksi" class="py-24 px-6 bg-[#020617]">
+        <div class="max-w-7xl mx-auto text-center mb-16">
+            <h2 class="text-4xl md:text-5xl font-black font-serif mb-4">Koleksi <span class="text-brand">Unggulan</span></h2>
+            <div class="w-24 h-1 bg-brand mx-auto mb-6"></div>
+            <p class="text-slate-400">Dipilih secara khusus untuk melengkapi gaya hidup prestisius Anda.</p>
+        </div>
 
-            <div id="car-grid" class="grid grid-cols-1 md:grid-cols-3 gap-10">
-                <!-- Car 1 -->
-                <div class="group glass rounded-[3rem] overflow-hidden car-card" data-category="Sport">
-                    <div class="relative h-64 overflow-hidden">
-                        <img src="https://images.unsplash.com/photo-1617531653332-bd46c24f2068?auto=format&fit=crop&q=80&w=800" 
-                             class="w-full h-full object-cover car-image-3d" alt="BMW M4">
-                        <div class="absolute top-6 right-6 px-4 py-1.5 bg-blue-600 text-[10px] font-black uppercase rounded-full shadow-lg">Sport Performance</div>
-                    </div>
-                    <div class="p-10 car-card-content">
-                        <div class="flex justify-between items-start mb-6">
-                            <h4 class="text-2xl font-black italic uppercase leading-none">BMW M4 Competition</h4>
-                            <div class="flex text-yellow-500 gap-0.5"><i class="fa-solid fa-star text-[10px]"></i><i class="fa-solid fa-star text-[10px]"></i><i class="fa-solid fa-star text-[10px]"></i><i class="fa-solid fa-star text-[10px]"></i><i class="fa-solid fa-star text-[10px]"></i></div>
-                        </div>
-                        <div class="grid grid-cols-3 gap-3 mb-8">
-                            <div class="bg-white/5 p-3 rounded-2xl text-center hover:bg-white/10 transition-colors"><i class="fa-solid fa-users text-blue-400 mb-1"></i><p class="text-[10px] font-bold text-white/50 uppercase">4 Kursi</p></div>
-                            <div class="bg-white/5 p-3 rounded-2xl text-center hover:bg-white/10 transition-colors"><i class="fa-solid fa-gas-pump text-blue-400 mb-1"></i><p class="text-[10px] font-bold text-white/50 uppercase">Bensin</p></div>
-                            <div class="bg-white/5 p-3 rounded-2xl text-center hover:bg-white/10 transition-colors"><i class="fa-solid fa-gear text-blue-400 mb-1"></i><p class="text-[10px] font-bold text-white/50 uppercase">Auto</p></div>
-                        </div>
-                        <div class="flex items-center justify-between pt-6 border-t border-white/5">
-                            <div>
-                                <p class="text-[10px] font-black text-white/40 uppercase">Mulai Dari</p>
-                                <p class="text-xl font-black text-blue-400 uppercase leading-none">Rp 3.5jt <span class="text-xs font-bold text-white/40 italic">/ hari</span></p>
-                            </div>
-                            <button onclick="handleBooking('BMW M4 Competition')" class="w-14 h-14 bg-white text-neutral-900 rounded-full flex items-center justify-center hover:bg-blue-600 hover:text-white transition-all transform active:scale-90 shadow-[0_10px_20px_rgba(0,0,0,0.3)]">
-                                <i class="fa-solid fa-arrow-right"></i>
-                            </button>
-                        </div>
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-7xl mx-auto">
+            <!-- Mobil 1 -->
+            <div class="car-card transition-custom bg-premium rounded-3xl overflow-hidden border border-brand/10">
+                <div class="h-64 overflow-hidden relative group">
+                    <img src="https://images.unsplash.com/photo-1541899481282-d53bffe3c35d?auto=format&fit=crop&w=800&q=80" alt="Mercedes S-Class" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110">
+                    <div class="absolute top-4 right-4 bg-brand/90 backdrop-blur-md px-3 py-1 rounded-lg text-white text-xs font-bold border border-white/20 italic">
+                        Terlaris
                     </div>
                 </div>
-
-                <!-- Car 2 -->
-                <div class="group glass rounded-[3rem] overflow-hidden car-card" data-category="SUV">
-                    <div class="relative h-64 overflow-hidden">
-                        <img src="https://images.unsplash.com/photo-1520031441872-265e4ff70366?auto=format&fit=crop&q=80&w=800" 
-                             class="w-full h-full object-cover car-image-3d" alt="Mercedes G-Class">
-                        <div class="absolute top-6 right-6 px-4 py-1.5 bg-blue-600 text-[10px] font-black uppercase rounded-full shadow-lg">SUV Luxury</div>
+                <div class="p-8">
+                    <div class="flex justify-between items-start mb-4">
+                        <h3 class="text-2xl font-bold font-serif">Mercedes-Benz S-Class</h3>
                     </div>
-                    <div class="p-10 car-card-content">
-                        <div class="flex justify-between items-start mb-6">
-                            <h4 class="text-2xl font-black italic uppercase leading-none">Mercedes G-Class</h4>
-                            <div class="flex text-yellow-500 gap-0.5"><i class="fa-solid fa-star text-[10px]"></i><i class="fa-solid fa-star text-[10px]"></i><i class="fa-solid fa-star text-[10px]"></i><i class="fa-solid fa-star text-[10px]"></i><i class="fa-solid fa-star text-[10px]"></i></div>
-                        </div>
-                        <div class="grid grid-cols-3 gap-3 mb-8">
-                            <div class="bg-white/5 p-3 rounded-2xl text-center hover:bg-white/10 transition-colors"><i class="fa-solid fa-users text-blue-400 mb-1"></i><p class="text-[10px] font-bold text-white/50 uppercase">5 Kursi</p></div>
-                            <div class="bg-white/5 p-3 rounded-2xl text-center hover:bg-white/10 transition-colors"><i class="fa-solid fa-gas-pump text-blue-400 mb-1"></i><p class="text-[10px] font-bold text-white/50 uppercase">Diesel</p></div>
-                            <div class="bg-white/5 p-3 rounded-2xl text-center hover:bg-white/10 transition-colors"><i class="fa-solid fa-gear text-blue-400 mb-1"></i><p class="text-[10px] font-bold text-white/50 uppercase">Auto</p></div>
-                        </div>
-                        <div class="flex items-center justify-between pt-6 border-t border-white/5">
-                            <div>
-                                <p class="text-[10px] font-black text-white/40 uppercase">Mulai Dari</p>
-                                <p class="text-xl font-black text-blue-400 uppercase leading-none">Rp 5.0jt <span class="text-xs font-bold text-white/40 italic">/ hari</span></p>
-                            </div>
-                            <button onclick="handleBooking('Mercedes G-Class')" class="w-14 h-14 bg-white text-neutral-900 rounded-full flex items-center justify-center hover:bg-blue-600 hover:text-white transition-all transform active:scale-90 shadow-[0_10px_20px_rgba(0,0,0,0.3)]">
-                                <i class="fa-solid fa-arrow-right"></i>
-                            </button>
-                        </div>
+                    <div class="grid grid-cols-2 gap-y-3 gap-x-2 text-slate-400 text-sm mb-6">
+                        <span class="flex items-center gap-2"><i class="fa-solid fa-user text-brand w-4 text-center"></i> 4 Kursi</span>
+                        <span class="flex items-center gap-2"><i class="fa-solid fa-bolt text-brand w-4 text-center"></i> Matic</span>
+                        <span class="flex items-center gap-2"><i class="fa-solid fa-microchip text-brand w-4 text-center"></i> V6 Biturbo</span>
+                        <span class="flex items-center gap-2"><i class="fa-solid fa-gas-pump text-brand w-4 text-center"></i> Bensin (RON 98)</span>
                     </div>
-                </div>
-
-                <!-- Car 3 -->
-                <div class="group glass rounded-[3rem] overflow-hidden car-card" data-category="MPV">
-                    <div class="relative h-64 overflow-hidden">
-                        <img src="https://images.unsplash.com/photo-1621993202323-f438eec934ff?auto=format&fit=crop&q=80&w=800" 
-                             class="w-full h-full object-cover car-image-3d" alt="Toyota Alphard">
-                        <div class="absolute top-6 right-6 px-4 py-1.5 bg-blue-600 text-[10px] font-black uppercase rounded-full shadow-lg">VIP MPV</div>
-                    </div>
-                    <div class="p-10 car-card-content">
-                        <div class="flex justify-between items-start mb-6">
-                            <h4 class="text-2xl font-black italic uppercase leading-none">Toyota Alphard VIP</h4>
-                            <div class="flex text-yellow-500 gap-0.5"><i class="fa-solid fa-star text-[10px]"></i><i class="fa-solid fa-star text-[10px]"></i><i class="fa-solid fa-star text-[10px]"></i><i class="fa-solid fa-star text-[10px]"></i><i class="fa-solid fa-star text-[10px]"></i></div>
+                    <div class="flex justify-between items-center border-t border-white/5 pt-6">
+                        <div>
+                            <p class="text-[10px] text-slate-500 uppercase font-bold tracking-widest mb-1">Mulai Dari</p>
+                            <p class="text-xl font-black text-brand">Rp 4.5jt<span class="text-xs text-slate-400">/hari</span></p>
                         </div>
-                        <div class="grid grid-cols-3 gap-3 mb-8">
-                            <div class="bg-white/5 p-3 rounded-2xl text-center hover:bg-white/10 transition-colors"><i class="fa-solid fa-users text-blue-400 mb-1"></i><p class="text-[10px] font-bold text-white/50 uppercase">7 Kursi</p></div>
-                            <div class="bg-white/5 p-3 rounded-2xl text-center hover:bg-white/10 transition-colors"><i class="fa-solid fa-gas-pump text-blue-400 mb-1"></i><p class="text-[10px] font-bold text-white/50 uppercase">Bensin</p></div>
-                            <div class="bg-white/5 p-3 rounded-2xl text-center hover:bg-white/10 transition-colors"><i class="fa-solid fa-gear text-blue-400 mb-1"></i><p class="text-[10px] font-bold text-white/50 uppercase">Auto</p></div>
-                        </div>
-                        <div class="flex items-center justify-between pt-6 border-t border-white/5">
-                            <div>
-                                <p class="text-[10px] font-black text-white/40 uppercase">Mulai Dari</p>
-                                <p class="text-xl font-black text-blue-400 uppercase leading-none">Rp 2.8jt <span class="text-xs font-bold text-white/40 italic">/ hari</span></p>
-                            </div>
-                            <button onclick="handleBooking('Toyota Alphard VIP')" class="w-14 h-14 bg-white text-neutral-900 rounded-full flex items-center justify-center hover:bg-blue-600 hover:text-white transition-all transform active:scale-90 shadow-[0_10px_20px_rgba(0,0,0,0.3)]">
-                                <i class="fa-solid fa-arrow-right"></i>
-                            </button>
-                        </div>
+                        <button onclick="showBooking('Mercedes S-Class')" class="bg-brand text-white p-3 rounded-2xl hover:bg-brandDark transition-colors">
+                            <i class="fa-solid fa-arrow-right-long text-xl"></i>
+                        </button>
                     </div>
                 </div>
             </div>
 
-            <div class="mt-20 text-center">
-                <button onclick="showAllCars()" class="px-12 py-5 border border-white/20 rounded-full font-black uppercase italic tracking-widest hover:bg-white hover:text-neutral-900 transition-all transform hover:scale-110 active:scale-95 shadow-xl">
-                    Lihat Koleksi Lengkap (40+)
-                </button>
+            <!-- Mobil 2 -->
+            <div class="car-card transition-custom bg-premium rounded-3xl overflow-hidden border border-brand/10">
+                <div class="h-64 overflow-hidden relative group">
+                    <img src="https://images.unsplash.com/photo-1617469767053-d3b523a0b982?auto=format&fit=crop&w=800&q=80" alt="Range Rover Vogue" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110">
+                </div>
+                <div class="p-8">
+                    <div class="flex justify-between items-start mb-4">
+                        <h3 class="text-2xl font-bold font-serif">Range Rover Vogue</h3>
+                    </div>
+                    <div class="grid grid-cols-2 gap-y-3 gap-x-2 text-slate-400 text-sm mb-6">
+                        <span class="flex items-center gap-2"><i class="fa-solid fa-user text-brand w-4 text-center"></i> 5 Kursi</span>
+                        <span class="flex items-center gap-2"><i class="fa-solid fa-bolt text-brand w-4 text-center"></i> 4x4</span>
+                        <span class="flex items-center gap-2"><i class="fa-solid fa-microchip text-brand w-4 text-center"></i> V8 Supercharged</span>
+                        <span class="flex items-center gap-2"><i class="fa-solid fa-gas-pump text-brand w-4 text-center"></i> Diesel / Bensin</span>
+                    </div>
+                    <div class="flex justify-between items-center border-t border-white/5 pt-6">
+                        <div>
+                            <p class="text-[10px] text-slate-500 uppercase font-bold tracking-widest mb-1">Mulai Dari</p>
+                            <p class="text-xl font-black text-brand">Rp 6.5jt<span class="text-xs text-slate-400">/hari</span></p>
+                        </div>
+                        <button onclick="showBooking('Range Rover')" class="bg-brand text-white p-3 rounded-2xl hover:bg-brandDark transition-colors">
+                            <i class="fa-solid fa-arrow-right-long text-xl"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Mobil 3 -->
+            <div class="car-card transition-custom bg-premium rounded-3xl overflow-hidden border border-brand/10">
+                <div class="h-64 overflow-hidden relative group">
+                    <img src="https://images.unsplash.com/photo-1563720223185-11003d516905?auto=format&fit=crop&w=800&q=80" alt="Toyota Alphard" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110">
+                </div>
+                <div class="p-8">
+                    <div class="flex justify-between items-start mb-4">
+                        <h3 class="text-2xl font-bold font-serif">Alphard Transformer</h3>
+                    </div>
+                    <div class="grid grid-cols-2 gap-y-3 gap-x-2 text-slate-400 text-sm mb-6">
+                        <span class="flex items-center gap-2"><i class="fa-solid fa-user text-brand w-4 text-center"></i> 6 Kursi</span>
+                        <span class="flex items-center gap-2"><i class="fa-solid fa-bolt text-brand w-4 text-center"></i> Matic</span>
+                        <span class="flex items-center gap-2"><i class="fa-solid fa-microchip text-brand w-4 text-center"></i> Inline-4 2.5L</span>
+                        <span class="flex items-center gap-2"><i class="fa-solid fa-leaf text-brand w-4 text-center"></i> Hybrid / Bensin</span>
+                    </div>
+                    <div class="flex justify-between items-center border-t border-white/5 pt-6">
+                        <div>
+                            <p class="text-[10px] text-slate-500 uppercase font-bold tracking-widest mb-1">Mulai Dari</p>
+                            <p class="text-xl font-black text-brand">Rp 2.8jt<span class="text-xs text-slate-400">/hari</span></p>
+                        </div>
+                        <button onclick="showBooking('Alphard')" class="bg-brand text-white p-3 rounded-2xl hover:bg-brandDark transition-colors">
+                            <i class="fa-solid fa-arrow-right-long text-xl"></i>
+                        </button>
+                    </div>
+                </div>
             </div>
         </div>
     </section>
 
-    <!-- Stats Section with 3D Depth -->
-    <section class="py-24 bg-blue-600 text-white relative overflow-hidden" style="perspective: 1000px;">
-        <div class="max-w-7xl mx-auto px-6 relative z-10 grid grid-cols-2 md:grid-cols-4 gap-12 text-center">
-            <div class="cursor-pointer hover:scale-125 transition-transform duration-500" onclick="notify('Terima kasih atas kepercayaan Anda!')">
-                <p class="text-5xl font-black mb-2 italic uppercase drop-shadow-2xl">1.2k+</p>
-                <p class="text-blue-100 font-bold uppercase text-xs tracking-widest">Klien Puas</p>
+    <!-- Layanan VVIP -->
+    <section id="layanan" class="py-24 px-6 bg-premium">
+        <div class="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-16 items-center">
+            <div>
+                <h4 class="text-brand font-bold tracking-widest uppercase mb-4">Eksklusivitas Tanpa Batas</h4>
+                <h2 class="text-4xl md:text-6xl font-black font-serif mb-8 leading-tight">Pelayanan Premium <span class="italic font-normal">Bintang Lima.</span></h2>
+                <div class="space-y-6">
+                    <div class="flex gap-4">
+                        <div class="w-12 h-12 bg-brand/10 rounded-xl flex items-center justify-center flex-shrink-0">
+                            <i class="fa-solid fa-id-card text-brand text-xl"></i>
+                        </div>
+                        <div>
+                            <h5 class="font-bold text-xl mb-1 text-brand">Chauffeur Berpengalaman</h5>
+                            <p class="text-slate-400">Pengemudi profesional kami terlatih dengan protokol etiket tinggi dan keamanan maksimal.</p>
+                        </div>
+                    </div>
+                    <div class="flex gap-4">
+                        <div class="w-12 h-12 bg-brand/10 rounded-xl flex items-center justify-center flex-shrink-0">
+                            <i class="fa-solid fa-shield-halved text-brand text-xl"></i>
+                        </div>
+                        <div>
+                            <h5 class="font-bold text-xl mb-1 text-brand">Proteksi Keamanan Penuh</h5>
+                            <p class="text-slate-400">Setiap perjalanan dilengkapi dengan asuransi all-risk dan unit cadangan jika diperlukan.</p>
+                        </div>
+                    </div>
+                    <div class="flex gap-4">
+                        <div class="w-12 h-12 bg-brand/10 rounded-xl flex items-center justify-center flex-shrink-0">
+                            <i class="fa-solid fa-hand-sparkles text-brand text-xl"></i>
+                        </div>
+                        <div>
+                            <h5 class="font-bold text-xl mb-1 text-brand">Kebersihan Sempurna</h5>
+                            <p class="text-slate-400">Setiap unit disterilisasi dan diperiksa secara menyeluruh sebelum tiba di lokasi Anda.</p>
+                        </div>
+                    </div>
+                </div>
             </div>
-            <div class="cursor-pointer hover:scale-125 transition-transform duration-500" onclick="notify('Armada kami terus bertambah setiap bulan.')">
-                <p class="text-5xl font-black mb-2 italic uppercase drop-shadow-2xl">45+</p>
-                <p class="text-blue-100 font-bold uppercase text-xs tracking-widest">Unit Premium</p>
-            </div>
-            <div class="cursor-pointer hover:scale-125 transition-transform duration-500" onclick="notify('Hadir di Jakarta, Bali, Surabaya, dan lainnya.')">
-                <p class="text-5xl font-black mb-2 italic uppercase drop-shadow-2xl">12</p>
-                <p class="text-blue-100 font-bold uppercase text-xs tracking-widest">Kota Besar</p>
-            </div>
-            <div class="cursor-pointer hover:scale-125 transition-transform duration-500" onclick="notify('Pengalaman matang sejak 2015.')">
-                <p class="text-5xl font-black mb-2 italic uppercase drop-shadow-2xl">9</p>
-                <p class="text-blue-100 font-bold uppercase text-xs tracking-widest">Tahun Eksistensi</p>
+            <div class="relative">
+                <div class="absolute -top-10 -left-10 w-40 h-40 bg-brand/20 rounded-full blur-3xl"></div>
+                <img src="https://images.unsplash.com/photo-1449965408869-eaa3f722e40d?auto=format&fit=crop&w=1000&q=80" alt="Chauffeur Service" class="rounded-[2rem] shadow-2xl border-4 border-brand/20 relative z-10">
+                <div class="absolute -bottom-6 -right-6 bg-brand p-8 rounded-3xl z-20 text-white shadow-xl shadow-brand/30">
+                    <p class="text-4xl font-black font-serif">24/7</p>
+                    <p class="font-bold uppercase tracking-widest text-[10px]">Layanan Siaga</p>
+                </div>
             </div>
         </div>
-        <div class="absolute top-0 right-0 w-96 h-96 bg-white/10 rounded-full -translate-y-1/2 translate-x-1/2 blur-3xl animate-pulse"></div>
-        <div class="absolute bottom-0 left-0 w-64 h-64 bg-black/10 rounded-full translate-y-1/2 -translate-x-1/2 blur-3xl"></div>
     </section>
 
     <!-- Footer -->
-    <footer id="kontak" class="bg-neutral-900 text-white pt-32 pb-16 px-6 border-t border-white/5">
-        <div class="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-4 gap-16">
-            <div class="col-span-1 md:col-span-1">
-                <div class="flex items-center gap-2 mb-10 cursor-pointer group" onclick="window.scrollTo({top: 0, behavior: 'smooth'})">
-                    <div class="w-10 h-10 bg-blue-600 rounded-xl flex items-center justify-center text-white transition-transform group-hover:rotate-12"><i class="fa-solid fa-car-side"></i></div>
-                    <span class="text-2xl font-black tracking-tighter italic uppercase">LUXDRIVE</span>
+    <footer class="bg-[#020617] pt-24 pb-12 px-6 border-t border-brand/10">
+        <div class="max-w-7xl mx-auto">
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-12 mb-16">
+                <div class="col-span-1 md:col-span-2">
+                    <div class="flex items-center gap-2 mb-6">
+                        <i class="fa-solid fa-crown text-brand text-2xl"></i>
+                        <span class="text-3xl font-extrabold tracking-tighter font-serif italic text-brand">LuxuryDrive</span>
+                    </div>
+                    <p class="text-slate-400 max-w-sm mb-8">Penyedia jasa sewa mobil mewah nomor satu yang mengedepankan keamanan, privasi, dan kenyamanan Anda.</p>
+                    <div class="flex gap-4">
+                        <a href="#" class="w-10 h-10 bg-premium rounded-lg flex items-center justify-center hover:bg-brand hover:text-white transition-all"><i class="fa-brands fa-instagram text-brand group-hover:text-white"></i></a>
+                        <a href="#" class="w-10 h-10 bg-premium rounded-lg flex items-center justify-center hover:bg-brand hover:text-white transition-all"><i class="fa-brands fa-facebook-f text-brand group-hover:text-white"></i></a>
+                        <a href="#" class="w-10 h-10 bg-premium rounded-lg flex items-center justify-center hover:bg-brand hover:text-white transition-all"><i class="fa-brands fa-whatsapp text-brand group-hover:text-white"></i></a>
+                    </div>
                 </div>
-                <p class="text-neutral-500 leading-relaxed font-medium mb-10">Penyedia layanan sewa mobil mewah terkemuka dengan komitmen pada kualitas, keamanan, dan gaya hidup.</p>
-                <div class="flex gap-4">
-                    <a href="#" class="w-12 h-12 rounded-2xl bg-white/5 flex items-center justify-center hover:bg-blue-600 hover:translate-y-[-5px] transition-all"><i class="fa-brands fa-instagram text-xl"></i></a>
-                    <a href="#" class="w-12 h-12 rounded-2xl bg-white/5 flex items-center justify-center hover:bg-blue-600 hover:translate-y-[-5px] transition-all"><i class="fa-brands fa-facebook-f text-xl"></i></a>
-                    <a href="#" class="w-12 h-12 rounded-2xl bg-white/5 flex items-center justify-center hover:bg-blue-600 hover:translate-y-[-5px] transition-all"><i class="fa-brands fa-whatsapp text-xl"></i></a>
+                <div>
+                    <h5 class="font-bold text-lg mb-6">Navigasi</h5>
+                    <ul class="space-y-4 text-slate-400 font-medium">
+                        <li><a href="#" class="hover:text-brand transition-colors">Armada</a></li>
+                        <li><a href="#" class="hover:text-brand transition-colors">Paket Sewa</a></li>
+                        <li><a href="#" class="hover:text-brand transition-colors">Testimoni</a></li>
+                        <li><a href="#" class="hover:text-brand transition-colors">Syarat & Ketentuan</a></li>
+                    </ul>
                 </div>
-            </div>
-
-            <div>
-                <h5 class="text-blue-500 font-black text-sm uppercase tracking-[0.2em] mb-10">Tautan Cepat</h5>
-                <ul class="flex flex-col gap-5 text-neutral-400 font-bold uppercase text-xs tracking-widest">
-                    <li><a href="#" class="hover:text-white transition-colors">Tentang Kami</a></li>
-                    <li><a href="#koleksi" class="hover:text-white transition-colors">Katalog Armada</a></li>
-                    <li><a href="javascript:notify('Layanan Wedding segera hadir!')" class="hover:text-white transition-colors">Layanan Wedding</a></li>
-                    <li><a href="javascript:notify('Hubungi sales kami untuk korporasi.')" class="hover:text-white transition-colors">Bantuan Korporasi</a></li>
-                    <li><a href="#kontak" class="hover:text-white transition-colors">Kontak Kami</a></li>
-                </ul>
-            </div>
-
-            <div>
-                <h5 class="text-blue-500 font-black text-sm uppercase tracking-[0.2em] mb-10">Legalitas</h5>
-                <ul class="flex flex-col gap-5 text-neutral-400 font-bold uppercase text-xs tracking-widest">
-                    <li><a href="javascript:showDetail('Syarat & Ketentuan')" class="hover:text-white transition-colors">Syarat & Ketentuan</a></li>
-                    <li><a href="javascript:showDetail('Kebijakan Privasi')" class="hover:text-white transition-colors">Kebijakan Privasi</a></li>
-                    <li><a href="javascript:showDetail('Pengembalian Dana')" class="hover:text-white transition-colors">Pengembalian Dana</a></li>
-                    <li><a href="javascript:showDetail('Asuransi Trip')" class="hover:text-white transition-colors">Asuransi Trip</a></li>
-                </ul>
-            </div>
-
-            <div>
-                <h5 class="text-blue-500 font-black text-sm uppercase tracking-[0.2em] mb-10">Pusat Bantuan</h5>
-                <div class="bg-white/5 p-8 rounded-[2rem] border border-white/10 transform hover:scale-[1.05] transition-transform shadow-2xl">
-                    <p class="text-white/40 text-[10px] font-black uppercase mb-2 tracking-widest">Call Center 24 Jam</p>
-                    <p class="text-2xl font-black mb-6 italic tracking-tight">+62 21 555 888</p>
-                    <button onclick="window.location.href='tel:+6221555888'" class="w-full bg-blue-600 hover:bg-blue-700 text-white py-4 rounded-xl font-black text-xs uppercase tracking-widest transition-all active:scale-95 shadow-lg">Hubungi Kami</button>
+                <div>
+                    <h5 class="font-bold text-lg mb-6">Hubungi Kami</h5>
+                    <p class="text-slate-400 mb-4 font-medium"><i class="fa-solid fa-location-dot text-brand mr-2"></i> Sudirman Central Business District, Jakarta</p>
+                    <p class="text-slate-400 mb-4 font-medium"><i class="fa-solid fa-phone text-brand mr-2"></i> +62 812 3456 7890</p>
+                    <p class="text-slate-400 font-medium"><i class="fa-solid fa-envelope text-brand mr-2"></i> booking@luxurydrive.com</p>
                 </div>
             </div>
-        </div>
-        <div class="max-w-7xl mx-auto mt-24 pt-10 border-t border-white/5 text-center text-neutral-600 text-[10px] font-black uppercase tracking-[0.3em]">
-            &copy; 2024 LuxDrive International Group. All Rights Reserved.
+            <div class="pt-12 border-t border-white/5 text-center text-slate-500 text-sm font-bold tracking-widest uppercase">
+                &copy; 2026 LuxuryDrive Indonesia. All Rights Reserved.
+            </div>
         </div>
     </footer>
 
-    <script>
-        // --- Core Interactions ---
-
-        // Navbar Scroll Logic
-        window.addEventListener('scroll', () => {
-            const navbar = document.getElementById('navbar');
-            const logoText = document.getElementById('logo-text');
-            const navLinks = document.getElementById('nav-links');
-            const menuIcon = document.getElementById('menu-icon');
-
-            if (window.scrollY > 50) {
-                navbar.classList.add('nav-scrolled');
-                logoText.classList.replace('text-white', 'text-blue-600');
-                navLinks.classList.replace('text-white/90', 'text-neutral-600');
-                menuIcon.classList.replace('text-white', 'text-neutral-900');
-            } else {
-                navbar.classList.remove('nav-scrolled');
-                logoText.classList.replace('text-blue-600', 'text-white');
-                navLinks.classList.replace('text-neutral-600', 'text-white/90');
-                menuIcon.classList.replace('text-neutral-900', 'text-white');
-            }
-        });
-
-        // 3D Tilt Effect on Mouse Move for Hero
-        const hero = document.querySelector('section');
-        hero.addEventListener('mousemove', (e) => {
-            const x = (window.innerWidth / 2 - e.pageX) / 50;
-            const y = (window.innerHeight / 2 - e.pageY) / 50;
-            const heroContent = hero.querySelector('.animate-fade');
-            heroContent.style.transform = `rotateY(${x}deg) rotateX(${-y}deg)`;
-        });
-
-        // Mobile Menu Toggle
-        function toggleMenu() {
-            const menu = document.getElementById('mobile-menu');
-            const icon = document.getElementById('menu-icon');
-            menu.classList.toggle('hidden');
-            menu.classList.toggle('flex');
+    <!-- Booking Modal (Custom UI) -->
+    <div id="bookingModal" class="fixed inset-0 z-[100] flex items-center justify-center bg-[#020617]/95 backdrop-blur-xl hidden p-6">
+        <div class="bg-premium w-full max-w-lg rounded-[2.5rem] border border-brand/30 p-10 relative overflow-hidden">
+            <div class="absolute top-0 right-0 w-32 h-32 bg-brand/10 rounded-full -translate-y-10 translate-x-10 blur-2xl"></div>
+            <button onclick="closeModal()" class="absolute top-6 right-6 text-slate-400 hover:text-white"><i class="fa-solid fa-xmark text-2xl"></i></button>
+            <h3 class="text-3xl font-serif font-bold text-brand mb-2">Pesan Sekarang</h3>
+            <p class="text-slate-400 text-sm mb-8">Anda akan memesan unit <span id="carName" class="text-white font-bold"></span></p>
             
-            if (menu.classList.contains('flex')) {
-                icon.classList.replace('fa-bars', 'fa-xmark');
-            } else {
-                icon.classList.replace('fa-xmark', 'fa-bars');
-            }
+            <div class="space-y-4">
+                <input type="text" placeholder="Nama Lengkap" class="w-full bg-[#020617] border border-brand/20 rounded-2xl px-6 py-4 outline-none focus:border-brand transition-all text-white placeholder:text-slate-600">
+                <input type="tel" placeholder="Nomor WhatsApp" class="w-full bg-[#020617] border border-brand/20 rounded-2xl px-6 py-4 outline-none focus:border-brand transition-all text-white placeholder:text-slate-600">
+                <div class="flex gap-4">
+                    <input type="date" class="w-1/2 bg-[#020617] border border-brand/20 rounded-2xl px-6 py-4 outline-none focus:border-brand transition-all text-slate-400">
+                    <input type="number" placeholder="Durasi (Hari)" class="w-1/2 bg-[#020617] border border-brand/20 rounded-2xl px-6 py-4 outline-none focus:border-brand transition-all text-white placeholder:text-slate-600">
+                </div>
+                <button onclick="confirmOrder()" class="w-full bg-brand text-white py-5 rounded-2xl font-black text-lg hover:bg-brandDark transition-custom mt-4 shadow-lg shadow-brand/20">
+                    KIRIM PERMINTAAN
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Floating WhatsApp -->
+    <a href="https://wa.me/6281234567890" class="fixed bottom-10 right-10 z-40 bg-[#25D366] text-white p-5 rounded-full shadow-2xl shadow-green-500/20 hover:scale-110 active:scale-95 transition-all flex items-center justify-center">
+        <i class="fa-brands fa-whatsapp text-3xl"></i>
+    </a>
+
+    <script>
+        function showBooking(car) {
+            document.getElementById('carName').innerText = car;
+            document.getElementById('bookingModal').classList.remove('hidden');
+            document.body.style.overflow = 'hidden';
         }
 
-        // --- Active Button Handlers ---
+        function closeModal() {
+            document.getElementById('bookingModal').classList.add('hidden');
+            document.body.style.overflow = 'auto';
+        }
 
-        // Notification system (Toast)
-        function notify(message) {
-            const container = document.getElementById('toast-container');
-            const toast = document.createElement('div');
-            toast.className = 'toast';
-            toast.innerHTML = `<i class="fa-solid fa-circle-info text-blue-600"></i> ${message}`;
-            container.appendChild(toast);
+        function confirmOrder() {
+            const msgBox = document.createElement('div');
+            msgBox.className = 'fixed top-10 left-1/2 -translate-x-1/2 z-[110] bg-brand text-white px-8 py-4 rounded-2xl font-bold shadow-2xl animate-bounce';
+            msgBox.innerText = 'Permintaan Terkirim! Tim Concierge kami akan segera menghubungi Anda.';
+            document.body.appendChild(msgBox);
             
-            // Show toast
-            setTimeout(() => toast.classList.add('show'), 10);
-            
-            // Remove toast after 3 seconds
             setTimeout(() => {
-                toast.classList.remove('show');
-                setTimeout(() => toast.remove(), 400);
+                msgBox.remove();
+                closeModal();
             }, 3000);
         }
-
-        // Booking Button Handler
-        function handleBooking(carName) {
-            notify(`Memproses pemesanan untuk: ${carName}...`);
-            setTimeout(() => {
-                notify("Sistem kami sedang mengarahkan Anda ke formulir reservasi 3D.");
-            }, 1000);
-        }
-
-        // Search Form Handler
-        function handleSearch(event) {
-            event.preventDefault();
-            const loc = document.getElementById('loc-input').value;
-            const date = document.getElementById('date-input').value;
-            
-            notify(`Mencari armada tersedia di ${loc} pada ${date}...`);
-            
-            setTimeout(() => {
-                document.getElementById('koleksi').scrollIntoView({ behavior: 'smooth' });
-                notify("Katalog armada telah diperbarui secara dinamis.");
-            }, 1500);
-        }
-
-        // Service/Legal Detail Handler
-        function showDetail(title) {
-            notify(`Menampilkan informasi detail: ${title}`);
-        }
-
-        // Collection Filter/Show More
-        function showAllCars() {
-            notify("Memuat katalog lengkap armada LuxDrive...");
-            const btn = event.target;
-            btn.innerHTML = '<i class="fa-solid fa-spinner fa-spin mr-2"></i> LOADING 3D ASSETS...';
-            setTimeout(() => {
-                btn.innerHTML = 'SEMUA ARMADA TELAH DITAMPILKAN';
-                btn.classList.add('opacity-50', 'cursor-not-allowed');
-                btn.onclick = null;
-                notify("40+ Mobil premium lainnya tersedia melalui aplikasi kami.");
-            }, 2000);
-        }
     </script>
-
 </body>
 </html>
