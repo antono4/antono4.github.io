@@ -1,0 +1,379 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BrainMetrics Elite Pro | 50-Point Psychometric Analysis</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <style>
+        body { font-family: 'Inter', sans-serif; background-color: #f1f5f9; }
+        .glass-card { background: rgba(255, 255, 255, 0.98); border: 1px solid #e2e8f0; box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1); }
+        .option-card { border: 2px solid #e2e8f0; transition: all 0.2s; cursor: pointer; }
+        .option-card:hover { border-color: #3b82f6; background-color: #eff6ff; }
+        .option-card.selected { border-color: #2563eb; background-color: #dbeafe; outline: 2px solid #2563eb; }
+        .progress-fill { transition: width 0.4s cubic-bezier(0.4, 0, 0.2, 1); }
+        @media print { .no-print { display: none; } }
+    </style>
+</head>
+<body class="min-h-screen">
+
+    <nav class="bg-white border-b sticky top-0 z-50 no-print">
+        <div class="max-w-5xl mx-auto px-4 h-16 flex items-center justify-between">
+            <div class="flex items-center gap-2">
+                <div class="w-8 h-8 bg-indigo-600 rounded flex items-center justify-center">
+                    <span class="text-white font-bold">B</span>
+                </div>
+                <span class="font-bold text-xl text-slate-900">BrainMetrics <span class="text-indigo-600">Pro</span></span>
+            </div>
+            <div id="test-timer" class="hidden font-mono bg-slate-100 px-4 py-1 rounded-full text-slate-600 font-bold">00:00</div>
+        </div>
+    </nav>
+
+    <main class="max-w-4xl mx-auto p-4 md:p-8">
+        
+        <!-- Welcome Screen -->
+        <div id="screen-welcome" class="glass-card rounded-3xl p-8 md:p-12 text-center shadow-xl">
+            <h1 class="text-4xl font-extrabold text-slate-900 mb-6">Evaluasi Kognitif Komprehensif</h1>
+            <p class="text-slate-600 mb-10 text-lg leading-relaxed">
+                Anda akan menghadapi 50 soal yang mencakup 5 domain utama kecerdasan manusia. 
+                Pastikan Anda berada di lingkungan yang tenang. Estimasi waktu: 15-20 menit.
+            </p>
+            
+            <div class="grid grid-cols-2 md:grid-cols-5 gap-3 mb-10">
+                <div class="p-4 bg-blue-50 rounded-2xl border border-blue-100">
+                    <div class="text-blue-700 font-bold text-sm">Verbal</div>
+                </div>
+                <div class="p-4 bg-purple-50 rounded-2xl border border-purple-100">
+                    <div class="text-purple-700 font-bold text-sm">Logika</div>
+                </div>
+                <div class="p-4 bg-amber-50 rounded-2xl border border-amber-100">
+                    <div class="text-amber-700 font-bold text-sm">Numerik</div>
+                </div>
+                <div class="p-4 bg-emerald-50 rounded-2xl border border-emerald-100">
+                    <div class="text-emerald-700 font-bold text-sm">Spasial</div>
+                </div>
+                <div class="p-4 bg-rose-50 rounded-2xl border border-rose-100">
+                    <div class="text-rose-700 font-bold text-sm">Memori</div>
+                </div>
+            </div>
+
+            <button onclick="startTest()" class="bg-indigo-600 hover:bg-indigo-700 text-white text-xl font-bold py-5 px-16 rounded-2xl transition-all hover:scale-105 active:scale-95 shadow-xl shadow-indigo-200">
+                Mulai Tes 50 Soal
+            </button>
+        </div>
+
+        <!-- Test Screen -->
+        <div id="screen-test" class="hidden">
+            <div class="mb-6 flex flex-col gap-2">
+                <div class="flex justify-between items-end">
+                    <span id="question-index" class="text-indigo-600 font-bold tracking-tighter text-lg uppercase">Soal 1 / 50</span>
+                    <span id="domain-badge" class="bg-indigo-100 text-indigo-700 text-xs font-black px-3 py-1 rounded-full uppercase">Kategori</span>
+                </div>
+                <div class="w-full bg-slate-200 h-3 rounded-full overflow-hidden">
+                    <div id="progress-indicator" class="progress-fill bg-indigo-600 h-full w-0"></div>
+                </div>
+            </div>
+
+            <div class="glass-card rounded-3xl p-8 md:p-10">
+                <h2 id="question-text" class="text-2xl font-bold text-slate-800 mb-8 leading-snug"></h2>
+                <div id="options-container" class="grid grid-cols-1 gap-4"></div>
+
+                <div class="mt-12 pt-8 border-t border-slate-100 flex justify-between">
+                    <button onclick="prevQuestion()" id="btn-prev" class="text-slate-400 font-bold hover:text-slate-600 px-4 py-2 disabled:opacity-0 transition-all">Sebelumnya</button>
+                    <button onclick="nextQuestion()" id="btn-next" class="bg-slate-900 text-white font-bold px-12 py-4 rounded-2xl hover:bg-slate-800 transition-all shadow-lg shadow-slate-200">Lanjut</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Results Screen -->
+        <div id="screen-results" class="hidden">
+            <div id="capture-area" class="space-y-6 bg-white p-6 rounded-3xl">
+                <div class="flex justify-between items-start border-b pb-6">
+                    <div>
+                        <h2 class="text-3xl font-black text-slate-900">Laporan Analisis Kognitif</h2>
+                        <p id="res-date" class="text-slate-400 text-sm"></p>
+                    </div>
+                    <div class="text-right">
+                        <div class="text-xs font-bold text-indigo-600 uppercase">BrainMetrics Elite ID</div>
+                        <div id="res-id" class="text-sm font-mono text-slate-600 uppercase"></div>
+                    </div>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                    <div class="bg-indigo-900 text-white rounded-3xl p-8 flex flex-col items-center justify-center text-center">
+                        <span class="text-indigo-300 text-xs font-bold uppercase tracking-widest mb-2">Estimasi IQ</span>
+                        <div id="final-iq" class="text-7xl font-black mb-2 leading-none">0</div>
+                        <div id="iq-class" class="text-xl font-bold mb-4">Menganalisis...</div>
+                        <div class="w-full bg-indigo-800 h-1 rounded-full mb-4"></div>
+                        <p id="res-percentile" class="text-sm text-indigo-200 italic"></p>
+                    </div>
+
+                    <div class="md:col-span-2 border border-slate-200 rounded-3xl p-6 flex flex-col items-center">
+                        <h4 class="text-slate-800 font-bold mb-4 self-start">Visualisasi Domain Kognitif</h4>
+                        <div class="w-full h-64">
+                            <canvas id="radarChart"></canvas>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <div class="bg-slate-50 border border-slate-100 rounded-3xl p-8">
+                        <h4 class="text-indigo-900 font-bold text-xl mb-4">Saran Profesi & Karir</h4>
+                        <p id="res-career-desc" class="text-slate-600 text-sm mb-6 leading-relaxed"></p>
+                        <div id="res-career-list" class="flex flex-wrap gap-2"></div>
+                    </div>
+                    <div class="bg-emerald-50 border border-emerald-100 rounded-3xl p-8">
+                        <h4 class="text-emerald-900 font-bold text-xl mb-4">Rekomendasi Pengembangan</h4>
+                        <ul id="res-advice" class="space-y-3 text-sm text-emerald-800 list-disc pl-4"></ul>
+                    </div>
+                </div>
+            </div>
+
+            <div class="mt-8 flex flex-col md:flex-row gap-4 no-print">
+                <button onclick="downloadPDF()" class="flex-1 bg-indigo-600 text-white font-bold py-5 rounded-2xl hover:bg-indigo-700 shadow-xl flex items-center justify-center gap-2">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"></path></svg>
+                    Download Laporan PDF
+                </button>
+                <button onclick="location.reload()" class="bg-white border-2 border-slate-200 text-slate-600 font-bold py-5 px-8 rounded-2xl hover:bg-slate-50">
+                    Ulangi Tes
+                </button>
+            </div>
+        </div>
+    </main>
+
+    <script>
+        // 50 Soal Bank (Campuran 5 Kategori)
+        const bank = [
+            // VERBAL (10)
+            { t: "Jika 'MATAHARI' adalah 'PANAS', maka 'ES' adalah...", o: ["Dingin", "Beku", "Putih", "Cair"], c: 0, d: "Verbal" },
+            { t: "Pilihlah kata yang tidak cocok: Apel, Jeruk, Pisang, Bayam", o: ["Apel", "Jeruk", "Pisang", "Bayam"], c: 3, d: "Verbal" },
+            { t: "Analogi: Buku - Penulis = Film - ...", o: ["Aktor", "Sutradara", "Penonton", "Kamera"], c: 1, d: "Verbal" },
+            { t: "Persamaan kata dari 'AUTENTIK' adalah...", o: ["Palsu", "Asli", "Indah", "Kuno"], c: 1, d: "Verbal" },
+            { t: "Lawan kata dari 'PROGRESIF' adalah...", o: ["Maju", "Statis", "Agresif", "Regresif"], c: 3, d: "Verbal" },
+            { t: "Manakah yang bukan alat musik petik?", o: ["Gitar", "Harpa", "Biola", "Kecapi"], c: 2, d: "Verbal" },
+            { t: "Jika 'A' adalah 1 dan 'B' adalah 2, maka 'CAB' adalah...", o: ["312", "123", "321", "213"], c: 0, d: "Verbal" },
+            { t: "Pilih kata yang memiliki arti paling mirip dengan 'EPIDEMI'...", o: ["Wabah", "Obat", "Dokter", "Sakit"], c: 0, d: "Verbal" },
+            { t: "Semua mawar adalah bunga. Beberapa bunga berwarna merah. Maka...", o: ["Semua mawar merah", "Mungkin ada mawar merah", "Mawar bukan bunga", "Bunga mawar tidak ada"], c: 1, d: "Verbal" },
+            { t: "Pilih yang berbeda: London, Paris, Roma, Tokyo", o: ["London", "Paris", "Roma", "Tokyo"], c: 3, d: "Verbal" },
+
+            // LOGIKA (10)
+            { t: "Jika semua X adalah Y, dan semua Y adalah Z, maka...", o: ["Semua X adalah Z", "Semua Z adalah X", "Beberapa Y adalah X", "Tidak ada Z"], c: 0, d: "Logika" },
+            { t: "Pola: Segitiga, Kotak, Segilima, ...", o: ["Segienam", "Lingkaran", "Titik", "Garis"], c: 0, d: "Logika" },
+            { t: "Seorang ayah berumur 4 kali umur anaknya. 20 tahun lagi umurnya menjadi 2 kali umur anaknya. Umur anak sekarang?", o: ["5", "10", "15", "20"], c: 1, d: "Logika" },
+            { t: "Jika hari ini Senin, maka 65 hari lagi adalah hari...", o: ["Senin", "Selasa", "Rabu", "Kamis"], c: 2, d: "Logika" },
+            { t: "Temukan pola: A, C, E, G, ...", o: ["H", "I", "J", "K"], c: 1, d: "Logika" },
+            { t: "Mana yang lebih berat: 1kg emas atau 1kg kapas?", o: ["Emas", "Kapas", "Sama Berat", "Tergantung lokasi"], c: 2, d: "Logika" },
+            { t: "Jika p > q dan r < q, maka...", o: ["p < r", "p > r", "p = r", "Tidak tahu"], c: 1, d: "Logika" },
+            { t: "Ibu Budi punya 5 anak: Nana, Nene, Nini, Nono. Siapa anak kelima?", o: ["Nunu", "Budi", "Bibi", "Nana"], c: 1, d: "Logika" },
+            { t: "Lampu A menyala tiap 2 detik, Lampu B tiap 3 detik. Kapan menyala bersama?", o: ["Detik ke-5", "Detik ke-6", "Detik ke-1", "Detik ke-12"], c: 1, d: "Logika" },
+            { t: "Jika kotak kosong diisi pola, manakah lanjutannya: 1, 3, 6, 10, 15, ...", o: ["20", "21", "25", "26"], c: 1, d: "Logika" },
+
+            // NUMERIK (10)
+            { t: "15% dari 200 adalah...", o: ["20", "25", "30", "35"], c: 2, d: "Numerik" },
+            { t: "Akar dari 144 dikali 2 adalah...", o: ["12", "24", "48", "72"], c: 1, d: "Numerik" },
+            { t: "Berapakah 2 + 2 x 2?", o: ["4", "6", "8", "10"], c: 1, d: "Numerik" },
+            { t: "1, 1, 2, 3, 5, 8, ...", o: ["10", "12", "13", "15"], c: 2, d: "Numerik" },
+            { t: "Sebuah baju diskon 20% jadi 80rb. Harga asli?", o: ["90rb", "100rb", "110rb", "120rb"], c: 1, d: "Numerik" },
+            { t: "3^3 - 3^2 = ...", o: ["0", "9", "18", "27"], c: 2, d: "Numerik" },
+            { t: "Setengah dari seperempat dari 400?", o: ["25", "50", "100", "200"], c: 1, d: "Numerik" },
+            { t: "7, 10, 14, 19, ...", o: ["21", "23", "25", "27"], c: 2, d: "Numerik" },
+            { t: "Berapakah 1000 / 0.5?", o: ["500", "1000", "2000", "5000"], c: 2, d: "Numerik" },
+            { t: "Jika x + 5 = 12, maka 2x = ...", o: ["7", "14", "10", "12"], c: 1, d: "Numerik" },
+
+            // SPASIAL (10)
+            { t: "Jika kubus dibuka, akan menghasilkan berapa sisi persegi?", o: ["4", "5", "6", "8"], c: 2, d: "Spasial" },
+            { t: "Huruf 'L' jika dicerminkan secara vertikal menjadi...", o: ["Tetap L", "L terbalik", "7", "I"], c: 1, d: "Spasial" },
+            { t: "Manakah bangun ruang yang tidak memiliki sudut?", o: ["Kubus", "Limas", "Kerucut", "Bola"], c: 3, d: "Spasial" },
+            { t: "Berapa banyak kotak kecil di dalam kotak 3x3x3?", o: ["9", "18", "27", "81"], c: 2, d: "Spasial" },
+            { t: "Warna sekunder hijau campuran dari...", o: ["Biru + Merah", "Kuning + Biru", "Merah + Kuning", "Hitam + Putih"], c: 1, d: "Spasial" },
+            { t: "Putar 'b' 180 derajat...", o: ["d", "p", "q", "u"], c: 2, d: "Spasial" },
+            { t: "Sisi yang berlawanan dengan atas pada dadu standar adalah...", o: ["Bawah", "Samping", "Belakang", "Depan"], c: 0, d: "Spasial" },
+            { t: "Mana yang lebih luas: Lingkaran jari-jari 7 atau Persegi sisi 14?", o: ["Lingkaran", "Persegi", "Sama", "Tergantung lokasi"], c: 1, d: "Spasial" },
+            { t: "Bayangan jam 3 tepat di cermin menunjukkan pukul...", o: ["3:00", "9:00", "6:00", "12:00"], c: 1, d: "Spasial" },
+            { t: "Jumlah rusuk pada sebuah limas segi empat adalah...", o: ["4", "6", "8", "10"], c: 2, d: "Spasial" },
+
+            // MEMORI / FOKUS (10)
+            { t: "Ingat kata: APEL. (Soal berikutnya akan bertanya)", o: ["Siap", "Lanjut", "Oke", "Paham"], c: 0, d: "Memori" },
+            { t: "Apa kata yang disuruh ingat tadi?", o: ["Jeruk", "Apel", "Anggur", "Melon"], c: 1, d: "Memori" },
+            { t: "Warna langit saat siang tanpa awan biasanya...", o: ["Merah", "Biru", "Hijau", "Kuning"], c: 1, d: "Memori" },
+            { t: "Ejaan yang benar adalah...", o: ["Apotik", "Apotek", "Apoteg", "Apotic"], c: 1, d: "Memori" },
+            { t: "Simbol kimia Air adalah...", o: ["CO2", "O2", "H2O", "NaCl"], c: 2, d: "Memori" },
+            { t: "Mana yang bukan planet?", o: ["Mars", "Pluto", "Bulan", "Saturnus"], c: 2, d: "Memori" },
+            { t: "Urutan pelangi: Me, Ji, Ku, Hi, Bi, Ni, ...", o: ["Ungu", "Coklat", "Abu", "Hitam"], c: 0, d: "Memori" },
+            { t: "Berapa jumlah kaki laba-laba?", o: ["4", "6", "8", "10"], c: 2, d: "Memori" },
+            { t: "Presiden pertama Indonesia adalah...", o: ["Hatta", "Soeharto", "Soekarno", "Habibie"], c: 2, d: "Memori" },
+            { t: "Ingat angka ini: 5821. (Pilih yang benar)", o: ["5812", "5821", "5281", "8521"], c: 1, d: "Memori" }
+        ];
+
+        let currentIdx = 0;
+        let answers = new Array(bank.length).fill(null);
+        let startTime, timerInt;
+
+        function startTest() {
+            document.getElementById('screen-welcome').classList.add('hidden');
+            document.getElementById('screen-test').classList.remove('hidden');
+            document.getElementById('test-timer').classList.remove('hidden');
+            startTime = Date.now();
+            timerInt = setInterval(updateTimer, 1000);
+            renderQuestion();
+        }
+
+        function updateTimer() {
+            const sec = Math.floor((Date.now() - startTime)/1000);
+            const m = Math.floor(sec/60).toString().padStart(2,'0');
+            const s = (sec%60).toString().padStart(2,'0');
+            document.getElementById('test-timer').innerText = `${m}:${s}`;
+        }
+
+        function renderQuestion() {
+            const q = bank[currentIdx];
+            document.getElementById('question-index').innerText = `Soal ${currentIdx + 1} / ${bank.length}`;
+            document.getElementById('domain-badge').innerText = q.d;
+            document.getElementById('question-text').innerText = q.t;
+            document.getElementById('progress-indicator').style.width = `${((currentIdx+1)/bank.length)*100}%`;
+
+            const container = document.getElementById('options-container');
+            container.innerHTML = '';
+            q.o.forEach((opt, i) => {
+                const div = document.createElement('div');
+                div.className = `option-card p-5 rounded-2xl flex items-center gap-4 ${answers[currentIdx] === i ? 'selected' : 'bg-white'}`;
+                div.innerHTML = `
+                    <div class="w-10 h-10 rounded-full border-2 flex items-center justify-center font-bold text-slate-400 border-slate-100">${String.fromCharCode(65+i)}</div>
+                    <div class="font-semibold text-slate-700">${opt}</div>
+                `;
+                div.onclick = () => {
+                    answers[currentIdx] = i;
+                    renderQuestion();
+                };
+                container.appendChild(div);
+            });
+
+            document.getElementById('btn-prev').disabled = currentIdx === 0;
+            document.getElementById('btn-next').innerText = currentIdx === bank.length - 1 ? "Lihat Hasil" : "Lanjut";
+        }
+
+        function nextQuestion() {
+            if (answers[currentIdx] === null) return alert("Pilih jawaban!");
+            if (currentIdx < bank.length - 1) {
+                currentIdx++;
+                renderQuestion();
+            } else {
+                finishTest();
+            }
+        }
+
+        function prevQuestion() {
+            if (currentIdx > 0) {
+                currentIdx--;
+                renderQuestion();
+            }
+        }
+
+        function finishTest() {
+            clearInterval(timerInt);
+            document.getElementById('screen-test').classList.add('hidden');
+            document.getElementById('screen-results').classList.remove('hidden');
+            
+            const stats = { Verbal:0, Logika:0, Numerik:0, Spasial:0, Memori:0 };
+            const max = { Verbal:0, Logika:0, Numerik:0, Spasial:0, Memori:0 };
+            let correct = 0;
+
+            bank.forEach((q, i) => {
+                max[q.d]++;
+                if (answers[i] === q.c) {
+                    stats[q.d]++;
+                    correct++;
+                }
+            });
+
+            // IQ Calculation (Refined for 50 questions)
+            // Median IQ is 100. Range roughly 70 - 160.
+            const raw = (correct / bank.length) * 100;
+            const finalIQ = Math.round(75 + (raw * 0.8));
+            
+            let classif = "Rata-rata";
+            let pctl = "Top 50%";
+            if (finalIQ >= 140) { classif = "Genius"; pctl = "Top 0.5%"; }
+            else if (finalIQ >= 130) { classif = "Sangat Superior"; pctl = "Top 2%"; }
+            else if (finalIQ >= 120) { classif = "Superior"; pctl = "Top 9%"; }
+            else if (finalIQ >= 110) { classif = "Di Atas Rata-rata"; pctl = "Top 25%"; }
+
+            document.getElementById('final-iq').innerText = finalIQ;
+            document.getElementById('iq-class').innerText = classif;
+            document.getElementById('res-percentile').innerText = `Performa Anda berada di ${pctl} populasi.`;
+            document.getElementById('res-id').innerText = 'BM-' + Math.random().toString(36).substr(2, 9);
+            document.getElementById('res-date').innerText = new Date().toLocaleDateString('id-ID', { dateStyle: 'long' });
+
+            // Career Logic
+            const dominant = Object.keys(stats).reduce((a, b) => (stats[a]/max[a] > stats[b]/max[b] ? a : b));
+            const careerData = {
+                Verbal: { desc: "Anda memiliki kemampuan bahasa dan komunikasi yang luar biasa. Sangat baik dalam memahami nuansa teks.", list: ["Editor", "Pengacara", "Diplomat", "Public Relations", "Penulis"] },
+                Logika: { desc: "Anda adalah pemecah masalah alami dengan kemampuan deduksi yang tajam.", list: ["Software Engineer", "Analisis Data", "Detektif", "Filsuf", "Peneliti"] },
+                Numerik: { desc: "Angka adalah bahasa kedua bagi Anda. Anda cepat dalam kalkulasi dan pola statistik.", list: ["Akuntan", "Aktuaria", "Ekonom", "Trader", "Matematikawan"] },
+                Spasial: { desc: "Visualisasi 3D dan orientasi objek adalah kekuatan utama Anda.", list: ["Arsitek", "Pilot", "Desainer Grafis", "Dokter Bedah", "Teknik Sipil"] },
+                Memori: { desc: "Anda memiliki fokus detail yang sangat tinggi dan daya ingat jangka pendek yang solid.", list: ["Manajer Proyek", "Penyelidik", "Administrasi Medis", "Sejarahwan"] }
+            };
+
+            document.getElementById('res-career-desc').innerText = careerData[dominant].desc;
+            const cList = document.getElementById('res-career-list');
+            cList.innerHTML = '';
+            careerData[dominant].list.forEach(c => {
+                const span = document.createElement('span');
+                span.className = "bg-white border border-indigo-200 text-indigo-700 px-3 py-1 rounded-full text-xs font-bold";
+                span.innerText = c;
+                cList.appendChild(span);
+            });
+
+            // Advice
+            const advice = document.getElementById('res-advice');
+            advice.innerHTML = `
+                <li>Asah kembali domain <strong>${Object.keys(stats).sort((a,b)=>stats[a]-stats[b])[0]}</strong> untuk keseimbangan kognitif.</li>
+                <li>Lakukan meditasi 10 menit setiap pagi untuk meningkatkan fokus Memori.</li>
+                <li>Gunakan potensi <strong>${dominant}</strong> Anda dalam proyek strategis di kantor/sekolah.</li>
+            `;
+
+            initChart(stats, max);
+        }
+
+        function initChart(stats, max) {
+            const ctx = document.getElementById('radarChart').getContext('2d');
+            new Chart(ctx, {
+                type: 'radar',
+                data: {
+                    labels: ['Verbal', 'Logika', 'Numerik', 'Spasial', 'Memori'],
+                    datasets: [{
+                        label: 'Kapasitas (%)',
+                        data: Object.keys(stats).map(k => (stats[k]/max[k])*100),
+                        backgroundColor: 'rgba(79, 70, 229, 0.2)',
+                        borderColor: 'rgb(79, 70, 229)',
+                        pointBackgroundColor: 'rgb(79, 70, 229)'
+                    }]
+                },
+                options: {
+                    scales: { r: { min: 0, max: 100 } },
+                    plugins: { legend: { display: false } }
+                }
+            });
+        }
+
+        async function downloadPDF() {
+            const { jsPDF } = window.jspdf;
+            const element = document.getElementById('capture-area');
+            const canvas = await html2canvas(element, { scale: 2 });
+            const imgData = canvas.toDataURL('image/png');
+            
+            const pdf = new jsPDF('p', 'mm', 'a4');
+            const imgProps = pdf.getImageProperties(imgData);
+            const pdfWidth = pdf.internal.pageSize.getWidth();
+            const pdfHeight = (imgProps.height * pdfWidth) / imgProps.width;
+            
+            pdf.addImage(imgData, 'PNG', 0, 0, pdfWidth, pdfHeight);
+            pdf.save(`BrainMetrics_Result_${document.getElementById('res-id').innerText}.pdf`);
+        }
+    </script>
+</body>
+</html>
