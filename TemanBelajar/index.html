@@ -1,0 +1,422 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sahabat Belajar AI</title>
+    <!-- Tailwind CSS untuk styling -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Lucide Icons -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Fredoka:wght@300;400;500;600;700&display=swap');
+        
+        body {
+            font-family: 'Fredoka', sans-serif;
+            background-color: #f0f9ff;
+        }
+
+        .chat-container::-webkit-scrollbar {
+            width: 6px;
+        }
+        .chat-container::-webkit-scrollbar-track {
+            background: transparent;
+        }
+        .chat-container::-webkit-scrollbar-thumb {
+            background: #bae6fd;
+            border-radius: 10px;
+        }
+
+        .animate-bounce-slow {
+            animation: bounce 2s infinite;
+        }
+
+        @keyframes bounce {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-10px); }
+        }
+    </style>
+</head>
+<body class="h-screen flex flex-col overflow-hidden">
+
+    <!-- Header -->
+    <header class="bg-white border-b-4 border-sky-200 p-4 flex items-center justify-between shadow-sm z-10">
+        <div class="flex items-center gap-3">
+            <div class="w-12 h-12 bg-yellow-400 rounded-full flex items-center justify-center border-2 border-white shadow-md">
+                <i data-lucide="bot" class="text-white w-7 h-7"></i>
+            </div>
+            <div>
+                <h1 class="text-xl font-bold text-sky-700">Sahabat AI 🌟</h1>
+                <p class="text-xs text-sky-400 font-medium uppercase tracking-wider">Teman Belajarmu</p>
+            </div>
+        </div>
+        <div class="flex gap-2">
+            <button class="p-2 rounded-full bg-orange-100 text-orange-500 hover:bg-orange-200 transition-colors">
+                <i data-lucide="book-open" class="w-5 h-5"></i>
+            </button>
+            <button class="p-2 rounded-full bg-sky-100 text-sky-500 hover:bg-sky-200 transition-colors">
+                <i data-lucide="home" class="w-5 h-5"></i>
+            </button>
+        </div>
+    </header>
+
+    <!-- Chat Area -->
+    <main id="chat-area" class="flex-1 overflow-y-auto p-4 space-y-6 chat-container">
+        <!-- Selamat Datang -->
+        <div id="welcome-screen" class="flex flex-col items-center justify-center h-full text-center space-y-4 py-10">
+            <div class="bg-white p-8 rounded-3xl shadow-xl max-w-sm border-2 border-sky-100">
+                <i data-lucide="sparkles" class="w-12 h-12 text-yellow-400 mx-auto mb-4 animate-bounce-slow"></i>
+                <h2 class="text-2xl font-bold text-sky-800">Halo Teman! 👋</h2>
+                <p class="text-gray-600 mt-2">Aku Sahabat AI. Kamu mau tanya apa hari ini? Aku bisa bantu belajar apa saja!</p>
+                <div class="grid grid-cols-1 gap-2 mt-6">
+                    <button onclick="setQuery('Kenapa langit warnanya biru?')" class="p-3 bg-sky-50 rounded-xl text-sky-700 text-sm hover:bg-sky-100 text-left transition-colors border border-sky-100">
+                        "Kenapa langit biru?" ☁️
+                    </button>
+                    <button onclick="setQuery('Gambarkan naga lucu makan es krim')" class="p-3 bg-purple-50 rounded-xl text-purple-700 text-sm hover:bg-purple-100 text-left transition-colors border border-purple-100">
+                        "Gambar naga makan es krim" 🍦
+                    </button>
+                </div>
+            </div>
+        </div>
+        <div id="messages-list" class="space-y-6"></div>
+        <div id="typing-indicator" class="hidden">
+            <div class="flex justify-start items-center gap-3">
+                <div class="w-10 h-10 rounded-2xl bg-yellow-400 flex items-center justify-center border-2 border-white shadow-sm">
+                    <i data-lucide="bot" class="text-white w-6 h-6"></i>
+                </div>
+                <div class="bg-white p-4 rounded-3xl rounded-tl-none border border-sky-100 shadow-sm">
+                    <div class="flex gap-1">
+                        <div class="w-2 h-2 bg-sky-300 rounded-full animate-bounce"></div>
+                        <div class="w-2 h-2 bg-sky-300 rounded-full animate-bounce" style="animation-delay: 0.2s"></div>
+                        <div class="w-2 h-2 bg-sky-300 rounded-full animate-bounce" style="animation-delay: 0.4s"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Voice Indicator -->
+    <div id="voice-indicator" class="fixed bottom-24 right-8 hidden">
+        <div class="bg-sky-500 text-white px-5 py-2.5 rounded-full shadow-2xl border-4 border-white flex items-center gap-3 animate-bounce">
+            <i data-lucide="volume-2" class="w-5 h-5 animate-pulse"></i>
+            <span class="text-sm font-bold">Sahabat AI Berbicara...</span>
+        </div>
+    </div>
+
+    <!-- Input Area -->
+    <footer class="p-4 bg-white border-t-4 border-sky-100">
+        <form id="chat-form" class="max-w-4xl mx-auto flex items-center gap-2">
+            <div class="relative flex-1">
+                <input
+                    type="text"
+                    id="user-input"
+                    placeholder="Tanya apa saja..."
+                    class="w-full py-4 pl-6 pr-12 rounded-full border-2 border-sky-200 focus:outline-none focus:border-sky-400 text-gray-700 font-medium bg-sky-50 transition-all placeholder:text-sky-300"
+                    autocomplete="off"
+                >
+                <button type="button" class="absolute right-4 top-1/2 -translate-y-1/2 text-sky-400 hover:text-sky-600">
+                    <i data-lucide="mic" class="w-6 h-6"></i>
+                </button>
+            </div>
+            <button
+                type="submit"
+                id="send-btn"
+                class="p-4 bg-yellow-400 hover:bg-yellow-500 text-white rounded-full transition-all shadow-lg hover:shadow-xl active:scale-95 flex items-center justify-center disabled:bg-gray-300"
+            >
+                <i data-lucide="send" class="w-6 h-6"></i>
+            </button>
+        </form>
+        <p class="text-center text-[10px] text-gray-400 mt-3 font-bold uppercase tracking-widest">
+            Didukung oleh AI Pintar • Belajar Jadi Menyenangkan
+        </p>
+    </footer>
+
+    <!-- Firebase Scripts -->
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
+        import { getAuth, signInAnonymously, onAuthStateChanged, signInWithCustomToken } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
+        import { getFirestore, collection, addDoc, onSnapshot, serverTimestamp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
+
+        // Global State & Config
+        const firebaseConfig = JSON.parse(window.__firebase_config || '{}');
+        const appId = window.__app_id || 'kid-ai-html-v1';
+        const apiKey = ""; // Diset secara otomatis oleh environment
+
+        const app = initializeApp(firebaseConfig);
+        const auth = getAuth(app);
+        const db = getFirestore(app);
+
+        let currentUser = null;
+        let localMessages = []; 
+
+        // UI References
+        const messagesList = document.getElementById('messages-list');
+        const chatForm = document.getElementById('chat-form');
+        const userInput = document.getElementById('user-input');
+        const welcomeScreen = document.getElementById('welcome-screen');
+        const typingIndicator = document.getElementById('typing-indicator');
+        const voiceIndicator = document.getElementById('voice-indicator');
+        const chatArea = document.getElementById('chat-area');
+
+        lucide.createIcons();
+
+        // 1. Auth & Sync
+        async function initAuth() {
+            try {
+                if (typeof window.__initial_auth_token !== 'undefined' && window.__initial_auth_token) {
+                    await signInWithCustomToken(auth, window.__initial_auth_token);
+                } else {
+                    await signInAnonymously(auth);
+                }
+            } catch (err) {
+                console.error("Auth Error:", err);
+            }
+        }
+        initAuth();
+
+        onAuthStateChanged(auth, (user) => {
+            if (user) {
+                currentUser = user;
+                initChatSync();
+            }
+        });
+
+        function initChatSync() {
+            if (!currentUser) return;
+            const path = `artifacts/${appId}/users/${currentUser.uid}/chat_history`;
+            const chatCol = collection(db, ...path.split('/'));
+
+            onSnapshot(chatCol, (snapshot) => {
+                const cloudMsgs = snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
+                const allMsgs = [...cloudMsgs, ...localMessages];
+                
+                const sorted = allMsgs.sort((a, b) => {
+                    const timeA = a.timestamp?.toMillis ? a.timestamp.toMillis() : (a.timestamp || 0);
+                    const timeB = b.timestamp?.toMillis ? b.timestamp.toMillis() : (b.timestamp || 0);
+                    return timeA - timeB;
+                });
+                
+                renderMessages(sorted);
+                if (sorted.length > 0) welcomeScreen.classList.add('hidden');
+                scrollToBottom();
+            }, (error) => {
+                console.error("Firestore sync error:", error);
+            });
+        }
+
+        function renderMessages(msgs) {
+            messagesList.innerHTML = '';
+            msgs.forEach(msg => {
+                const isUser = msg.sender === 'user';
+                const div = document.createElement('div');
+                div.className = `flex ${isUser ? 'justify-end' : 'justify-start'} animate-in fade-in`;
+                
+                div.innerHTML = `
+                    <div class="flex gap-3 max-w-[85%] ${isUser ? 'flex-row-reverse' : 'flex-row'}">
+                        <div class="w-10 h-10 rounded-2xl flex items-center justify-center flex-shrink-0 border-2 border-white shadow-sm ${isUser ? 'bg-sky-500' : 'bg-yellow-400'}">
+                            <i data-lucide="${isUser ? 'user' : 'bot'}" class="text-white w-6 h-6"></i>
+                        </div>
+                        <div class="p-4 rounded-3xl shadow-sm relative group ${isUser ? 'bg-sky-500 text-white rounded-tr-none' : 'bg-white text-gray-800 rounded-tl-none border border-sky-100'}">
+                            ${msg.image ? `<div class="mb-3 overflow-hidden rounded-xl border-4 border-white shadow-md"><img src="${msg.image}" class="w-full h-auto"></div>` : ''}
+                            <p class="text-sm md:text-base leading-relaxed font-medium whitespace-pre-wrap">${msg.text}</p>
+                            ${!isUser ? `<button onclick="window.speak('${msg.text.replace(/'/g, "\\'")}')" class="absolute -right-10 top-0 p-2 bg-white rounded-full text-sky-400 opacity-0 group-hover:opacity-100 transition-opacity shadow-sm border border-sky-100"><i data-lucide="volume-2" class="w-4 h-4"></i></button>` : ''}
+                        </div>
+                    </div>
+                `;
+                messagesList.appendChild(div);
+            });
+            lucide.createIcons();
+        }
+
+        // 2. Chat Actions
+        chatForm.onsubmit = async (e) => {
+            e.preventDefault();
+            const text = userInput.value.trim();
+            if (!text || !currentUser) return;
+
+            userInput.value = '';
+            const path = `artifacts/${appId}/users/${currentUser.uid}/chat_history`;
+            const chatCol = collection(db, ...path.split('/'));
+
+            try {
+                await addDoc(chatCol, {
+                    text: text,
+                    sender: 'user',
+                    timestamp: serverTimestamp()
+                });
+
+                const lower = text.toLowerCase();
+                if (lower.includes('gambar') || lower.includes('lukis') || lower.includes('foto')) {
+                    generateImage(text);
+                } else {
+                    generateText(text);
+                }
+            } catch (err) {
+                console.error("Submit error:", err);
+            }
+        };
+
+        async function generateText(prompt) {
+            typingIndicator.classList.remove('hidden');
+            scrollToBottom();
+
+            try {
+                const res = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-preview-09-2025:generateContent?key=${apiKey}`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        contents: [{ parts: [{ text: prompt }] }],
+                        systemInstruction: { parts: [{ text: "Kamu adalah asisten belajar anak 'Sahabat AI'. Gunakan bahasa Indonesia sederhana, ceria, banyak emoji untuk anak 5-10 tahun." }] }
+                    })
+                });
+                
+                if (!res.ok) throw new Error(`API Gemini Error: ${res.status}`);
+                const data = await res.json();
+                const reply = data.candidates?.[0]?.content?.parts?.[0]?.text || "Wah, aku bingung teman!";
+                
+                const path = `artifacts/${appId}/users/${currentUser.uid}/chat_history`;
+                await addDoc(collection(db, ...path.split('/')), {
+                    text: reply,
+                    sender: 'bot',
+                    timestamp: serverTimestamp()
+                });
+
+                window.speak(reply);
+            } catch (err) {
+                console.error(err);
+            } finally {
+                typingIndicator.classList.add('hidden');
+            }
+        }
+
+        async function generateImage(prompt) {
+            typingIndicator.classList.remove('hidden');
+            scrollToBottom();
+
+            try {
+                const cleanPrompt = `Cute colorful bright cartoon illustration for children: ${prompt}`;
+                // Penting: Memastikan API Key tidak kosong dalam request
+                const fetchUrl = `https://generativelanguage.googleapis.com/v1beta/models/imagen-4.0-generate-001:predict?key=${apiKey}`;
+                
+                const res = await fetch(fetchUrl, {
+                    method: 'POST',
+                    headers: { 
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({
+                        instances: [{ prompt: cleanPrompt }],
+                        parameters: { sampleCount: 1 }
+                    })
+                });
+
+                if (!res.ok) {
+                    const errTxt = await res.text();
+                    throw new Error(`Imagen API Error (${res.status}): ${errTxt}`);
+                }
+
+                const data = await res.json();
+                
+                if (!data.predictions || data.predictions.length === 0) {
+                    throw new Error("Respon Imagen tidak berisi data gambar.");
+                }
+
+                const b64 = data.predictions[0].bytesBase64Encoded;
+                
+                if (b64) {
+                    const imgUrl = `data:image/png;base64,${b64}`;
+                    const time = Date.now();
+                    
+                    const localMsg = {
+                        id: `local-${time}`,
+                        text: `Tadaa! Ini gambarmu untuk "${prompt}"! 🎨`,
+                        image: imgUrl,
+                        sender: 'bot',
+                        timestamp: time
+                    };
+                    localMessages.push(localMsg);
+
+                    const path = `artifacts/${appId}/users/${currentUser.uid}/chat_history`;
+                    await addDoc(collection(db, ...path.split('/')), {
+                        text: `Aku sudah melukis "${prompt}" untukmu! 🎨`,
+                        sender: 'bot',
+                        timestamp: serverTimestamp()
+                    });
+
+                    initChatSync(); 
+                } else {
+                    throw new Error("Field bytesBase64Encoded kosong.");
+                }
+            } catch (err) {
+                console.error("Image Gen Error Details:", err);
+                const path = `artifacts/${appId}/users/${currentUser.uid}/chat_history`;
+                await addDoc(collection(db, ...path.split('/')), {
+                    text: "Maaf teman, kuas lukisku sepertinya macet. Bisakah kamu coba minta gambar yang lain? 🖍️",
+                    sender: 'bot',
+                    timestamp: serverTimestamp()
+                });
+            } finally {
+                typingIndicator.classList.add('hidden');
+            }
+        }
+
+        // 3. Audio Logic
+        window.speak = async (text) => {
+            if (!text) return;
+            voiceIndicator.classList.remove('hidden');
+            try {
+                const res = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-preview-tts:generateContent?key=${apiKey}`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        contents: [{ parts: [{ text: `Katakan ceria: ${text}` }] }],
+                        generationConfig: {
+                            responseModalities: ["AUDIO"],
+                            speechConfig: { voiceConfig: { prebuiltVoiceConfig: { voiceName: "Kore" } } }
+                        }
+                    })
+                });
+                
+                if (!res.ok) throw new Error("TTS Error");
+                const data = await res.json();
+                const pcm = data.candidates?.[0]?.content?.parts?.[0]?.inlineData?.data;
+                if (pcm) playPcm(pcm);
+                else voiceIndicator.classList.add('hidden');
+            } catch (err) {
+                console.error(err);
+                voiceIndicator.classList.add('hidden');
+            }
+        };
+
+        function playPcm(base64Pcm) {
+            try {
+                const binary = atob(base64Pcm);
+                const len = binary.length;
+                const buffer = new ArrayBuffer(44 + len);
+                const view = new DataView(buffer);
+                const sampleRate = 24000;
+
+                const writeString = (offset, s) => { for (let i = 0; i < s.length; i++) view.setUint8(offset + i, s.charCodeAt(i)); };
+                writeString(0, 'RIFF'); view.setUint32(4, 36 + len, true);
+                writeString(8, 'WAVE'); writeString(12, 'fmt ');
+                view.setUint32(16, 16, true); view.setUint16(20, 1, true);
+                view.setUint16(22, 1, true); view.setUint32(24, sampleRate, true);
+                view.setUint32(28, sampleRate * 2, true); view.setUint16(32, 2, true);
+                view.setUint16(34, 16, true); writeString(36, 'data');
+                view.setUint32(40, len, true);
+                for (let i = 0; i < len; i++) view.setUint8(44 + i, binary.charCodeAt(i));
+
+                const blob = new Blob([buffer], { type: 'audio/wav' });
+                const audio = new Audio(URL.createObjectURL(blob));
+                audio.onended = () => voiceIndicator.classList.add('hidden');
+                audio.play();
+            } catch (e) {
+                console.error("Audio playback error:", e);
+                voiceIndicator.classList.add('hidden');
+            }
+        }
+
+        function scrollToBottom() { chatArea.scrollTo({ top: chatArea.scrollHeight, behavior: 'smooth' }); }
+        window.setQuery = (q) => { userInput.value = q; chatForm.dispatchEvent(new Event('submit')); };
+    </script>
+</body>
+</html>
