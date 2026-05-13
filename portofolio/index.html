@@ -40,135 +40,136 @@
             background-attachment: fixed;
         }
 
-        /* Bamboo Leaves Animation */
-        .leaf-container {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            pointer-events: none;
-            z-index: 2;
-            overflow: hidden;
-        }
-
-        .leaf {
-            position: absolute;
-            display: block;
-            will-change: transform;
-        }
-
-        @keyframes falling {
-            0% { transform: translate(-10%, -10%) rotate(0deg); opacity: 0; }
-            10% { opacity: var(--leaf-opacity); }
-            90% { opacity: var(--leaf-opacity); }
-            100% { transform: translate(110vw, 110vh) rotate(360deg); opacity: 0; }
-        }
-
-        @keyframes drift {
-            0%, 100% { transform: translateX(0) rotateY(0deg); }
-            50% { transform: translateX(120px) rotateY(180deg); }
-        }
-
-        /* Lanyard Construction */
+        /* Lanyard & Strap Mechanics */
         @keyframes swayRealistic {
-            0%, 100% { transform: rotate(-1.2deg) translateY(0); }
-            50% { transform: rotate(1.2deg) translateY(6px); }
+            0%, 100% { transform: rotate(-1.2deg) translateY(0) translateX(0); }
+            50% { transform: rotate(1.2deg) translateY(12px) translateX(6px); }
         }
 
         .lanyard-v-container {
             display: flex;
             flex-direction: column;
             align-items: center;
-            animation: swayRealistic 12s ease-in-out infinite;
-            filter: drop-shadow(0 25px 50px rgba(0,0,0,0.12));
+            animation: swayRealistic 9s ease-in-out infinite;
         }
 
         .lanyard-v-strap {
-            width: 240px;
-            height: 280px;
+            width: 280px;
+            height: 200px;
             position: relative;
             z-index: 5;
+            display: flex;
+            justify-content: center;
         }
 
         .strap-part {
             position: absolute;
-            width: 16px;
-            height: 480px;
-            background: linear-gradient(to right, #0891b2, #1e40af, #0891b2);
-            background-size: 200% 100%;
-            box-shadow: inset 2px 0 5px rgba(255,255,255,0.1), inset -2px 0 5px rgba(0,0,0,0.2);
-            animation: movingStrap 8s linear infinite;
+            width: 24px;
+            height: 1000px;
+            background: linear-gradient(90deg, 
+                rgba(0,0,0,0.2) 0%, 
+                rgba(255,255,255,0.05) 50%, 
+                rgba(0,0,0,0.25) 100%
+            ), #0891b2;
+            background-size: 6px 100%, cover;
+            box-shadow: 0 15px 40px rgba(0,0,0,0.4);
         }
 
-        @keyframes movingStrap {
-            0% { background-position: 0% 50%; }
-            100% { background-position: 200% 50%; }
+        .strap-left { 
+            left: 50%;
+            bottom: 0; 
+            transform: translateX(-100%) rotate(-12deg); 
+            transform-origin: bottom right;
+            z-index: 6;
+            border-radius: 0 0 0 4px;
         }
 
-        .strap-left { left: 40px; top: -180px; transform: rotate(-22deg); border-radius: 4px; }
-        .strap-right { right: 40px; top: -180px; transform: rotate(22deg); border-radius: 4px; }
+        .strap-right { 
+            right: 50%;
+            bottom: 0; 
+            transform: translateX(100%) rotate(12deg); 
+            transform-origin: bottom left;
+            z-index: 5;
+            filter: brightness(0.7);
+            border-radius: 0 0 4px 0;
+        }
 
-        /* Hologram Effect */
+        .lanyard-buckle {
+            width: 40px;
+            height: 45px;
+            background: linear-gradient(135deg, #1e293b, #020617);
+            border: 1px solid rgba(255,255,255,0.2);
+            border-radius: 6px;
+            z-index: 15;
+            margin-top: -2px;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.6);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: space-around;
+            padding: 4px 0;
+        }
+
+        .buckle-line {
+            width: 20px;
+            height: 2px;
+            background: rgba(255,255,255,0.1);
+            border-radius: 2px;
+        }
+
+        .lanyard-clip-bridge {
+            width: 8px;
+            height: 20px;
+            background: linear-gradient(to bottom, #475569, #1e293b);
+            z-index: 14;
+            margin-top: -5px;
+            border-radius: 2px;
+        }
+
+        .lanyard-ring {
+            width: 24px;
+            height: 24px;
+            border: 4px solid #94a3b8;
+            border-radius: 50%;
+            z-index: 13;
+            margin-top: -10px;
+            box-shadow: inset 0 2px 5px rgba(0,0,0,0.5);
+        }
+
         .hologram-overlay {
-            position: absolute;
-            inset: 0;
-            background: linear-gradient(
-                135deg,
-                transparent 0%,
-                rgba(255, 255, 255, 0) 30%,
-                rgba(0, 255, 255, 0.15) 45%,
-                rgba(255, 0, 255, 0.15) 50%,
-                rgba(0, 255, 255, 0.15) 55%,
-                rgba(255, 255, 255, 0) 70%,
-                transparent 100%
-            );
+            position: absolute; inset: 0;
+            background: linear-gradient(135deg, transparent 0%, rgba(0, 255, 255, 0.15) 45%, rgba(255, 0, 255, 0.15) 50%, transparent 100%);
             background-size: 200% 200%;
             mix-blend-mode: color-dodge;
-            z-index: 30;
-            pointer-events: none;
-            opacity: 0.6;
-            transition: background-position 0.1s ease;
-        }
-
-        .card-inner-glow {
-            position: absolute;
-            inset: 0;
-            box-shadow: inset 0 0 40px rgba(8, 145, 178, 0.2);
-            pointer-events: none;
-            z-index: 5;
+            z-index: 30; pointer-events: none;
         }
 
         .premium-card {
             backdrop-filter: blur(var(--surface-blur));
-            transition: all 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+            transition: all 0.4s cubic-bezier(0.17, 0.55, 0.55, 1);
         }
 
-        .dark-mode .premium-card { background: rgba(15, 23, 42, 0.4); border: 1px solid rgba(255, 255, 255, 0.05); }
-        .light-mode .premium-card { background: rgba(255, 255, 255, 0.7); border: 1px solid rgba(8, 145, 178, 0.15); }
+        .text-outline { -webkit-text-stroke: 1px currentColor; color: transparent; }
 
-        @media (max-width: 1024px) {
-            .lanyard-section { display: none; }
+        @media (max-width: 1024px) { .lanyard-section { display: none; } }
+
+        .timeline-item::before {
+            content: '';
+            position: absolute;
+            left: -25px;
+            top: 10px;
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            background: #0891b2;
+            box-shadow: 0 0 15px #0891b2;
         }
 
-        .android-nav {
-            position: fixed;
-            bottom: 0;
-            left: 0;
-            width: 100%;
-            height: 72px;
-            display: none;
-            z-index: 200;
-            backdrop-filter: blur(16px);
-        }
-        
-        .light-mode .android-nav { background: rgba(255, 255, 255, 0.9); border-top: 1px solid rgba(0,0,0,0.05); }
-        .dark-mode .android-nav { background: rgba(2, 6, 23, 0.9); border-top: 1px solid rgba(255,255,255,0.05); }
-
-        @media (max-width: 768px) {
-            .android-nav { display: flex; }
-            .desktop-nav { display: none; }
-            main { padding-bottom: 120px; padding-top: 140px; }
+        @keyframes falling {
+            0% { transform: translateY(-10vh) rotate(0deg); opacity: 0; }
+            10% { opacity: var(--leaf-opacity); }
+            90% { opacity: var(--leaf-opacity); }
+            100% { transform: translateY(110vh) rotate(360deg); opacity: 0; }
         }
     </style>
 </head>
@@ -178,113 +179,82 @@
       :class="isDarkMode ? 'dark-mode bg-mesh-dark text-slate-200' : 'light-mode bg-mesh-light text-slate-900'"
       class="min-h-screen transition-colors duration-1000 relative overflow-x-hidden">
 
-    <!-- Efek Daun Bambu -->
-    <div class="leaf-container">
+    <!-- Efek Partikel Latar Belakang -->
+    <div class="leaf-container fixed top-0 left-0 w-full h-full pointer-events-none z-2 overflow-hidden">
         <template x-for="(leaf, index) in leaves" :key="index">
-            <div class="leaf" 
-                 :style="`
-                    left: ${leaf.left}; 
-                    animation: falling ${leaf.duration} linear ${leaf.delay} infinite;
-                    --leaf-opacity: ${leaf.opacity};
-                    filter: blur(${leaf.blur});
-                    transform: scale(${leaf.scale}) rotate(${leaf.rotation}deg);
-                 `">
-                <div :style="`animation: drift ${6 + Math.random() * 4}s ease-in-out infinite`" class="opacity-40">
-                    <svg width="120" height="30" viewBox="0 0 120 30" fill="none" xmlns="http://www.w3.org/2000/svg">
-                        <path d="M5 15C35 12 75 2 115 15C75 28 35 18 5 15Z" :fill="leaf.color" fill-opacity="0.8" />
-                    </svg>
-                </div>
+            <div class="absolute will-change-transform" 
+                 :style="`left: ${leaf.left}; animation: falling ${leaf.duration} linear ${leaf.delay} infinite; --leaf-opacity: ${leaf.opacity};` ">
+                <svg width="60" height="15" viewBox="0 0 120 30" :fill="leaf.color" class="opacity-10">
+                    <path d="M5 15C35 12 75 2 115 15C75 28 35 18 5 15Z" />
+                </svg>
             </div>
         </template>
     </div>
 
-    <!-- Navigasi Desktop -->
-    <nav class="desktop-nav fixed top-8 left-1/2 -translate-x-1/2 w-[90%] max-w-5xl z-[100]">
-        <div class="flex justify-between items-center px-8 py-5 rounded-[2.5rem] border backdrop-blur-3xl shadow-2xl transition-all"
-             :class="isDarkMode ? 'bg-slate-950/40 border-white/5 shadow-black/40' : 'bg-white/70 border-cyan-100 shadow-cyan-900/5'">
+    <!-- Navigasi -->
+    <nav class="fixed top-8 left-1/2 -translate-x-1/2 w-[90%] max-w-6xl z-[100]">
+        <div class="flex justify-between items-center px-8 py-4 rounded-[2.5rem] border backdrop-blur-3xl transition-all"
+             :class="isDarkMode ? 'bg-slate-950/60 border-white/10 shadow-2xl' : 'bg-white/80 border-cyan-100 shadow-xl'">
             
             <div class="flex items-center gap-4 cursor-pointer group" @click="activeTab = 'dashboard'">
-                <div class="w-11 h-11 rounded-2xl bg-cyan-600 flex items-center justify-center text-white font-black text-xl shadow-lg shadow-cyan-500/20 group-hover:scale-110 transition-transform">
-                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                        <path d="M12 2L4 21H7.5L12 9.5L16.5 21H20L12 2Z" fill="currentColor" />
-                    </svg>
-                </div>
-                <div class="hidden sm:flex flex-col">
-                    <span class="font-black text-xl tracking-tighter uppercase leading-none italic">ANTONO</span>
-                    <span class="text-[8px] font-bold tracking-[0.5em] opacity-40 uppercase">Architecture 2026</span>
-                </div>
+                <div class="w-10 h-10 rounded-2xl bg-cyan-600 flex items-center justify-center text-white font-black shadow-lg group-hover:scale-110 transition-transform">A</div>
+                <div class="hidden sm:block font-black text-lg tracking-tighter uppercase italic">ANTONO</div>
             </div>
             
-            <div class="flex gap-1 items-center bg-black/5 dark:bg-white/5 p-1.5 rounded-full border border-black/5 dark:border-white/5">
+            <div class="flex gap-1 p-1 bg-black/5 dark:bg-white/5 rounded-full">
                 <template x-for="tab in ['dashboard', 'keahlian', 'pengalaman', 'kontak']">
                     <button @click="activeTab = tab" 
-                            class="px-6 py-2 rounded-full text-[10px] font-black uppercase tracking-widest transition-all relative z-10"
+                            class="px-5 py-2.5 rounded-full text-[10px] font-black uppercase tracking-widest transition-all relative"
                             :class="activeTab === tab ? 'text-white' : 'opacity-40 hover:opacity-100'">
-                        <span x-text="tab === 'dashboard' ? 'Mulai' : tab === 'keahlian' ? 'Stack' : tab === 'pengalaman' ? 'Jejak' : 'Hubungi'"></span>
-                        <div x-show="activeTab === tab" x-transition.opacity class="absolute inset-0 bg-cyan-600 rounded-full -z-10 shadow-lg shadow-cyan-500/30"></div>
+                        <span x-text="tab === 'dashboard' ? 'Mulai' : tab === 'keahlian' ? 'Stack' : tab === 'pengalaman' ? 'Misi' : 'Kontak'"></span>
+                        <div x-show="activeTab === tab" x-transition class="absolute inset-0 bg-cyan-600 rounded-full -z-10 shadow-lg shadow-cyan-600/40"></div>
                     </button>
                 </template>
             </div>
 
-            <button @click="isDarkMode = !isDarkMode" class="w-11 h-11 rounded-full border border-current/10 flex items-center justify-center hover:bg-current/5 transition-all">
-                <span x-text="isDarkMode ? '🌙' : '☀️'" class="text-lg"></span>
+            <button @click="isDarkMode = !isDarkMode" class="w-10 h-10 rounded-full border border-current/10 flex items-center justify-center hover:bg-current/5 transition-all">
+                <span x-text="isDarkMode ? '🌙' : '☀️'" class="text-sm"></span>
             </button>
         </div>
     </nav>
 
-    <!-- Navigasi Android -->
-    <div class="android-nav px-6 flex items-center justify-around">
-        <template x-for="tab in [{id:'dashboard', icon:'🏠'}, {id:'keahlian', icon:'⚡'}, {id:'pengalaman', icon:'📄'}, {id:'kontak', icon:'✉️'}]">
-            <button @click="activeTab = tab.id" class="flex flex-col items-center justify-center relative transition-all" :class="activeTab === tab.id ? 'scale-110' : 'opacity-40'">
-                <span class="text-2xl mb-1" x-text="tab.icon"></span>
-                <span class="text-[8px] font-black uppercase tracking-widest" x-text="tab.id"></span>
-            </button>
-        </template>
-    </div>
-
-    <!-- Lanyard - ID Card Section -->
-    <div class="lanyard-section fixed top-0 right-[12%] z-20 h-screen pointer-events-none transition-all duration-1000 flex flex-col items-center" :class="isLoaded ? 'translate-y-0 opacity-100' : '-translate-y-full opacity-0'">
+    <!-- INTEGRATED LANYARD SECTION -->
+    <div class="lanyard-section fixed top-0 right-[10%] xl:right-[15%] z-20 h-screen pointer-events-none transition-all duration-1000" :class="isLoaded ? 'translate-y-0 opacity-100' : '-translate-y-full opacity-0'">
         <div class="lanyard-v-container">
             <div class="lanyard-v-strap">
+                <div class="strap-part strap-left"></div>
                 <div class="strap-part strap-right"></div>
-                <div class="strap-part strap-left"></div> 
-                <div class="absolute bottom-[-15px] left-1/2 -translate-x-1/2 w-14 h-16 bg-gradient-to-b from-slate-700 to-slate-900 rounded-xl shadow-2xl z-10 flex flex-col items-center justify-center border border-white/20">
-                    <div class="w-3 h-3 rounded-full bg-cyan-500 mb-1 animate-pulse shadow-[0_0_12px_rgba(6,182,212,0.8)]"></div>
-                    <div class="text-[6px] font-bold text-white/40 uppercase tracking-tighter">ENG-SYS</div>
-                </div>
             </div>
-            <div class="pointer-events-auto mt-0 relative overflow-hidden rounded-[3rem]" :style="`transform: perspective(2000px) rotateX(${rotation.x}deg) rotateY(${rotation.y}deg)`">
-                <div class="hologram-overlay" :style="`background-position: ${rotation.y * 5}% ${rotation.x * 5}%`"></div>
-                <div class="w-72 h-[440px] rounded-[3rem] bg-white/5 border border-white/30 backdrop-blur-3xl p-1 shadow-[0_50px_100px_-20px_rgba(0,0,0,0.4)]">
-                    <div class="w-full h-full rounded-[2.8rem] overflow-hidden relative flex flex-col" :class="isDarkMode ? 'bg-slate-950/90' : 'bg-white/95'">
-                        <div class="card-inner-glow"></div>
-                        <div class="h-28 bg-gradient-to-br from-cyan-600 via-indigo-700 to-purple-800 p-6 flex flex-col justify-between relative">
-                             <div class="flex justify-between items-start relative z-10">
-                                <span class="text-[9px] font-black text-white tracking-[0.4em]">PRIORITY ACCESS</span>
-                                <svg width="16" height="16" viewBox="0 0 24 24" fill="white" class="opacity-50"><path d="M12 2L4 21H20L12 2Z"/></svg>
-                             </div>
-                             <div class="flex items-center gap-2 relative z-10">
-                                <div class="w-2 h-2 rounded-full bg-green-400 animate-ping"></div>
-                                <span class="text-[10px] font-black text-white uppercase italic">Level 5 Security</span>
-                             </div>
+            <div class="lanyard-buckle">
+                <div class="buckle-line"></div>
+                <div class="text-[6px] text-white/50 font-black uppercase tracking-[0.2em]">SECURE</div>
+                <div class="buckle-line"></div>
+            </div>
+            <div class="lanyard-clip-bridge"></div>
+            <div class="lanyard-ring"></div>
+
+            <div class="pointer-events-auto mt-[-8px] relative overflow-hidden rounded-[2.8rem] shadow-[0_50px_100px_-20px_rgba(0,0,0,0.5)]" 
+                 :style="`transform: perspective(1200px) rotateX(${rotation.x}deg) rotateY(${rotation.y}deg)`">
+                <div class="hologram-overlay" :style="`background-position: ${rotation.y * 10}% ${rotation.x * 10}%`"></div>
+                <div class="w-72 h-[440px] rounded-[2.8rem] bg-white/10 border border-white/20 backdrop-blur-3xl p-1.5">
+                    <div class="w-full h-full rounded-[2.5rem] overflow-hidden flex flex-col" :class="isDarkMode ? 'bg-slate-950/95' : 'bg-white/95'">
+                        <div class="h-28 bg-gradient-to-br from-cyan-600 via-cyan-800 to-indigo-950 p-6 flex justify-between items-start">
+                            <div class="flex flex-col">
+                                <span class="text-[9px] font-black text-white tracking-widest uppercase">Global Access</span>
+                                <span class="text-[7px] text-white/50 font-mono italic">NODE-2026-IND</span>
+                            </div>
+                            <div class="w-2 h-2 rounded-full bg-green-400 shadow-[0_0_10px_#4ade80] animate-pulse"></div>
                         </div>
-                        <div class="p-8 flex flex-col items-center relative">
-                            <div class="w-32 h-32 rounded-[2.5rem] p-1 bg-gradient-to-tr from-cyan-500 via-white to-purple-500 shadow-2xl mb-6">
-                                <img src="https://avatars.githubusercontent.com/u/73228642?v=4" alt="Antono" class="w-full h-full object-cover rounded-[2.2rem]">
+                        <div class="px-8 pb-8 flex flex-col items-center -mt-14">
+                            <div class="w-32 h-32 rounded-[2rem] p-1.5 bg-gradient-to-tr from-cyan-500 to-indigo-500 shadow-2xl mb-5">
+                                <img src="https://avatars.githubusercontent.com/u/73228642?v=4" class="w-full h-full object-cover rounded-[1.6rem]">
                             </div>
-                            <h3 class="text-3xl font-black uppercase tracking-tighter mb-1" :class="isDarkMode ? 'text-white' : 'text-slate-950'">ANTONO</h3>
-                            <p class="text-[10px] font-black text-cyan-500 uppercase tracking-widest mb-6">Principal Architect</p>
-                            <div class="w-full border-t border-current/10 pt-6 flex flex-col items-center">
-                                <div class="text-[7px] font-mono opacity-40 uppercase tracking-widest">ID: 0x2026_ANTONO_SYS</div>
+                            <h3 class="text-3xl font-black uppercase tracking-tighter" :class="isDarkMode ? 'text-white' : 'text-slate-950'">ANTONO</h3>
+                            <p class="text-[10px] font-black text-cyan-600 uppercase tracking-widest mb-8">Principal Engineer</p>
+                            <div class="w-full h-12 bg-current/5 rounded-2xl flex items-center justify-center px-4 overflow-hidden relative">
+                                <div class="w-full h-[1px] bg-cyan-500/30 absolute top-1/2 -translate-y-1/2"></div>
+                                <span class="text-[8px] font-mono opacity-20 tracking-[0.5em] truncate">01010111010101001010</span>
                             </div>
-                        </div>
-                        <div class="mt-auto p-6 bg-current/5 flex items-center justify-between">
-                            <div class="flex gap-0.5">
-                                <div class="w-0.5 h-4 bg-current opacity-20"></div>
-                                <div class="w-0.5 h-6 bg-current opacity-40"></div>
-                                <div class="w-0.5 h-3 bg-current opacity-30"></div>
-                            </div>
-                            <span class="text-[8px] font-bold opacity-30">EST. 2012</span>
                         </div>
                     </div>
                 </div>
@@ -292,99 +262,99 @@
         </div>
     </div>
 
-    <!-- Main Content -->
-    <main class="max-w-7xl mx-auto px-6 md:px-16 pb-32 pt-48 lg:pt-56 flex flex-col lg:flex-row gap-24 relative z-10">
-        <div class="w-full lg:w-[60%]">
+    <!-- Konten Utama -->
+    <main class="max-w-7xl mx-auto px-6 md:px-16 pb-32 pt-48 lg:pt-64 flex flex-col lg:flex-row relative z-10">
+        <div class="w-full lg:w-3/5">
             
-            <!-- Mulai / Home -->
-            <div x-show="activeTab === 'dashboard'" x-transition:enter="transition ease-out duration-1000" x-transition:enter-start="opacity-0 translate-y-32">
-                <div class="mb-20">
-                    <div class="inline-flex items-center gap-3 px-5 py-2 rounded-full bg-cyan-500/10 border border-cyan-500/20 text-[10px] font-black uppercase tracking-[0.3em] text-cyan-600 mb-10">
-                        <span class="relative flex h-2 w-2">
-                            <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-cyan-400 opacity-75"></span>
-                            <span class="relative inline-flex rounded-full h-2 w-2 bg-cyan-500"></span>
-                        </span>
-                        Node Active: Jakarta Central
+            <!-- Dashboard -->
+            <div x-show="activeTab === 'dashboard'" x-transition:enter="transition ease-out duration-1000" x-transition:enter-start="opacity-0 translate-y-10">
+                <div class="mb-14">
+                    <div class="inline-flex items-center gap-3 px-4 py-2 rounded-full bg-cyan-500/10 border border-cyan-500/20 text-[10px] font-black uppercase tracking-[0.2em] text-cyan-600 mb-8">
+                        <span class="w-2 h-2 rounded-full bg-cyan-500 animate-ping"></span>
+                        Status: Mengembangkan Masa Depan
                     </div>
-                    <h1 class="text-6xl md:text-[7.5rem] font-black uppercase italic mb-12 leading-[0.85] tracking-tighter">
-                        Digital <br>
-                        <span class="text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 via-indigo-500 to-purple-600">Alchemist.</span>
+                    <h1 class="text-7xl md:text-9xl font-black uppercase italic leading-[0.8] tracking-tighter mb-10">
+                        Crafting <br>
+                        <span class="text-outline opacity-20 italic">The Next</span> <br>
+                        Standard.
                     </h1>
-                    <p class="text-xl md:text-2xl opacity-50 max-w-xl font-medium leading-relaxed italic border-l-[12px] border-cyan-500/30 pl-8">
-                        Mewujudkan ide kompleks menjadi infrastruktur digital yang elegan dan tak terhancurkan.
+                    <p class="text-lg opacity-60 leading-relaxed max-w-xl font-medium italic">
+                        Membangun infrastruktur digital yang resilien dengan estetika modern. Fokus pada sistem terdistribusi, otomasi tingkat lanjut, dan arsitektur cloud-native untuk skala global.
                     </p>
                 </div>
-                <div class="flex flex-wrap gap-6 items-center">
-                    <button @click="activeTab = 'pengalaman'" class="px-12 py-6 rounded-[2.5rem] bg-gradient-to-r from-cyan-600 to-indigo-700 text-white font-black uppercase tracking-[0.3em] text-[11px] shadow-2xl hover:scale-105 transition-all shadow-cyan-600/30">Lihat Operasi</button>
-                    <div class="flex -space-x-4">
-                        <div class="w-12 h-12 rounded-full border-4 border-slate-900 bg-slate-800 flex items-center justify-center text-[10px] font-bold">Go</div>
-                        <div class="w-12 h-12 rounded-full border-4 border-slate-900 bg-slate-800 flex items-center justify-center text-[10px] font-bold">Rs</div>
-                        <div class="w-12 h-12 rounded-full border-4 border-slate-900 bg-slate-800 flex items-center justify-center text-[10px] font-bold">Py</div>
-                    </div>
+                <div class="flex flex-wrap gap-6">
+                    <button @click="activeTab = 'keahlian'" class="group relative px-10 py-5 rounded-full bg-cyan-600 text-white font-black uppercase tracking-widest text-xs shadow-2xl shadow-cyan-600/40 hover:scale-105 transition-all">
+                        Eksplorasi Stack
+                    </button>
+                    <button @click="activeTab = 'kontak'" class="px-10 py-5 rounded-full border border-current/10 font-black uppercase tracking-widest text-xs hover:bg-current/5 transition-all">
+                        Hubungi Saya
+                    </button>
                 </div>
             </div>
 
-            <!-- Keahlian / Stack -->
+            <!-- Bagian Keahlian (Stack) -->
             <div x-show="activeTab === 'keahlian'" x-cloak x-transition:enter="transition ease-out duration-800" x-transition:enter-start="opacity-0 scale-95">
-                <h2 class="text-5xl font-black uppercase italic tracking-tighter mb-12">Tech <span class="text-cyan-600">Stacks.</span></h2>
-                <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
+                <h2 class="text-5xl font-black uppercase italic tracking-tighter mb-12">Arsip <span class="text-cyan-600">Teknologi.</span></h2>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
                     <template x-for="stack in techStacks">
-                        <div class="p-8 rounded-[3rem] premium-card group relative overflow-hidden hover:bg-cyan-600/5 transition-all border border-transparent hover:border-cyan-500/20">
-                            <div class="flex flex-wrap gap-3 mb-6">
-                                <template x-for="icon in stack.icons">
-                                    <div class="w-12 h-12 rounded-2xl bg-white/40 dark:bg-white/5 border border-black/5 dark:border-white/10 flex items-center justify-center p-2.5 shadow-sm group-hover:scale-110 transition-transform duration-500" :title="icon.name">
-                                        <img :src="`https://cdn.simpleicons.org/${icon.slug}/${isDarkMode ? 'ffffff' : icon.color}`" 
-                                             :alt="icon.name" 
-                                             class="w-full h-full object-contain">
+                        <div class="p-8 rounded-[2.5rem] premium-card border border-white/5 hover:border-cyan-500/40 shadow-xl group cursor-default relative overflow-hidden flex flex-col justify-between">
+                            <div>
+                                <div class="flex justify-between items-start mb-8">
+                                    <h4 class="text-[10px] font-black uppercase tracking-[0.3em] opacity-40" x-text="stack.category"></h4>
+                                    <div class="w-10 h-10 rounded-2xl bg-cyan-500/5 flex items-center justify-center group-hover:scale-110 transition-transform duration-500">
+                                        <svg class="w-6 h-6 text-cyan-600" viewBox="0 0 24 24" fill="currentColor" x-html="stack.mainIcon"></svg>
                                     </div>
+                                </div>
+                                <div class="space-y-4">
+                                    <p class="text-2xl font-black italic tracking-tight mb-6" x-text="stack.primary"></p>
+                                    <div class="flex flex-wrap gap-3">
+                                        <template x-for="icon in stack.icons">
+                                            <div class="flex items-center gap-2 px-3 py-1.5 rounded-xl bg-current/5 border border-current/5 group/icon hover:bg-cyan-500/10 transition-colors">
+                                                <svg class="w-4 h-4 text-cyan-600/80 group-hover/icon:scale-110 transition-transform" viewBox="0 0 24 24" fill="currentColor" x-html="icon.svg"></svg>
+                                                <span class="text-[10px] font-bold opacity-60" x-text="icon.name"></span>
+                                            </div>
+                                        </template>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </template>
+                </div>
+            </div>
+
+            <!-- Bagian Pengalaman (Misi) -->
+            <div x-show="activeTab === 'pengalaman'" x-cloak x-transition:enter="transition ease-out duration-800" x-transition:enter-start="opacity-0 translate-x-12">
+                <h2 class="text-5xl font-black uppercase italic tracking-tighter mb-12">Log <span class="text-cyan-600">Ekspedisi.</span></h2>
+                <div class="ml-8 space-y-12 border-l-2 border-current/10 pl-10">
+                    <template x-for="exp in experienceLog">
+                        <div class="relative timeline-item" :class="exp.isCurrent ? '' : 'opacity-60'">
+                            <span class="text-[10px] font-black opacity-30 uppercase tracking-[0.2em] block mb-2" x-text="exp.period"></span>
+                            <h4 class="text-3xl font-black uppercase italic leading-none mb-1" x-text="exp.role"></h4>
+                            <p class="text-lg font-bold text-cyan-600 mb-4 tracking-tight" x-text="exp.company"></p>
+                            <p class="opacity-70 text-sm leading-relaxed max-w-lg" x-text="exp.description"></p>
+                            <div class="mt-4 flex flex-wrap gap-2">
+                                <template x-for="tag in exp.tags">
+                                    <span class="text-[9px] px-2 py-1 bg-current/5 rounded-md font-mono opacity-50" x-text="tag"></span>
                                 </template>
                             </div>
-                            <h3 class="text-[9px] font-black uppercase tracking-[0.4em] opacity-40 mb-3" x-text="stack.t"></h3>
-                            <p class="text-xl font-black italic" x-text="stack.v"></p>
                         </div>
                     </template>
                 </div>
             </div>
 
-            <!-- Pengalaman / Jejak -->
-            <div x-show="activeTab === 'pengalaman'" x-cloak x-transition:enter="transition ease-out duration-800" x-transition:enter-start="opacity-0 translate-x-10">
-                <h2 class="text-5xl font-black uppercase italic tracking-tighter mb-12">Riwayat <span class="text-cyan-600">Karir.</span></h2>
-                <div class="space-y-6">
-                    <template x-for="job in experiences">
-                        <div class="p-8 rounded-[3rem] premium-card hover:translate-x-2 transition-transform">
-                            <div class="flex justify-between items-start mb-4">
-                                <div>
-                                    <h4 class="text-xl font-black italic uppercase" x-text="job.role"></h4>
-                                    <p class="text-[10px] font-black text-cyan-600 uppercase tracking-widest" x-text="job.company"></p>
-                                </div>
-                                <span class="text-[10px] font-black opacity-30" x-text="job.year"></span>
-                            </div>
-                            <p class="text-sm opacity-50 leading-relaxed italic" x-text="job.desc"></p>
-                        </div>
-                    </template>
-                </div>
-            </div>
-
-            <!-- Kontak -->
-            <div x-show="activeTab === 'kontak'" x-cloak x-transition:enter="transition ease-out duration-800" x-transition:enter-start="opacity-0 translate-y-10">
-                <h2 class="text-5xl font-black uppercase italic tracking-tighter mb-12">Sinyal <span class="text-cyan-600">Kontak.</span></h2>
-                <div class="p-8 rounded-[3rem] premium-card">
-                    <form @submit.prevent class="space-y-6">
+            <!-- Bagian Kontak -->
+            <div x-show="activeTab === 'kontak'" x-cloak x-transition:enter="transition ease-out duration-800" x-transition:enter-start="opacity-0 translate-y-12">
+                <h2 class="text-5xl font-black uppercase italic tracking-tighter mb-12">Transmisi <span class="text-cyan-600">Langsung.</span></h2>
+                <div class="p-10 rounded-[3rem] premium-card shadow-2xl border border-white/5">
+                    <form @submit.prevent class="space-y-8">
                         <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                            <div class="space-y-2">
-                                <label class="text-[8px] font-black uppercase tracking-[0.4em] opacity-40">Identitas</label>
-                                <input type="text" placeholder="Nama Lengkap" class="w-full bg-current/5 border-none rounded-2xl p-4 italic font-bold focus:ring-2 focus:ring-cyan-500 transition-all outline-none">
-                            </div>
-                            <div class="space-y-2">
-                                <label class="text-[8px] font-black uppercase tracking-[0.4em] opacity-40">Koordinat Email</label>
-                                <input type="email" placeholder="email@anda.com" class="w-full bg-current/5 border-none rounded-2xl p-4 italic font-bold focus:ring-2 focus:ring-cyan-500 transition-all outline-none">
-                            </div>
+                            <input type="text" placeholder="Nama Lengkap" class="w-full bg-current/5 border-none rounded-[1.5rem] p-5 italic font-bold outline-none focus:ring-2 ring-cyan-500/30 transition-all">
+                            <input type="email" placeholder="Email Korporat" class="w-full bg-current/5 border-none rounded-[1.5rem] p-5 italic font-bold outline-none focus:ring-2 ring-cyan-500/30 transition-all">
                         </div>
-                        <div class="space-y-2">
-                            <label class="text-[8px] font-black uppercase tracking-[0.4em] opacity-40">Enkripsi Pesan</label>
-                            <textarea rows="4" placeholder="Tuliskan pesan Anda..." class="w-full bg-current/5 border-none rounded-2xl p-4 italic font-bold focus:ring-2 focus:ring-cyan-500 transition-all outline-none"></textarea>
-                        </div>
-                        <button class="w-full py-5 rounded-[2rem] bg-cyan-600 text-white font-black uppercase tracking-[0.5em] text-[10px] shadow-xl hover:bg-cyan-700 transition-all">Kirim Transmisi</button>
+                        <textarea rows="4" placeholder="Detail Proyek atau Pertanyaan..." class="w-full bg-current/5 border-none rounded-[2rem] p-6 italic font-bold outline-none focus:ring-2 ring-cyan-500/30 transition-all"></textarea>
+                        <button class="w-full py-6 rounded-[2rem] bg-cyan-600 text-white font-black uppercase tracking-[0.4em] text-xs shadow-xl shadow-cyan-600/20 hover:bg-cyan-700 transition-all">
+                            Kirim Transmisi
+                        </button>
                     </form>
                 </div>
             </div>
@@ -392,67 +362,136 @@
         </div>
     </main>
 
-    <!-- Alpine.js & Logic -->
+    <!-- Stats Footer -->
+    <footer class="fixed bottom-0 left-0 w-full p-8 px-16 flex justify-between items-end pointer-events-none z-[80]">
+        <div class="flex flex-col gap-1">
+            <span class="text-[8px] font-black opacity-20 uppercase tracking-[0.5em]">Latensi Sistem</span>
+            <span class="text-xs font-mono font-bold text-cyan-600">0.024ms</span>
+        </div>
+        <div class="flex flex-col items-center gap-2">
+            <div class="w-8 h-8 rounded-lg bg-cyan-600/20 flex items-center justify-center text-cyan-600 opacity-40">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M12 2L4 21H7.5L12 11L16.5 21H20L12 2Z" />
+                </svg>
+            </div>
+            <span class="text-[7px] font-black opacity-20 uppercase tracking-[1em] translate-x-[0.5em]">Antono 2026</span>
+        </div>
+        <div class="flex flex-col items-end gap-1">
+            <span class="text-[8px] font-black opacity-20 uppercase tracking-[0.5em]">Lokasi</span>
+            <span class="text-xs font-mono font-bold text-cyan-600 italic">IDN.HQ_NODE</span>
+        </div>
+    </footer>
+
     <script src="https://unpkg.com/alpinejs@3.x.x/dist/cdn.min.js" defer></script>
     <script>
         function portfolioApp() {
+            const ICONS = {
+                K8S: '<path d="M12.11 2.34l7.15 2.59c.56.2.94.73.94 1.32v7.5c0 .59-.38 1.12-.94 1.32l-7.15 2.59c-.07.03-.15.03-.22 0l-7.15-2.59c-.56-.2-.94-.73-.94-1.32v-7.5c0-.59.38-1.12.94-1.32l7.15-2.59c.07-.03.15-.03.22 0z"/>',
+                AWS: '<path d="M16.5 13c-1.2 0-2.3.4-3.1 1.1-.5.5-.8 1.1-.9 1.8-.1.7 0 1.5.3 2.1.4.7 1 1.2 1.8 1.5.8.3 1.7.3 2.5.1.8-.2 1.5-.6 2-1.2.6-.6.9-1.4.9-2.2 0-1.8-1.5-3.2-3.5-3.2zm-12.7 5.1c.1.3.4.4.6.3.2-.1.3-.4.2-.6l-1.4-2.7c.3.1.6.1.9.1.9 0 1.8-.4 2.5-1 1.5-1.4 1.5-3.8.1-5.3-.7-.7-1.6-1.1-2.6-1.1s-1.9.4-2.6 1.1c-1.4 1.5-1.4 3.9.1 5.3.4.4.9.6 1.4.8l.8 2.5z"/>',
+                DOCKER: '<path d="M13.962 6.075v-2.43h2.427v2.43h-2.427zm0 2.918v-2.428h2.427v2.428h-2.427zm-2.918 0V6.565h2.428v2.428h-2.428zm0-2.918v-2.43h2.428v2.43h-2.428zm-2.918 0v-2.43h2.427v2.43H8.126zm0 2.918v-2.428h2.427v2.428H8.126zm-2.428 0V6.565h2.427v2.428H5.698zm0-2.918v-2.43h2.427v2.43H5.698zm-2.43 2.918v-2.428h2.43v2.428h-2.43zM23.998 12.87s-1.637-1.107-4.43-1.107c-1.31 0-2.585.25-3.543.684v-2.6h-3.41v3.41h-3.41v-3.41H5.795v3.41H2.385v-3.41H0v4.275c0 3.75 3.1 4.75 6.1 4.75h11.8c3.2 0 6.1-2.5 6.1-6.012z"/>',
+                TERRAFORM: '<path d="M1.44 0v7.575l6.561 3.79V3.787L1.44 0zm14.559 0l-6.561 3.787v7.578l6.561-3.79V0zM8.719 12.682v7.531l6.561-3.79v-7.528l-6.561 3.787zm-7.279 0l6.561 3.787v7.531l-6.561-3.787v-7.531z"/>',
+                GO: '<path d="M1.81 12.144c-1.144-1.393-1.52-3.15-.81-4.707.728-1.6 2.38-2.613 4.14-2.54 2.12.088 3.847 1.488 4.414 3.424.16.544.183 1.114.183 1.684h-5.232c-.015-.224-.008-.45.022-.672.105-.758.74-1.365 1.503-1.42 1.396-.102 2.13 1.05 1.954 2.13-.075.465-.436.855-.886.99-.255.075-.51.105-.78.105h-.12c.165 1.05 1.14 1.59 2.055 1.42.45-.09.84-.36 1.065-.765h2.115c-.465 1.695-1.92 2.94-3.66 3.105-1.74.165-3.465-.675-4.2-2.25l-.75.03c.12-.03.225-.03.3-.06zm13.11-8.295c1.86 0 3.54.915 4.545 2.445l-1.77 1.155c-.645-1.02-1.71-1.635-2.775-1.635-1.92 0-3.48 1.545-3.48 3.48s1.56 3.48 3.48 3.48c1.065 0 2.13-.615 2.775-1.635l1.77 1.155c-1.005 1.53-2.685 2.445-4.545 2.445-3.03 0-5.49-2.46-5.49-5.49s2.46-5.49 5.49-5.49z"/>',
+                RUST: '<path d="M12 0c-6.627 0-12 5.373-12 12s5.373 12 12 12 12-5.373 12-12-5.373-12-12-12zm0 2c1.785 0 3.435.531 4.821 1.442l-.744 1.288c-1.21-.77-2.64-1.23-4.177-1.23-1.472 0-2.851.423-4.025 1.149l-.75-1.3c1.436-.88 3.105-1.349 4.875-1.349zm-6.681 2.378l.75 1.3c-.929.802-1.688 1.802-2.215 2.936l-1.319-.711c.642-1.378 1.595-2.592 2.784-3.525zm13.362 0c1.189.933 2.142 2.147 2.784 3.525l-1.319.711c-.527-1.134-1.286-2.134-2.215-2.936l.75-1.3zm-15.681 6.622l1.319.711c-.131.423-.199.865-.199 1.32s.068.897.199 1.32l-1.319.711c-.247-.648-.381-1.346-.381-2.031s.134-1.383.381-2.031zm22 0c.247.648.381 1.346.381 2.031s-.134 1.383-.381 2.031l-1.319-.711c.131-.423.199-.865.199-1.32s-.068-.897-.199-1.32l1.319-.711zm-19.681 5.064l1.319.711c.527 1.134 1.286 2.134 2.215 2.936l-.75 1.3c-1.189-.933-2.142-2.147-2.784-3.525zm17.362 0c-.642 1.378-1.595 2.592-2.784 3.525l.75 1.3c.929-.802 1.688-1.802 2.215-2.936l-1.319-.711zm-10.681 4.587c-1.77 0-3.439-.469-4.875-1.349l.75-1.3c1.174.726 2.553 1.149 4.025 1.149 1.537 0 2.967-.46 4.177-1.23l.744 1.288c-1.386.911-3.036 1.442-4.821 1.442z"/>',
+                REACT: '<circle cx="0" cy="0" r="2" fill="currentColor"/><g fill="none" stroke="currentColor" stroke-width="0.3"><ellipse rx="10" ry="4.5"/><ellipse rx="10" ry="4.5" transform="rotate(60)"/><ellipse rx="10" ry="4.5" transform="rotate(120)"/></g>',
+                SHIELD: '<path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>',
+                DATABASE: '<ellipse cx="12" cy="5" rx="9" ry="3"/><path d="M21 12c0 1.66-4 3-9 3s-9-1.34-9-3"/><path d="M3 5v14c0 1.66 4 3 9 3s9-1.34 9-3V5"/>'
+            };
+
             return {
-                isDarkMode: false, 
+                isDarkMode: false,
                 activeTab: 'dashboard',
                 isLoaded: false,
                 rotation: { x: 0, y: 0 },
                 leaves: [],
                 techStacks: [
                     {
-                        t: 'Core Logic', v: 'Go, Rust, Python',
+                        category: 'Sistem & Cloud', 
+                        primary: 'Cloud Engineering',
+                        mainIcon: ICONS.K8S,
                         icons: [
-                            { name: 'Go', slug: 'go', color: '00ADD8' },
-                            { name: 'Rust', slug: 'rust', color: '000000' },
-                            { name: 'Python', slug: 'python', color: '3776AB' }
+                            {name: 'Kubernetes', svg: ICONS.K8S},
+                            {name: 'AWS Architecture', svg: ICONS.AWS},
+                            {name: 'Terraform IaC', svg: ICONS.TERRAFORM},
+                            {name: 'Docker Engine', svg: ICONS.DOCKER}
                         ]
                     },
                     {
-                        t: 'Orchestration', v: 'Kubernetes, AWS, Terraform',
+                        category: 'Backend & Performa', 
+                        primary: 'Distributed Systems',
+                        mainIcon: ICONS.GO,
                         icons: [
-                            { name: 'Kubernetes', slug: 'kubernetes', color: '326CE5' },
-                            { name: 'AWS', slug: 'amazonwebservices', color: 'FF9900' },
-                            { name: 'Terraform', slug: 'terraform', color: '7B42BC' }
+                            {name: 'Go (Golang)', svg: ICONS.GO},
+                            {name: 'Rust Systems', svg: ICONS.RUST},
+                            {name: 'gRPC / Proto', svg: '<path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/>'},
+                            {name: 'Node.js', svg: '<circle cx="12" cy="12" r="10" />'}
                         ]
                     },
                     {
-                        t: 'Persistence', v: 'PostgreSQL, Redis, Kafka',
+                        category: 'Security & Ops', 
+                        primary: 'DevSecOps Standard',
+                        mainIcon: ICONS.SHIELD,
                         icons: [
-                            { name: 'PostgreSQL', slug: 'postgresql', color: '4169E1' },
-                            { name: 'Redis', slug: 'redis', color: 'DC382D' },
-                            { name: 'Apache Kafka', slug: 'apachekafka', color: '231F20' }
+                            {name: 'Istio Mesh', svg: ICONS.SHIELD},
+                            {name: 'Vault', svg: '<rect x="3" y="11" width="18" height="11" rx="2" ry="2" /><path d="M7 11V7a5 5 0 0 1 10 0v4" />'},
+                            {name: 'Prometheus', svg: '<path d="M18 20V10M12 20V4M6 20v-6" />'},
+                            {name: 'GitOps (Argo)', svg: '<path d="M22 11.08V12a10 10 0 1 1-5.93-9.14" />'}
                         ]
                     },
                     {
-                        t: 'Visual Engine', v: 'React, Tailwind, Three.js',
+                        category: 'Data & Messaging', 
+                        primary: 'Data Reliability',
+                        mainIcon: ICONS.DATABASE,
                         icons: [
-                            { name: 'React', slug: 'react', color: '61DAFB' },
-                            { name: 'Tailwind CSS', slug: 'tailwindcss', color: '06B6D4' },
-                            { name: 'Three.js', slug: 'threedotjs', color: '000000' }
+                            {name: 'PostgreSQL', svg: ICONS.DATABASE},
+                            {name: 'Apache Kafka', svg: '<path d="M12 2L2 7l10 5 10-5-10-5z" />'},
+                            {name: 'Redis OSS', svg: '<path d="M12 22s-8-4-8-10V5l8-3 8 3v7c0 6-8 10-8 10z" />'},
+                            {name: 'Elasticsearch', svg: '<circle cx="11" cy="11" r="8" /><line x1="21" y1="21" x2="16.65" y2="16.65" />'}
                         ]
                     }
                 ],
-                experiences: [
-                    {year: '2022 — Skr', role: 'Principal Engineer', company: 'Global Tech Corp', desc: 'Transformasi cloud-native untuk sistem dengan 10M+ pengguna harian aktif.'},
-                    {year: '2018 — 2022', role: 'Senior Architect', company: 'Fintech Solutions', desc: 'Merancang arsitektur microservices untuk sistem pembayaran real-time berkeamanan tinggi.'},
-                    {year: '2014 — 2018', role: 'Infrastructure Lead', company: 'Data Systems Inc', desc: 'Optimasi database terdistribusi dan otomatisasi skala server otomatis.'}
+                experienceLog: [
+                    {
+                        period: '2023 — SEKARANG',
+                        role: 'Principal Engineer',
+                        company: 'Quantum Systems International',
+                        description: 'Arsitek utama untuk platform orkestrasi data berbasis AI. Mengoptimalkan throughput sistem sebesar 250% menggunakan pola concurrency di Rust dan Go. Mengelola budget cloud senilai $2M/tahun.',
+                        tags: ['Rust', 'Kubernetes', 'FinOps', 'Leadership'],
+                        isCurrent: true
+                    },
+                    {
+                        period: '2020 — 2023',
+                        role: 'Senior Cloud Architect',
+                        company: 'Fintech Horizon Asia',
+                        description: 'Mendesain sistem pembayaran yang melayani 50 juta transaksi harian. Membangun infrastruktur multi-region yang resilien di AWS dengan ketersediaan 99.99%.',
+                        tags: ['AWS', 'Terraform', 'Security', 'Scalability'],
+                        isCurrent: false
+                    },
+                    {
+                        period: '2018 — 2020',
+                        role: 'Backend Developer',
+                        company: 'E-Commerce Giant',
+                        description: 'Mengembangkan microservices untuk modul pencarian produk menggunakan Elasticsearch. Berhasil menurunkan latensi pencarian dari 800ms menjadi 120ms.',
+                        tags: ['Node.js', 'Elasticsearch', 'Redis', 'Unit Testing'],
+                        isCurrent: false
+                    },
+                    {
+                        period: '2016 — 2018',
+                        role: 'Full Stack Developer',
+                        company: 'Innovate Startups',
+                        description: 'Membangun MVP aplikasi logistik dari nol. Mengintegrasikan sistem pelacakan GPS real-time dan manajemen armada.',
+                        tags: ['React', 'Python', 'WebSockets', 'PostgreSQL'],
+                        isCurrent: false
+                    }
                 ],
                 init() {
                     setTimeout(() => { this.isLoaded = true; }, 100);
                     for(let i=0; i<30; i++) {
                         this.leaves.push({
                             left: (Math.random() * 100) + '%',
-                            delay: -(Math.random() * 30) + 's',
-                            duration: (20 + Math.random() * 20) + 's',
-                            scale: 0.5 + Math.random(),
-                            blur: Math.random() > 0.5 ? '1px' : '0px',
-                            opacity: 0.1 + (Math.random() * 0.3),
-                            color: ['#0891b2', '#1e40af', '#4f46e5'][Math.floor(Math.random()*3)],
-                            rotation: Math.random() * 360
+                            delay: -(Math.random() * 40) + 's',
+                            duration: (20 + Math.random() * 30) + 's',
+                            opacity: 0.05 + (Math.random() * 0.12),
+                            color: ['#0891b2', '#1e293b', '#64748b'][Math.floor(Math.random()*3)]
                         });
                     }
                 },
