@@ -4,685 +4,250 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Aplikasi Deteksi Gambar AI - GitHub Pages</title>
-    <!-- Tailwind CSS -->
-    <script src="https://cdn.tailwindcss.com"></script>
-    <!-- Memuat TensorFlow.js & Model MobileNet dengan Versi Stabil -->
-    <script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs@4.20.0/dist/tf.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/@tensorflow-models/mobilenet@2.1.0/dist/mobilenet.min.js"></script>
-    <style>
-        /* Animasi kustom untuk denyut nadi pemuatan */
-        @keyframes pulse-ring {
-            0% { transform: scale(0.95); opacity: 0.5; }
-            50% { transform: scale(1.05); opacity: 0.8; }
-            100% { transform: scale(0.95); opacity: 0.5; }
-        }
-        .pulse-loader {
-            animation: pulse-ring 2s infinite ease-in-out;
-        }
-    </style>
+    <link rel="preconnect" href="https://cdn.tailwindcss.com">
+    <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+    <!-- Tailwind CSS untuk tampilan yang menarik -->
+    <script defer src="https://cdn.tailwindcss.com"></script>
+    <!-- Memuat TensorFlow.js, Model MobileNet, dan Model COCO-SSD -->
+    <script defer src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs"></script>
+    <script defer src="https://cdn.jsdelivr.net/npm/@tensorflow-models/mobilenet"></script>
+    <script defer src="https://cdn.jsdelivr.net/npm/@tensorflow-models/coco-ssd"></script>
 </head>
-<body class="bg-slate-900 text-slate-100 min-h-screen flex flex-col justify-between font-sans selection:bg-blue-500 selection:text-white">
+<body class="bg-gray-100 min-h-screen flex flex-col items-center justify-center p-5">
 
-    <!-- Header -->
-    <header class="border-b border-slate-800 bg-slate-900/80 backdrop-blur sticky top-0 z-10 py-4 px-6">
-        <div class="max-w-5xl mx-auto flex items-center justify-between">
-            <div class="flex items-center gap-3">
-                <span class="text-2xl">🤖</span>
-                <h1 class="text-xl font-bold bg-gradient-to-r from-blue-400 to-indigo-400 bg-clip-text text-transparent">VisionAI Pro + GitHub Models</h1>
-            </div>
-            <span class="text-xs bg-blue-500/10 text-blue-400 px-3 py-1 rounded-full font-semibold border border-blue-500/20">Client-Side & Cloud AI</span>
-        </div>
-    </header>
+    <div class="bg-white p-8 rounded-lg shadow-lg max-w-md w-full text-center">
+        <h1 class="text-2xl font-bold mb-4 text-blue-600">Detektor Gambar AI 🤖</h1>
+        <p class="text-gray-600 mb-6">Unggah gambar di bawah ini untuk dianalisis oleh AI langsung di browser Anda.</p>
 
-    <!-- Konten Utama -->
-    <main class="max-w-5xl w-full mx-auto p-4 md:p-8 flex-grow flex flex-col justify-center">
-        <!-- Notifikasi Error Kustom -->
-        <div id="errorBanner" class="hidden mb-6 p-4 bg-red-500/10 border border-red-500/20 rounded-xl text-red-400 flex items-center justify-between gap-3">
-            <div class="flex items-center gap-3">
-                <span>⚠️</span>
-                <span id="errorMessage">Terdapat kesalahan saat memuat aplikasi.</span>
-            </div>
-            <button onclick="document.getElementById('errorBanner').classList.add('hidden')" class="text-slate-400 hover:text-slate-200">✕</button>
+        <!-- Area Input Gambar -->
+        <input type="file" id="imageUpload" accept="image/*" class="hidden" />
+        <label id="uploadLabel" for="imageUpload" class="cursor-pointer bg-blue-500 hover:bg-blue-600 text-white font-semibold py-2 px-4 rounded-lg inline-block mb-4 transition duration-200" aria-describedby="status">
+            Pilih Gambar atau Tarik & Lepas di sini
+        </label>
+
+        <div class="flex justify-center gap-3 mb-4">
+            <button id="modeClassify" class="px-4 py-2 rounded-full bg-emerald-600 text-white font-semibold shadow-sm">Klasifikasi</button>
+            <button id="modeDetect" class="px-4 py-2 rounded-full bg-slate-200 text-slate-700 font-semibold shadow-sm">Deteksi Objek</button>
         </div>
 
-        <!-- Pemilih Mode AI Global -->
-        <div class="mb-8 bg-slate-850 border border-slate-850 p-4 rounded-3xl max-w-xl mx-auto w-full text-center">
-            <label class="block text-xs font-semibold text-slate-400 uppercase tracking-wider mb-2">Pilih Otak Kecerdasan Buatan (AI Engine)</label>
-            <div class="flex gap-2 p-1 bg-slate-950/60 rounded-2xl border border-slate-800">
-                <button id="engineLocal" class="flex-1 py-2.5 px-4 rounded-xl text-sm font-semibold transition bg-blue-600 text-white shadow-lg flex items-center justify-center gap-2">
-                    ⚡ Lokal (MobileNet)
-                </button>
-                <button id="engineGithub" class="flex-1 py-2.5 px-4 rounded-xl text-sm font-semibold transition text-slate-400 hover:text-slate-200 flex items-center justify-center gap-2">
-                    🌌 GitHub Models (Cloud API)
-                </button>
-            </div>
+        <!-- Preview Gambar -->
+        <div class="relative flex justify-center mb-4">
+            <img id="imagePreview" class="max-h-64 rounded-lg hidden" alt="Pratinjau Gambar" />
+            <div id="overlayBoxes" class="pointer-events-none absolute inset-0"></div>
         </div>
 
-        <!-- Pengaturan GitHub Models (Hanya muncul jika mode GitHub terpilih) -->
-        <div id="githubConfigPanel" class="hidden max-w-3xl mx-auto w-full mb-8 bg-gradient-to-br from-indigo-950/40 to-slate-900/40 border border-indigo-500/20 rounded-3xl p-6 shadow-xl backdrop-blur-md">
-            <h3 class="text-md font-bold text-indigo-400 mb-3 flex items-center gap-2">
-                🔑 Pengaturan GitHub Models API
-            </h3>
-            <p class="text-xs text-slate-400 mb-4">
-                Layanan ini langsung menghubungkan browser Anda ke API GitHub secara aman. Token Anda disimpan secara lokal hanya di browser Anda sendiri.
-                <a href="https://github.com/settings/tokens" target="_blank" class="text-blue-400 hover:underline inline-flex items-center gap-1 ml-1">Dapatkan Token GitHub Gratis Anda di sini <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"></path></svg></a> (buat token klasik dengan hak akses minimal atau tanpa hak khusus).
-            </p>
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-                <div class="space-y-1.5">
-                    <label class="block text-xs font-medium text-slate-300">GitHub Personal Access Token (PAT)</label>
-                    <div class="relative">
-                        <input type="password" id="githubToken" class="w-full bg-slate-950 border border-slate-800 focus:border-indigo-500 rounded-xl px-4 py-2 text-sm text-slate-100 placeholder-slate-600 focus:outline-none transition" placeholder="ghp_xxxxxxxxxxxxxxxxxxxx">
-                        <button id="toggleTokenVisibility" class="absolute right-3 top-2.5 text-xs text-slate-500 hover:text-slate-300">Lihat</button>
-                    </div>
-                </div>
-                <div class="space-y-1.5">
-                    <label class="block text-xs font-medium text-slate-300">Pilih Model Visi AI</label>
-                    <select id="githubModelSelect" class="w-full bg-slate-950 border border-slate-800 focus:border-indigo-500 rounded-xl px-4 py-2 text-sm text-slate-100 focus:outline-none transition">
-                        <option value="gpt-4o-mini">gpt-4o-mini (Sangat Cepat & Cerdas - Rekomendasi)</option>
-                        <option value="gpt-4o">gpt-4o (Kemampuan Visi Maksimal)</option>
-                        <option value="meta-llama-3.2-11b-vision-instruct">Llama 3.2 11B Vision (Open Source)</option>
-                    </select>
-                </div>
-            </div>
-            <div class="mt-4 space-y-1.5">
-                <label class="block text-xs font-medium text-slate-300">Perintah Analisis (Prompt)</label>
-                <input type="text" id="githubPrompt" class="w-full bg-slate-950 border border-slate-800 focus:border-indigo-500 rounded-xl px-4 py-2 text-sm text-slate-100 placeholder-slate-500 focus:outline-none transition" value="Sebutkan objek apa saja yang ada di gambar ini secara mendetail serta berikan deskripsi ringkas yang menarik dalam Bahasa Indonesia.">
-            </div>
+        <!-- Status & Hasil Prediksi -->
+        <div id="status" class="text-amber-600 font-medium mb-2">Memuat Model AI (Mohon Tunggu)...</div>
+        <div id="result" class="text-left bg-gray-50 p-4 rounded border border-gray-200 hidden">
+            <h3 class="font-bold text-gray-700 mb-2">Hasil Analisis AI:</h3>
+            <ol id="predictionList" class="list-decimal list-inside text-gray-600"></ol>
         </div>
+    </div>
 
-        <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
-            
-            <!-- Kolom Kiri: Input & Kamera -->
-            <div class="lg:col-span-7 bg-slate-800/50 border border-slate-800 rounded-3xl p-6 backdrop-blur">
-                <h2 class="text-lg font-semibold mb-4 text-slate-200">Input Gambar</h2>
-                
-                <!-- Tab Pilihan Input -->
-                <div class="flex gap-2 mb-6 bg-slate-950/60 p-1.5 rounded-xl border border-slate-800/80">
-                    <button id="tabUpload" class="flex-1 py-2 px-4 rounded-lg text-sm font-medium transition bg-blue-600 text-white shadow-lg">
-                        📂 Unggah File
-                    </button>
-                    <button id="tabWebcam" class="flex-1 py-2 px-4 rounded-lg text-sm font-medium transition text-slate-400 hover:text-slate-200">
-                        📷 Kamera Live
-                    </button>
-                </div>
-
-                <!-- Bagian: File Upload -->
-                <div id="uploadSection" class="space-y-4">
-                    <div id="dropZone" class="border-2 border-dashed border-slate-700 hover:border-blue-500/50 bg-slate-900/30 rounded-2xl p-8 text-center cursor-pointer transition flex flex-col items-center justify-center min-h-[250px]">
-                        <input type="file" id="imageUpload" accept="image/*" class="hidden" />
-                        
-                        <!-- Icon Upload -->
-                        <div id="uploadPrompt" class="space-y-4">
-                            <div class="w-16 h-16 bg-blue-500/10 text-blue-400 rounded-full flex items-center justify-center mx-auto mb-2 border border-blue-500/20">
-                                <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-8l-4-4m0 0L8 8m4-4v12" />
-                                </svg>
-                            </div>
-                            <div>
-                                <p class="font-medium text-slate-200">Seret dan lepas gambar Anda di sini</p>
-                                <p class="text-xs text-slate-500 mt-1">Mendukung file PNG, JPG, JPEG, atau WebP</p>
-                            </div>
-                            <span class="inline-block text-xs bg-slate-800 text-slate-300 py-1.5 px-3 rounded-lg border border-slate-700/50">Cari dari Perangkat Anda</span>
-                        </div>
-
-                        <!-- Pratinjau Gambar -->
-                        <img id="imagePreview" class="max-h-[300px] w-auto rounded-xl hidden shadow-2xl object-contain border border-slate-700" alt="Pratinjau Gambar" />
-                    </div>
-                </div>
-
-                <!-- Bagian: Kamera Live -->
-                <div id="webcamSection" class="hidden space-y-4">
-                    <div class="relative rounded-2xl overflow-hidden bg-slate-950 border border-slate-850 flex items-center justify-center min-h-[250px]">
-                        <video id="webcamElement" autoplay playsinline muted class="w-full h-auto max-h-[350px] object-cover scale-x-[-1]"></video>
-                        <div id="webcamPlaceholder" class="absolute inset-0 bg-slate-950 flex flex-col items-center justify-center text-center p-6 space-y-3">
-                            <span class="text-3xl">📷</span>
-                            <p class="text-slate-400 text-sm">Aktifkan kamera untuk memulai pemindaian.</p>
-                            <button id="btnStartCamera" class="bg-blue-600 hover:bg-blue-500 text-white text-xs font-semibold py-2 px-4 rounded-xl transition">
-                                Izinkan & Mulai Kamera
-                            </button>
-                        </div>
-                    </div>
-                    <div class="flex justify-between items-center px-2">
-                        <span id="webcamScanIntervalInfo" class="text-xs text-slate-500">Klasifikasi otomatis berjalan setiap 500ms</span>
-                        <div class="flex gap-2">
-                            <button id="btnCaptureGithub" class="hidden bg-indigo-600 hover:bg-indigo-500 text-white text-xs font-semibold py-1.5 px-4 rounded-lg transition border border-indigo-500/30">
-                                📸 Potret & Analisis Cloud
-                            </button>
-                            <button id="btnStopCamera" class="hidden text-xs bg-red-500/10 hover:bg-red-500/20 text-red-400 py-1.5 px-3 rounded-lg border border-red-500/20 transition">
-                                Hentikan Kamera
-                            </button>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Kolom Kanan: Status & Hasil Analisis -->
-            <div class="lg:col-span-5 space-y-6">
-                <!-- Card Status Model -->
-                <div class="bg-slate-800/50 border border-slate-800 rounded-3xl p-6 backdrop-blur">
-                    <h2 class="text-lg font-semibold mb-3 text-slate-200">Status Sistem AI</h2>
-                    <div class="flex items-center gap-3">
-                        <div id="statusDot" class="w-3 h-3 rounded-full bg-amber-500 pulse-loader"></div>
-                        <span id="statusText" class="text-sm text-amber-400 font-medium">Mengunduh Model Lokal MobileNet (Sekirat ~12MB)...</span>
-                    </div>
-                    <p id="statusDescText" class="text-xs text-slate-500 mt-2">
-                        Proses pengunduhan hanya terjadi sekali di awal. Seluruh data gambar diproses secara lokal di browser Anda untuk menjaga privasi keamanan data 100%.
-                    </p>
-                </div>
-
-                <!-- Card Hasil Analisis -->
-                <div id="resultCard" class="bg-slate-800/50 border border-slate-800 rounded-3xl p-6 backdrop-blur min-h-[200px] flex flex-col justify-between">
-                    <div>
-                        <h2 class="text-lg font-semibold mb-4 text-slate-200 flex items-center justify-between">
-                            <span id="resultCardTitle">Hasil Klasifikasi Lokal</span>
-                            <span id="analyzingBadge" class="hidden text-xs bg-blue-500/20 text-blue-400 px-2 py-0.5 rounded border border-blue-500/30 animate-pulse">Memproses...</span>
-                        </h2>
-                        
-                        <!-- List Hasil Analisis -->
-                        <div id="predictionPlaceholder" class="text-center py-8 text-slate-500 text-sm">
-                            <span class="block text-3xl mb-2">🔍</span>
-                            Belum ada gambar yang dianalisis. Silakan masukkan gambar atau aktifkan kamera.
-                        </div>
-                        
-                        <div id="predictionListContainer" class="hidden space-y-4">
-                            <!-- Tempat render hasil analisis dinamis -->
-                        </div>
-
-                        <!-- Panel Hasil Khusus Model GitHub (Format Teks/Markdown Deskripsi) -->
-                        <div id="githubResponseContainer" class="hidden bg-slate-950/60 border border-slate-800 p-4 rounded-xl text-sm leading-relaxed text-slate-300 whitespace-pre-line max-h-[350px] overflow-y-auto">
-                            <!-- Teks respons dari GitHub Models -->
-                        </div>
-                    </div>
-
-                    <div class="border-t border-slate-800/80 pt-4 mt-6 flex justify-between items-center text-[11px] text-slate-500">
-                        <span id="modelLabel">Model: MobileNet v1</span>
-                        <span id="processTime">Waktu Proses: -</span>
-                    </div>
-                </div>
-            </div>
-
-        </div>
-    </main>
-
-    <!-- Footer -->
-    <footer class="border-t border-slate-800/60 bg-slate-950/40 py-6 px-6 text-center text-xs text-slate-600">
-        <div class="max-w-5xl mx-auto flex flex-col sm:flex-row justify-between items-center gap-4">
-            <p>© 2026 VisionAI Pro + GitHub. Di-host dengan aman di GitHub Pages.</p>
-            <div class="flex gap-4">
-                <a href="#" class="hover:text-slate-400 transition">Keamanan Privasi</a>
-                <span>•</span>
-                <a href="#" class="hover:text-slate-400 transition">GitHub Models API</a>
-            </div>
-        </div>
-    </footer>
-
-    <!-- Logika Aplikasi -->
     <script>
-        // DOM Elements
         const imageUpload = document.getElementById('imageUpload');
+        const uploadLabel = document.getElementById('uploadLabel');
         const imagePreview = document.getElementById('imagePreview');
-        const statusText = document.getElementById('statusText');
-        const statusDot = document.getElementById('statusDot');
-        const statusDescText = document.getElementById('statusDescText');
-        const errorBanner = document.getElementById('errorBanner');
-        const errorMessage = document.getElementById('errorMessage');
-        const dropZone = document.getElementById('dropZone');
-        const uploadPrompt = document.getElementById('uploadPrompt');
-        
-        // Mode Selector & Config Panels
-        const engineLocal = document.getElementById('engineLocal');
-        const engineGithub = document.getElementById('engineGithub');
-        const githubConfigPanel = document.getElementById('githubConfigPanel');
-        const githubToken = document.getElementById('githubToken');
-        const toggleTokenVisibility = document.getElementById('toggleTokenVisibility');
-        const githubModelSelect = document.getElementById('githubModelSelect');
-        const githubPrompt = document.getElementById('githubPrompt');
-        
-        // Tab & Section Switcher
-        const tabUpload = document.getElementById('tabUpload');
-        const tabWebcam = document.getElementById('tabWebcam');
-        const uploadSection = document.getElementById('uploadSection');
-        const webcamSection = document.getElementById('webcamSection');
-        
-        // Camera Elements
-        const webcamElement = document.getElementById('webcamElement');
-        const webcamPlaceholder = document.getElementById('webcamPlaceholder');
-        const btnStartCamera = document.getElementById('btnStartCamera');
-        const btnStopCamera = document.getElementById('btnStopCamera');
-        const btnCaptureGithub = document.getElementById('btnCaptureGithub');
-        const webcamScanIntervalInfo = document.getElementById('webcamScanIntervalInfo');
-        
-        // Result Elements
-        const resultCardTitle = document.getElementById('resultCardTitle');
-        const analyzingBadge = document.getElementById('analyzingBadge');
-        const predictionPlaceholder = document.getElementById('predictionPlaceholder');
-        const predictionListContainer = document.getElementById('predictionListContainer');
-        const githubResponseContainer = document.getElementById('githubResponseContainer');
-        const processTime = document.getElementById('processTime');
-        const modelLabel = document.getElementById('modelLabel');
+        const overlayBoxes = document.getElementById('overlayBoxes');
+        const status = document.getElementById('status');
+        const result = document.getElementById('result');
+        const predictionList = document.getElementById('predictionList');
+        const modeClassifyButton = document.getElementById('modeClassify');
+        const modeDetectButton = document.getElementById('modeDetect');
+        const TOP_K = 7;
 
-        let model = null;
-        let webcamStream = null;
-        let isWebcamLoopActive = false;
-        let activeEngine = 'local'; // 'local' atau 'github'
+        let mobilenetModel = null;
+        let cocoModel = null;
+        let modelMode = 'classification';
 
-        // Mengambil token yang mungkin tersimpan di localStorage
-        if (localStorage.getItem('github_models_token')) {
-            githubToken.value = localStorage.getItem('github_models_token');
+        function updateStatus(text, colorClass = 'text-blue-600') {
+            status.innerText = text;
+            status.className = `${colorClass} font-medium mb-2`;
         }
 
-        // Simpan token ke localStorage saat diketik
-        githubToken.addEventListener('input', (e) => {
-            localStorage.setItem('github_models_token', e.target.value);
-        });
+        function setActiveMode(mode) {
+            modelMode = mode;
+            modeClassifyButton.classList.toggle('bg-emerald-600', mode === 'classification');
+            modeClassifyButton.classList.toggle('text-white', mode === 'classification');
+            modeClassifyButton.classList.toggle('bg-slate-200', mode !== 'classification');
+            modeClassifyButton.classList.toggle('text-slate-700', mode !== 'classification');
 
-        // Toggle visibilitas Token
-        toggleTokenVisibility.addEventListener('click', () => {
-            if (githubToken.type === 'password') {
-                githubToken.type = 'text';
-                toggleTokenVisibility.innerText = 'Sembunyikan';
-            } else {
-                githubToken.type = 'password';
-                toggleTokenVisibility.innerText = 'Lihat';
-            }
-        });
+            modeDetectButton.classList.toggle('bg-emerald-600', mode === 'detection');
+            modeDetectButton.classList.toggle('text-white', mode === 'detection');
+            modeDetectButton.classList.toggle('bg-slate-200', mode !== 'detection');
+            modeDetectButton.classList.toggle('text-slate-700', mode !== 'detection');
 
-        // Event listener pemilih Otak AI
-        engineLocal.addEventListener('click', () => {
-            activeEngine = 'local';
-            engineLocal.className = "flex-1 py-2.5 px-4 rounded-xl text-sm font-semibold transition bg-blue-600 text-white shadow-lg flex items-center justify-center gap-2";
-            engineGithub.className = "flex-1 py-2.5 px-4 rounded-xl text-sm font-semibold transition text-slate-400 hover:text-slate-200 flex items-center justify-center gap-2";
-            githubConfigPanel.classList.add('hidden');
-            resultCardTitle.innerText = "Hasil Klasifikasi Lokal";
-            modelLabel.innerText = "Model: MobileNet v1";
-            webcamScanIntervalInfo.innerText = "Klasifikasi otomatis berjalan setiap 500ms";
-            btnCaptureGithub.classList.add('hidden');
-            
-            // Atur status atas dasar model lokal
-            if (model) {
-                statusText.innerText = "Model AI Lokal Berhasil Dimuat!";
-                statusText.className = "text-sm text-emerald-400 font-medium";
-                statusDot.className = "w-3 h-3 rounded-full bg-emerald-500";
-            } else {
-                statusText.innerText = "Memuat model lokal...";
-                statusText.className = "text-sm text-amber-400 font-medium";
-                statusDot.className = "w-3 h-3 rounded-full bg-amber-500";
-            }
-            
-            // Bersihkan sisa render
-            predictionListContainer.classList.add('hidden');
-            githubResponseContainer.classList.add('hidden');
-            predictionPlaceholder.classList.remove('hidden');
-        });
+            updateStatus(mode === 'classification' ? 'Mode klasifikasi aktif. Unggah gambar.' : 'Mode deteksi objek aktif. Unggah gambar.');
+            overlayBoxes.innerHTML = '';
+            result.classList.add('hidden');
+        }
 
-        engineGithub.addEventListener('click', () => {
-            activeEngine = 'github';
-            engineGithub.className = "flex-1 py-2.5 px-4 rounded-xl text-sm font-semibold transition bg-indigo-600 text-white shadow-lg flex items-center justify-center gap-2";
-            engineLocal.className = "flex-1 py-2.5 px-4 rounded-xl text-sm font-semibold transition text-slate-400 hover:text-slate-200 flex items-center justify-center gap-2";
-            githubConfigPanel.classList.remove('hidden');
-            resultCardTitle.innerText = "Analisis Visi GitHub Models";
-            modelLabel.innerText = "Model: " + githubModelSelect.value;
-            webcamScanIntervalInfo.innerText = "Potret manual diperlukan untuk membatasi kuota API";
-            
-            if (isWebcamLoopActive) {
-                btnCaptureGithub.classList.remove('hidden');
-            }
-
-            statusText.innerText = "GitHub Models Terpilih. Masukkan Token API untuk memulai.";
-            statusText.className = "text-sm text-indigo-400 font-medium";
-            statusDot.className = "w-3 h-3 rounded-full bg-indigo-500";
-
-            predictionListContainer.classList.add('hidden');
-            githubResponseContainer.classList.add('hidden');
-            predictionPlaceholder.classList.remove('hidden');
-        });
-
-        // Event listener ketika model dropdown diganti
-        githubModelSelect.addEventListener('change', () => {
-            if (activeEngine === 'github') {
-                modelLabel.innerText = "Model: " + githubModelSelect.value;
-            }
-        });
-
-        // Inisialisasi Model MobileNet
         async function initAI() {
             try {
-                model = await mobilenet.load();
-                
-                if (activeEngine === 'local') {
-                    statusText.innerText = "Model AI Berhasil Dimuat! Siap digunakan.";
-                    statusText.className = "text-sm text-emerald-400 font-medium";
-                    statusDot.className = "w-3 h-3 rounded-full bg-emerald-500";
+                await tf.ready();
+                const hasWebgl = tf.findBackend && tf.findBackend('webgl');
+                if (hasWebgl) {
+                    await tf.setBackend('webgl');
+                    await tf.ready();
                 }
-                
-                dropZone.classList.remove('cursor-not-allowed', 'opacity-60');
+
+                const [mobilenetLoaded, cocoLoaded] = await Promise.all([
+                    mobilenet.load({ version: 3, alpha: 1.0 }),
+                    cocoSsd.load(),
+                ]);
+
+                mobilenetModel = mobilenetLoaded;
+                cocoModel = cocoLoaded;
+                setActiveMode('classification');
+                updateStatus('AI siap! Pilih mode dan unggah gambar.', 'text-green-600');
             } catch (error) {
-                showError("Gagal memuat model AI lokal. Namun, Anda masih dapat menggunakan mode GitHub Models jika memiliki Token.");
-                if (activeEngine === 'local') {
-                    statusText.innerText = "Gagal memuat AI Lokal.";
-                    statusText.className = "text-sm text-red-500 font-medium";
-                    statusDot.className = "w-3 h-3 rounded-full bg-red-500";
-                }
+                console.error('Init AI error:', error);
+                updateStatus('Gagal memuat model AI. Coba muat ulang halaman.', 'text-red-600');
             }
         }
 
-        // Tampilkan Error Banner
-        function showError(msg) {
-            errorMessage.innerText = msg;
-            errorBanner.classList.remove('hidden');
-        }
+        function drawBoxes(predictions) {
+            overlayBoxes.innerHTML = '';
+            const rect = imagePreview.getBoundingClientRect();
+            const scaleX = imagePreview.naturalWidth ? imagePreview.clientWidth / imagePreview.naturalWidth : 1;
+            const scaleY = imagePreview.naturalHeight ? imagePreview.clientHeight / imagePreview.naturalHeight : 1;
 
-        // Klasifikasi Elemen Gambar / Frame Video
-        async function classifyElement(element) {
-            if (activeEngine === 'local') {
-                if (!model) return;
-                analyzingBadge.classList.remove('hidden');
-                const startTime = performance.now();
-                try {
-                    const predictions = await model.classify(element);
-                    const endTime = performance.now();
-                    const duration = (endTime - startTime).toFixed(0);
-                    
-                    renderPredictions(predictions);
-                    processTime.innerText = `Waktu Proses: ${duration}ms`;
-                } catch (err) {
-                    console.error("Kesalahan klasifikasi: ", err);
-                } finally {
-                    analyzingBadge.classList.add('hidden');
-                }
-            } else if (activeEngine === 'github') {
-                // Di handle lewat trigger event langsung (bukan loop otomatis pada kamera demi menghemat token)
-                await classifyWithGithubModels(element);
-            }
-        }
+            predictions.forEach((item) => {
+                const box = document.createElement('div');
+                box.className = 'absolute border-2 border-emerald-500 rounded-lg pointer-events-none';
+                box.style.left = `${item.bbox[0] * scaleX}px`;
+                box.style.top = `${item.bbox[1] * scaleY}px`;
+                box.style.width = `${item.bbox[2] * scaleX}px`;
+                box.style.height = `${item.bbox[3] * scaleY}px`;
+                box.style.boxShadow = '0 0 0 2px rgba(16,185,129,0.3)';
 
-        // API Call ke GitHub Models (Azure Inference Endpoint)
-        async function classifyWithGithubModels(imageElement) {
-            const token = githubToken.value.trim();
-            if (!token) {
-                showError("Mohon masukkan GitHub Personal Access Token (PAT) Anda terlebih dahulu pada panel pengaturan!");
-                return;
-            }
-
-            analyzingBadge.classList.remove('hidden');
-            predictionPlaceholder.classList.add('hidden');
-            predictionListContainer.classList.add('hidden');
-            githubResponseContainer.classList.remove('hidden');
-            githubResponseContainer.innerText = "Menghubungi GitHub Models Cloud API...";
-            
-            const startTime = performance.now();
-
-            try {
-                // Mengkonversi elemen gambar / video ke format base64
-                const base64Image = getBase64FromElement(imageElement);
-                const selectedModel = githubModelSelect.value;
-                const prompt = githubPrompt.value;
-
-                // Konfigurasi Exponential Backoff Retry (Max 5 kali)
-                const fetchWithRetry = async (url, options, retries = 5, delay = 1000) => {
-                    try {
-                        const response = await fetch(url, options);
-                        if (!response.ok) {
-                            const errBody = await response.json().catch(() => ({}));
-                            throw new Error(errBody.error?.message || `HTTP error! status: ${response.status}`);
-                        }
-                        return response;
-                    } catch (err) {
-                        if (retries > 1) {
-                            await new Promise(resolve => setTimeout(resolve, delay));
-                            return fetchWithRetry(url, options, retries - 1, delay * 2);
-                        } else {
-                            throw err;
-                        }
-                    }
-                };
-
-                const response = await fetchWithRetry('https://models.inference.ai.azure.com/chat/completions', {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json',
-                        'Authorization': `Bearer ${token}`
-                    },
-                    body: JSON.stringify({
-                        model: selectedModel,
-                        messages: [
-                            {
-                                role: "user",
-                                content: [
-                                    { type: "text", text: prompt },
-                                    {
-                                        type: "image_url",
-                                        image_url: {
-                                            url: base64Image
-                                        }
-                                    }
-                                ]
-                            }
-                        ]
-                    })
-                });
-
-                const data = await response.json();
-                const content = data.choices?.[0]?.message?.content || "Gagal mendapatkan analisis bermakna dari model visi.";
-                
-                const endTime = performance.now();
-                const duration = (endTime - startTime).toFixed(0);
-
-                githubResponseContainer.innerText = content;
-                processTime.innerText = `Waktu Cloud: ${duration}ms`;
-
-            } catch (err) {
-                console.error("GitHub API Error: ", err);
-                githubResponseContainer.classList.add('hidden');
-                predictionPlaceholder.classList.remove('hidden');
-                showError("Gagal memanggil API GitHub Models: " + err.message);
-            } finally {
-                analyzingBadge.classList.add('hidden');
-            }
-        }
-
-        // Helper: Konversi Image/Video HTML ke Base64 DataURL
-        function getBase64FromElement(element) {
-            const canvas = document.createElement('canvas');
-            
-            if (element.tagName === 'VIDEO') {
-                canvas.width = element.videoWidth;
-                canvas.height = element.videoHeight;
-            } else {
-                canvas.width = element.naturalWidth;
-                canvas.height = element.naturalHeight;
-            }
-            
-            const ctx = canvas.getContext('2d');
-            
-            // Balik gambar horizontal jika menggunakan kamera (mirroring)
-            if (element.id === 'webcamElement') {
-                ctx.translate(canvas.width, 0);
-                ctx.scale(-1, 1);
-            }
-
-            ctx.drawImage(element, 0, 0, canvas.width, canvas.height);
-            return canvas.toDataURL('image/jpeg', 0.85); // Compress ke JPEG 85% untuk efisiensi bandwidth
-        }
-
-        // Render Hasil Prediksi ke UI dengan Progres Bar (Model Lokal)
-        function renderPredictions(predictions) {
-            predictionPlaceholder.classList.add('hidden');
-            githubResponseContainer.classList.add('hidden');
-            predictionListContainer.classList.remove('hidden');
-            predictionListContainer.innerHTML = '';
-
-            predictions.forEach((prediction) => {
-                const percent = (prediction.probability * 100).toFixed(1);
-                const friendlyName = prediction.className.split(',')[0];
-                
-                const itemDiv = document.createElement('div');
-                itemDiv.className = "space-y-1.5";
-                itemDiv.innerHTML = `
-                    <div class="flex justify-between text-sm">
-                        <span class="font-medium text-slate-200 capitalize">${friendlyName}</span>
-                        <span class="font-bold text-blue-400">${percent}%</span>
-                    </div>
-                    <div class="w-full bg-slate-900 rounded-full h-2.5 overflow-hidden border border-slate-800">
-                        <div class="bg-gradient-to-r from-blue-500 to-indigo-500 h-2.5 rounded-full transition-all duration-300" style="width: ${percent}%"></div>
-                    </div>
-                `;
-                predictionListContainer.appendChild(itemDiv);
+                const label = document.createElement('span');
+                label.className = 'absolute top-0 left-0 bg-emerald-600 text-white text-[10px] px-1 py-0.5 rounded-br-md';
+                label.innerText = `${item.class} ${Math.round(item.score * 100)}%`;
+                box.appendChild(label);
+                overlayBoxes.appendChild(box);
             });
         }
 
-        // Penanganan Input File Gambar
-        function processFile(file) {
-            if (!file || !file.type.startsWith('image/')) {
-                showError("Mohon masukkan berkas berupa gambar yang valid (JPG, PNG, atau WebP).");
-                return;
-            }
-
+        async function handleFileUpload(file) {
+            if (!file) return;
             const reader = new FileReader();
-            
+
             reader.onload = (event) => {
-                uploadPrompt.classList.add('hidden');
-                imagePreview.classList.remove('hidden');
-                
-                imagePreview.onload = async () => {
-                    await classifyElement(imagePreview);
-                };
-                
                 imagePreview.src = event.target.result;
+                imagePreview.classList.remove('hidden');
+                result.classList.add('hidden');
+                predictionList.innerHTML = '';
+                overlayBoxes.innerHTML = '';
+                updateStatus('Sedang menganalisis gambar...', 'text-blue-600');
+
+                imagePreview.onload = async () => {
+                    try {
+                        if (modelMode === 'classification') {
+                            if (!mobilenetModel) {
+                                updateStatus('Model klasifikasi belum siap. Mohon tunggu.', 'text-amber-600');
+                                return;
+                            }
+                            const predictions = await mobilenetModel.classify(imagePreview, TOP_K);
+                            displayPredictions(predictions);
+                        } else {
+                            if (!cocoModel) {
+                                updateStatus('Model deteksi objek belum siap. Mohon tunggu.', 'text-amber-600');
+                                return;
+                            }
+                            const detections = await cocoModel.detect(imagePreview);
+                            displayDetectionResults(detections);
+                            drawBoxes(detections);
+                        }
+                    } catch (error) {
+                        console.error('Analysis error:', error);
+                        updateStatus('Terjadi kesalahan saat analisis. Coba ulangi.', 'text-red-600');
+                    }
+                };
             };
-            
+
             reader.readAsDataURL(file);
         }
 
-        // Event Listener: Pilih Berkas Melalui Tombol/Klik
-        dropZone.addEventListener('click', (e) => {
-            if (e.target !== imageUpload) {
-                imageUpload.click();
-            }
-        });
-
         imageUpload.addEventListener('change', (e) => {
-            if (e.target.files.length > 0) {
-                processFile(e.target.files[0]);
-            }
+            const file = e.target.files[0];
+            handleFileUpload(file);
         });
 
-        // Event Listener: Drag and Drop
-        ['dragenter', 'dragover'].forEach(eventName => {
-            dropZone.addEventListener(eventName, (e) => {
-                e.preventDefault();
-                dropZone.classList.add('border-blue-500', 'bg-blue-500/5');
-            }, false);
+        uploadLabel.addEventListener('dragover', (e) => {
+            e.preventDefault();
+            uploadLabel.classList.add('bg-blue-600');
         });
 
-        ['dragleave', 'drop'].forEach(eventName => {
-            dropZone.addEventListener(eventName, (e) => {
-                e.preventDefault();
-                dropZone.classList.remove('border-blue-500', 'bg-blue-500/5');
-            }, false);
+        uploadLabel.addEventListener('dragleave', () => {
+            uploadLabel.classList.remove('bg-blue-600');
         });
 
-        dropZone.addEventListener('drop', (e) => {
-            const dt = e.dataTransfer;
-            const files = dt.files;
-            if (files.length > 0) {
-                processFile(files[0]);
-            }
-        });
-
-        // Penanganan Fungsionalitas Kamera / Webcam
-        async function startWebcam() {
-            try {
-                webcamStream = await navigator.mediaDevices.getUserMedia({
-                    video: { facingMode: 'environment' },
-                    audio: false
-                });
-                
-                webcamElement.srcObject = webcamStream;
-                webcamPlaceholder.classList.add('hidden');
-                btnStopCamera.classList.remove('hidden');
-                
-                if (activeEngine === 'github') {
-                    btnCaptureGithub.classList.remove('hidden');
-                }
-                
-                isWebcamLoopActive = true;
-                webcamElement.onloadedmetadata = () => {
-                    runWebcamLoop();
-                };
-            } catch (err) {
-                console.error("Gagal mengakses webcam: ", err);
-                showError("Tidak dapat mengakses kamera perangkat. Pastikan Anda memberikan izin akses kamera.");
-            }
-        }
-
-        function stopWebcam() {
-            isWebcamLoopActive = false;
-            if (webcamStream) {
-                webcamStream.getTracks().forEach(track => track.stop());
-                webcamElement.srcObject = null;
-            }
-            webcamPlaceholder.classList.remove('hidden');
-            btnStopCamera.classList.add('hidden');
-            btnCaptureGithub.classList.add('hidden');
-            
-            predictionPlaceholder.classList.remove('hidden');
-            predictionListContainer.classList.add('hidden');
-            githubResponseContainer.classList.add('hidden');
-        }
-
-        // Perulangan Klasifikasi Kamera Secara Berkala (Khusus Lokal)
-        async function runWebcamLoop() {
-            if (!isWebcamLoopActive) return;
-            
-            if (activeEngine === 'local' && model && webcamElement.readyState === 4) {
-                await classifyElement(webcamElement);
-            }
-            
-            // Jeda klasifikasi lokal setiap 500ms agar performa tetap enteng
-            setTimeout(() => {
-                if (isWebcamLoopActive && activeEngine === 'local') {
-                    requestAnimationFrame(runWebcamLoop);
-                }
-            }, 500);
-        }
-
-        // Event Listener: Capture Gambar & Analisis via GitHub Models
-        btnCaptureGithub.addEventListener('click', async () => {
-            if (webcamElement.readyState === 4) {
-                await classifyWithGithubModels(webcamElement);
+        uploadLabel.addEventListener('drop', (e) => {
+            e.preventDefault();
+            uploadLabel.classList.remove('bg-blue-600');
+            const file = e.dataTransfer.files[0];
+            if (file && file.type.startsWith('image/')) {
+                imageUpload.files = e.dataTransfer.files;
+                handleFileUpload(file);
             } else {
-                showError("Video kamera belum siap atau belum sepenuhnya termuat.");
+                updateStatus('Silakan seret file gambar yang valid.', 'text-amber-600');
             }
         });
 
-        // Event Listener: Kamera Buttons
-        btnStartCamera.addEventListener('click', startWebcam);
-        btnStopCamera.addEventListener('click', stopWebcam);
+        modeClassifyButton.addEventListener('click', () => setActiveMode('classification'));
+        modeDetectButton.addEventListener('click', () => setActiveMode('detection'));
 
-        // Penanganan Tab Switcher
-        tabUpload.addEventListener('click', () => {
-            tabUpload.className = "flex-1 py-2 px-4 rounded-lg text-sm font-medium transition bg-blue-600 text-white shadow-lg";
-            tabWebcam.className = "flex-1 py-2 px-4 rounded-lg text-sm font-medium transition text-slate-400 hover:text-slate-200";
-            
-            uploadSection.classList.remove('hidden');
-            webcamSection.classList.add('hidden');
-            stopWebcam();
-        });
+        function displayPredictions(predictions) {
+            updateStatus('Analisis selesai! Berikut prediksi terbaik dari AI.', 'text-green-600');
+            predictionList.innerHTML = '';
 
-        tabWebcam.addEventListener('click', () => {
-            tabWebcam.className = "flex-1 py-2 px-4 rounded-lg text-sm font-medium transition bg-blue-600 text-white shadow-lg";
-            tabUpload.className = "flex-1 py-2 px-4 rounded-lg text-sm font-medium transition text-slate-400 hover:text-slate-200";
-            
-            webcamSection.classList.remove('hidden');
-            uploadSection.classList.add('hidden');
-        });
+            predictions.forEach((prediction) => {
+                const li = document.createElement('li');
+                const probability = (prediction.probability * 100).toFixed(2);
+                li.innerHTML = `
+                    <div class="flex justify-between items-center gap-4 mb-2">
+                        <span class="font-semibold text-gray-800">${prediction.className}</span>
+                        <span class="text-sm text-gray-500">${probability}%</span>
+                    </div>
+                    <div class="h-2 rounded-full bg-gray-200 overflow-hidden mb-2">
+                        <div class="h-full rounded-full bg-blue-500" style="width: ${probability}%"></div>
+                    </div>
+                `;
+                predictionList.appendChild(li);
+            });
 
-        // Jalankan Inisialisasi setelah DOM Siap
-        window.onload = function() {
-            dropZone.classList.add('cursor-not-allowed', 'opacity-60');
-            initAI();
-        };
+            result.classList.remove('hidden');
+        }
+
+        function displayDetectionResults(detections) {
+            if (!detections.length) {
+                updateStatus('Tidak ditemukan objek dalam gambar.', 'text-amber-600');
+                predictionList.innerHTML = '<li class="text-gray-500">Tidak ada objek terdeteksi.</li>';
+                result.classList.remove('hidden');
+                return;
+            }
+
+            updateStatus('Deteksi objek selesai! Lihat hasilnya di bawah.', 'text-green-600');
+            predictionList.innerHTML = '';
+
+            detections.forEach((item) => {
+                const li = document.createElement('li');
+                const score = (item.score * 100).toFixed(2);
+                li.innerHTML = `
+                    <div class="flex justify-between items-center gap-4 mb-2">
+                        <span class="font-semibold text-gray-800">${item.class}</span>
+                        <span class="text-sm text-gray-500">${score}%</span>
+                    </div>
+                    <div class="text-[10px] text-slate-500">Kotak: [${Math.round(item.bbox[0])}, ${Math.round(item.bbox[1])}, ${Math.round(item.bbox[2])}, ${Math.round(item.bbox[3])}]</div>
+                `;
+                predictionList.appendChild(li);
+            });
+
+            result.classList.remove('hidden');
+        }
+
+        window.addEventListener('load', initAI);
     </script>
 </body>
 </html>
