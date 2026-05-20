@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Aplikasi Deteksi Gambar AI - GitHub Pages</title>
+    <!-- Tailwind CSS untuk tampilan yang menarik -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Memuat TensorFlow.js dan Model MobileNet -->
+    <script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@tensorflow-models/mobilenet"></script>
+</head>
+<body class="bg-gray-100 min-h-screen flex flex-col items-center justify-center p-5">
+
+    <div class="bg-white p-8 rounded-lg shadow-lg max-w-md w-full text-center">
+        <h1 class="text-2xl font-bold mb-4 text-blue-600">Detektor Gambar AI 🤖</h1>
+        <p class="text-gray-600 mb-6">Unggah gambar di bawah ini untuk dianalisis oleh AI langsung di browser Anda.</p>
+
+        <!-- Area Input Gambar -->
+        <input type="file" id="imageUpload" accept="image/*" class="hidden" />
+        <label for="imageUpload" class="cursor-pointer bg-blue-500 hover:bg-blue-600 text-white font-semibold py-2 px-4 rounded-lg inline-block mb-4 transition">
+            Pilih Gambar
+        </label>
+
+        <!-- Preview Gambar -->
+        <div class="flex justify-center mb-4">
+            <img id="imagePreview" class="max-h-64 rounded-lg hidden" alt="Pratinjau Gambar" />
+        </div>
+
+        <!-- Status & Hasil Prediksi -->
+        <div id="status" class="text-amber-600 font-medium mb-2">Memuat Model AI (Mohon Tunggu)...</div>
+        <div id="result" class="text-left bg-gray-50 p-4 rounded border border-gray-200 hidden">
+            <h3 class="font-bold text-gray-700 mb-2">Hasil Analisis AI:</h3>
+            <ol id="predictionList" class="list-decimal list-inside text-gray-600"></ol>
+        </div>
+    </div>
+
+    <script>
+        const imageUpload = document.getElementById('imageUpload');
+        const imagePreview = document.getElementById('imagePreview');
+        const status = document.getElementById('status');
+        const result = document.getElementById('result');
+        const predictionList = document.getElementById('predictionList');
+        
+        let model = null;
+
+        // Load MobileNet model saat halaman dibuka
+        async function initAI() {
+            try {
+                model = await mobilenet.load();
+                status.innerText = "Model AI Siap Digunakan! Silakan unggah gambar.";
+                status.className = "text-green-600 font-medium mb-2";
+            } catch (error) {
+                status.innerText = "Gagal memuat model AI.";
+                status.className = "text-red-600 font-medium mb-2";
+                console.error(error);
+            }
+        }
+
+        // Handle unggahan gambar
+        imageUpload.addEventListener('change', async (e) => {
+            const file = e.target.files[0];
+            if (!file) return;
+
+            const reader = new FileReader();
+            reader.onload = async (event) => {
+                imagePreview.src = event.target.result;
+                imagePreview.classList.remove('hidden');
+                
+                if (model) {
+                    status.innerText = "Sedang menganalisis gambar...";
+                    status.className = "text-blue-600 font-medium mb-2";
+                    
+                    // Tunggu gambar selesai dimuat di DOM sebelum klasifikasi
+                    imagePreview.onload = async () => {
+                        const predictions = await model.classify(imagePreview);
+                        displayPredictions(predictions);
+                    };
+                }
+            };
+            reader.readAsDataURL(file);
+        });
+
+        // Tampilkan hasil prediksi
+        function displayPredictions(predictions) {
+            status.innerText = "Analisis Selesai!";
+            status.className = "text-green-600 font-medium mb-2";
+            predictionList.innerHTML = '';
+            
+            predictions.forEach(p => {
+                const li = document.createElement('li');
+                const persentase = (p.probability * 100).toFixed(2);
+                li.innerHTML = `<span class="font-semibold">${p.className}</span> - ${persentase}%`;
+                predictionList.appendChild(li);
+            });
+            result.classList.remove('hidden');
+        }
+
+        // Jalankan inisialisasi
+        initAI();
+    </script>
+</body>
+</html>
