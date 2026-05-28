@@ -1,0 +1,299 @@
+<!doctype html>
+<html lang="id">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>VOLTRA — Premium Electric Vehicles Indonesia</title>
+<meta name="description" content="VOLTRA menghadirkan kendaraan listrik premium dengan teknologi baterai generasi baru, performa elektrik, dan desain yang memimpin era mobilitas." />
+<script src="https://cdn.tailwindcss.com"></script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<script>
+  tailwind.config = {
+    theme: {
+      extend: {
+        colors: {
+          ink: '#0f1b3d',
+          'ink-soft': '#4a5a78',
+          navy: '#1e3a5f',
+          'navy-deep': '#0f1b3d',
+          azure: '#3b6fa0',
+          paper: '#e8edf3',
+          border: '#d9e0ea',
+        },
+        fontFamily: {
+          display: ['"Space Grotesk"', 'ui-sans-serif', 'system-ui'],
+          sans: ['"DM Sans"', 'ui-sans-serif', 'system-ui'],
+        },
+      },
+    },
+  };
+</script>
+<style>
+  html { scroll-behavior: smooth; }
+  body { font-family: 'DM Sans', sans-serif; color: #0f1b3d; -webkit-font-smoothing: antialiased; }
+  h1,h2,h3,h4 { font-family: 'Space Grotesk', sans-serif; letter-spacing: -0.02em; }
+  .container-x { padding-left: clamp(1.25rem, 5vw, 4rem); padding-right: clamp(1.25rem, 5vw, 4rem); }
+  .hairline { border-top: 1px solid #d9e0ea; }
+</style>
+</head>
+<body class="bg-white text-ink">
+
+<!-- NAV -->
+<header class="fixed top-0 inset-x-0 z-50 backdrop-blur bg-white/70 border-b border-border/60">
+  <div class="container-x flex items-center justify-between h-16">
+    <a href="#top" class="font-display text-lg font-bold tracking-tight text-ink">VOLTRA<span class="text-azure">.</span></a>
+    <nav class="hidden md:flex items-center gap-8 text-sm text-ink-soft">
+      <a href="#models" class="hover:text-ink transition">Model</a>
+      <a href="#technology" class="hover:text-ink transition">Teknologi</a>
+      <a href="#performance" class="hover:text-ink transition">Performa</a>
+      <a href="#sustainability" class="hover:text-ink transition">Keberlanjutan</a>
+      <a href="#contact" class="hover:text-ink transition">Kontak</a>
+    </nav>
+    <a href="#contact" class="inline-flex items-center gap-2 bg-ink text-white px-4 py-2 text-sm font-medium hover:bg-navy transition">Pesan Test Drive</a>
+  </div>
+</header>
+
+<!-- HERO -->
+<section id="top" class="relative min-h-screen flex items-end overflow-hidden" style="background-color:#0f1b3d">
+  <img src="voltra-assets/hero-car.jpg" alt="VOLTRA Aurora — sedan listrik premium" width="1920" height="1080" class="absolute inset-0 w-full h-full object-cover opacity-90" />
+  <div class="absolute inset-0" style="background:linear-gradient(180deg, rgba(15,27,61,0.6) 0%, rgba(15,27,61,0.1) 35%, rgba(15,27,61,0.95) 100%)"></div>
+  <div class="relative container-x w-full pb-16 md:pb-24 text-white">
+    <div class="max-w-3xl">
+      <div class="flex items-center gap-3 text-xs uppercase tracking-[0.25em] text-paper/80 mb-6">
+        <span class="w-8 h-px bg-paper/60"></span>
+        <span>The 2026 Aurora Series</span>
+      </div>
+      <h1 class="font-display text-5xl md:text-7xl lg:text-8xl font-semibold leading-[0.95]">
+        Mobilitas listrik,<br />
+        <span class="text-paper/80 italic font-normal">tanpa kompromi.</span>
+      </h1>
+      <p class="mt-8 max-w-xl text-base md:text-lg text-paper/80 leading-relaxed">
+        Direkayasa di Indonesia. Disempurnakan untuk performa, jangkauan, dan ketenangan absolut. Setiap VOLTRA dibangun di atas platform baterai Blade generasi kelima.
+      </p>
+      <div class="mt-10 flex flex-wrap items-center gap-3">
+        <a href="#models" class="inline-flex items-center gap-2 bg-white text-ink px-6 py-3 text-sm font-medium hover:bg-paper transition">Jelajahi Model</a>
+        <a href="#technology" class="inline-flex items-center gap-2 border border-white/30 text-white px-6 py-3 text-sm font-medium hover:bg-white/10 transition">Teknologi Blade →</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- STATS -->
+<section class="bg-white border-y border-border">
+  <div class="container-x grid grid-cols-2 md:grid-cols-4">
+    <div class="py-10 md:py-14">
+      <div class="font-display text-4xl md:text-5xl font-semibold text-ink tracking-tight">650<span class="text-azure text-2xl md:text-3xl ml-1">km</span></div>
+      <div class="mt-2 text-xs uppercase tracking-widest text-ink-soft">Jangkauan WLTP</div>
+    </div>
+    <div class="py-10 md:py-14 border-l border-border">
+      <div class="font-display text-4xl md:text-5xl font-semibold text-ink tracking-tight">2.9<span class="text-azure text-2xl md:text-3xl ml-1">dtk</span></div>
+      <div class="mt-2 text-xs uppercase tracking-widest text-ink-soft">0–100 km/jam</div>
+    </div>
+    <div class="py-10 md:py-14 md:border-l border-border">
+      <div class="font-display text-4xl md:text-5xl font-semibold text-ink tracking-tight">800<span class="text-azure text-2xl md:text-3xl ml-1">V</span></div>
+      <div class="mt-2 text-xs uppercase tracking-widest text-ink-soft">Arsitektur Cepat</div>
+    </div>
+    <div class="py-10 md:py-14 border-l border-border">
+      <div class="font-display text-4xl md:text-5xl font-semibold text-ink tracking-tight">1.2M+<span class="text-azure text-2xl md:text-3xl ml-1"></span></div>
+      <div class="mt-2 text-xs uppercase tracking-widest text-ink-soft">Kendaraan Terkirim</div>
+    </div>
+  </div>
+</section>
+
+<!-- MODELS -->
+<section id="models" class="bg-white">
+  <div class="container-x py-24 md:py-32">
+    <div class="flex items-end justify-between flex-wrap gap-6 mb-16">
+      <div>
+        <div class="text-xs uppercase tracking-[0.25em] text-azure mb-4">— Koleksi 2026</div>
+        <h2 class="font-display text-4xl md:text-6xl font-semibold text-ink max-w-2xl leading-[1.05]">Tiga karakter,<br />satu standar premium.</h2>
+      </div>
+      <a href="#contact" class="text-sm text-ink-soft hover:text-ink underline underline-offset-4">Lihat seluruh konfigurasi →</a>
+    </div>
+  </div>
+
+  <!-- model 1 -->
+  <article class="border-t border-border">
+    <div class="container-x grid md:grid-cols-12 gap-8 py-16 md:py-24 items-center">
+      <div class="md:col-span-7 order-2 md:order-1">
+        <img src="voltra-assets/hero-car.jpg" alt="Aurora GT — Grand Touring Sedan" loading="lazy" class="w-full h-[320px] md:h-[520px] object-cover" />
+      </div>
+      <div class="md:col-span-5 order-1 md:order-2 md:pl-8">
+        <div class="text-xs uppercase tracking-[0.25em] text-azure">01 / 03</div>
+        <h3 class="font-display text-4xl md:text-5xl font-semibold text-ink mt-4">Aurora GT</h3>
+        <div class="text-ink-soft mt-2">Grand Touring Sedan</div>
+        <dl class="mt-8 grid grid-cols-2 gap-y-4 text-sm">
+          <dt class="text-ink-soft">Jangkauan</dt><dd class="text-ink font-medium">650 km</dd>
+          <dt class="text-ink-soft">Pengisian DC</dt><dd class="text-ink font-medium">10–80% / 18 menit</dd>
+          <dt class="text-ink-soft">Drivetrain</dt><dd class="text-ink font-medium">Dual-Motor AWD</dd>
+        </dl>
+        <div class="mt-10 hairline pt-6 flex items-center justify-between">
+          <span class="text-ink font-medium">Mulai Rp 1.295.000.000</span>
+          <a href="#contact" class="text-sm font-medium text-ink border-b border-ink hover:text-azure hover:border-azure transition">Konfigurasi →</a>
+        </div>
+      </div>
+    </div>
+  </article>
+
+  <!-- model 2 -->
+  <article class="border-t border-border">
+    <div class="container-x grid md:grid-cols-12 gap-8 py-16 md:py-24 items-center">
+      <div class="md:col-span-7 order-2 md:order-1">
+        <img src="voltra-assets/model-suv.jpg" alt="Stellar X — Performance SUV" loading="lazy" class="w-full h-[320px] md:h-[520px] object-cover" />
+      </div>
+      <div class="md:col-span-5 order-1 md:order-2 md:pl-8">
+        <div class="text-xs uppercase tracking-[0.25em] text-azure">02 / 03</div>
+        <h3 class="font-display text-4xl md:text-5xl font-semibold text-ink mt-4">Stellar X</h3>
+        <div class="text-ink-soft mt-2">Performance SUV</div>
+        <dl class="mt-8 grid grid-cols-2 gap-y-4 text-sm">
+          <dt class="text-ink-soft">Jangkauan</dt><dd class="text-ink font-medium">580 km</dd>
+          <dt class="text-ink-soft">Pengisian DC</dt><dd class="text-ink font-medium">10–80% / 18 menit</dd>
+          <dt class="text-ink-soft">Drivetrain</dt><dd class="text-ink font-medium">Dual-Motor AWD</dd>
+        </dl>
+        <div class="mt-10 hairline pt-6 flex items-center justify-between">
+          <span class="text-ink font-medium">Mulai Rp 985.000.000</span>
+          <a href="#contact" class="text-sm font-medium text-ink border-b border-ink hover:text-azure hover:border-azure transition">Konfigurasi →</a>
+        </div>
+      </div>
+    </div>
+  </article>
+
+  <!-- model 3 -->
+  <article class="border-t border-b border-border">
+    <div class="container-x grid md:grid-cols-12 gap-8 py-16 md:py-24 items-center">
+      <div class="md:col-span-7 order-2 md:order-1">
+        <img src="voltra-assets/model-coupe.jpg" alt="Lumen Coupé — Electric Coupé" loading="lazy" class="w-full h-[320px] md:h-[520px] object-cover" />
+      </div>
+      <div class="md:col-span-5 order-1 md:order-2 md:pl-8">
+        <div class="text-xs uppercase tracking-[0.25em] text-azure">03 / 03</div>
+        <h3 class="font-display text-4xl md:text-5xl font-semibold text-ink mt-4">Lumen Coupé</h3>
+        <div class="text-ink-soft mt-2">Electric Coupé</div>
+        <dl class="mt-8 grid grid-cols-2 gap-y-4 text-sm">
+          <dt class="text-ink-soft">Jangkauan</dt><dd class="text-ink font-medium">540 km</dd>
+          <dt class="text-ink-soft">Pengisian DC</dt><dd class="text-ink font-medium">10–80% / 18 menit</dd>
+          <dt class="text-ink-soft">Drivetrain</dt><dd class="text-ink font-medium">Dual-Motor AWD</dd>
+        </dl>
+        <div class="mt-10 hairline pt-6 flex items-center justify-between">
+          <span class="text-ink font-medium">Mulai Rp 1.450.000.000</span>
+          <a href="#contact" class="text-sm font-medium text-ink border-b border-ink hover:text-azure hover:border-azure transition">Konfigurasi →</a>
+        </div>
+      </div>
+    </div>
+  </article>
+</section>
+
+<!-- TECHNOLOGY -->
+<section id="technology" class="relative text-white overflow-hidden" style="background-color:#0f1b3d">
+  <img src="voltra-assets/tech-battery.jpg" alt="Teknologi baterai Blade generasi kelima" loading="lazy" class="absolute inset-0 w-full h-full object-cover opacity-30" />
+  <div class="absolute inset-0" style="background:linear-gradient(90deg, rgba(15,27,61,0.95) 0%, rgba(15,27,61,0.7) 60%, rgba(15,27,61,0.2) 100%)"></div>
+  <div class="relative container-x py-24 md:py-36 grid md:grid-cols-12 gap-12">
+    <div class="md:col-span-6">
+      <div class="text-xs uppercase tracking-[0.25em] text-paper/70 mb-6">— Blade Battery 5.0</div>
+      <h2 class="font-display text-4xl md:text-6xl font-semibold leading-[1.05]">Arsitektur 800 volt.<br /><span class="italic font-normal text-paper/80">Setiap molekul direkayasa.</span></h2>
+      <p class="mt-8 max-w-lg text-paper/80 leading-relaxed">Sel Lithium Iron Phosphate dengan struktur bilah ultra-tipis. Kepadatan energi 30% lebih tinggi, suhu operasi lebih stabil, dan siklus hidup melampaui 1.5 juta kilometer.</p>
+    </div>
+    <div class="md:col-span-6 grid grid-cols-2 gap-px bg-white/10">
+      <div class="p-8" style="background-color:#0f1b3d"><div class="font-display text-3xl md:text-4xl font-semibold">30%</div><div class="text-paper/70 text-sm mt-2">Densitas energi lebih tinggi</div></div>
+      <div class="p-8" style="background-color:#0f1b3d"><div class="font-display text-3xl md:text-4xl font-semibold">18 min</div><div class="text-paper/70 text-sm mt-2">Pengisian ultra cepat</div></div>
+      <div class="p-8" style="background-color:#0f1b3d"><div class="font-display text-3xl md:text-4xl font-semibold">−30°C</div><div class="text-paper/70 text-sm mt-2">Performa dingin terjamin</div></div>
+      <div class="p-8" style="background-color:#0f1b3d"><div class="font-display text-3xl md:text-4xl font-semibold">1.5M km</div><div class="text-paper/70 text-sm mt-2">Garansi siklus baterai</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- PERFORMANCE -->
+<section id="performance" class="bg-paper">
+  <div class="container-x py-24 md:py-32 grid md:grid-cols-12 gap-12 items-center">
+    <div class="md:col-span-5">
+      <div class="text-xs uppercase tracking-[0.25em] text-azure mb-4">— Performa</div>
+      <h2 class="font-display text-4xl md:text-6xl font-semibold text-ink leading-[1.05]">Direkayasa untuk presisi sunyi.</h2>
+      <p class="mt-6 text-ink-soft leading-relaxed max-w-md">Dual-motor permanent magnet dengan torsi vektor adaptif. Setiap putaran roda dihitung 100 kali per detik untuk memberikan respons yang lembut, mantap, dan elegan.</p>
+    </div>
+    <div class="md:col-span-7">
+      <dl class="divide-y divide-border border-y border-border">
+        <div class="flex items-baseline justify-between py-5"><dt class="text-ink-soft">Tenaga Sistem</dt><dd class="font-display text-xl md:text-2xl text-ink font-medium tabular-nums">550 kW</dd></div>
+        <div class="flex items-baseline justify-between py-5"><dt class="text-ink-soft">Torsi Puncak</dt><dd class="font-display text-xl md:text-2xl text-ink font-medium tabular-nums">950 Nm</dd></div>
+        <div class="flex items-baseline justify-between py-5"><dt class="text-ink-soft">0–100 km/jam</dt><dd class="font-display text-xl md:text-2xl text-ink font-medium tabular-nums">2.9 detik</dd></div>
+        <div class="flex items-baseline justify-between py-5"><dt class="text-ink-soft">Kecepatan Tertinggi</dt><dd class="font-display text-xl md:text-2xl text-ink font-medium tabular-nums">260 km/jam</dd></div>
+        <div class="flex items-baseline justify-between py-5"><dt class="text-ink-soft">Suspensi Adaptif</dt><dd class="font-display text-xl md:text-2xl text-ink font-medium tabular-nums">DiSus-A Magnetic</dd></div>
+        <div class="flex items-baseline justify-between py-5"><dt class="text-ink-soft">Mode Berkendara</dt><dd class="font-display text-xl md:text-2xl text-ink font-medium tabular-nums">7 Profil Dinamis</dd></div>
+      </dl>
+    </div>
+  </div>
+</section>
+
+<!-- SUSTAINABILITY -->
+<section id="sustainability" class="bg-white">
+  <div class="container-x py-24 md:py-32">
+    <div class="grid md:grid-cols-12 gap-12 items-end mb-16">
+      <div class="md:col-span-7">
+        <div class="text-xs uppercase tracking-[0.25em] text-azure mb-4">— Manufaktur</div>
+        <h2 class="font-display text-4xl md:text-6xl font-semibold text-ink leading-[1.05]">Dari pabrik karbon-netral<br />menuju jalanan Anda.</h2>
+      </div>
+      <p class="md:col-span-5 text-ink-soft leading-relaxed">Fasilitas produksi terintegrasi vertikal di Subang, Jawa Barat — mulai dari sel baterai hingga perakitan akhir, didayai 100% energi terbarukan sejak 2024.</p>
+    </div>
+    <img src="voltra-assets/factory.jpg" alt="Pabrik perakitan VOLTRA di Subang" loading="lazy" class="w-full h-[320px] md:h-[560px] object-cover" />
+    <div class="grid md:grid-cols-3 mt-px bg-border gap-px">
+      <div class="bg-white p-10"><div class="font-display text-4xl font-semibold text-ink">100%</div><div class="text-ink-soft mt-3">Energi terbarukan di fasilitas produksi</div></div>
+      <div class="bg-white p-10"><div class="font-display text-4xl font-semibold text-ink">95%</div><div class="text-ink-soft mt-3">Komponen baterai dapat didaur ulang</div></div>
+      <div class="bg-white p-10"><div class="font-display text-4xl font-semibold text-ink">−42%</div><div class="text-ink-soft mt-3">Jejak karbon vs. produksi konvensional</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- CTA -->
+<section id="contact" class="text-white" style="background-color:#0f1b3d">
+  <div class="container-x py-24 md:py-36 grid md:grid-cols-12 gap-12 items-center">
+    <div class="md:col-span-7">
+      <h2 class="font-display text-4xl md:text-6xl font-semibold leading-[1.05]">Rasakan ketenangan<br /><span class="italic font-normal text-paper/80">listrik premium.</span></h2>
+      <p class="mt-6 text-paper/80 max-w-lg leading-relaxed">Jadwalkan test drive privat di salah satu showroom flagship VOLTRA di Jakarta, Surabaya, atau Bali.</p>
+    </div>
+    <div class="md:col-span-5 bg-white/5 border border-white/10 p-8">
+      <form class="grid gap-4" onsubmit="event.preventDefault(); alert('Terima kasih! Tim kami akan menghubungi Anda.');">
+        <label class="grid gap-2"><span class="text-xs uppercase tracking-widest text-paper/70">Nama Lengkap</span><input type="text" class="bg-transparent border-b border-white/30 py-2 text-white focus:outline-none focus:border-white" /></label>
+        <label class="grid gap-2"><span class="text-xs uppercase tracking-widest text-paper/70">Email</span><input type="email" class="bg-transparent border-b border-white/30 py-2 text-white focus:outline-none focus:border-white" /></label>
+        <label class="grid gap-2"><span class="text-xs uppercase tracking-widest text-paper/70">Model</span>
+          <select class="bg-transparent border-b border-white/30 py-2 text-white focus:outline-none focus:border-white">
+            <option class="text-ink">Aurora GT</option>
+            <option class="text-ink">Stellar X</option>
+            <option class="text-ink">Lumen Coupé</option>
+          </select>
+        </label>
+        <button class="mt-4 bg-white text-ink py-3 font-medium hover:bg-paper transition">Jadwalkan Test Drive</button>
+      </form>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer class="text-paper/70 text-sm" style="background-color:#0a1230">
+  <div class="container-x py-16 grid md:grid-cols-12 gap-10">
+    <div class="md:col-span-4">
+      <div class="font-display text-xl font-bold text-white">VOLTRA<span class="text-azure">.</span></div>
+      <p class="mt-4 max-w-xs">PT VOLTRA Mobilitas Indonesia. Memimpin transisi menuju mobilitas elektrik premium di Asia Tenggara.</p>
+    </div>
+    <div class="md:col-span-2">
+      <div class="text-white font-medium mb-4">Model</div>
+      <ul class="space-y-2"><li><a href="#models" class="hover:text-white">Aurora GT</a></li><li><a href="#models" class="hover:text-white">Stellar X</a></li><li><a href="#models" class="hover:text-white">Lumen Coupé</a></li></ul>
+    </div>
+    <div class="md:col-span-2">
+      <div class="text-white font-medium mb-4">Perusahaan</div>
+      <ul class="space-y-2"><li><a href="#" class="hover:text-white">Tentang</a></li><li><a href="#" class="hover:text-white">Karier</a></li><li><a href="#" class="hover:text-white">Berita</a></li></ul>
+    </div>
+    <div class="md:col-span-4">
+      <div class="text-white font-medium mb-4">Kantor Pusat</div>
+      <p>Menara Voltra, Lantai 42<br />SCBD Lot 18, Jakarta Selatan 12190<br />+62 21 5000 9000</p>
+    </div>
+  </div>
+  <div class="border-t border-white/10">
+    <div class="container-x py-6 flex flex-wrap items-center justify-between gap-4 text-xs">
+      <span>© 2026 PT VOLTRA Mobilitas Indonesia. All rights reserved.</span>
+      <div class="flex gap-6"><a href="#" class="hover:text-white">Privasi</a><a href="#" class="hover:text-white">Syarat & Ketentuan</a><a href="#" class="hover:text-white">Cookies</a></div>
+    </div>
+  </div>
+</footer>
+
+</body>
+</html>
