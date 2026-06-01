@@ -2,1301 +2,672 @@
 <html lang="id">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, user-scalable=yes">
-    <title>RS Medika Utama - Pelayanan Kesehatan Elegan & Terpercaya</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Antono | Senior Fullstack Developer</title>
     <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Font Awesome 6 -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <!-- Three.js -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
     <!-- Google Fonts -->
-    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700;800;900&family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
-    <!-- Lucide Icons -->
-    <script src="https://unpkg.com/lucide@latest"></script>
-    
-    <script>
-        tailwind.config = {
-            theme: {
-                extend: {
-                    fontFamily: {
-                        sans: ['Inter', 'sans-serif'],
-                        serif: ['Playfair Display', 'serif'],
-                    },
-                    colors: {
-                        primary: '#10b981', 
-                        secondary: '#34d399',
-                        accent: '#6ee7b7',
-                        dark: '#064e3b',
-                        gold: '#d4af37'
-                    },
-                    animation: {
-                        'fade-in-up': 'fadeInUp 0.6s ease-out',
-                        'fade-in': 'fadeIn 0.8s ease-out',
-                        'slide-in-right': 'slideInRight 0.5s ease-out',
-                        'float': 'float 3s ease-in-out infinite',
-                        'shimmer': 'shimmer 2s linear infinite',
-                        'glow': 'glow 2s ease-in-out infinite alternate',
-                    },
-                    keyframes: {
-                        fadeInUp: {
-                            '0%': { opacity: '0', transform: 'translateY(30px)' },
-                            '100%': { opacity: '1', transform: 'translateY(0)' }
-                        },
-                        fadeIn: {
-                            '0%': { opacity: '0' },
-                            '100%': { opacity: '1' }
-                        },
-                        slideInRight: {
-                            '0%': { opacity: '0', transform: 'translateX(30px)' },
-                            '100%': { opacity: '1', transform: 'translateX(0)' }
-                        },
-                        float: {
-                            '0%, 100%': { transform: 'translateY(0px)' },
-                            '50%': { transform: 'translateY(-20px)' }
-                        },
-                        shimmer: {
-                            '0%': { backgroundPosition: '-1000px 0' },
-                            '100%': { backgroundPosition: '1000px 0' }
-                        },
-                        glow: {
-                            '0%': { boxShadow: '0 0 20px rgba(16, 185, 129, 0.3)' },
-                            '100%': { boxShadow: '0 0 40px rgba(16, 185, 129, 0.6)' }
-                        }
-                    }
-                }
-            }
-        }
-    </script>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600&family=Sora:wght@600;700;800&display=swap" rel="stylesheet">
     <style>
-        html { 
-            scroll-behavior: smooth; 
-            -webkit-tap-highlight-color: transparent;
+        :root {
+            --primary: #f2ba42;
         }
+
         * {
-            -webkit-font-smoothing: antialiased;
-            -moz-osx-font-smoothing: grayscale;
+            cursor: default;
+            -webkit-tap-highlight-color: transparent;
+            user-select: none;
         }
-        #navbar { 
-            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-            will-change: transform, background-color;
+
+        body {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            background-color: #0c0a09;
+            color: #f3f4f6;
+            margin: 0;
+            overflow-x: hidden;
         }
-        .nav-scrolled {
-            background: rgba(255, 255, 255, 0.98) !important;
-            backdrop-filter: blur(30px) saturate(180%);
-            -webkit-backdrop-filter: blur(30px) saturate(180%);
-            padding-top: 0.75rem; 
-            padding-bottom: 0.75rem;
-            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.08), 0 2px 8px rgba(16, 185, 129, 0.1);
-            border-bottom: 1px solid rgba(16, 185, 129, 0.1);
+
+        #bg-canvas {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            background: radial-gradient(circle at center, #1c1917 0%, #0c0a09 100%);
         }
-        .nav-link { 
-            position: relative; 
-            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+
+        /* --- NAVIGATION --- */
+        .top-bar-container {
+            position: fixed;
+            top: 20px;
+            left: 0;
+            right: 0;
+            z-index: 100;
+            padding: 0 20px;
+            display: flex;
+            justify-content: center;
         }
-        .nav-link::after {
-            content: ''; 
-            position: absolute; 
-            width: 0; 
-            height: 3px;
-            bottom: -8px; 
-            left: 50%; 
-            background: linear-gradient(90deg, #10b981, #34d399);
-            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-            transform: translateX(-50%);
-            border-radius: 3px;
+
+        .top-bar {
+            width: 100%;
+            max-width: 1200px;
+            height: 64px;
+            background: rgba(28, 25, 23, 0.6);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 24px;
+            display: flex;
+            align-items: center;
+            padding: 0 24px;
         }
-        .nav-link:hover::after { width: 100%; }
-        #mobile-menu {
-            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-            opacity: 0; 
-            visibility: hidden; 
-            transform: scale(0.95);
+
+        .nav-links {
+            display: flex;
+            gap: 8px;
+            margin-left: 30px;
         }
-        #mobile-menu.active { 
-            opacity: 1; 
-            visibility: visible; 
-            transform: scale(1);
+
+        .nav-item {
+            padding: 8px 16px;
+            color: #a8a29e;
+            font-size: 13px;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            border-radius: 12px;
+            cursor: pointer;
         }
-        .glass-card {
-            background: rgba(255, 255, 255, 0.98);
-            backdrop-filter: blur(20px) saturate(180%);
-            -webkit-backdrop-filter: blur(20px) saturate(180%);
-            border: 1px solid rgba(255, 255, 255, 0.5);
-            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.08), 0 2px 8px rgba(16, 185, 129, 0.05);
+
+        .nav-item:hover, .nav-item.active {
+            color: #fff;
+            background: rgba(245, 158, 11, 0.1);
         }
-        .glass-card-dark {
-            background: rgba(6, 78, 59, 0.95);
-            backdrop-filter: blur(20px) saturate(180%);
-            -webkit-backdrop-filter: blur(20px) saturate(180%);
-            border: 1px solid rgba(16, 185, 129, 0.2);
-            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3), 0 2px 8px rgba(16, 185, 129, 0.1);
+
+        .nav-item.active {
+            color: #f2ba42;
         }
-        .gradient-text {
-            background: linear-gradient(135deg, #10b981 0%, #34d399 100%);
+
+        /* --- PAGE TRANSITIONS --- */
+        .page {
+            display: none;
+            animation: fadeIn 0.8s cubic-bezier(0.2, 0, 0, 1) forwards;
+        }
+
+        .page.active {
+            display: block;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .content-main {
+            margin-top: 100px;
+            width: 100%;
+            min-height: calc(100vh - 100px);
+        }
+
+        /* --- COMPONENTS --- */
+        .hero-title {
+            background: linear-gradient(to bottom, #fff 40%, rgba(255,255,255,0.4));
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
-            background-clip: text;
+            font-family: 'Sora', sans-serif;
         }
-        .card-hover {
-            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+
+        .glass-card {
+            background: rgba(255, 255, 255, 0.02);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(8px);
+            border-radius: 24px;
+            padding: 24px;
+            transition: all 0.3s ease;
+        }
+
+        .glass-card:hover {
+            background: rgba(255, 255, 255, 0.04);
+            border-color: rgba(245, 158, 11, 0.3);
+            transform: translateY(-5px);
+        }
+
+        .skill-badge {
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            padding: 6px 12px;
+            border-radius: 10px;
+            font-size: 11px;
+            font-weight: 600;
+            color: #d6d3d1;
+        }
+
+        .social-icon {
+            width: 45px; height: 45px;
+            display: flex; align-items: center; justify-content: center;
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 12px; color: #a8a29e;
+            transition: all 0.3s ease;
+        }
+
+        .social-icon:hover {
+            color: #f2ba42; background: rgba(245, 158, 11, 0.1);
+            transform: translateY(-5px);
+        }
+
+        /* --- CAROUSEL --- */
+        .carousel-container {
             position: relative;
-        }
-        .card-hover::before {
-            content: '';
-            position: absolute;
-            inset: 0;
-            border-radius: inherit;
-            padding: 2px;
-            background: linear-gradient(135deg, #10b981, #34d399, #6ee7b7);
-            -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
-            -webkit-mask-composite: xor;
-            mask-composite: exclude;
-            opacity: 0;
-            transition: opacity 0.4s;
-        }
-        .card-hover:hover::before {
-            opacity: 1;
-        }
-        .card-hover:hover {
-            transform: translateY(-12px);
-            box-shadow: 0 20px 60px rgba(16, 185, 129, 0.2), 0 8px 24px rgba(0, 0, 0, 0.1);
-        }
-        .card-hover:active {
-            transform: translateY(-4px);
-        }
-        @media (max-width: 768px) {
-            .hero-title {
-                font-size: 2.5rem;
-                line-height: 1.1;
-            }
-            .section-title {
-                font-size: 2rem;
-            }
-        }
-        /* Premium decorative elements */
-        .premium-border {
-            position: relative;
-        }
-        .premium-border::after {
-            content: '';
-            position: absolute;
-            bottom: -8px;
-            left: 50%;
-            transform: translateX(-50%);
-            width: 60px;
-            height: 3px;
-            background: linear-gradient(90deg, transparent, #d4af37, transparent);
-        }
-        .text-shadow-premium {
-            text-shadow: 0 2px 20px rgba(16, 185, 129, 0.3);
-        }
-        .shimmer-effect {
-            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.4), transparent);
-            background-size: 200% 100%;
-            animation: shimmer 2s infinite;
-        }
-        .btn-primary {
-            background: linear-gradient(135deg, #10b981 0%, #34d399 100%);
-            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-            position: relative;
-            overflow: hidden;
-        }
-        .btn-primary::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: -100%;
             width: 100%;
-            height: 100%;
-            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent);
-            transition: left 0.5s;
         }
-        .btn-primary:hover::before {
-            left: 100%;
+
+        .carousel-viewport {
+            overflow-x: auto;
+            scroll-snap-type: x mandatory;
+            scrollbar-width: none;
+            display: flex;
+            padding: 1rem 0;
+            gap: 24px;
+            scroll-behavior: smooth;
         }
-        .btn-primary:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 20px 40px rgba(16, 185, 129, 0.4), 0 0 20px rgba(16, 185, 129, 0.2);
+        .carousel-viewport::-webkit-scrollbar { display: none; }
+
+        .project-card {
+            flex: 0 0 85%;
+            scroll-snap-align: center;
         }
-        .btn-primary:active {
-            transform: translateY(0);
+
+        @media (min-width: 768px) {
+            .project-card { flex: 0 0 450px; }
+            .project-card:first-child { margin-left: 0; }
         }
-        /* Smooth scroll untuk mobile */
-        @media (max-width: 768px) {
-            body {
-                overflow-x: hidden;
-            }
-        }
-        
-        /* Premium Enhancements */
-        .glass-premium {
-            background: rgba(255, 255, 255, 0.98);
-            backdrop-filter: blur(30px) saturate(200%);
-            box-shadow: 0 8px 32px rgba(16, 185, 129, 0.15), 0 0 0 1px rgba(16, 185, 129, 0.1);
-        }
-        
-        .card-premium {
-            transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
-            position: relative;
-            overflow: hidden;
-        }
-        .card-premium::before {
-            content: '';
-            position: absolute;
-            top: -50%;
-            left: -50%;
-            width: 200%;
-            height: 200%;
-            background: linear-gradient(45deg, transparent, rgba(255,255,255,0.1), transparent);
-            transform: rotate(45deg);
-            transition: all 0.6s;
-        }
-        .card-premium:hover::before {
-            left: 100%;
-        }
-        .card-premium:hover {
-            transform: translateY(-12px) scale(1.02);
-            box-shadow: 0 20px 60px rgba(16, 185, 129, 0.3);
-        }
-        
-        .btn-premium {
-            position: relative;
-            overflow: hidden;
-            box-shadow: 0 10px 30px rgba(16, 185, 129, 0.3);
-        }
-        .btn-premium::after {
-            content: '';
+
+        .carousel-btn {
             position: absolute;
             top: 50%;
-            left: 50%;
-            width: 0;
-            height: 0;
+            transform: translateY(-50%);
+            width: 50px;
+            height: 50px;
+            background: rgba(28, 25, 23, 0.8);
+            border: 1px solid rgba(255, 255, 255, 0.1);
             border-radius: 50%;
-            background: rgba(255, 255, 255, 0.4);
-            transform: translate(-50%, -50%);
-            transition: width 0.6s, height 0.6s;
-        }
-        .btn-premium:hover::after {
-            width: 400px;
-            height: 400px;
-        }
-        
-        @keyframes shimmer {
-            0% { background-position: -1000px 0; }
-            100% { background-position: 1000px 0; }
-        }
-        
-        .shimmer {
-            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.5), transparent);
-            background-size: 1000px 100%;
-            animation: shimmer 3s infinite;
-        }
-        
-        .glass-card-dark {
-            background: rgba(255, 255, 255, 0.1);
-            backdrop-filter: blur(10px);
-            -webkit-backdrop-filter: blur(10px);
-        }
-        
-        .text-shadow-premium {
-            text-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
-        }
-        
-        /* Custom Modal Styles */
-        .modal {
-            display: none;
-            position: fixed;
-            z-index: 9999;
-            left: 0;
-            top: 0;
-            width: 100%;
-            height: 100%;
-            background-color: rgba(0, 0, 0, 0.6);
-            backdrop-filter: blur(8px);
-            animation: fadeIn 0.3s ease-out;
-        }
-        
-        .modal.active {
+            color: white;
             display: flex;
             align-items: center;
             justify-content: center;
-        }
-        
-        .modal-content {
-            background: linear-gradient(135deg, #ffffff 0%, #f0fdf4 100%);
-            padding: 1rem;
-            border-radius: 1.25rem;
-            max-width: 260px;
-            width: 90%;
-            box-shadow: 0 10px 30px rgba(16, 185, 129, 0.25);
-            animation: slideInUp 0.4s ease-out;
-            border: 1.5px solid rgba(16, 185, 129, 0.2);
-        }
-        
-        @keyframes slideInUp {
-            from {
-                transform: translateY(50px);
-                opacity: 0;
-            }
-            to {
-                transform: translateY(0);
-                opacity: 1;
-            }
-        }
-        
-        .modal-header {
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-            margin-bottom: 0.625rem;
-        }
-        
-        .modal-icon {
-            width: 32px;
-            height: 32px;
-            background: linear-gradient(135deg, #10b981, #34d399);
-            border-radius: 0.5rem;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            box-shadow: 0 4px 10px rgba(16, 185, 129, 0.3);
-        }
-        
-        .modal-close {
-            position: absolute;
-            top: 0.5rem;
-            right: 0.5rem;
-            width: 24px;
-            height: 24px;
-            border-radius: 50%;
-            background: rgba(16, 185, 129, 0.1);
-            border: none;
             cursor: pointer;
+            z-index: 10;
+            backdrop-filter: blur(8px);
+            transition: all 0.3s ease;
+        }
+
+        .carousel-btn:hover {
+            background: var(--primary);
+            border-color: transparent;
+            transform: translateY(-50%) scale(1.1);
+        }
+
+        .carousel-btn.prev { left: -25px; }
+        .carousel-btn.next { right: -25px; }
+
+        @media (max-width: 1024px) {
+            .carousel-btn { display: none; }
+        }
+
+        /* --- EKSPLORASI SPECIFIC --- */
+        .skill-icon-box {
+            width: 48px;
+            height: 48px;
+            background: linear-gradient(135deg, rgba(245, 158, 11, 0.2), rgba(245, 158, 11, 0.05));
+            border-radius: 12px;
             display: flex;
             align-items: center;
             justify-content: center;
-            transition: all 0.3s;
+            border: 1px solid rgba(245, 158, 11, 0.2);
+            color: var(--primary);
+            font-size: 20px;
+            margin-bottom: 20px;
         }
-        
-        .modal-close:hover {
-            background: rgba(16, 185, 129, 0.2);
-            transform: rotate(90deg);
-        }
-
-        /* ── Doctor Search ── */
-        @keyframes cardIn {
-            from { opacity: 0; transform: translateY(20px); }
-            to   { opacity: 1; transform: translateY(0); }
-        }
-        .animate-card { animation: cardIn 0.4s ease-out both; }
-
-        #search-input:focus,
-        #filter-spesialis:focus,
-        #filter-hari:focus {
-            box-shadow: 0 0 0 3px rgba(5,150,105,0.15);
-        }
-
-        mark {
-            background: #a7f3d0;
-            color: #065f46;
-            border-radius: 3px;
-            padding: 0 2px;
-            font-style: normal;
-        }
-
-        .doctor-badge-available  { background:#10b981; color:#fff; }
-        .doctor-badge-unavailable{ background:#9ca3af; color:#fff; }
     </style>
 </head>
-<body class="font-sans text-gray-800 antialiased bg-gradient-to-br from-emerald-50 via-white to-teal-50/30 overflow-x-hidden relative">
+<body>
 
-    <!-- Floating Cartoon Decorations -->
-    <div class="fixed inset-0 pointer-events-none z-0 overflow-hidden opacity-40">
-        <div class="absolute top-20 left-10 w-20 h-20 animate-float">
-            <svg viewBox="0 0 100 100" class="w-full h-full">
-                <circle cx="50" cy="50" r="40" fill="#10b981" opacity="0.3"/>
-                <circle cx="50" cy="50" r="30" fill="#34d399" opacity="0.5"/>
-                <circle cx="50" cy="50" r="20" fill="#6ee7b7" opacity="0.7"/>
-            </svg>
-        </div>
-        <div class="absolute top-40 right-20 w-16 h-16 animate-float" style="animation-delay: 1s;">
-            <svg viewBox="0 0 24 24" class="w-full h-full" fill="#10b981">
-                <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/>
-            </svg>
-        </div>
-        <div class="absolute bottom-40 left-1/4 w-24 h-24 animate-float" style="animation-delay: 2s;">
-            <svg viewBox="0 0 100 100" class="w-full h-full">
-                <path d="M50 10 L90 90 L10 90 Z" fill="#34d399" opacity="0.4"/>
-            </svg>
+    <canvas id="bg-canvas"></canvas>
+
+    <div class="top-bar-container">
+        <div class="top-bar">
+            <div class="flex items-center gap-3 cursor-pointer" onclick="showPage('home')">
+                <div class="w-8 h-8 bg-amber-600 rounded-lg flex items-center justify-center rotate-3 shadow-lg">
+                    <i class="fa-solid fa-leaf text-white text-xs"></i>
+                </div>
+                <span class="font-bold tracking-tighter text-sm uppercase">Antono</span>
+            </div>
+
+            <nav class="nav-links">
+                <div onclick="showPage('home')" class="nav-item active" data-page="home">Beranda</div>
+                <div onclick="showPage('eksplorasi')" class="nav-item" data-page="eksplorasi">Eksplorasi</div>
+                <div onclick="showPage('koleksi')" class="nav-item" data-page="koleksi">Project</div>
+                <div onclick="showPage('profil')" class="nav-item" data-page="profil">Profil</div>
+            </nav>
+
+            <div class="ml-auto">
+                <div class="w-9 h-9 rounded-xl overflow-hidden border border-white/10 cursor-pointer" onclick="showPage('profil')">
+                    <img src="https://avatars.githubusercontent.com/u/73228642?v=4" alt="Profil">
+                </div>
+            </div>
         </div>
     </div>
 
-    <!-- Header / Navigasi Premium -->
-    <header id="navbar" class="fixed w-full top-0 z-[100] py-3 md:py-4 px-4 md:px-6 lg:px-8 transition-all duration-500">
-        <div class="max-w-7xl mx-auto glass-premium rounded-3xl px-4 md:px-6 py-3 md:py-4 shadow-2xl">
-            <div class="flex justify-between items-center">
-                <div class="flex items-center gap-2 md:gap-3 group cursor-pointer shrink-0" onclick="window.scrollTo({top:0, behavior:'smooth'})">
-                    <div class="w-10 h-10 md:w-12 md:h-12 bg-gradient-to-br from-emerald-500 via-green-500 to-teal-500 rounded-2xl flex items-center justify-center shadow-xl transition-all group-hover:scale-110 group-hover:rotate-12 relative overflow-hidden">
-                        <div class="absolute inset-0 bg-gradient-to-br from-white/20 to-transparent"></div>
-                        <i data-lucide="heart-pulse" class="w-5 h-5 md:w-6 md:h-6 text-white relative z-10"></i>
+    <div class="content-main">
+        <div class="max-w-6xl mx-auto px-6 py-12">
+            
+            <!-- HOME PAGE -->
+            <div id="page-home" class="page active space-y-24">
+                <header class="text-center space-y-8 pt-12">
+                    <div class="relative inline-block">
+                        <div class="absolute -inset-6 bg-amber-600 rounded-full blur-3xl opacity-10"></div>
+                        <img class="relative w-32 h-32 md:w-40 md:h-40 rounded-full object-cover p-1 bg-gradient-to-tr from-amber-600 to-orange-400" 
+                             src="https://avatars.githubusercontent.com/u/73228642?v=4" alt="Profil Antono">
                     </div>
-                    <div class="flex flex-col leading-none">
-                        <span id="logo-text" class="text-lg md:text-xl font-bold bg-gradient-to-r from-emerald-600 to-green-600 bg-clip-text text-transparent tracking-tight">
-                            Medika<span class="font-light">Utama</span>
-                        </span>
-                        <span id="tagline-text" class="text-[8px] md:text-[9px] uppercase tracking-[0.15em] text-emerald-600 font-semibold">Excellence in Care</span>
-                    </div>
-                </div>
+                    <div class="space-y-6">
+                        <h1 class="text-5xl md:text-7xl font-black tracking-tighter hero-title">Digital Architect.</h1>
+                        <p class="text-stone-400 text-lg max-w-2xl mx-auto font-light leading-relaxed">
+                            Membangun ekosistem digital yang efisien bukan sekadar mengadopsi teknologi terbaru, melainkan menciptakan jaringan yang saling terhubung antara teknologi, data,
+                            dan manusia untuk menciptakan nilai yang konsisten. Efisiensi tercapai ketika seluruh elemen dapat beroperasi secara otomatis, terintegrasi, dan adaptif terhadap perubahan..
+                        </p>
+                        <div class="flex justify-center gap-4 pt-4">
+                            <a href="https://github.com/antono4" class="social-icon"><i class="fa-brands fa-github"></i></a>
+                            <a href="https://www.linkedin.com/in/antono-40aa4b93/" class="social-icon"><i class="fa-brands fa-linkedin-in"></i></a>
 
-                <nav class="hidden lg:flex items-center gap-6 xl:gap-8">
-                    <a href="#hero" class="nav-text nav-link text-emerald-700 font-semibold text-sm tracking-wide hover:text-emerald-500 transition-colors">Beranda</a>
-                    <a href="#tentang" class="nav-text nav-link text-gray-700 font-semibold text-sm tracking-wide hover:text-emerald-600 transition-colors">Tentang</a>
-                    <a href="#layanan" class="nav-text nav-link text-gray-700 font-semibold text-sm tracking-wide hover:text-emerald-600 transition-colors">Layanan</a>
-                    <a href="#dokter" class="nav-text nav-link text-gray-700 font-semibold text-sm tracking-wide hover:text-emerald-600 transition-colors">Dokter</a>
-                </nav>
+                        </div>
+                    </div>
+                </header>
+
+                <section class="space-y-8">
+                    <div class="flex justify-between items-end px-2">
+                        <div>
+                            <h2 class="text-2xl font-bold text-white">Proyek Terpilih</h2>
+                            <p class="text-stone-500 text-sm">Karya yang mendefinisikan standar saya.</p>
+                        </div>
+                        <div class="flex items-center gap-4">
+                             <button onclick="showPage('koleksi')" class="text-amber-500 text-xs font-bold hover:underline">LIHAT SEMUA</button>
+                        </div>
+                    </div>
+                    
+                    <div class="carousel-container">
+                        <button class="carousel-btn prev" onclick="moveCarousel(-1)"><i class="fa-solid fa-chevron-left"></i></button>
+                        <button class="carousel-btn next" onclick="moveCarousel(1)"><i class="fa-solid fa-chevron-right"></i></button>
+                        
+                        <div class="carousel-viewport" id="project-carousel">
+                            <!-- Proyek akan diisi via JS -->
+                        </div>
+                    </div>
+                </section>
+            </div>
+
+            <!-- EKSPLORASI PAGE -->
+            <div id="page-eksplorasi" class="page space-y-16">
+                <header class="space-y-4">
+                    <span class="text-amber-500 font-bold text-xs tracking-[0.3em] uppercase">Tech Stack & Mastery</span>
+                    <h2 class="text-4xl md:text-5xl font-bold hero-title">Eksplorasi Teknologi</h2>
+                    <p class="text-stone-400 max-w-2xl text-lg leading-relaxed font-light">
+                        Saya tidak hanya menulis kode; saya merancang arsitektur. Dari keindahan antarmuka hingga skalabilitas infrastruktur, berikut adalah instrumen yang saya gunakan.
+                    </p>
+                </header>
                 
-                <div class="hidden lg:block">
-                    <button onclick="showModal('Buat Janji Online', 'Terima kasih atas minat Anda!<br><br>📅 Fitur booking online akan segera hadir.<br><br>Untuk saat ini, silakan hubungi kami di:<br>📞 (021) 1500-123<br><br>Tim kami siap melayani Anda.')" class="btn-premium bg-gradient-to-r from-emerald-500 to-green-600 text-white px-6 xl:px-8 py-2.5 xl:py-3 rounded-full font-bold text-sm shadow-xl hover:shadow-2xl transition-all relative overflow-hidden cursor-pointer">
-                        <span class="relative z-10">Buat Janji Online</span>
-                    </button>
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8" id="skills-container">
+                    <!-- Keahlian diisi via JS -->
                 </div>
 
-                <button id="menu-open" class="lg:hidden p-2 text-emerald-600 hover:text-emerald-700 active:scale-95 transition-all">
-                    <i data-lucide="menu" class="w-6 h-6 md:w-7 md:h-7"></i>
-                </button>
-            </div>
-        </div>
-    </header>
-
-    <!-- Mobile Menu Overlay -->
-    <div id="mobile-menu" class="fixed inset-0 bg-gradient-to-br from-primary via-primary to-secondary z-[120] flex flex-col items-center justify-center lg:hidden">
-        <div class="absolute inset-0 bg-[url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNjAiIGhlaWdodD0iNjAiIHZpZXdCb3g9IjAgMCA2MCA2MCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48ZyBmaWxsPSJub25lIiBmaWxsLXJ1bGU9ImV2ZW5vZGQiPjxwYXRoIGQ9Ik0zNiAxOGMzLjMxNCAwIDYgMi42ODYgNiA2cy0yLjY4NiA2LTYgNi02LTIuNjg2LTYtNiAyLjY4Ni02IDYtNnoiIHN0cm9rZT0iI2ZmZiIgc3Ryb2tlLW9wYWNpdHk9Ii4wNSIvPjwvZz48L3N2Zz4=')] opacity-30"></div>
-        <button id="menu-close" class="absolute top-6 right-6 md:top-8 md:right-8 text-white active:scale-90 transition-transform">
-            <i data-lucide="x" class="w-9 h-9 md:w-10 md:h-10"></i>
-        </button>
-        <nav class="flex flex-col items-center gap-6 md:gap-8 relative z-10">
-            <a href="#hero" class="mobile-link text-3xl md:text-4xl font-bold text-white hover:scale-110 transition-transform active:scale-95">Beranda</a>
-            <a href="#tentang" class="mobile-link text-3xl md:text-4xl font-bold text-white/80 hover:text-white hover:scale-110 transition-all active:scale-95">Tentang</a>
-            <a href="#layanan" class="mobile-link text-3xl md:text-4xl font-bold text-white/80 hover:text-white hover:scale-110 transition-all active:scale-95">Layanan</a>
-            <a href="#dokter" class="mobile-link text-3xl md:text-4xl font-bold text-white/80 hover:text-white hover:scale-110 transition-all active:scale-95">Dokter</a>
-            <button onclick="showModal('Buat Janji', 'Terima kasih atas minat Anda!<br><br>📅 Fitur booking online akan segera hadir.<br><br>Untuk saat ini, silakan hubungi kami di:<br>📞 (021) 1500-123<br><br>Tim kami siap melayani Anda.')" class="mt-6 btn-premium text-white px-10 py-4 rounded-full font-bold text-lg shadow-2xl bg-gradient-to-r from-emerald-500 to-green-600 cursor-pointer">
-                Buat Janji
-            </button>
-        </nav>
-    </div>
-
-    <!-- Hero Section -->
-    <section id="hero" class="relative min-h-screen flex items-center bg-gradient-to-br from-emerald-600 via-green-600 to-teal-700 overflow-hidden pt-32 md:pt-36 pb-20 md:pb-24">
-        <img src="https://images.unsplash.com/photo-1519494026892-80bbd2d6fd0d?auto=format&fit=crop&w=1920&q=80" class="absolute inset-0 w-full h-full object-cover opacity-15 mix-blend-overlay" alt="Rumah Sakit Modern">
-        <div class="absolute inset-0 bg-gradient-to-br from-emerald-900/60 via-green-800/50 to-teal-900/60"></div>
-        
-        <!-- Premium Floating Elements -->
-        <div class="absolute top-32 left-10 w-32 h-32 md:w-96 md:h-96 bg-emerald-400/10 rounded-full blur-3xl animate-float"></div>
-        <div class="absolute bottom-20 right-10 w-40 h-40 md:w-96 md:h-96 bg-teal-400/10 rounded-full blur-3xl animate-float" style="animation-delay: 1s;"></div>
-        <div class="absolute top-1/2 left-1/2 w-64 h-64 md:w-[600px] md:h-[600px] bg-green-400/5 rounded-full blur-3xl animate-float" style="animation-delay: 2s;"></div>
-        
-        <!-- Cartoon Doctor Illustration -->
-        <div class="absolute bottom-10 right-10 w-32 h-32 md:w-48 md:h-48 opacity-20 animate-float hidden lg:block" style="animation-delay: 0.5s;">
-            <svg viewBox="0 0 200 200" class="w-full h-full">
-                <circle cx="100" cy="80" r="40" fill="#fff" opacity="0.8"/>
-                <circle cx="90" cy="75" r="5" fill="#10b981"/>
-                <circle cx="110" cy="75" r="5" fill="#10b981"/>
-                <path d="M 85 90 Q 100 100 115 90" stroke="#10b981" stroke-width="3" fill="none"/>
-                <rect x="70" y="120" width="60" height="60" rx="10" fill="#fff" opacity="0.8"/>
-                <path d="M 85 140 L 115 140 M 100 130 L 100 160" stroke="#10b981" stroke-width="4"/>
-            </svg>
-        </div>
-        
-        <div class="relative max-w-7xl mx-auto px-4 md:px-8 lg:px-12 w-full text-white py-8 md:py-12 z-10">
-            <div class="max-w-4xl">
-                <div class="flex items-center gap-2 mb-4 md:mb-6 animate-fade-in">
-                    <span class="w-2 h-2 md:w-3 md:h-3 bg-emerald-300 rounded-full animate-pulse shadow-lg shadow-emerald-300/50"></span>
-                    <span class="text-emerald-200 font-bold text-xs md:text-sm tracking-[0.3em] uppercase">Pelayanan Medis Terpadu</span>
-                </div>
-                <h1 class="hero-title font-serif text-4xl md:text-6xl lg:text-7xl xl:text-8xl font-bold mb-6 md:mb-8 leading-[1.1] animate-fade-in-up text-shadow-premium">
-                    Kesehatan Anda Adalah <span class="bg-gradient-to-r from-white via-emerald-100 to-teal-100 bg-clip-text text-transparent">Amanah Kami.</span>
-                </h1>
-                <p class="text-base md:text-xl text-emerald-50/95 mb-8 md:mb-12 max-w-2xl leading-relaxed animate-fade-in-up font-light" style="animation-delay: 0.2s;">
-                    Menyediakan perawatan medis tingkat dunia dengan teknologi mutakhir dan tim spesialis yang peduli pada kesembuhan total Anda.
-                </p>
-                <div class="flex flex-col sm:flex-row flex-wrap gap-3 md:gap-5 animate-fade-in-up" style="animation-delay: 0.4s;">
-                    <a href="#layanan" class="btn-premium bg-white text-emerald-600 px-8 md:px-10 py-4 md:py-5 rounded-2xl font-bold text-sm md:text-base shadow-2xl w-full sm:w-auto hover:scale-105 transition-all relative overflow-hidden text-center cursor-pointer">
-                        <span class="relative z-10">Eksplor Layanan Kami</span>
-                    </a>
-                    <a href="#tentang" class="glass-card-dark border-2 border-emerald-400/30 px-8 md:px-10 py-4 md:py-5 rounded-2xl font-bold text-sm md:text-base hover:border-emerald-400/60 hover:bg-white/10 transition-all w-full sm:w-auto active:scale-95 hover:shadow-xl hover:shadow-emerald-500/20 text-center cursor-pointer">
-                        Lihat Fasilitas
-                    </a>
-                </div>
-            </div>
-        </div>
-        
-        <!-- Scroll Indicator -->
-        <div class="absolute bottom-8 left-1/2 transform -translate-x-1/2 animate-bounce hidden md:block z-10">
-            <div class="w-6 h-10 border-2 border-white/50 rounded-full flex justify-center pt-2">
-                <div class="w-1 h-2 bg-white/70 rounded-full"></div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Statistik & Quick Info -->
-    <section class="relative -mt-12 md:-mt-20 z-20 px-4 md:px-6 max-w-7xl mx-auto">
-        <div class="grid grid-cols-2 lg:grid-cols-4 gap-3 md:gap-4">
-            <div class="glass-card p-6 md:p-8 rounded-2xl md:rounded-3xl shadow-2xl flex flex-col items-center text-center border-b-4 border-emerald-400 card-hover relative overflow-hidden group">
-                <div class="absolute inset-0 bg-gradient-to-br from-emerald-50/50 to-transparent opacity-0 group-hover:opacity-100 transition-opacity"></div>
-                <div class="text-3xl md:text-4xl font-black gradient-text mb-2 relative z-10 font-serif">150+</div>
-                <div class="text-gray-600 font-bold text-[10px] md:text-xs uppercase tracking-[0.2em] relative z-10">Dokter Spesialis</div>
-                <div class="absolute top-2 right-2 w-16 h-16 bg-emerald-100/30 rounded-full blur-2xl"></div>
-            </div>
-            <div class="glass-card p-6 md:p-8 rounded-2xl md:rounded-3xl shadow-2xl flex flex-col items-center text-center border-b-4 border-green-500 card-hover relative overflow-hidden group">
-                <div class="absolute inset-0 bg-gradient-to-br from-green-50/50 to-transparent opacity-0 group-hover:opacity-100 transition-opacity"></div>
-                <div class="text-3xl md:text-4xl font-black gradient-text mb-2 relative z-10 font-serif">25<sup class="text-xl">th</sup></div>
-                <div class="text-gray-600 font-bold text-[10px] md:text-xs uppercase tracking-[0.2em] relative z-10">Tahun Pengalaman</div>
-                <div class="absolute top-2 right-2 w-16 h-16 bg-green-100/30 rounded-full blur-2xl"></div>
-            </div>
-            <div class="glass-card p-6 md:p-8 rounded-2xl md:rounded-3xl shadow-2xl flex flex-col items-center text-center border-b-4 border-emerald-400 card-hover relative overflow-hidden group">
-                <div class="absolute inset-0 bg-gradient-to-br from-emerald-50/50 to-transparent opacity-0 group-hover:opacity-100 transition-opacity"></div>
-                <div class="text-3xl md:text-4xl font-black gradient-text mb-2 relative z-10 font-serif">50k+</div>
-                <div class="text-gray-600 font-bold text-[10px] md:text-xs uppercase tracking-[0.2em] relative z-10">Pasien Puas</div>
-                <div class="absolute top-2 right-2 w-16 h-16 bg-emerald-100/30 rounded-full blur-2xl"></div>
-            </div>
-            <div class="glass-card bg-gradient-to-br from-emerald-500 via-green-500 to-teal-600 p-6 md:p-8 rounded-2xl md:rounded-3xl shadow-2xl flex flex-col items-center text-center card-hover col-span-2 lg:col-span-1 relative overflow-hidden group">
-                <div class="absolute inset-0 bg-gradient-to-br from-white/10 to-transparent"></div>
-                <div class="text-3xl md:text-4xl font-black text-white mb-2 relative z-10 font-serif">24/7</div>
-                <div class="text-white/95 font-bold text-[10px] md:text-xs uppercase tracking-[0.2em] relative z-10">Layanan Darurat</div>
-                <div class="absolute -bottom-4 -right-4 w-24 h-24 bg-white/10 rounded-full blur-2xl"></div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Tentang Kami -->
-    <section id="tentang" class="py-16 md:py-32 bg-white">
-        <div class="max-w-7xl mx-auto px-4 md:px-8 lg:px-12 grid grid-cols-1 lg:grid-cols-2 gap-12 md:gap-24 items-center">
-            <div class="relative order-2 lg:order-1">
-                <div class="absolute -top-6 -left-6 md:-top-10 md:-left-10 w-32 h-32 md:w-40 md:h-40 bg-emerald-300/20 rounded-full blur-3xl"></div>
-                <img src="https://images.unsplash.com/photo-1516549655169-df83a0774514?auto=format&fit=crop&w=800&q=80" alt="Teknologi Medis" class="rounded-3xl md:rounded-[3rem] shadow-2xl relative z-10 w-full">
-                <div class="absolute -bottom-6 -right-6 md:-bottom-10 md:-right-10 glass-card p-6 md:p-10 rounded-2xl md:rounded-[2rem] shadow-2xl z-20 border border-emerald-100">
-                    <i data-lucide="award" class="text-emerald-500 w-10 h-10 md:w-12 md:h-12 mb-3 md:mb-4"></i>
-                    <p class="font-black gradient-text text-xl md:text-2xl">Akreditasi JCI</p>
-                    <p class="text-gray-600 text-xs md:text-sm font-bold">Standar Internasional</p>
-                </div>
-            </div>
-            <div class="order-1 lg:order-2">
-                <span class="text-emerald-600 font-black uppercase tracking-[0.25em] text-xs mb-3 md:mb-4 block">Siapa Kami</span>
-                <h2 class="section-title font-serif text-3xl md:text-5xl font-bold text-dark mb-6 md:mb-8 leading-tight premium-border inline-block">
-                    Berkomitmen Untuk <span class="gradient-text">Masa Depan</span> Kesehatan Anda.
-                </h2>
-                <p class="text-gray-600 text-base md:text-lg leading-relaxed mb-8 md:mb-10 font-light">
-                    Didirikan dengan visi untuk membawa teknologi medis tercanggih ke Indonesia, RS Medika Utama terus berinovasi dalam metode penyembuhan yang efisien dan manusiawi.
-                </p>
-                <div class="space-y-5 md:space-y-6">
-                    <div class="flex items-start gap-3 md:gap-4 card-hover p-5 md:p-6 rounded-2xl hover:bg-emerald-50/70 glass-card border border-emerald-100/50">
-                        <div class="w-12 h-12 md:w-14 md:h-14 bg-gradient-to-br from-emerald-100 to-green-100 rounded-2xl flex items-center justify-center text-emerald-600 shrink-0 shadow-lg relative overflow-hidden group">
-                            <div class="absolute inset-0 bg-gradient-to-br from-emerald-500 to-green-600 opacity-0 group-hover:opacity-100 transition-opacity"></div>
-                            <i data-lucide="check" class="w-6 h-6 md:w-7 md:h-7 relative z-10 group-hover:text-white transition-colors"></i>
+                <div class="glass-card mt-12 p-8 md:p-12 border-amber-600/10 relative overflow-hidden group">
+                    <div class="absolute top-0 right-0 w-64 h-64 bg-amber-600/5 blur-3xl rounded-full -mr-20 -mt-20"></div>
+                    <div class="relative z-10 grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
+                        <div class="space-y-6">
+                            <h3 class="text-2xl font-bold text-white">Metodologi Kerja</h3>
+                            <ul class="space-y-4">
+                                <li class="flex items-start gap-3">
+                                    <i class="fa-solid fa-check-circle text-amber-500 mt-1"></i>
+                                    <div>
+                                        <p class="text-white font-semibold">User-Centric Design</p>
+                                        <p class="text-sm text-stone-400">Setiap keputusan desain berawal dari kebutuhan pengguna akhir.</p>
+                                    </div>
+                                </li>
+                                <li class="flex items-start gap-3">
+                                    <i class="fa-solid fa-check-circle text-amber-500 mt-1"></i>
+                                    <div>
+                                        <p class="text-white font-semibold">Agile Development</p>
+                                        <p class="text-sm text-stone-400">Iterasi cepat dengan fokus pada kualitas dan pengiriman tepat waktu.</p>
+                                    </div>
+                                </li>
+                                <li class="flex items-start gap-3">
+                                    <i class="fa-solid fa-check-circle text-amber-500 mt-1"></i>
+                                    <div>
+                                        <p class="text-white font-semibold">Clean Code & Docs</p>
+                                        <p class="text-sm text-stone-400">Kode yang mudah dipelihara dan dokumentasi teknis yang komprehensif.</p>
+                                    </div>
+                                </li>
+                            </ul>
                         </div>
-                        <div>
-                            <p class="font-bold text-dark text-base md:text-lg mb-1">Pusat Diagnostik Digital</p>
-                            <p class="text-gray-600 text-sm md:text-base font-light">Hasil laboratorium dan pencitraan 50% lebih cepat dengan sistem AI terintegrasi.</p>
-                        </div>
-                    </div>
-                    <div class="flex items-start gap-3 md:gap-4 card-hover p-5 md:p-6 rounded-2xl hover:bg-emerald-50/70 glass-card border border-emerald-100/50">
-                        <div class="w-12 h-12 md:w-14 md:h-14 bg-gradient-to-br from-emerald-100 to-green-100 rounded-2xl flex items-center justify-center text-emerald-600 shrink-0 shadow-lg relative overflow-hidden group">
-                            <div class="absolute inset-0 bg-gradient-to-br from-emerald-500 to-green-600 opacity-0 group-hover:opacity-100 transition-opacity"></div>
-                            <i data-lucide="check" class="w-6 h-6 md:w-7 md:h-7 relative z-10 group-hover:text-white transition-colors"></i>
-                        </div>
-                        <div>
-                            <p class="font-bold text-dark text-base md:text-lg mb-1">Rawat Inap Eksklusif</p>
-                            <p class="text-gray-600 text-sm md:text-base font-light">Kamar perawatan dengan desain terapeutik untuk kenyamanan seperti di rumah.</p>
+                        <div class="bg-black/40 border border-white/5 p-6 rounded-2xl">
+                             <div class="flex items-center gap-4 mb-6">
+                                <div class="w-3 h-3 rounded-full bg-red-500/50"></div>
+                                <div class="w-3 h-3 rounded-full bg-amber-500/50"></div>
+                                <div class="w-3 h-3 rounded-full bg-green-500/50"></div>
+                             </div>
+                             <div class="space-y-3 font-mono text-xs text-stone-500">
+                                <p><span class="text-amber-500">const</span> skills = [</p>
+                                <p class="pl-4">"Continuous Integration",</p>
+                                <p class="pl-4">"Cloud Architecture",</p>
+                                <p class="pl-4">"Performance Optimization",</p>
+                                <p class="pl-4">"Accessibility Standard"</p>
+                                <p>];</p>
+                                <p><span class="text-amber-500">if</span> (project.needsSuccess) {</p>
+                                <p class="pl-4">applyMastery(skills);</p>
+                                <p>}</p>
+                             </div>
                         </div>
                     </div>
                 </div>
             </div>
-        </div>
-    </section>
 
-    <!-- Layanan Kami -->
-    <section id="layanan" class="py-16 md:py-32 bg-gradient-to-br from-emerald-900 via-green-900 to-teal-900 relative overflow-hidden">
-        <!-- Background Pattern -->
-        <div class="absolute inset-0 bg-[url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNjAiIGhlaWdodD0iNjAiIHZpZXdCb3g9IjAgMCA2MCA2MCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48ZyBmaWxsPSJub25lIiBmaWxsLXJ1bGU9ImV2ZW5vZGQiPjxwYXRoIGQ9Ik0zNiAxOGMzLjMxNCAwIDYgMi42ODYgNiA2cy0yLjY4NiA2LTYgNi02LTIuNjg2LTYtNiAyLjY4Ni02IDYtNnoiIHN0cm9rZT0iI2ZmZiIgc3Ryb2tlLW9wYWNpdHk9Ii4wMyIvPjwvZz48L3N2Zz4=')] opacity-40"></div>
-        
-        <div class="max-w-7xl mx-auto px-4 md:px-8 lg:px-12 relative z-10">
-            <div class="text-center mb-12 md:mb-24">
-                <span class="text-emerald-300 font-black uppercase tracking-[0.3em] text-xs mb-3 md:mb-4 block">Spesialisasi</span>
-                <h2 class="section-title font-serif text-3xl md:text-5xl font-bold text-white premium-border inline-block">Layanan Unggulan Kami</h2>
-            </div>
-            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-8">
-                <!-- Card 1 -->
-                <div class="group bg-white/5 backdrop-blur-sm border border-white/10 p-8 md:p-12 rounded-3xl md:rounded-[2.5rem] hover:bg-white hover:shadow-2xl transition-all duration-500 card-hover">
-                    <div class="w-14 h-14 md:w-16 md:h-16 bg-gradient-to-br from-emerald-400/20 to-green-400/20 rounded-2xl flex items-center justify-center text-emerald-300 mb-6 md:mb-8 group-hover:bg-gradient-to-br group-hover:from-emerald-500 group-hover:to-green-600 group-hover:text-white transition-all group-hover:scale-110">
-                        <i data-lucide="activity" class="w-7 h-7 md:w-8 md:h-8"></i>
+            <!-- KOLEKSI PAGE -->
+            <div id="page-koleksi" class="page space-y-16">
+                <div class="flex flex-col md:flex-row md:items-center justify-between gap-6">
+                    <h2 class="text-4xl font-bold hero-title">Seluruh Koleksi</h2>
+                    <div class="flex gap-2 overflow-x-auto pb-2 md:pb-0">
+                        <button class="skill-badge bg-amber-600/20 text-amber-500 border-amber-600/30">Semua</button>
+                        <button class="skill-badge">Web</button>
+                        <button class="skill-badge">Mobile</button>
+                        <button class="skill-badge">Design</button>
                     </div>
-                    <h3 class="text-xl md:text-2xl font-bold text-white group-hover:text-emerald-700 mb-3 md:mb-4">Pusat Jantung</h3>
-                    <p class="text-gray-400 group-hover:text-gray-600 mb-6 md:mb-8 leading-relaxed text-sm md:text-base">Layanan kardiovaskular terpadu dengan teknologi kateterisasi dan bedah jantung terkini.</p>
-                    <a href="#" class="text-emerald-300 font-bold inline-flex items-center gap-2 group-hover:text-emerald-600 text-sm md:text-base active:scale-95 transition-transform">
-                        Eksplor Layanan <i data-lucide="chevron-right" class="w-4 h-4"></i>
-                    </a>
                 </div>
-                <!-- Card 2 -->
-                <div class="group bg-white/5 backdrop-blur-sm border border-white/10 p-8 md:p-12 rounded-3xl md:rounded-[2.5rem] hover:bg-white hover:shadow-2xl transition-all duration-500 card-hover">
-                    <div class="w-14 h-14 md:w-16 md:h-16 bg-gradient-to-br from-emerald-400/20 to-green-400/20 rounded-2xl flex items-center justify-center text-emerald-300 mb-6 md:mb-8 group-hover:bg-gradient-to-br group-hover:from-emerald-500 group-hover:to-green-600 group-hover:text-white transition-all group-hover:scale-110">
-                        <i data-lucide="baby" class="w-7 h-7 md:w-8 md:h-8"></i>
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8" id="full-koleksi-grid">
+                    <!-- Semua proyek diisi via JS -->
+                </div>
+            </div>
+
+            <!-- PROFIL PAGE -->
+            <div id="page-profil" class="page max-w-4xl mx-auto space-y-16">
+                <div class="flex flex-col md:flex-row gap-12 items-start">
+                    <div class="w-full md:w-1/3">
+                        <img class="w-full rounded-3xl object-cover ring-1 ring-white/10" src="https://avatars.githubusercontent.com/u/73228642?v=4" alt="Profil Lengkap">
+                        <div class="mt-6 p-6 glass-card space-y-4">
+                            <h4 class="text-sm font-bold text-amber-500 uppercase">Kontak</h4>
+                            <p class="text-xs text-stone-400">Email: Antonockr1@gmail.com</p>
+                            <p class="text-xs text-stone-400">Lokasi: Bekasi, Indonesia</p>
+                        </div>
                     </div>
-                    <h3 class="text-xl md:text-2xl font-bold text-white group-hover:text-emerald-700 mb-3 md:mb-4">Ibu & Anak</h3>
-                    <p class="text-gray-400 group-hover:text-gray-600 mb-6 md:mb-8 leading-relaxed text-sm md:text-base">Perawatan holistik mulai dari masa kehamilan, persalinan, hingga tumbuh kembang buah hati.</p>
-                    <a href="#" class="text-emerald-300 font-bold inline-flex items-center gap-2 group-hover:text-emerald-600 text-sm md:text-base active:scale-95 transition-transform">
-                        Eksplor Layanan <i data-lucide="chevron-right" class="w-4 h-4"></i>
-                    </a>
-                </div>
-                <!-- Card 3 -->
-                <div class="group bg-white/5 backdrop-blur-sm border border-white/10 p-8 md:p-12 rounded-3xl md:rounded-[2.5rem] hover:bg-white hover:shadow-2xl transition-all duration-500 card-hover md:col-span-2 lg:col-span-1">
-                    <div class="w-14 h-14 md:w-16 md:h-16 bg-gradient-to-br from-emerald-400/20 to-green-400/20 rounded-2xl flex items-center justify-center text-emerald-300 mb-6 md:mb-8 group-hover:bg-gradient-to-br group-hover:from-emerald-500 group-hover:to-green-600 group-hover:text-white transition-all group-hover:scale-110">
-                        <i data-lucide="brain" class="w-7 h-7 md:w-8 md:h-8"></i>
+                    <div class="w-full md:w-2/3 space-y-8">
+                        <h2 class="text-5xl font-bold text-white">Antono</h2>
+                        <h3 class="text-xl text-amber-500 font-medium">Senior Fullstack Developer & Designer</h3>
+                        <div class="space-y-6 text-stone-400 leading-relaxed">
+                            <p>Dengan pengalaman lebih dari 6 tahun di industri kreatif digital, saya fokus pada pembuatan antarmuka yang intuitif dan arsitektur backend yang tangguh.</p>
+                            <p>Filosofi desain saya sederhana: fungsionalitas di atas segalanya, namun estetika adalah jiwa yang membuat pengguna merasa betah. Seperti daun yang jatuh, teknologi harus bergerak dengan ritme yang alami dan tidak mengganggu.</p>
+                        </div>
+
+                        </div>
                     </div>
-                    <h3 class="text-xl md:text-2xl font-bold text-white group-hover:text-emerald-700 mb-3 md:mb-4">Bedah Saraf</h3>
-                    <p class="text-gray-400 group-hover:text-gray-600 mb-6 md:mb-8 leading-relaxed text-sm md:text-base">Tim ahli bedah saraf yang didukung oleh robotik untuk tingkat presisi dan keamanan tinggi.</p>
-                    <a href="#" class="text-emerald-300 font-bold inline-flex items-center gap-2 group-hover:text-emerald-600 text-sm md:text-base active:scale-95 transition-transform">
-                        Eksplor Layanan <i data-lucide="chevron-right" class="w-4 h-4"></i>
-                    </a>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Dokter Spesialis -->
-    <section id="dokter" class="py-16 md:py-32 bg-gradient-to-br from-emerald-50 via-green-50/30 to-teal-50/30">
-        <div class="max-w-7xl mx-auto px-4 md:px-8 lg:px-12">
-
-            <!-- Header -->
-            <div class="flex flex-col md:flex-row justify-between items-start md:items-end mb-8 md:mb-12 gap-4">
-                <div>
-                    <span class="text-emerald-600 font-black uppercase tracking-[0.25em] text-xs mb-3 block">Tim Medis</span>
-                    <h2 class="font-serif text-3xl md:text-5xl font-bold text-dark">Konsultan & Dokter Spesialis</h2>
-                </div>
-                <div class="text-sm text-gray-500 font-medium" id="dokter-count">Menampilkan 8 dokter</div>
-            </div>
-
-            <!-- Search & Filter Bar -->
-            <div class="bg-white rounded-3xl shadow-xl border border-emerald-100 p-4 md:p-6 mb-10 md:mb-14">
-                <div class="flex flex-col md:flex-row gap-3 md:gap-4">
-                    <!-- Search Input -->
-                    <div class="relative flex-1">
-                        <i data-lucide="search" class="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-emerald-400 pointer-events-none"></i>
-                        <input id="search-input" type="text" placeholder="Cari nama dokter atau spesialisasi..."
-                            class="w-full pl-12 pr-4 py-3.5 rounded-2xl border-2 border-emerald-100 focus:border-emerald-400 focus:outline-none text-sm font-medium text-gray-700 placeholder-gray-400 transition-colors bg-emerald-50/40">
-                    </div>
-                    <!-- Filter Spesialisasi -->
-                    <div class="relative">
-                        <i data-lucide="filter" class="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-emerald-400 pointer-events-none"></i>
-                        <select id="filter-spesialis"
-                            class="pl-10 pr-10 py-3.5 rounded-2xl border-2 border-emerald-100 focus:border-emerald-400 focus:outline-none text-sm font-medium text-gray-700 bg-emerald-50/40 appearance-none cursor-pointer transition-colors w-full md:w-56">
-                            <option value="">Semua Spesialisasi</option>
-                            <option value="jantung">Spesialis Jantung</option>
-                            <option value="penyakit dalam">Penyakit Dalam</option>
-                            <option value="kebidanan">Kebidanan & Kandungan</option>
-                            <option value="anak">Spesialis Anak</option>
-                            <option value="saraf">Bedah Saraf</option>
-                            <option value="ortopedi">Ortopedi</option>
-                            <option value="mata">Spesialis Mata</option>
-                            <option value="kulit">Kulit & Kelamin</option>
-                        </select>
-                        <i data-lucide="chevron-down" class="absolute right-3 top-1/2 -translate-y-1/2 w-4 h-4 text-emerald-400 pointer-events-none"></i>
-                    </div>
-                    <!-- Filter Hari -->
-                    <div class="relative">
-                        <i data-lucide="calendar" class="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-emerald-400 pointer-events-none"></i>
-                        <select id="filter-hari"
-                            class="pl-10 pr-10 py-3.5 rounded-2xl border-2 border-emerald-100 focus:border-emerald-400 focus:outline-none text-sm font-medium text-gray-700 bg-emerald-50/40 appearance-none cursor-pointer transition-colors w-full md:w-44">
-                            <option value="">Semua Hari</option>
-                            <option value="senin">Senin</option>
-                            <option value="selasa">Selasa</option>
-                            <option value="rabu">Rabu</option>
-                            <option value="kamis">Kamis</option>
-                            <option value="jumat">Jumat</option>
-                            <option value="sabtu">Sabtu</option>
-                        </select>
-                        <i data-lucide="chevron-down" class="absolute right-3 top-1/2 -translate-y-1/2 w-4 h-4 text-emerald-400 pointer-events-none"></i>
-                    </div>
-                    <!-- Reset -->
-                    <button id="reset-filter" onclick="resetFilter()"
-                        class="flex items-center justify-center gap-2 px-5 py-3.5 rounded-2xl border-2 border-emerald-200 text-emerald-600 font-semibold text-sm hover:bg-emerald-50 transition-colors whitespace-nowrap">
-                        <i data-lucide="rotate-ccw" class="w-4 h-4"></i> Reset
-                    </button>
                 </div>
             </div>
 
-            <!-- Grid Dokter -->
-            <div id="dokter-grid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 md:gap-6">
-
-                <!-- Data dokter di-render oleh JS -->
-
-            </div>
-
-            <!-- Empty State -->
-            <div id="empty-state" class="hidden text-center py-20">
-                <div class="w-20 h-20 bg-emerald-100 rounded-full flex items-center justify-center mx-auto mb-5">
-                    <i data-lucide="search-x" class="w-9 h-9 text-emerald-400"></i>
-                </div>
-                <h3 class="text-xl font-bold text-dark mb-2">Dokter tidak ditemukan</h3>
-                <p class="text-gray-500 text-sm mb-6">Coba ubah kata kunci atau filter pencarian Anda.</p>
-                <button onclick="resetFilter()" class="btn-primary px-6 py-3 rounded-xl text-sm font-bold text-white">
-                    Tampilkan Semua Dokter
-                </button>
-            </div>
-
-        </div>
-    </section>
-
-    <!-- CTA & Footer -->
-    <section class="py-16 md:py-24 bg-gradient-to-br from-emerald-500 via-green-600 to-teal-600 text-white text-center px-4 md:px-6 relative overflow-hidden">
-        <div class="absolute inset-0 bg-[url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNjAiIGhlaWdodD0iNjAiIHZpZXdCb3g9IjAgMCA2MCA2MCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48ZyBmaWxsPSJub25lIiBmaWxsLXJ1bGU9ImV2ZW5vZGQiPjxwYXRoIGQ9Ik0zNiAxOGMzLjMxNCAwIDYgMi42ODYgNiA2cy0yLjY4NiA2LTYgNi02LTIuNjg2LTYtNiAyLjY4Ni02IDYtNnoiIHN0cm9rZT0iI2ZmZiIgc3Ryb2tlLW9wYWNpdHk9Ii4wNSIvPjwvZz48L3N2Zz4=')] opacity-30"></div>
-        <div class="max-w-4xl mx-auto relative z-10">
-            <h2 class="text-3xl md:text-5xl lg:text-6xl font-bold mb-6 md:mb-8 leading-tight">Jangan Tunda Kesehatan Anda.</h2>
-            <p class="text-base md:text-xl text-emerald-50 mb-8 md:mb-12 leading-relaxed">Konsultasikan keluhan medis Anda dengan tim spesialis kami hari ini juga secara online maupun tatap muka.</p>
-            <button onclick="showModal('Buat Janji Sekarang', 'Terima kasih atas kepercayaan Anda!<br><br>📅 Fitur booking online akan segera hadir.<br><br>Untuk konsultasi dan membuat janji, silakan hubungi:<br>📞 (021) 1500-123<br><br>Kami siap melayani Anda dengan sepenuh hati.')" class="bg-white text-emerald-600 px-10 md:px-12 py-5 md:py-6 rounded-2xl font-black text-lg md:text-xl hover:scale-105 transition-all shadow-2xl active:scale-100 w-full sm:w-auto cursor-pointer">
-                Buat Janji Sekarang
-            </button>
-        </div>
-    </section>
-
-    <footer class="bg-emerald-950 text-gray-400 py-12 md:py-20 px-4 md:px-8 lg:px-12 border-t border-emerald-900/50">
-        <div class="max-w-7xl mx-auto grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-10 md:gap-16">
-            <div class="sm:col-span-2">
-                <div class="flex items-center gap-3 mb-6 md:mb-8">
-                    <div class="w-10 h-10 bg-gradient-to-br from-emerald-500 to-green-600 rounded-xl flex items-center justify-center">
-                        <i data-lucide="heart-pulse" class="w-6 h-6 text-white"></i>
-                    </div>
-                    <span class="text-xl md:text-2xl font-bold text-white">Medika<span class="font-light gradient-text">Utama</span></span>
-                </div>
-                <p class="text-base md:text-lg leading-relaxed max-w-md mb-6">Menyediakan layanan kesehatan prima sejak 1998 dengan integritas dan kasih sayang.</p>
-            </div>
-            <div>
-                <h5 class="text-white font-bold text-base md:text-lg mb-6 md:mb-8 uppercase tracking-widest">Kontak</h5>
-                <ul class="space-y-3 md:space-y-4 font-bold text-sm md:text-base">
-                    <li class="flex items-center gap-2">
-                        <i data-lucide="phone" class="w-4 h-4 text-emerald-400"></i>
-                        (021) 1500-123
-                    </li>
-                    <li class="flex items-center gap-2">
-                        <i data-lucide="mail" class="w-4 h-4 text-emerald-400"></i>
-                        info@medikautama.co.id
-                    </li>
-                    <li class="flex items-center gap-2">
-                        <i data-lucide="map-pin" class="w-4 h-4 text-emerald-400"></i>
-                        Jakarta Selatan
-                    </li>
-                </ul>
-            </div>
-            <div>
-                <h5 class="text-white font-bold text-base md:text-lg mb-6 md:mb-8 uppercase tracking-widest">Sosial</h5>
-                <div class="flex gap-3 md:gap-4">
-                    <a href="#" class="w-12 h-12 bg-white/5 rounded-2xl flex items-center justify-center hover:bg-gradient-to-br hover:from-emerald-500 hover:to-green-600 transition-all card-hover active:scale-95">
-                        <i data-lucide="instagram" class="w-5 h-5"></i>
-                    </a>
-                    <a href="#" class="w-12 h-12 bg-white/5 rounded-2xl flex items-center justify-center hover:bg-gradient-to-br hover:from-emerald-500 hover:to-green-600 transition-all card-hover active:scale-95">
-                        <i data-lucide="facebook" class="w-5 h-5"></i>
-                    </a>
-                    <a href="#" class="w-12 h-12 bg-white/5 rounded-2xl flex items-center justify-center hover:bg-gradient-to-br hover:from-emerald-500 hover:to-green-600 transition-all card-hover active:scale-95">
-                        <i data-lucide="youtube" class="w-5 h-5"></i>
-                    </a>
-                </div>
-            </div>
-        </div>
-        <div class="max-w-7xl mx-auto mt-12 md:mt-20 pt-6 md:pt-8 border-t border-emerald-900/50 text-center text-xs md:text-sm font-bold uppercase tracking-[0.15em] md:tracking-[0.2em]">
-            &copy; 2024 RS Medika Utama. Merawat Dengan Hati.
-        </div>
-    </footer>
-
-    <!-- Custom Modal -->
-    <div id="customModal" class="modal">
-        <div class="modal-content relative">
-            <button class="modal-close" onclick="closeModal()">
-                <i data-lucide="x" class="w-3 h-3 text-emerald-600"></i>
-            </button>
-            <div class="modal-header">
-                <div class="modal-icon">
-                    <i data-lucide="calendar-check" class="w-4 h-4 text-white"></i>
-                </div>
-                <div>
-                    <h3 id="modalTitle" class="text-sm font-bold text-emerald-700 leading-tight pr-5"></h3>
-                    <p class="text-xs text-gray-500">RS Medika Utama</p>
-                </div>
-            </div>
-            <div id="modalBody" class="text-gray-700 text-xs leading-relaxed mb-3"></div>
-            <div class="flex gap-2">
-                <button onclick="closeModal()" class="flex-1 bg-gradient-to-r from-emerald-500 to-green-600 text-white px-3 py-2 rounded-lg font-bold text-xs hover:shadow-md transition-all">
-                    Tutup
-                </button>
-                <a href="tel:02115000123" class="flex-1 bg-white border border-emerald-500 text-emerald-600 px-3 py-2 rounded-lg font-bold text-xs hover:bg-emerald-50 transition-all text-center">
-                    Hubungi
-                </a>
-            </div>
+            <footer class="text-center pt-32 pb-12 border-t border-white/5 mt-32">
+                <p class="text-[10px] text-stone-500 uppercase tracking-[0.5em]">&copy; 2024 Antono &mdash; Estetika Musim Gugur</p>
+            </footer>
         </div>
     </div>
 
     <script>
-        lucide.createIcons();
+        // Data Proyek
+        const projects = [
+            { id: 1, title: "Web portofolio", tag: "DASHBOARD", desc: "Sistem desain berbasis komponen alam yang sangat responsif dan minimalis.", img: "https://69eeba9cabe5326bdb41b94e.imgix.net/website/portofolio.png?auto=format&fit=crop&w=1200&q=80" },
+            { id: 2, title: "TV Online with API Engine", tag: "WEB3", desc: "Mesin API RESTful berperforma tinggi dengan manajemen cache cerdas.", img: "https://69eeba9cabe5326bdb41b94e.imgix.net/website/tvonline.png?auto=format&fit=crop&w=1200&q=80" },
+            { id: 3, title: "Portofolio website", tag: "WEB3", desc: "Dasbord website portofolio dengan UI yang profesional.", img: "https://69eeba9cabe5326bdb41b94e.imgix.net/website/portofolioAntono.png?auto=format&fit=crop&w=1200&q=80" },
+            { id: 4, title: "Alquran Digital With AI", tag: "MOBILE", desc: "Aplikasi ALQURAN mobile lintas Menggunakan API AI.", img: "https://69eeba9cabe5326bdb41b94e.imgix.net/website/AlquranDigital.png?auto=format&fit=crop&w=1200&q=80" },
+            { id: 5, title: "SCENERY", tag: "DASHBOARD", desc: "Anime scenery.", img: "https://69eeba9cabe5326bdb41b94e.imgix.net/website/AnimeScenery.png?auto=format&fit=crop&w=1200&q=80" },
+            { id: 6, title: "Auto Content Generator", tag: "AI", desc: "Auto content Generator with AI for Social Media Content.", img: "https://69eeba9cabe5326bdb41b94e.imgix.net/website/acg.png?auto=format&fit=crop&w=1200&q=80" }
+        ];
 
-        // ── DATA DOKTER ──────────────────────────────────────────────
-        const dataDokter = [
-            {
-                nama: 'Dr. Sarah Wijaya, Sp.JP',
-                spesialis: 'Spesialis Jantung',
-                tag: 'jantung',
-                pengalaman: '15 tahun',
-                lulusan: 'Universitas Indonesia',
-                jadwal: ['senin','selasa','rabu','kamis','jumat'],
-                jadwalTeks: 'Senin–Jumat, 09:00–15:00',
-                keahlian: ['Kateterisasi Jantung','Bedah Jantung Minimal Invasif','Perawatan Gagal Jantung'],
-                foto: 'https://images.unsplash.com/photo-1559839734-2b71ea197ec2?auto=format&fit=crop&w=600&q=80',
-                tersedia: true
+        // Data Keahlian Terupdate
+        const skills = [
+            { 
+                name: "Frontend Mastery", 
+                icon: "fa-solid fa-code", 
+                tech: ["React.js", "Next.js", "Vue.js", "GSAP"], 
+                desc: "Membangun antarmuka yang cair dengan fokus pada performa runtime dan pengalaman pengguna yang seamless." 
             },
-            {
-                nama: 'Dr. Hendra Gunawan, Sp.PD',
-                spesialis: 'Penyakit Dalam',
-                tag: 'penyakit dalam',
-                pengalaman: '12 tahun',
-                lulusan: 'Universitas Gadjah Mada',
-                jadwal: ['senin','selasa','rabu','kamis','jumat','sabtu'],
-                jadwalTeks: 'Senin–Sabtu, 10:00–16:00',
-                keahlian: ['Diabetes & Metabolik','Hipertensi','Penyakit Ginjal'],
-                foto: 'https://images.unsplash.com/photo-1622253692010-333f2da6031d?auto=format&fit=crop&w=600&q=80',
-                tersedia: true
+            { 
+                name: "Backend Architecture", 
+                icon: "fa-solid fa-server", 
+                tech: ["Node.js", "Golang", "PostgreSQL", "Redis"], 
+                desc: "Merancang sistem terdistribusi yang tangguh menghadapi beban tinggi dan menjaga integritas data." 
             },
-            {
-                nama: 'Dr. Anita Lestari, Sp.OG',
-                spesialis: 'Kebidanan & Kandungan',
-                tag: 'kebidanan',
-                pengalaman: '10 tahun',
-                lulusan: 'Universitas Airlangga',
-                jadwal: ['senin','selasa','rabu','kamis','jumat'],
-                jadwalTeks: 'Senin–Jumat, 08:00–14:00',
-                keahlian: ['Kehamilan & Persalinan','Kesehatan Reproduksi','USG 4D'],
-                foto: 'https://images.unsplash.com/photo-1594824476967-48c8b964273f?auto=format&fit=crop&w=600&q=80',
-                tersedia: true
+            { 
+                name: "Creative Design", 
+                icon: "fa-solid fa-bezier-curve", 
+                tech: ["Figma", "Framer", "Spline 3D", "After Effects"], 
+                desc: "Menerjemahkan konsep abstrak menjadi visual yang fungsional dan estetis sesuai brand identity." 
             },
-            {
-                nama: 'Dr. Budi Santoso, Sp.A',
-                spesialis: 'Spesialis Anak',
-                tag: 'anak',
-                pengalaman: '8 tahun',
-                lulusan: 'Universitas Padjadjaran',
-                jadwal: ['senin','selasa','rabu','kamis','jumat','sabtu'],
-                jadwalTeks: 'Senin–Sabtu, 09:00–15:00',
-                keahlian: ['Tumbuh Kembang Anak','Imunisasi Lengkap','Penyakit Infeksi Anak'],
-                foto: 'https://images.unsplash.com/photo-1612349317150-e413f6a5b16d?auto=format&fit=crop&w=600&q=80',
-                tersedia: true
+            { 
+                name: "Mobile Ecosystem", 
+                icon: "fa-solid fa-mobile-screen-button", 
+                tech: ["React Native", "Flutter", "Swift UI"], 
+                desc: "Pengembangan aplikasi native dan hybrid dengan fokus pada efisiensi daya dan UI yang adaptif." 
             },
-            {
-                nama: 'Dr. Rizky Pratama, Sp.BS',
-                spesialis: 'Bedah Saraf',
-                tag: 'saraf',
-                pengalaman: '14 tahun',
-                lulusan: 'Universitas Indonesia',
-                jadwal: ['senin','rabu','jumat'],
-                jadwalTeks: 'Senin, Rabu, Jumat, 13:00–18:00',
-                keahlian: ['Bedah Tumor Otak','Operasi Tulang Belakang','Neuronavigation'],
-                foto: 'https://images.unsplash.com/photo-1537368910025-700350fe46c7?auto=format&fit=crop&w=600&q=80',
-                tersedia: true
+            { 
+                name: "DevOps & Cloud", 
+                icon: "fa-solid fa-cloud-arrow-up", 
+                tech: ["Docker", "Kubernetes", "AWS", "CI/CD"], 
+                desc: "Otomatisasi deployment dan manajemen infrastruktur awan untuk skalabilitas yang fleksibel." 
             },
-            {
-                nama: 'Dr. Maya Kusuma, Sp.OT',
-                spesialis: 'Ortopedi',
-                tag: 'ortopedi',
-                pengalaman: '11 tahun',
-                lulusan: 'Universitas Diponegoro',
-                jadwal: ['selasa','kamis','sabtu'],
-                jadwalTeks: 'Selasa, Kamis, Sabtu, 08:00–13:00',
-                keahlian: ['Penggantian Sendi','Bedah Tulang','Cedera Olahraga'],
-                foto: 'https://images.unsplash.com/photo-1651008376811-b90baee60c1f?auto=format&fit=crop&w=600&q=80',
-                tersedia: false
-            },
-            {
-                nama: 'Dr. Farhan Malik, Sp.M',
-                spesialis: 'Spesialis Mata',
-                tag: 'mata',
-                pengalaman: '9 tahun',
-                lulusan: 'Universitas Brawijaya',
-                jadwal: ['senin','selasa','rabu','kamis'],
-                jadwalTeks: 'Senin–Kamis, 10:00–15:00',
-                keahlian: ['Operasi Katarak','LASIK','Retina & Glaukoma'],
-                foto: 'https://images.unsplash.com/photo-1582750433449-648ed127bb54?auto=format&fit=crop&w=600&q=80',
-                tersedia: true
-            },
-            {
-                nama: 'Dr. Dewi Rahayu, Sp.KK',
-                spesialis: 'Kulit & Kelamin',
-                tag: 'kulit',
-                pengalaman: '7 tahun',
-                lulusan: 'Universitas Hasanuddin',
-                jadwal: ['rabu','kamis','jumat','sabtu'],
-                jadwalTeks: 'Rabu–Sabtu, 11:00–17:00',
-                keahlian: ['Dermatologi Estetik','Penyakit Kulit','Laser Therapy'],
-                foto: 'https://images.unsplash.com/photo-1614608682850-e0d6ed316d47?auto=format&fit=crop&w=600&q=80',
-                tersedia: true
+            { 
+                name: "Blockchain & Web3", 
+                icon: "fa-solid fa-link", 
+                tech: ["Solidity", "Ethers.js", "Smart Contracts"], 
+                desc: "Eksplorasi ekonomi digital baru melalui teknologi desentralisasi yang aman dan transparan." 
             }
         ];
 
-        // ── RENDER DOKTER ────────────────────────────────────────────
-        function highlight(text, query) {
-            if (!query) return text;
-            const safe = query.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
-            return text.replace(new RegExp(`(${safe})`, 'gi'),
-                '<mark>$1</mark>');
-        }
+        // --- CAROUSEL LOGIC ---
+        const carousel = document.getElementById('project-carousel');
+        let slideInterval;
 
-        function renderDokter(list, query = '') {
-            const grid  = document.getElementById('dokter-grid');
-            const empty = document.getElementById('empty-state');
-            const count = document.getElementById('dokter-count');
-
-            if (list.length === 0) {
-                grid.innerHTML = '';
-                empty.classList.remove('hidden');
-                count.textContent = '0 dokter ditemukan';
-                return;
-            }
-
-            empty.classList.add('hidden');
-            count.textContent = `Menampilkan ${list.length} dokter`;
-
-            grid.innerHTML = list.map((d, i) => {
-                const badgeClass = d.tersedia ? 'doctor-badge-available' : 'doctor-badge-unavailable';
-                const dotClass   = d.tersedia ? 'bg-white animate-pulse' : 'bg-white/60';
-                const badgeLabel = d.tersedia ? 'Tersedia' : 'Penuh';
-                // Store index in dataDokter for safe onclick
-                const idx = dataDokter.indexOf(d);
-                return `
-                <div class="group bg-white rounded-3xl shadow-lg border border-emerald-100/60 overflow-hidden
-                            transition-all duration-300 hover:-translate-y-2 hover:shadow-2xl hover:shadow-emerald-100/60
-                            cursor-pointer animate-card"
-                     style="animation-delay:${i * 60}ms"
-                     onclick="showDokterModal(${idx})">
-                    <div class="relative aspect-[4/5] overflow-hidden">
-                        <img src="${d.foto}" alt="${d.nama}"
-                             class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
-                             loading="lazy">
-                        <div class="absolute top-3 left-3">
-                            <span class="inline-flex items-center gap-1 text-xs font-bold px-2.5 py-1 rounded-full shadow ${badgeClass}">
-                                <span class="w-1.5 h-1.5 rounded-full ${dotClass}"></span>
-                                ${badgeLabel}
-                            </span>
-                        </div>
-                        <div class="absolute inset-0 bg-gradient-to-t from-emerald-900/90 via-emerald-700/40 to-transparent
-                                    opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-end p-5">
-                            <span class="w-full bg-white text-emerald-700 py-2.5 rounded-xl font-bold text-sm text-center block shadow-lg">
-                                Lihat Profil Lengkap
-                            </span>
+        function renderCarousel() {
+            carousel.innerHTML = '';
+            projects.forEach(proj => {
+                const card = document.createElement('div');
+                card.className = 'project-card glass-card group cursor-pointer';
+                card.innerHTML = `
+                    <div class="h-64 rounded-xl overflow-hidden mb-6 relative">
+                        <img src="${proj.img}" class="w-full h-full object-cover transition duration-1000 group-hover:scale-110">
+                        <div class="absolute inset-0 bg-black/30 group-hover:bg-transparent transition duration-500"></div>
+                        <div class="absolute top-4 left-4">
+                             <span class="px-3 py-1 bg-black/50 backdrop-blur-md rounded-full text-[10px] font-bold text-amber-500 tracking-widest uppercase border border-white/10">${proj.tag}</span>
                         </div>
                     </div>
-                    <div class="p-4">
-                        <h4 class="font-bold text-dark text-base leading-snug mb-0.5">${highlight(d.nama, query)}</h4>
-                        <p class="text-emerald-600 font-semibold text-xs uppercase tracking-wider mb-2">${highlight(d.spesialis, query)}</p>
-                        <div class="flex items-center gap-1.5 text-gray-400 text-xs">
-                            <i data-lucide="clock" class="w-3.5 h-3.5 shrink-0"></i>
-                            <span class="truncate">${d.jadwalTeks}</span>
-                        </div>
+                    <div class="space-y-3">
+                        <h3 class="text-2xl font-bold text-white group-hover:text-amber-500 transition">${proj.title}</h3>
+                        <p class="text-stone-400 text-sm leading-relaxed">${proj.desc}</p>
                     </div>
-                </div>`;
-            }).join('');
-
-            lucide.createIcons();
-        }
-
-        // Tampilkan modal profil dokter (aman dari masalah kutip)
-        function showDokterModal(idx) {
-            const d = dataDokter[idx];
-            const statusBadge = d.tersedia
-                ? '<span style="display:inline-flex;align-items:center;gap:4px;background:#d1fae5;color:#065f46;font-size:11px;font-weight:700;padding:3px 10px;border-radius:999px;margin-bottom:10px">● Tersedia Hari Ini</span>'
-                : '<span style="display:inline-flex;align-items:center;gap:4px;background:#fee2e2;color:#991b1b;font-size:11px;font-weight:700;padding:3px 10px;border-radius:999px;margin-bottom:10px">● Tidak Tersedia</span>';
-            const keahlianList = d.keahlian.map(k => `• ${k}`).join('<br>');
-            const body = `${statusBadge}<br>
-<strong>${d.spesialis}</strong><br><br>
-🎓 ${d.lulusan}<br>
-📅 Pengalaman: ${d.pengalaman}<br>
-⏰ ${d.jadwalTeks}<br><br>
-<strong>Keahlian:</strong><br>${keahlianList}<br><br>
-📞 Hubungi <strong>(021) 1500-123</strong> untuk membuat janji.`;
-            showModal(d.nama, body);
-        }
-
-        // ── FILTER LOGIC ─────────────────────────────────────────────
-        function filterDokter() {
-            const query   = document.getElementById('search-input').value.toLowerCase().trim();
-            const spesialis = document.getElementById('filter-spesialis').value.toLowerCase();
-            const hari    = document.getElementById('filter-hari').value.toLowerCase();
-
-            const hasil = dataDokter.filter(d => {
-                const matchQuery = !query ||
-                    d.nama.toLowerCase().includes(query) ||
-                    d.spesialis.toLowerCase().includes(query) ||
-                    d.keahlian.some(k => k.toLowerCase().includes(query));
-                const matchSpesialis = !spesialis || d.tag.includes(spesialis);
-                const matchHari = !hari || d.jadwal.includes(hari);
-                return matchQuery && matchSpesialis && matchHari;
+                `;
+                carousel.appendChild(card);
             });
-
-            renderDokter(hasil, query);
         }
 
-        function resetFilter() {
-            document.getElementById('search-input').value = '';
-            document.getElementById('filter-spesialis').value = '';
-            document.getElementById('filter-hari').value = '';
-            renderDokter(dataDokter);
+        function moveCarousel(direction) {
+            const scrollAmount = carousel.offsetWidth * 0.8;
+            carousel.scrollBy({ left: direction * scrollAmount, behavior: 'smooth' });
+            resetAutoSlide();
         }
 
-        // Event listeners
-        document.getElementById('search-input').addEventListener('input', filterDokter);
-        document.getElementById('filter-spesialis').addEventListener('change', filterDokter);
-        document.getElementById('filter-hari').addEventListener('change', filterDokter);
-
-        // Render awal
-        renderDokter(dataDokter);
-        
-        // Modal Functions
-        function showModal(title, message) {
-            const modal = document.getElementById('customModal');
-            const modalTitle = document.getElementById('modalTitle');
-            const modalBody = document.getElementById('modalBody');
-            
-            modalTitle.textContent = title;
-            modalBody.innerHTML = message.replace(/\n/g, '<br>');
-            
-            modal.classList.add('active');
-            document.body.style.overflow = 'hidden';
-            
-            // Refresh icons for modal
-            setTimeout(() => lucide.createIcons(), 50);
+        function startAutoSlide() {
+            slideInterval = setInterval(() => {
+                if (carousel.scrollLeft + carousel.offsetWidth >= carousel.scrollWidth - 10) {
+                    carousel.scrollTo({ left: 0, behavior: 'smooth' });
+                } else {
+                    carousel.scrollBy({ left: 300, behavior: 'smooth' });
+                }
+            }, 4000);
         }
-        
-        function closeModal() {
-            const modal = document.getElementById('customModal');
-            modal.classList.remove('active');
-            document.body.style.overflow = '';
-        }
-        
-        // Close modal when clicking outside
-        document.getElementById('customModal').addEventListener('click', function(e) {
-            if (e.target === this) {
-                closeModal();
-            }
-        });
-        
-        // Close modal with Escape key
-        document.addEventListener('keydown', function(e) {
-            if (e.key === 'Escape') {
-                closeModal();
-            }
-        });
 
-        // Navbar Logic dengan smooth transition
-        const navbar = document.getElementById('navbar');
-        
-        let lastScroll = 0;
-        window.addEventListener('scroll', () => {
-            const currentScroll = window.scrollY;
+        function resetAutoSlide() {
+            clearInterval(slideInterval);
+            startAutoSlide();
+        }
+
+        // --- NAVIGATION ---
+        function showPage(pageId) {
+            document.querySelectorAll('.page').forEach(page => page.classList.remove('active'));
+            const targetPage = document.getElementById(`page-${pageId}`);
+            if (targetPage) targetPage.classList.add('active');
             
-            // Navbar sudah memiliki glass background, tidak perlu ubah warna
-            if (currentScroll > 80) {
-                navbar.style.paddingTop = '0.5rem';
-                navbar.style.paddingBottom = '0.5rem';
+            document.querySelectorAll('.nav-item').forEach(item => {
+                item.classList.toggle('active', item.getAttribute('data-page') === pageId);
+            });
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+            
+            if (pageId === 'home') {
+                 resetAutoSlide();
             } else {
-                navbar.style.paddingTop = '0.75rem';
-                navbar.style.paddingBottom = '1rem';
+                 clearInterval(slideInterval);
             }
-            
-            lastScroll = currentScroll;
-        });
-
-        // Mobile Menu dengan smooth animation
-        const mobileMenu = document.getElementById('mobile-menu');
-        const openBtn = document.getElementById('menu-open');
-        const closeBtn = document.getElementById('menu-close');
-
-        openBtn.addEventListener('click', () => { 
-            mobileMenu.classList.add('active');
-            document.body.style.overflow = 'hidden';
-        });
-        
-        closeBtn.addEventListener('click', () => { 
-            mobileMenu.classList.remove('active');
-            document.body.style.overflow = '';
-        });
-        
-        document.querySelectorAll('.mobile-link').forEach(link => {
-            link.addEventListener('click', () => { 
-                mobileMenu.classList.remove('active');
-                document.body.style.overflow = '';
-            });
-        });
-
-        // Smooth scroll untuk anchor links
-        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-            anchor.addEventListener('click', function (e) {
-                e.preventDefault();
-                const targetId = this.getAttribute('href');
-                
-                // Jika href adalah #hero, scroll ke top
-                if (targetId === '#hero') {
-                    window.scrollTo({
-                        top: 0,
-                        behavior: 'smooth'
-                    });
-                    return;
-                }
-                
-                const target = document.querySelector(targetId);
-                if (target) {
-                    const navbarHeight = 100; // Tinggi navbar + padding
-                    const offsetTop = target.offsetTop - navbarHeight;
-                    window.scrollTo({
-                        top: offsetTop,
-                        behavior: 'smooth'
-                    });
-                }
-            });
-        });
-        
-        // Active menu highlighting on scroll
-        const sections = document.querySelectorAll('section[id]');
-        const navLinks = document.querySelectorAll('.nav-link');
-        
-        window.addEventListener('scroll', () => {
-            let current = 'hero';
-            const scrollPosition = window.scrollY + 150;
-            
-            sections.forEach(section => {
-                const sectionTop = section.offsetTop;
-                const sectionHeight = section.clientHeight;
-                if (scrollPosition >= sectionTop && scrollPosition < sectionTop + sectionHeight) {
-                    current = section.getAttribute('id');
-                }
-            });
-            
-            navLinks.forEach(link => {
-                link.classList.remove('text-emerald-700');
-                link.classList.add('text-gray-700');
-                
-                const href = link.getAttribute('href').substring(1);
-                if (href === current) {
-                    link.classList.remove('text-gray-700');
-                    link.classList.add('text-emerald-700');
-                }
-            });
-        });
-
-        // Intersection Observer untuk animasi fade-in saat scroll
-        const observerOptions = {
-            threshold: 0.1,
-            rootMargin: '0px 0px -50px 0px'
-        };
-
-        const observer = new IntersectionObserver((entries) => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    entry.target.style.opacity = '1';
-                    entry.target.style.transform = 'translateY(0)';
-                }
-            });
-        }, observerOptions);
-
-        // Observe semua card untuk animasi
-        document.querySelectorAll('.card-hover').forEach(card => {
-            card.style.opacity = '0';
-            card.style.transform = 'translateY(30px)';
-            card.style.transition = 'all 0.6s ease-out';
-            observer.observe(card);
-        });
-
-        // Touch feedback untuk mobile
-        if ('ontouchstart' in window) {
-            document.querySelectorAll('button, a').forEach(element => {
-                element.addEventListener('touchstart', function() {
-                    this.style.opacity = '0.8';
-                });
-                element.addEventListener('touchend', function() {
-                    this.style.opacity = '1';
-                });
-            });
         }
 
-        // Refresh icons setelah DOM loaded
-        setTimeout(() => {
-            lucide.createIcons();
-        }, 100);
-        
-        // Premium Interactive Features
-        // Parallax effect untuk cartoon elements
-        document.addEventListener('mousemove', (e) => {
-            const cartoons = document.querySelectorAll('.fixed > div > div');
-            const mouseX = e.clientX / window.innerWidth;
-            const mouseY = e.clientY / window.innerHeight;
-            
-            cartoons.forEach((cartoon, index) => {
-                const speed = (index + 1) * 0.5;
-                const x = (mouseX - 0.5) * speed * 20;
-                const y = (mouseY - 0.5) * speed * 20;
-                cartoon.style.transform = `translate(${x}px, ${y}px)`;
-            });
+        // Render Keahlian di Halaman Eksplorasi
+        const skillsContainer = document.getElementById('skills-container');
+        skills.forEach(skill => {
+            const card = document.createElement('div');
+            card.className = 'glass-card group';
+            card.innerHTML = `
+                <div class="skill-icon-box group-hover:bg-amber-600 group-hover:text-white transition-colors duration-500">
+                    <i class="${skill.icon}"></i>
+                </div>
+                <h3 class="font-bold text-white text-xl mb-3 group-hover:text-amber-500 transition-colors">${skill.name}</h3>
+                <p class="text-stone-400 text-sm leading-relaxed mb-6">${skill.desc}</p>
+                <div class="flex flex-wrap gap-2">
+                    ${skill.tech.map(t => `<span class="skill-badge">${t}</span>`).join('')}
+                </div>
+            `;
+            skillsContainer.appendChild(card);
         });
-        
-        // Interactive card tilt effect
-        document.querySelectorAll('.card-premium, .glass-card').forEach(card => {
-            card.addEventListener('mousemove', (e) => {
-                const rect = card.getBoundingClientRect();
-                const x = e.clientX - rect.left;
-                const y = e.clientY - rect.top;
-                
-                const centerX = rect.width / 2;
-                const centerY = rect.height / 2;
-                
-                const rotateX = (y - centerY) / 10;
-                const rotateY = (centerX - x) / 10;
-                
-                card.style.transform = `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) translateY(-8px)`;
-            });
-            
-            card.addEventListener('mouseleave', () => {
-                card.style.transform = 'perspective(1000px) rotateX(0) rotateY(0) translateY(0)';
-            });
+
+        // Render Koleksi Lengkap
+        const koleksiGrid = document.getElementById('full-koleksi-grid');
+        projects.forEach(proj => {
+            const card = document.createElement('div');
+            card.className = 'glass-card group cursor-pointer';
+            card.innerHTML = `
+                <div class="h-48 rounded-xl overflow-hidden mb-6 relative">
+                    <img src="${proj.img}" class="w-full h-full object-cover transition group-hover:scale-105">
+                </div>
+                <div class="space-y-2">
+                    <span class="text-[10px] font-bold text-stone-500 tracking-widest uppercase">${proj.tag}</span>
+                    <h3 class="text-lg font-bold text-white">${proj.title}</h3>
+                    <p class="text-stone-400 text-xs">${proj.desc}</p>
+                </div>
+            `;
+            koleksiGrid.appendChild(card);
         });
-        
-        // Button ripple effect
-        document.querySelectorAll('.btn-premium').forEach(button => {
-            button.addEventListener('click', function(e) {
-                const ripple = document.createElement('span');
-                const rect = this.getBoundingClientRect();
-                const size = Math.max(rect.width, rect.height);
-                const x = e.clientX - rect.left - size / 2;
-                const y = e.clientY - rect.top - size / 2;
-                
-                ripple.style.width = ripple.style.height = size + 'px';
-                ripple.style.left = x + 'px';
-                ripple.style.top = y + 'px';
-                ripple.classList.add('ripple');
-                
-                this.appendChild(ripple);
-                
-                setTimeout(() => ripple.remove(), 600);
+
+        // --- BACKGROUND ENGINE (Three.js - Falling Leaves) ---
+        let scene, camera, renderer, leaves = [];
+        let mouse = new THREE.Vector2(0, 0);
+        const leafCount = 50;
+
+        function initBackground() {
+            scene = new THREE.Scene();
+            camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
+            camera.position.z = 5;
+
+            renderer = new THREE.WebGLRenderer({ 
+                canvas: document.getElementById('bg-canvas'), 
+                antialias: true, 
+                alpha: true 
             });
-        });
-        
-        // Smooth reveal animation on scroll
-        const revealElements = document.querySelectorAll('.card-premium, .glass-card');
-        const revealObserver = new IntersectionObserver((entries) => {
-            entries.forEach((entry, index) => {
-                if (entry.isIntersecting) {
-                    setTimeout(() => {
-                        entry.target.style.opacity = '1';
-                        entry.target.style.transform = 'translateY(0)';
-                    }, index * 100);
+            renderer.setSize(window.innerWidth, window.innerHeight);
+            renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+
+            const leafShape = new THREE.Shape();
+            leafShape.moveTo(0, 0);
+            leafShape.bezierCurveTo(0.2, 0.1, 0.3, 0.5, 0, 0.8);
+            leafShape.bezierCurveTo(-0.3, 0.5, -0.2, 0.1, 0, 0);
+            const geometry = new THREE.ShapeGeometry(leafShape);
+            const colors = [0xd97706, 0xb45309, 0xf59e0b, 0x78350f, 0x92400e];
+
+            for (let i = 0; i < leafCount; i++) {
+                const material = new THREE.MeshBasicMaterial({ 
+                    color: colors[Math.floor(Math.random() * colors.length)],
+                    side: THREE.DoubleSide,
+                    transparent: true,
+                    opacity: 0.3 + Math.random() * 0.4
+                });
+                const leaf = new THREE.Mesh(geometry, material);
+                resetLeaf(leaf);
+                leaf.userData = {
+                    speedY: 0.005 + Math.random() * 0.01,
+                    speedX: (Math.random() - 0.5) * 0.005,
+                    rotationSpeed: { x: Math.random() * 0.02, y: Math.random() * 0.02, z: Math.random() * 0.02 },
+                    sway: Math.random() * Math.PI * 2,
+                    swaySpeed: 0.01 + Math.random() * 0.02
+                };
+                leaves.push(leaf);
+                scene.add(leaf);
+            }
+
+            window.addEventListener('mousemove', (e) => {
+                mouse.x = (e.clientX / window.innerWidth) * 2 - 1;
+                mouse.y = -(e.clientY / window.innerHeight) * 2 + 1;
+            });
+
+            animate();
+        }
+
+        function resetLeaf(leaf) {
+            leaf.position.y = 7 + Math.random() * 5;
+            leaf.position.x = (Math.random() - 0.5) * 15;
+            leaf.position.z = (Math.random() - 0.5) * 5;
+            leaf.scale.setScalar(0.3 + Math.random() * 0.6);
+            leaf.rotation.set(Math.random() * Math.PI, Math.random() * Math.PI, Math.random() * Math.PI);
+        }
+
+        function animate() {
+            requestAnimationFrame(animate);
+            leaves.forEach(leaf => {
+                const d = leaf.userData;
+                leaf.position.y -= d.speedY;
+                d.sway += d.swaySpeed;
+                leaf.position.x += Math.sin(d.sway) * 0.005 + d.speedX;
+                leaf.rotation.x += d.rotationSpeed.x;
+                leaf.rotation.y += d.rotationSpeed.y;
+                leaf.rotation.z += d.rotationSpeed.z;
+
+                const mousePos = new THREE.Vector3(mouse.x * 5, mouse.y * 3, 0);
+                const dist = leaf.position.distanceTo(mousePos);
+                if (dist < 2) {
+                    leaf.position.x += (leaf.position.x - mousePos.x) * 0.02;
+                    leaf.position.y += (leaf.position.y - mousePos.y) * 0.02;
                 }
+                if (leaf.position.y < -7) resetLeaf(leaf);
             });
-        }, { threshold: 0.1 });
-        
-        revealElements.forEach(el => {
-            el.style.opacity = '0';
-            el.style.transform = 'translateY(30px)';
-            el.style.transition = 'all 0.6s ease-out';
-            revealObserver.observe(el);
-        });
+            renderer.render(scene, camera);
+        }
+
+        window.onload = () => {
+            initBackground();
+            renderCarousel();
+            startAutoSlide();
+            window.addEventListener('resize', () => {
+                camera.aspect = window.innerWidth / window.innerHeight;
+                camera.updateProjectionMatrix();
+                renderer.setSize(window.innerWidth, window.innerHeight);
+            });
+            
+            carousel.addEventListener('mouseenter', () => clearInterval(slideInterval));
+            carousel.addEventListener('mouseleave', () => startAutoSlide());
+        };
     </script>
 </body>
 </html>
