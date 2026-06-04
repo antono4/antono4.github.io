@@ -9,14 +9,16 @@
     <!-- Font Awesome 6 -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     <!-- Google Fonts -->
-    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600&family=Sora:wght@600;700;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700&family=Sora:wght@600;700;800&display=swap" rel="stylesheet">
+    
     <style>
         :root {
             --primary: #f2ba42;
             --primary-rgb: 242, 186, 66;
             --bg-dark: #070707;
-            --card-bg: rgba(255, 255, 255, 0.03);
-            --card-border: rgba(255, 255, 255, 0.08);
+            --card-bg: rgba(255, 255, 255, 0.02);
+            --card-border: rgba(255, 255, 255, 0.05);
+            --glass-highlight: rgba(255, 255, 255, 0.05);
         }
 
         * {
@@ -40,103 +42,210 @@
 
         h1, h2, h3, h4 { font-family: 'Sora', sans-serif; }
 
-        /* --- BACKGROUND --- */
         .bg-wrapper {
             position: fixed;
             top: 0; left: 0;
             width: 100%; height: 100%;
             z-index: -1;
-            background: radial-gradient(circle at 50% 50%, #1a1a1a 0%, #070707 100%);
+            /* Latar belakang dengan semburat hangat dari sudut kanan atas */
+            background: radial-gradient(ellipse at top right, #2a180b 0%, #0d0a08 50%, #050505 100%);
+            overflow: hidden;
+        }
+
+        /* Pendaran Cahaya Matahari Pagi */
+        .morning-sun {
+            position: absolute;
+            top: -20%;
+            right: -10%;
+            width: 70vw;
+            height: 70vw;
+            background: radial-gradient(circle, rgba(242, 186, 66, 0.15) 0%, rgba(255, 120, 30, 0.05) 40%, transparent 70%);
+            border-radius: 50%;
+            filter: blur(50px);
+            animation: pulseSun 8s infinite alternate ease-in-out;
+            z-index: 1;
+        }
+
+        /* Efek Sinar (God Rays) */
+        .sun-rays {
+            position: absolute;
+            top: 0; right: 0;
+            width: 100%; height: 100%;
+            background: repeating-linear-gradient(
+                -45deg,
+                rgba(242, 186, 66, 0.03) 0%,
+                rgba(242, 186, 66, 0.01) 3%,
+                transparent 3%,
+                transparent 8%
+            );
+            mask-image: radial-gradient(ellipse at top right, black 0%, transparent 70%);
+            -webkit-mask-image: radial-gradient(ellipse at top right, black 0%, transparent 70%);
+            z-index: 1;
+            pointer-events: none;
+            animation: rotateRays 60s linear infinite;
+            transform-origin: top right;
+        }
+
+        @keyframes pulseSun {
+            0% { transform: scale(1); opacity: 0.8; }
+            100% { transform: scale(1.05); opacity: 1; }
+        }
+
+        @keyframes rotateRays {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(5deg); }
         }
 
         .mesh-gradient {
             position: absolute;
             width: 100%; height: 100%;
             background-image: 
-                radial-gradient(at 0% 0%, rgba(var(--primary-rgb), 0.15) 0px, transparent 50%),
-                radial-gradient(at 100% 100%, rgba(59, 130, 246, 0.1) 0px, transparent 50%);
+                radial-gradient(at 0% 0%, rgba(242, 186, 66, 0.08) 0px, transparent 50%),
+                radial-gradient(at 100% 100%, rgba(200, 80, 20, 0.05) 0px, transparent 50%);
             filter: blur(100px);
+            z-index: 2;
         }
 
-        /* --- FLOATING NAV BAR (CENTERED) --- */
+        #rain-canvas {
+            position: fixed;
+            top: 0; left: 0;
+            width: 100vw;
+            height: 100vh;
+            pointer-events: none;
+            z-index: 3; /* Hujan di depan matahari */
+        }
+
         .floating-nav {
             position: fixed;
-            bottom: 24px;
+            bottom: 32px;
             left: 50%;
             transform: translateX(-50%);
             z-index: 1000;
-            background: rgba(15, 15, 15, 0.7);
-            backdrop-filter: blur(20px) saturate(180%);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            padding: 6px;
-            border-radius: 24px;
+            background: rgba(10, 10, 10, 0.65);
+            backdrop-filter: blur(24px) saturate(200%);
+            -webkit-backdrop-filter: blur(24px) saturate(200%);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-top: 1px solid rgba(255, 255, 255, 0.15);
+            padding: 8px;
+            border-radius: 99px;
             display: flex;
-            gap: 2px;
-            box-shadow: 0 20px 40px rgba(0,0,0,0.4);
+            gap: 4px;
+            box-shadow: 0 30px 60px rgba(0,0,0,0.6), 
+                        0 8px 24px rgba(0,0,0,0.4),
+                        inset 0 1px 0 rgba(255, 255, 255, 0.1);
             width: max-content;
-            max-width: 95vw;
+            max-width: 92vw;
             overflow-x: auto;
         }
 
         .nav-btn {
-            padding: 10px 16px;
-            border-radius: 18px;
-            color: #a8a29e;
-            font-size: 10px;
-            font-weight: 800;
+            padding: 12px 24px;
+            border-radius: 99px;
+            color: #78716c;
+            font-size: 11px;
+            font-weight: 700;
             text-transform: uppercase;
-            letter-spacing: 0.05em;
-            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            letter-spacing: 0.1em;
+            transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
             white-space: nowrap;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .nav-btn::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background: var(--primary);
+            opacity: 0;
+            border-radius: 99px;
+            transition: opacity 0.4s ease;
+            z-index: -1;
+        }
+
+        .nav-btn:hover {
+            color: #fafaf9;
+            background: rgba(255, 255, 255, 0.05);
         }
 
         .nav-btn.active {
-            background: var(--primary);
             color: #000;
-            box-shadow: 0 8px 15px rgba(var(--primary-rgb), 0.3);
+            box-shadow: 0 8px 20px rgba(var(--primary-rgb), 0.25);
         }
 
-        /* --- HOME SECTION --- */
+        .nav-btn.active::before {
+            opacity: 1;
+        }
+
         .hero-title {
-            font-size: clamp(2.5rem, 10vw, 8rem);
+            font-size: clamp(3rem, 11vw, 8.5rem);
             line-height: 0.9;
-            letter-spacing: -0.04em;
+            letter-spacing: -0.05em;
         }
 
         .outline-text {
             color: transparent;
-            -webkit-text-stroke: 1px rgba(255, 255, 255, 0.2);
+            -webkit-text-stroke: 1.5px rgba(255, 255, 255, 0.25);
+            text-shadow: none;
         }
 
-        /* --- CARDS & PANELS --- */
         .skill-card, .glass-panel {
-            background: linear-gradient(145deg, rgba(255,255,255,0.05) 0%, rgba(255,255,255,0.01) 100%);
+            background: linear-gradient(135deg, rgba(255, 255, 255, 0.04) 0%, rgba(255, 255, 255, 0.005) 100%);
             border: 1px solid var(--card-border);
-            backdrop-filter: blur(10px);
+            border-top: 1px solid var(--glass-highlight);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            box-shadow: 0 20px 40px -10px rgba(0, 0, 0, 0.7);
         }
 
         .skill-card {
             border-radius: 32px;
-            padding: 40px;
-            transition: all 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            padding: 48px 40px;
+            transition: all 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .skill-card::after {
+            content: '';
+            position: absolute;
+            top: 0; left: -100%; width: 50%; height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.05), transparent);
+            transform: skewX(-20deg);
+            transition: 0.7s;
+        }
+
+        .skill-card:hover::after {
+            left: 200%;
         }
 
         .skill-card:hover {
-            transform: translateY(-12px);
-            border-color: var(--primary);
+            transform: translateY(-12px) scale(1.02);
+            border-color: rgba(var(--primary-rgb), 0.3);
+            box-shadow: 0 30px 60px -15px rgba(var(--primary-rgb), 0.15),
+                        0 20px 40px -10px rgba(0, 0, 0, 0.7);
         }
 
         .skill-icon-box {
-            width: 64px; height: 64px;
+            width: 72px; height: 72px;
             display: flex; align-items: center; justify-content: center;
-            background: rgba(var(--primary-rgb), 0.1);
+            background: linear-gradient(135deg, rgba(var(--primary-rgb), 0.15), rgba(var(--primary-rgb), 0.05));
+            border: 1px solid rgba(var(--primary-rgb), 0.2);
             color: var(--primary);
-            border-radius: 20px;
-            font-size: 24px;
-            margin-bottom: 24px;
+            border-radius: 24px;
+            font-size: 28px;
+            margin-bottom: 32px;
+            transition: all 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+            box-shadow: inset 0 2px 10px rgba(255,255,255,0.1);
         }
 
-        /* --- FORM STYLING --- */
+        .skill-card:hover .skill-icon-box {
+            background: var(--primary);
+            color: #000;
+            transform: scale(1.1) rotate(5deg);
+            box-shadow: 0 15px 30px rgba(var(--primary-rgb), 0.3);
+        }
+
         .input-group {
             position: relative;
             width: 100%;
@@ -144,34 +253,36 @@
 
         .input-field {
             width: 100%;
-            background: rgba(255, 255, 255, 0.03);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            padding: 16px;
-            border-radius: 16px;
+            background: rgba(0, 0, 0, 0.2);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            padding: 20px 24px;
+            border-radius: 20px;
             color: white;
             outline: none;
-            transition: all 0.3s ease;
+            font-size: 15px;
+            transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+            box-shadow: inset 0 2px 10px rgba(0,0,0,0.5);
         }
 
         .input-field:focus {
-            border-color: var(--primary);
-            background: rgba(var(--primary-rgb), 0.05);
+            border-color: rgba(var(--primary-rgb), 0.5);
+            background: rgba(var(--primary-rgb), 0.02);
+            box-shadow: inset 0 2px 10px rgba(0,0,0,0.5), 0 0 0 4px rgba(var(--primary-rgb), 0.1);
         }
 
-        /* --- PAGE HANDLING --- */
         .page {
             display: none;
             opacity: 0;
-            transform: translateY(30px);
-            transition: all 0.6s ease-out;
-            padding-top: 80px;
-            padding-bottom: 140px;
+            transform: translateY(40px) scale(0.98);
+            transition: all 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+            padding-top: 120px;
+            padding-bottom: 180px;
         }
 
         .page.active {
             display: block;
             opacity: 1;
-            transform: translateY(0);
+            transform: translateY(0) scale(1);
         }
 
         .no-scrollbar::-webkit-scrollbar { display: none; }
@@ -180,15 +291,18 @@
 <body>
 
     <div class="bg-wrapper">
+        <div class="morning-sun"></div>
+        <div class="sun-rays"></div>
         <div class="mesh-gradient"></div>
+        <canvas id="rain-canvas"></canvas>
     </div>
 
-    <!-- BRAND -->
-    <div class="fixed top-8 left-8 z-[100] text-xl font-black tracking-tighter interactive" onclick="showPage('home')">
+    <!-- BRANDING -->
+    <div class="fixed top-8 left-8 md:top-10 md:left-12 z-[100] text-2xl font-black tracking-tighter interactive hover:scale-110 transition-transform duration-500 origin-left drop-shadow-xl" onclick="showPage('home')">
         ANT<span class="text-[#f2ba42]">.</span>DEV
     </div>
 
-    <!-- DOCK NAVIGATION -->
+    <!-- NAVBAR BAWAH -->
     <nav class="floating-nav no-scrollbar">
         <button onclick="showPage('home')" id="btn-home" class="nav-btn active">Home</button>
         <button onclick="showPage('keahlian')" id="btn-keahlian" class="nav-btn">Keahlian</button>
@@ -197,140 +311,155 @@
         <button onclick="showPage('kontak')" id="btn-kontak" class="nav-btn">Kontak</button>
     </nav>
 
-    <main class="px-6 md:px-12">
-        <!-- HOME PAGE -->
+    <main class="px-6 md:px-12 relative z-10">
         <section id="page-home" class="page active">
-            <div class="min-h-[75vh] flex flex-col justify-center items-center text-center max-w-7xl mx-auto">
-                <div class="relative mb-10 group interactive">
-                    <div class="absolute -inset-4 bg-amber-500/20 blur-2xl rounded-full opacity-0 group-hover:opacity-100 transition duration-700"></div>
-                    <img src="https://avatars.githubusercontent.com/u/73228642?v=4" class="relative w-32 h-32 rounded-full border-2 border-white/10 shadow-2xl transition-transform duration-500 group-hover:scale-110 grayscale hover:grayscale-0">
+            <div class="min-h-[80vh] flex flex-col justify-center items-center text-center max-w-7xl mx-auto">
+                <div class="relative mb-12 group interactive">
+                    <div class="absolute -inset-6 bg-amber-500/20 blur-[40px] rounded-full opacity-0 group-hover:opacity-100 transition duration-700"></div>
+                    <div class="relative w-36 h-36 rounded-full border border-white/20 p-2 glass-panel group-hover:border-amber-500/50 transition-colors duration-500">
+                        <img src="https://avatars.githubusercontent.com/u/73228642?v=4" class="w-full h-full rounded-full object-cover grayscale hover:grayscale-0 transition-all duration-700">
+                    </div>
                 </div>
 
-                <div class="inline-block px-4 py-1 rounded-full border border-white/10 bg-white/5 text-[10px] font-bold uppercase tracking-[0.3em] text-amber-500 mb-6">
+                <div class="inline-flex px-6 py-2.5 rounded-full border border-white/10 bg-white/5 text-[11px] font-bold uppercase tracking-[0.3em] text-amber-500 mb-8 backdrop-blur-xl shadow-lg">
                     Fullstack Specialist
                 </div>
                 
-                <h1 class="hero-title font-black mb-8 uppercase leading-tight">
+                <h1 class="hero-title font-black mb-10 uppercase leading-none text-white drop-shadow-2xl">
                     Digital <br>
                     <span class="outline-text">Architect</span> <br>
-                    <span class="text-white">Expertise</span>
+                    <span class="bg-gradient-to-r from-white via-stone-200 to-stone-500 bg-clip-text text-transparent">Expertise</span>
                 </h1>
 
-                <div class="flex flex-col md:flex-row items-center gap-8 mt-4">
-                    <p class="text-stone-500 text-lg max-w-md text-center md:text-left leading-relaxed">
-                        Membangun sistem digital masa depan dengan <span class="text-white font-bold">presisi teknis</span> dan <span class="text-white font-bold">estetika tinggi</span>.
+                <div class="flex flex-col md:flex-row items-center justify-center gap-8 mt-4">
+                    <p class="text-stone-400 text-lg md:text-xl max-w-md text-center md:text-left leading-relaxed font-light">
+                        Membangun sistem digital masa depan dengan <span class="text-white font-semibold">presisi teknis</span> dan <span class="text-white font-semibold">estetika tinggi</span>.
                     </p>
-                    <button onclick="showPage('koleksi')" class="group flex items-center gap-4 bg-white text-black px-8 py-5 rounded-full font-black text-xs uppercase tracking-widest transition-all hover:bg-amber-500 hover:scale-105 interactive">
+                    <button onclick="showPage('koleksi')" class="group flex items-center gap-5 bg-white text-black px-10 py-6 rounded-[30px] font-black text-xs uppercase tracking-[0.2em] transition-all duration-500 hover:bg-amber-500 hover:scale-105 interactive shadow-[0_10px_30px_rgba(255,255,255,0.15)] hover:shadow-[0_20px_40px_rgba(242,186,66,0.3)]">
                         Lihat Proyek
-                        <i class="fa-solid fa-arrow-right transition-transform group-hover:translate-x-2"></i>
+                        <div class="w-8 h-8 rounded-full bg-black/10 flex items-center justify-center group-hover:bg-black/20 transition-colors">
+                            <i class="fa-solid fa-arrow-right transition-transform duration-500 group-hover:translate-x-1"></i>
+                        </div>
                     </button>
                 </div>
             </div>
         </section>
 
-        <!-- KEAHLIAN PAGE -->
         <section id="page-keahlian" class="page">
-            <div class="max-w-6xl mx-auto">
-                <div class="mb-20 text-center">
-                    <h2 class="text-5xl md:text-7xl font-black mb-6 tracking-tighter uppercase">My <span class="text-amber-500">Mastery</span></h2>
-                    <p class="text-stone-500 max-w-2xl mx-auto font-light">Teknologi utama yang saya kuasai untuk menghadirkan solusi digital berkualitas tinggi.</p>
+            <div class="max-w-7xl mx-auto">
+                <div class="mb-24 text-center">
+                    <h2 class="text-6xl md:text-8xl font-black mb-8 tracking-tighter uppercase drop-shadow-2xl">My <span class="text-transparent bg-clip-text bg-gradient-to-r from-amber-400 to-amber-600">Mastery</span></h2>
+                    <p class="text-stone-400 max-w-2xl mx-auto font-light text-xl">Teknologi utama yang saya kuasai untuk menghadirkan solusi digital berkualitas tinggi di lingkungan produksi.</p>
                 </div>
                 <div class="grid grid-cols-1 md:grid-cols-3 gap-8" id="skills-container"></div>
             </div>
         </section>
 
-        <!-- KOLEKSI PAGE -->
         <section id="page-koleksi" class="page">
             <div class="max-w-7xl mx-auto space-y-16">
-                <div class="flex flex-col md:flex-row md:items-end justify-between gap-8">
-                    <div class="space-y-4">
-                        <h2 class="text-5xl font-black tracking-tighter uppercase">Selected <span class="text-amber-500">Works</span></h2>
-                        <p class="text-stone-500 max-w-xl font-light">Kumpulan karya digital mulai dari Web App hingga Arsitektur Cloud.</p>
+                <div class="flex flex-col md:flex-row md:items-end justify-between gap-8 mb-12">
+                    <div class="space-y-6">
+                        <h2 class="text-6xl md:text-7xl font-black tracking-tighter uppercase drop-shadow-2xl">Selected <span class="text-amber-500">Works</span></h2>
+                        <p class="text-stone-400 max-w-xl font-light text-xl">Kumpulan karya digital mulai dari Web App interaktif hingga Arsitektur Cloud yang tangguh.</p>
                     </div>
-                    <div class="flex gap-2 overflow-x-auto pb-4 no-scrollbar" id="project-filters">
-                        <button class="px-6 py-2 rounded-full border border-white/10 text-[10px] font-bold uppercase tracking-widest bg-amber-500 text-black interactive" data-filter="Semua">Semua</button>
+                    <div class="flex gap-3 overflow-x-auto pb-4 no-scrollbar items-center" id="project-filters">
+                        <!-- Filters populated dynamically -->
                     </div>
                 </div>
-                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8" id="full-koleksi-grid"></div>
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10" id="full-koleksi-grid"></div>
             </div>
         </section>
 
-        <!-- PROFIL PAGE -->
         <section id="page-profil" class="page">
-            <div class="max-w-5xl mx-auto">
-                <div class="flex flex-col lg:flex-row gap-16 items-center">
-                    <div class="w-full lg:w-1/2 relative">
-                        <img class="relative w-full rounded-[40px] border border-white/10 shadow-2xl grayscale hover:grayscale-0 transition-all duration-700" src="https://avatars.githubusercontent.com/u/73228642?v=4" alt="Antono Profile">
+            <div class="max-w-6xl mx-auto">
+                <div class="flex flex-col lg:flex-row gap-20 items-center">
+                    <div class="w-full lg:w-5/12 relative group">
+                        <div class="absolute -inset-4 bg-amber-500/20 blur-[50px] rounded-[48px] opacity-0 group-hover:opacity-100 transition duration-1000"></div>
+                        <div class="relative rounded-[48px] p-3 glass-panel">
+                            <img class="w-full rounded-[36px] grayscale hover:grayscale-0 transition-all duration-1000 object-cover aspect-[4/5]" src="https://avatars.githubusercontent.com/u/73228642?v=4" alt="Antono Profile">
+                        </div>
                     </div>
-                    <div class="w-full lg:w-1/2 space-y-8">
-                        <h2 class="text-6xl font-black tracking-tighter uppercase">Antono<span class="text-amber-500">.</span></h2>
-                        <p class="text-stone-400 text-xl font-light leading-relaxed">
-                            Fullstack Developer berbasis di Indonesia dengan minat mendalam pada performa sistem dan desain antarmuka yang intuitif.
-                        </p>
-                        <button onclick="showPage('kontak')" class="w-full py-5 bg-white text-black font-black rounded-2xl hover:bg-amber-500 transition-all interactive">
-                            LETS WORK TOGETHER
+                    <div class="w-full lg:w-7/12 space-y-10">
+                        <h2 class="text-7xl md:text-8xl font-black tracking-tighter uppercase leading-none">Antono<span class="text-amber-500">.</span></h2>
+                        <div class="space-y-6">
+                            <p class="text-stone-300 text-2xl font-light leading-relaxed">
+                                Fullstack Developer berbasis di Indonesia.
+                            </p>
+                            <p class="text-stone-500 text-lg font-light leading-relaxed">
+                                Saya memiliki spesialisasi dalam menjembatani kesenjangan antara desain antarmuka yang estetis dan arsitektur backend yang kompleks. Setiap baris kode yang saya tulis ditujukan untuk performa, skalabilitas, dan pengalaman pengguna yang tanpa cela.
+                            </p>
+                        </div>
+                        <button onclick="showPage('kontak')" class="group py-6 px-10 bg-white text-black font-black rounded-full hover:bg-amber-500 transition-all duration-500 interactive shadow-xl hover:shadow-amber-500/30 flex items-center gap-4 uppercase tracking-[0.2em] text-xs">
+                            Mari Berkolaborasi
+                            <i class="fa-solid fa-arrow-right group-hover:translate-x-2 transition-transform"></i>
                         </button>
                     </div>
                 </div>
             </div>
         </section>
 
-        <!-- KONTAK PAGE -->
         <section id="page-kontak" class="page">
-            <div class="max-w-6xl mx-auto">
-                <div class="mb-16">
-                    <h2 class="text-5xl md:text-7xl font-black tracking-tighter uppercase mb-4">Get In <span class="text-amber-500">Touch</span></h2>
-                    <p class="text-stone-500 text-lg">Ada ide menarik atau proyek yang ingin didiskusikan? Kirim pesan sekarang.</p>
+            <div class="max-w-7xl mx-auto">
+                <div class="mb-20">
+                    <h2 class="text-6xl md:text-8xl font-black tracking-tighter uppercase mb-6 drop-shadow-2xl">Get In <span class="text-amber-500">Touch</span></h2>
+                    <p class="text-stone-400 text-xl max-w-2xl font-light">Ada ide inovatif atau proyek teknis yang ingin didiskusikan? Mari wujudkan bersama.</p>
                 </div>
 
-                <div class="grid grid-cols-1 lg:grid-cols-2 gap-12">
-                    <div class="glass-panel p-8 md:p-12 rounded-[40px] space-y-8">
-                        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <div class="grid grid-cols-1 lg:grid-cols-5 gap-12 lg:gap-20">
+                    <div class="lg:col-span-3 glass-panel p-8 md:p-14 rounded-[40px] space-y-8 relative overflow-hidden">
+                        <div class="absolute top-0 right-0 w-64 h-64 bg-amber-500/5 blur-[80px] rounded-full pointer-events-none"></div>
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-8 relative z-10">
                             <div class="input-group">
-                                <label class="text-[10px] uppercase font-black tracking-widest text-stone-500 mb-2 block">Nama Lengkap</label>
-                                <input type="text" placeholder="John Doe" class="input-field">
+                                <label class="text-[11px] uppercase font-bold tracking-[0.2em] text-stone-400 mb-3 block ml-2">Nama Lengkap</label>
+                                <input type="text" id="contact-name" placeholder="John Doe" class="input-field">
                             </div>
                             <div class="input-group">
-                                <label class="text-[10px] uppercase font-black tracking-widest text-stone-500 mb-2 block">Email</label>
-                                <input type="email" placeholder="john@example.com" class="input-field">
+                                <label class="text-[11px] uppercase font-bold tracking-[0.2em] text-stone-400 mb-3 block ml-2">Email</label>
+                                <input type="email" id="contact-email" placeholder="john@example.com" class="input-field">
                             </div>
                         </div>
-                        <div class="input-group">
-                            <label class="text-[10px] uppercase font-black tracking-widest text-stone-500 mb-2 block">Pesan Anda</label>
-                            <textarea rows="5" placeholder="Halo, saya ingin bertanya tentang..." class="input-field resize-none"></textarea>
+                        <div class="input-group relative z-10">
+                            <label class="text-[11px] uppercase font-bold tracking-[0.2em] text-stone-400 mb-3 block ml-2">Pesan Anda</label>
+                            <textarea id="contact-message" rows="5" placeholder="Ceritakan tentang proyek Anda..." class="input-field resize-none"></textarea>
                         </div>
-                        <button class="w-full py-5 bg-amber-500 text-black font-black rounded-2xl flex items-center justify-center gap-3 hover:bg-white transition-all interactive uppercase tracking-widest text-sm">
-                            Kirim Pesan <i class="fa-solid fa-paper-plane"></i>
+                        <button onclick="submitContactForm()" class="w-full py-6 bg-amber-500 text-black font-black rounded-3xl flex items-center justify-center gap-4 hover:bg-white transition-all duration-500 interactive uppercase tracking-[0.2em] text-xs shadow-lg hover:shadow-white/20 relative z-10">
+                            Kirim Pesan <i class="fa-solid fa-paper-plane text-sm"></i>
                         </button>
+                        
+                        <div id="form-response" class="hidden text-xs text-center font-bold tracking-wider py-4 uppercase rounded-2xl transition-all duration-300 relative z-10"></div>
                     </div>
 
-                    <div class="flex flex-col justify-between py-4">
-                        <div class="space-y-12">
+                    <div class="lg:col-span-2 flex flex-col justify-center py-4">
+                        <div class="space-y-16">
                             <div>
-                                <h4 class="text-xs font-black uppercase text-amber-500 tracking-[0.3em] mb-6">Contact Info</h4>
-                                <div class="space-y-6">
+                                <h4 class="text-[11px] font-black uppercase text-amber-500 tracking-[0.3em] mb-8 flex items-center gap-4">
+                                    <span class="w-8 h-[1px] bg-amber-500/50 block"></span> Contact Info
+                                </h4>
+                                <div class="space-y-8">
                                     <div class="flex items-center gap-6 group">
-                                        <div class="w-14 h-14 rounded-2xl glass-panel flex items-center justify-center text-xl text-stone-400 group-hover:text-amber-500 group-hover:border-amber-500 transition-all"><i class="fa-solid fa-envelope"></i></div>
+                                        <div class="w-16 h-16 rounded-3xl glass-panel flex items-center justify-center text-xl text-stone-400 group-hover:text-amber-500 group-hover:bg-amber-500/10 transition-all duration-500 border border-white/5 group-hover:border-amber-500/30"><i class="fa-solid fa-envelope"></i></div>
                                         <div>
-                                            <p class="text-stone-500 text-[10px] uppercase font-bold tracking-widest">Email</p>
-                                            <p class="text-white font-bold text-lg">Antonockr1@gmail.com</p>
+                                            <p class="text-stone-500 text-[10px] uppercase font-bold tracking-widest mb-1">Email Resmi</p>
+                                            <p class="text-white font-semibold text-lg tracking-wide">Antonockr1@gmail.com</p>
                                         </div>
                                     </div>
                                     <div class="flex items-center gap-6 group">
-                                        <div class="w-14 h-14 rounded-2xl glass-panel flex items-center justify-center text-xl text-stone-400 group-hover:text-amber-500 group-hover:border-amber-500 transition-all"><i class="fa-solid fa-location-dot"></i></div>
+                                        <div class="w-16 h-16 rounded-3xl glass-panel flex items-center justify-center text-xl text-stone-400 group-hover:text-amber-500 group-hover:bg-amber-500/10 transition-all duration-500 border border-white/5 group-hover:border-amber-500/30"><i class="fa-solid fa-location-dot"></i></div>
                                         <div>
-                                            <p class="text-stone-500 text-[10px] uppercase font-bold tracking-widest">Lokasi</p>
-                                            <p class="text-white font-bold text-lg">Bekasi, Indonesia</p>
+                                            <p class="text-stone-500 text-[10px] uppercase font-bold tracking-widest mb-1">Lokasi Domisili</p>
+                                            <p class="text-white font-semibold text-lg tracking-wide">Bekasi, Indonesia</p>
                                         </div>
                                     </div>
                                 </div>
                             </div>
                             <div>
-                                <h4 class="text-xs font-black uppercase text-amber-500 tracking-[0.3em] mb-6">Social Media</h4>
-                                <div class="flex gap-4">
-                                    <a href="#" class="w-14 h-14 rounded-2xl glass-panel flex items-center justify-center text-xl text-stone-400 hover:text-amber-500 hover:border-amber-500 transition-all interactive"><i class="fa-brands fa-github"></i></a>
-                                    <a href="#" class="w-14 h-14 rounded-2xl glass-panel flex items-center justify-center text-xl text-stone-400 hover:text-amber-500 hover:border-amber-500 transition-all interactive"><i class="fa-brands fa-linkedin"></i></a>
-                                    <a href="#" class="w-14 h-14 rounded-2xl glass-panel flex items-center justify-center text-xl text-stone-400 hover:text-amber-500 hover:border-amber-500 transition-all interactive"><i class="fa-brands fa-instagram"></i></a>
+                                <h4 class="text-[11px] font-black uppercase text-amber-500 tracking-[0.3em] mb-8 flex items-center gap-4">
+                                    <span class="w-8 h-[1px] bg-amber-500/50 block"></span> Social Media
+                                </h4>
+                                <div class="flex gap-5">
+                                    <a href="#" class="w-16 h-16 rounded-3xl glass-panel flex items-center justify-center text-2xl text-stone-400 hover:text-white hover:bg-white/10 hover:-translate-y-2 transition-all duration-500 interactive border border-white/5"><i class="fa-brands fa-github"></i></a>
+                                    <a href="#" class="w-16 h-16 rounded-3xl glass-panel flex items-center justify-center text-2xl text-stone-400 hover:text-[#0077b5] hover:bg-[#0077b5]/10 hover:-translate-y-2 transition-all duration-500 interactive border border-white/5"><i class="fa-brands fa-linkedin"></i></a>
+                                    <a href="#" class="w-16 h-16 rounded-3xl glass-panel flex items-center justify-center text-2xl text-stone-400 hover:text-[#E1306C] hover:bg-[#E1306C]/10 hover:-translate-y-2 transition-all duration-500 interactive border border-white/5"><i class="fa-brands fa-instagram"></i></a>
                                 </div>
                             </div>
                         </div>
@@ -351,34 +480,62 @@
         ];
 
         const skills = [
-            { name: "Frontend Mastery", icon: "fa-solid fa-code", desc: "Menciptakan UI/UX yang cepat dan responsif menggunakan React & Next.js." },
-            { name: "Backend Expert", icon: "fa-solid fa-server", desc: "Infrastruktur skala besar dengan Node.js, Go, dan database PostgreSQL." },
-            { name: "DevOps Logic", icon: "fa-solid fa-terminal", desc: "Otomatisasi deployment dengan Docker dan CI/CD pipelines yang aman." }
+            { name: "Frontend Mastery", icon: "fa-solid fa-code", desc: "Menciptakan UI/UX yang cepat dan responsif menggunakan React, Next.js, dan arsitektur Tailwind yang terukur." },
+            { name: "Backend Expert", icon: "fa-solid fa-server", desc: "Membangun infrastruktur skala besar yang tangguh dengan Node.js, Go, dan optimasi database PostgreSQL tingkat lanjut." },
+            { name: "DevOps Logic", icon: "fa-solid fa-terminal", desc: "Mengotomatisasi siklus deployment dengan Docker, Kubernetes, dan CI/CD pipelines yang aman serta efisien." }
         ];
 
         function showPage(id) {
-            document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+            document.querySelectorAll('.page').forEach(p => {
+                p.classList.remove('active');
+            });
             document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
-            const target = document.getElementById('page-' + id);
-            target.classList.add('active');
+            
+            setTimeout(() => {
+                const target = document.getElementById('page-' + id);
+                if (target) {
+                    target.classList.add('active');
+                }
+            }, 50);
+
             document.getElementById('btn-' + id).classList.add('active');
             window.scrollTo({top: 0, behavior: 'smooth'});
         }
 
-        function init() {
-            const skillGrid = document.getElementById('skills-container');
-            if (skillGrid) {
-                skillGrid.innerHTML = skills.map(s => `
-                    <div class="skill-card group interactive">
-                        <div class="skill-icon-box transition-transform group-hover:scale-110">
-                            <i class="${s.icon}"></i>
-                        </div>
-                        <h3 class="text-2xl font-black text-white mb-4 uppercase">${s.name}</h3>
-                        <p class="text-stone-500 font-light leading-relaxed">${s.desc}</p>
-                    </div>
-                `).join('');
-            }
-            renderProjects('Semua');
+        function buildFilters() {
+            const filtersContainer = document.getElementById('project-filters');
+            if (!filtersContainer) return;
+
+            const tags = ['Semua', ...new Set(projects.map(p => p.tag))];
+            
+            filtersContainer.innerHTML = tags.map(tag => {
+                const isActive = tag === 'Semua';
+                return `
+                    <button onclick="handleFilterClick(this, '${tag}')" class="filter-btn px-6 py-2.5 rounded-full border border-white/10 text-[10px] font-bold uppercase tracking-widest transition-all duration-300 ${isActive ? 'bg-amber-500 text-black border-transparent shadow-[0_0_20px_rgba(242,186,66,0.3)]' : 'bg-white/5 text-stone-400 hover:text-white hover:bg-white/10'} interactive">
+                        ${tag}
+                    </button>
+                `;
+            }).join('');
+        }
+
+        function handleFilterClick(button, tag) {
+            document.querySelectorAll('.filter-btn').forEach(btn => {
+                btn.classList.remove('bg-amber-500', 'text-black', 'border-transparent', 'shadow-[0_0_20px_rgba(242,186,66,0.3)]');
+                btn.classList.add('bg-white/5', 'text-stone-400');
+            });
+            button.classList.add('bg-amber-500', 'text-black', 'border-transparent', 'shadow-[0_0_20px_rgba(242,186,66,0.3)]');
+            button.classList.remove('bg-white/5', 'text-stone-400');
+
+            const grid = document.getElementById('full-koleksi-grid');
+            grid.style.opacity = '0';
+            grid.style.transform = 'translateY(20px)';
+            
+            setTimeout(() => {
+                renderProjects(tag);
+                grid.style.transition = 'all 0.5s ease';
+                grid.style.opacity = '1';
+                grid.style.transform = 'translateY(0)';
+            }, 300);
         }
 
         function renderProjects(filter) {
@@ -386,23 +543,132 @@
             if (!grid) return;
             const filtered = filter === 'Semua' ? projects : projects.filter(p => p.tag === filter);
             grid.innerHTML = filtered.map(p => `
-                <a href="${p.link}" target="_blank" class="glass-panel p-4 rounded-[32px] group block interactive transition-all hover:border-amber-500/50">
-                    <div class="aspect-[4/3] rounded-[24px] overflow-hidden mb-6 bg-white/5 relative">
-                        <img src="${p.img}" class="w-full h-full object-cover grayscale group-hover:grayscale-0 transition-all duration-700 group-hover:scale-105">
-                        <div class="absolute inset-0 bg-gradient-to-t from-black/80 flex items-end p-6 opacity-0 group-hover:opacity-100 transition-opacity">
-                            <span class="text-white text-xs font-black uppercase tracking-widest">Explore Project <i class="fa-solid fa-arrow-right ml-2"></i></span>
+                <a href="${p.link}" target="_blank" class="glass-panel p-5 rounded-[36px] group block interactive transition-all duration-500 hover:-translate-y-3 hover:border-amber-500/40 hover:shadow-[0_20px_40px_rgba(0,0,0,0.5)] flex flex-col h-full relative overflow-hidden">
+                    <div class="absolute inset-0 bg-gradient-to-b from-amber-500/0 to-amber-500/5 opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+                    <div class="aspect-[4/3] rounded-[24px] overflow-hidden mb-6 bg-black/50 relative z-10 border border-white/5">
+                        <img src="${p.img}" class="w-full h-full object-cover grayscale opacity-70 group-hover:opacity-100 group-hover:grayscale-0 transition-all duration-700 group-hover:scale-110" onerror="this.onerror=null;this.src='https://placehold.co/600x450/111111/f2ba42?text=${encodeURIComponent(p.title)}'">
+                        <div class="absolute inset-0 bg-gradient-to-t from-black via-black/40 to-transparent flex items-end p-6 opacity-0 group-hover:opacity-100 transition-all duration-500 translate-y-4 group-hover:translate-y-0">
+                            <span class="text-white text-[11px] font-black uppercase tracking-widest flex items-center gap-3 bg-white/10 backdrop-blur-md px-4 py-2 rounded-full">Explore <i class="fa-solid fa-arrow-right text-amber-500"></i></span>
                         </div>
                     </div>
-                    <div class="px-2">
-                        <span class="text-[10px] font-black text-amber-500 tracking-widest uppercase">${p.tag}</span>
-                        <h3 class="text-xl font-bold text-white mt-1 mb-2">${p.title}</h3>
-                        <p class="text-stone-500 text-xs font-light line-clamp-2">${p.desc}</p>
+                    <div class="px-2 flex-grow flex flex-col z-10">
+                        <span class="text-[9px] font-black text-amber-500 tracking-[0.25em] uppercase mb-2 inline-block">${p.tag}</span>
+                        <h3 class="text-2xl font-bold text-white mb-3 group-hover:text-amber-500 transition-colors">${p.title}</h3>
+                        <p class="text-stone-400 text-sm font-light leading-relaxed mt-auto">${p.desc}</p>
                     </div>
                 </a>
             `).join('');
         }
 
-        init();
+        function submitContactForm() {
+            const name = document.getElementById('contact-name').value.trim();
+            const email = document.getElementById('contact-email').value.trim();
+            const message = document.getElementById('contact-message').value.trim();
+            const responseBox = document.getElementById('form-response');
+
+            if (!name || !email || !message) {
+                responseBox.className = "text-xs text-center font-bold tracking-wider py-4 uppercase rounded-2xl bg-red-500/10 text-red-400 mt-6 border border-red-500/20 shadow-[0_0_15px_rgba(239,68,68,0.1)] transition-all duration-300 relative z-10";
+                responseBox.innerText = "Harap isi semua kolom formulir!";
+                responseBox.classList.remove('hidden');
+                return;
+            }
+
+            responseBox.className = "text-xs text-center font-bold tracking-wider py-4 uppercase rounded-2xl bg-amber-500/10 text-amber-500 mt-6 animate-pulse border border-amber-500/20 transition-all duration-300 relative z-10";
+            responseBox.innerText = "Mengirim pesan...";
+            responseBox.classList.remove('hidden');
+
+            setTimeout(() => {
+                responseBox.className = "text-xs text-center font-bold tracking-wider py-4 uppercase rounded-2xl bg-emerald-500/10 text-emerald-400 mt-6 border border-emerald-500/20 shadow-[0_0_15px_rgba(16,185,129,0.1)] transition-all duration-300 relative z-10";
+                responseBox.innerText = `Terima kasih, ${name}! Pesan berhasil dikirim.`;
+                document.getElementById('contact-name').value = '';
+                document.getElementById('contact-email').value = '';
+                document.getElementById('contact-message').value = '';
+            }, 1500);
+        }
+
+        function initRain() {
+            const canvas = document.getElementById('rain-canvas');
+            if (!canvas) return;
+            const ctx = canvas.getContext('2d');
+            let width, height;
+            let drops = [];
+
+            function resize() {
+                width = canvas.width = window.innerWidth;
+                height = canvas.height = window.innerHeight;
+            }
+            resize();
+            window.addEventListener('resize', resize);
+
+            class Drop {
+                constructor() {
+                    this.reset(true);
+                }
+                reset(initial = false) {
+                    this.x = Math.random() * width;
+                    this.y = initial ? Math.random() * height : (Math.random() * -100) - 20; 
+                    this.vy = 12 + Math.random() * 15; 
+                    this.vx = -1.5 - Math.random() * 2.5; 
+                    this.len = 20 + Math.random() * 30; 
+                    this.opacity = 0.1 + Math.random() * 0.25; 
+                    this.weight = 0.8 + Math.random() * 1.2; 
+                }
+                update() {
+                    this.y += this.vy;
+                    this.x += this.vx;
+                    if (this.y > height + 50 || this.x < -50) {
+                        this.reset();
+                    }
+                }
+                draw() {
+                    ctx.beginPath();
+                    // Warna hujan diubah menjadi pantulan matahari pagi (emas pucat/jingga terang)
+                    ctx.strokeStyle = `rgba(255, 215, 140, ${this.opacity})`; 
+                    ctx.lineWidth = this.weight;
+                    ctx.lineCap = 'round';
+                    ctx.moveTo(this.x, this.y);
+                    ctx.lineTo(this.x + (this.vx * 0.5), this.y + this.len);
+                    ctx.stroke();
+                }
+            }
+
+            const maxDrops = 150; 
+            for (let i = 0; i < maxDrops; i++) {
+                drops.push(new Drop());
+            }
+
+            function animate() {
+                ctx.clearRect(0, 0, width, height);
+                drops.forEach(drop => {
+                    drop.update();
+                    drop.draw();
+                });
+                requestAnimationFrame(animate);
+            }
+            animate();
+        }
+
+        function init() {
+            const skillGrid = document.getElementById('skills-container');
+            if (skillGrid) {
+                skillGrid.innerHTML = skills.map(s => `
+                    <div class="skill-card group interactive">
+                        <div class="skill-icon-box">
+                            <i class="${s.icon}"></i>
+                        </div>
+                        <h3 class="text-2xl font-black text-white mb-5 uppercase tracking-tight group-hover:text-amber-500 transition-colors">${s.name}</h3>
+                        <p class="text-stone-400 font-light leading-relaxed text-sm">${s.desc}</p>
+                    </div>
+                `).join('');
+            }
+            buildFilters();
+            renderProjects('Semua');
+            initRain();
+        }
+
+        window.onload = function() {
+            init();
+        };
     </script>
 </body>
 </html>
