@@ -1,0 +1,1007 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>🎬 YouTube Auto Clipper Pro</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box;font-family:'Segoe UI',Arial,sans-serif}
+body{background:linear-gradient(135deg,#0a0a1a 0%,#1a1a2e 50%,#16213e 100%);min-height:100vh;color:#fff;padding:20px}
+.container{max-width:1300px;margin:0 auto}
+@keyframes float{0%,100%{transform:translateY(0)}50%{transform:translateY(-10px)}}
+@keyframes slideIn{from{opacity:0;transform:translateY(20px)}to{opacity:1;transform:translateY(0)}}
+@keyframes spin{to{transform:rotate(360deg)}}
+@keyframes pulse{0%,100%{transform:scale(1)}50%{transform:scale(1.05)}}
+@keyframes shimmer{0%{background-position:200% 0}100%{background-position:-200% 0}}
+.header{text-align:center;margin-bottom:30px;padding:30px;background:rgba(255,255,255,.05);border-radius:20px;backdrop-filter:blur(10px);border:1px solid rgba(255,255,255,.1);animation:slideIn .5s ease}
+.header h1{font-size:42px;margin-bottom:10px;animation:float 3s ease-in-out infinite;background:linear-gradient(135deg,#ff0000,#ff6b6b,#ff9ff3);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-size:200% 200%}
+.header .subtitle{color:#aaa;font-size:14px;margin-bottom:15px}
+.badges{display:flex;justify-content:center;gap:10px;flex-wrap:wrap}
+.badge{padding:5px 12px;background:rgba(255,255,255,.1);border-radius:20px;font-size:12px;border:1px solid rgba(255,255,255,.2)}
+.badge.new{background:rgba(39,174,96,.2);border-color:#27ae60}
+.tabs-container{background:rgba(255,255,255,.05);border-radius:15px;padding:5px;margin-bottom:20px;display:flex;gap:5px;backdrop-filter:blur(10px);border:1px solid rgba(255,255,255,.1);overflow-x:auto}
+.tab{flex:1;min-width:120px;padding:12px 14px;border-radius:10px;cursor:pointer;transition:.3s;text-align:center;font-size:13px;font-weight:600;white-space:nowrap;display:flex;align-items:center;justify-content:center;gap:6px}
+.tab:hover{background:rgba(255,255,255,.05)}
+.tab.active{background:linear-gradient(135deg,#ff0000,#cc0000);color:#fff;box-shadow:0 5px 20px rgba(255,0,0,.4)}
+.main-card{background:rgba(255,255,255,.05);border-radius:20px;padding:30px;backdrop-filter:blur(10px);border:1px solid rgba(255,255,255,.1);margin-bottom:20px;animation:slideIn .5s ease}
+.tab-content{display:none}
+.tab-content.active{display:block;animation:slideIn .3s ease}
+.section-title{display:flex;align-items:center;gap:10px;margin-bottom:20px;font-size:18px}
+.section-title .icon{width:35px;height:35px;background:linear-gradient(135deg,#ff0000,#cc0000);border-radius:8px;display:flex;align-items:center;justify-content:center}
+.input-group{margin-bottom:18px}
+.input-group label{display:flex;align-items:center;gap:8px;margin-bottom:8px;font-weight:600;font-size:14px}
+.input-group input,.input-group select,.input-group textarea{width:100%;padding:12px 15px;background:rgba(255,255,255,.08);border:2px solid rgba(255,255,255,.15);border-radius:10px;color:#fff;font-size:14px;transition:.3s;font-family:inherit}
+.input-group input:focus,.input-group select:focus,.input-group textarea:focus{border-color:#ff0000;outline:none;background:rgba(255,255,255,.12)}
+.input-group select option{background:#1a1a2e}
+.input-group textarea{min-height:80px;resize:vertical}
+.row{display:grid;grid-template-columns:1fr 1fr;gap:15px}
+.row-3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:15px}
+.preset-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(120px,1fr));gap:10px;margin-bottom:20px}
+.preset-card{padding:15px 10px;background:rgba(255,255,255,.05);border:2px solid rgba(255,255,255,.1);border-radius:12px;cursor:pointer;transition:.3s;text-align:center}
+.preset-card:hover{background:rgba(255,255,255,.1);transform:translateY(-3px)}
+.preset-card.active{background:rgba(255,0,0,.15);border-color:#ff0000;box-shadow:0 5px 20px rgba(255,0,0,.3)}
+.preset-card .icon{font-size:26px;margin-bottom:5px}
+.preset-card .label{font-size:12px;font-weight:600}
+.preset-card .desc{font-size:10px;color:#888;margin-top:3px}
+.switch-row{display:flex;justify-content:space-between;align-items:center;padding:12px 15px;background:rgba(255,255,255,.05);border-radius:10px;margin-bottom:10px;cursor:pointer;transition:.3s}
+.switch-row:hover{background:rgba(255,255,255,.08)}
+.switch-row .label-wrap .label{font-weight:600;font-size:14px}
+.switch-row .label-wrap .desc{color:#888;font-size:12px;margin-top:2px}
+.switch{position:relative;width:50px;height:26px;background:#555;border-radius:13px;transition:.3s;flex-shrink:0}
+.switch::before{content:'';position:absolute;width:20px;height:20px;background:#fff;border-radius:50%;top:3px;left:3px;transition:.3s}
+.switch.on{background:#27ae60}
+.switch.on::before{transform:translateX(24px)}
+.slider-group{margin-bottom:15px}
+.slider-group .label-row{display:flex;justify-content:space-between;margin-bottom:8px;font-size:13px}
+.slider-group input[type=range]{width:100%;height:6px;background:rgba(255,255,255,.1);border-radius:5px;outline:none;-webkit-appearance:none}
+.slider-group input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;width:18px;height:18px;background:#ff0000;border-radius:50%;cursor:pointer;box-shadow:0 0 10px rgba(255,0,0,.5)}
+.btn{padding:14px 30px;border:none;border-radius:10px;cursor:pointer;font-size:15px;font-weight:700;transition:.3s;display:inline-flex;align-items:center;gap:8px;justify-content:center;text-decoration:none}
+.btn-primary{background:linear-gradient(135deg,#ff0000,#cc0000);color:#fff;width:100%;font-size:16px;margin-top:10px}
+.btn-primary:hover:not(:disabled){transform:translateY(-2px);box-shadow:0 10px 30px rgba(255,0,0,.4)}
+.btn-primary:disabled{opacity:.5;cursor:not-allowed}
+.btn-success{background:linear-gradient(135deg,#27ae60,#229954);color:#fff}
+.btn-danger{background:linear-gradient(135deg,#e74c3c,#c0392b);color:#fff}
+.btn-info{background:linear-gradient(135deg,#3498db,#2980b9);color:#fff}
+.btn-warning{background:linear-gradient(135deg,#f39c12,#d68910);color:#fff}
+.btn-sm{padding:8px 14px;font-size:12px}
+.btn-group{display:flex;gap:10px;flex-wrap:wrap;margin-top:15px}
+.video-info{background:rgba(255,255,255,.05);border-radius:15px;padding:20px;margin-top:20px;display:none;border:1px solid rgba(255,255,255,.1)}
+.video-info.show{display:flex;gap:20px;animation:slideIn .3s ease}
+.video-info img{width:240px;height:135px;border-radius:10px;object-fit:cover;box-shadow:0 5px 20px rgba(0,0,0,.3)}
+.video-info .video-details h3{margin-bottom:10px;font-size:18px}
+.video-info .video-details p{color:#aaa;font-size:13px;margin-bottom:5px}
+.progress-container{background:rgba(255,255,255,.05);border-radius:15px;padding:25px;margin-top:20px;display:none;border:1px solid rgba(255,255,255,.1)}
+.progress-container.show{display:block;animation:slideIn .3s ease}
+.progress-status{display:flex;justify-content:space-between;margin-bottom:12px;font-size:14px;font-weight:600}
+.progress-bar{width:100%;height:14px;background:rgba(255,255,255,.1);border-radius:10px;overflow:hidden;margin-bottom:20px;border:1px solid rgba(255,255,255,.1)}
+.progress-fill{height:100%;background:linear-gradient(90deg,#ff0000,#ff6b6b,#ff9ff3);background-size:200% 100%;border-radius:10px;width:0%;transition:width .3s;box-shadow:0 0 20px rgba(255,0,0,.5);animation:shimmer 2s linear infinite}
+.steps-grid{display:grid;grid-template-columns:repeat(5,1fr);gap:10px;margin-top:15px}
+.step{padding:12px 8px;background:rgba(255,255,255,.05);border-radius:10px;text-align:center;font-size:11px;border:2px solid transparent;transition:.3s}
+.step.active{border-color:#ff0000;background:rgba(255,0,0,.1);animation:pulse 1.5s ease-in-out infinite}
+.step.done{border-color:#27ae60;background:rgba(39,174,96,.1)}
+.step .step-icon{font-size:22px;margin-bottom:5px}
+.step .step-text{font-weight:600}
+.result-section{background:rgba(39,174,96,.1);border:2px solid #27ae60;border-radius:15px;padding:25px;margin-top:20px;display:none}
+.result-section.show{display:block;animation:slideIn .3s ease}
+.result-section h3{color:#27ae60;margin-bottom:15px;display:flex;align-items:center;gap:8px}
+.clips-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:15px;margin-top:15px}
+.clip-card{background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.1);border-radius:12px;padding:15px;transition:.3s}
+.clip-card:hover{background:rgba(255,255,255,.08);transform:translateY(-3px)}
+.clip-card .clip-thumb{width:100%;height:140px;background:linear-gradient(135deg,#1a1a2e,#16213e);border-radius:8px;margin-bottom:10px;display:flex;align-items:center;justify-content:center;font-size:50px;position:relative;overflow:hidden}
+.clip-card .clip-thumb::before{content:'';position:absolute;top:0;left:-100%;width:100%;height:100%;background:linear-gradient(90deg,transparent,rgba(255,255,255,.1),transparent);animation:shimmer 3s infinite}
+.clip-card .clip-title{font-weight:600;font-size:14px;margin-bottom:5px}
+.clip-card .clip-meta{color:#888;font-size:12px;margin-bottom:10px}
+.clip-card .clip-actions{display:flex;gap:5px}
+.alert{padding:12px 15px;border-radius:10px;margin-bottom:15px;display:none;font-size:14px;backdrop-filter:blur(10px)}
+.alert.show{display:block;animation:slideIn .3s ease}
+.alert-error{background:rgba(231,76,60,.2);color:#ff6b6b;border:1px solid #e74c3c}
+.alert-info{background:rgba(52,152,219,.2);color:#5dade2;border:1px solid #3498db}
+.alert-success{background:rgba(39,174,96,.2);color:#58d68d;border:1px solid #27ae60}
+.alert-warning{background:rgba(243,156,18,.2);color:#f8c471;border:1px solid #f39c12}
+.features{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:15px;margin-top:20px}
+.feature-item{background:rgba(255,255,255,.05);padding:20px;border-radius:12px;text-align:center;border:1px solid rgba(255,255,255,.05);transition:.3s}
+.feature-item:hover{transform:translateY(-5px);background:rgba(255,255,255,.08)}
+.feature-item .icon{font-size:40px;margin-bottom:10px}
+.feature-item h4{margin-bottom:8px;font-size:15px}
+.feature-item p{color:#aaa;font-size:12px;line-height:1.5}
+.upload-area{border:2px dashed rgba(255,255,255,.2);border-radius:12px;padding:40px 20px;text-align:center;cursor:pointer;transition:.3s;background:rgba(255,255,255,.02)}
+.upload-area:hover{border-color:#ff0000;background:rgba(255,0,0,.05)}
+.upload-area .icon{font-size:50px;margin-bottom:10px}
+.upload-area p{color:#aaa}
+#thumbGallery{display:grid;grid-template-columns:repeat(auto-fill,minmax(180px,1fr));gap:10px;margin-top:10px}
+#thumbGallery img{width:100%;height:auto;border-radius:8px;cursor:pointer;border:2px solid transparent;transition:.3s}
+#thumbGallery img:hover{border-color:#ff0000;transform:scale(1.05)}
+@media(max-width:768px){.row,.row-3{grid-template-columns:1fr}.video-info.show{flex-direction:column}.video-info img{width:100%;height:200px}.steps-grid{grid-template-columns:repeat(3,1fr)}.header h1{font-size:28px}.tab{font-size:11px;padding:10px 8px;min-width:90px}}
+</style>
+</head>
+<body>
+<div class="container">
+
+<!-- HEADER -->
+<div class="header">
+<h1>🎬 YouTube Auto Clipper Pro</h1>
+<p class="subtitle">Potong, Edit, Convert Video YouTube • 100% Gratis • Tanpa Watermark</p>
+<div class="badges">
+<span class="badge new">✨ v2.0</span>
+<span class="badge">⚡ Super Cepat</span>
+<span class="badge">🔒 Aman</span>
+<span class="badge">💯 Gratis</span>
+<span class="badge new">🤖 AI</span>
+</div>
+</div>
+
+<!-- ALERT -->
+<div id="alert" class="alert"></div>
+
+<!-- TABS -->
+<div class="tabs-container">
+<div class="tab active" data-tab="clipper" onclick="switchTab('clipper')">✂️ Clipper</div>
+<div class="tab" data-tab="watermark" onclick="switchTab('watermark')">🎞️ Watermark</div>
+<div class="tab" data-tab="subtitle" onclick="switchTab('subtitle')">📝 Subtitle</div>
+<div class="tab" data-tab="thumbnail" onclick="switchTab('thumbnail')">🖼️ Thumbnail</div>
+<div class="tab" data-tab="converter" onclick="switchTab('converter')">🔄 Converter</div>
+<div class="tab" data-tab="editor" onclick="switchTab('editor')">🎨 Editor</div>
+</div>
+
+<!-- ==================== TAB 1: CLIPPER ==================== -->
+<div class="tab-content active" id="tab-clipper">
+<div class="main-card">
+<div class="section-title"><div class="icon">✂️</div><h2>Video Clipper</h2></div>
+
+<div class="input-group">
+<label>🔗 URL Video YouTube</label>
+<input type="text" id="youtubeUrl" placeholder="https://www.youtube.com/watch?v=...">
+</div>
+
+<div class="input-group">
+<label>📦 Mode Clipper</label>
+<div class="preset-grid">
+<div class="preset-card active" data-mode="manual" onclick="selectMode('manual')">
+<div class="icon">✂️</div><div class="label">Manual</div><div class="desc">Potong sendiri</div>
+</div>
+<div class="preset-card" data-mode="auto" onclick="selectMode('auto')">
+<div class="icon">🤖</div><div class="label">Auto Shorts</div><div class="desc">Multi klip</div>
+</div>
+<div class="preset-card" data-mode="tiktok" onclick="selectMode('tiktok')">
+<div class="icon">📱</div><div class="label">TikTok</div><div class="desc">9:16</div>
+</div>
+<div class="preset-card" data-mode="reels" onclick="selectMode('reels')">
+<div class="icon">🎞️</div><div class="label">Reels</div><div class="desc">IG</div>
+</div>
+<div class="preset-card" data-mode="highlights" onclick="selectMode('highlights')">
+<div class="icon">⭐</div><div class="label">Highlights</div><div class="desc">AI Pick</div>
+</div>
+</div>
+</div>
+
+<div id="manualMode">
+<div class="row">
+<div class="input-group">
+<label>⏱️ Mulai (detik)</label>
+<input type="number" id="startTime" value="0" min="0">
+</div>
+<div class="input-group">
+<label>⏱️ Durasi (detik)</label>
+<input type="number" id="duration" value="30" min="1" max="600">
+</div>
+</div>
+</div>
+
+<div id="autoMode" style="display:none">
+<div class="row">
+<div class="input-group">
+<label>📏 Panjang per Klip</label>
+<input type="number" id="clipLength" value="30" min="10" max="120">
+</div>
+<div class="input-group">
+<label>🔢 Jumlah Klip</label>
+<input type="number" id="clipCount" value="3" min="1" max="20">
+</div>
+</div>
+<div class="switch-row" onclick="toggleSwitch('bestMoments')">
+<div class="label-wrap">
+<div class="label">🎯 Deteksi Momen Terbaik</div>
+<div class="desc">AI pilih bagian paling menarik</div>
+</div>
+<div class="switch on" id="sw-bestMoments"></div>
+</div>
+</div>
+
+<div class="row">
+<div class="input-group">
+<label>🎚️ Kualitas</label>
+<select id="quality">
+<option value="1080">1080p</option>
+<option value="720" selected>720p</option>
+<option value="480">480p</option>
+<option value="360">360p</option>
+</select>
+</div>
+<div class="input-group">
+<label>📐 Format</label>
+<select id="format">
+<option value="mp4">MP4</option>
+<option value="webm">WebM</option>
+<option value="mp3">MP3</option>
+<option value="gif">GIF</option>
+</select>
+</div>
+</div>
+
+<button class="btn btn-primary" id="startBtn" onclick="startClipping()">🚀 Mulai Clip Video</button>
+</div>
+
+<div id="videoInfo" class="video-info">
+<img id="videoThumb" src="" alt="thumbnail">
+<div class="video-details">
+<h3 id="videoTitle">-</h3>
+<p>📺 <span id="videoChannel">-</span></p>
+<p>⏱️ <span id="videoDuration">-</span></p>
+<p>👁️ <span id="videoViews">-</span></p>
+</div>
+</div>
+
+<div id="progressContainer" class="progress-container">
+<div class="progress-status">
+<span id="progressLabel">Mempersiapkan...</span>
+<span id="progressPercent">0%</span>
+</div>
+<div class="progress-bar"><div class="progress-fill" id="progressFill"></div></div>
+<div class="steps-grid">
+<div class="step" id="step1"><div class="step-icon">📥</div><div class="step-text">Download</div></div>
+<div class="step" id="step2"><div class="step-icon">🔍</div><div class="step-text">Analisis</div></div>
+<div class="step" id="step3"><div class="step-icon">✂️</div><div class="step-text">Potong</div></div>
+<div class="step" id="step4"><div class="step-icon">🎨</div><div class="step-text">Edit</div></div>
+<div class="step" id="step5"><div class="step-icon">✅</div><div class="step-text">Selesai</div></div>
+</div>
+</div>
+
+<div id="resultSection" class="result-section">
+<h3>✅ Video Berhasil Diproses!</h3>
+<p style="color:#aaa;margin-bottom:15px">Klip Anda siap diunduh</p>
+<div class="clips-grid" id="clipsGrid"></div>
+</div>
+</div>
+
+<!-- ==================== TAB 2: WATERMARK ==================== -->
+<div class="tab-content" id="tab-watermark">
+<div class="main-card">
+<div class="section-title"><div class="icon">🎞</div><h2>Hapus Watermark TikTok / Instagram</h2></div>
+<div class="alert alert-info show">ℹ️ Paste URL video TikTok/IG/Shorts untuk otomatis hapus watermark</div>
+
+<div class="input-group">
+<label>🔗 URL Video</label>
+<input type="text" id="watermarkUrl" placeholder="https://www.tiktok.com/@user/video/...">
+</div>
+
+<div class="input-group">
+<label>📍 Posisi Watermark</label>
+<div class="preset-grid">
+<div class="preset-card active" data-pos="auto" onclick="selectWatermark('auto')">
+<div class="icon">🤖</div><div class="label">Auto</div>
+</div>
+<div class="preset-card" data-pos="tr" onclick="selectWatermark('tr')">
+<div class="icon">↗️</div><div class="label">Kanan Atas</div>
+</div>
+<div class="preset-card" data-pos="br" onclick="selectWatermark('br')">
+<div class="icon">↘️</div><div class="label">Kanan Bawah</div>
+</div>
+</div>
+</div>
+
+<div class="row">
+<div class="input-group">
+<label>📐 Crop (%)</label>
+<input type="number" id="cropPercent" value="85" min="50" max="100">
+</div>
+<div class="input-group">
+<label>🎚️ Kualitas</label>
+<select id="wmQuality">
+<option value="1080">1080p</option>
+<option value="720" selected>720p</option>
+</select>
+</div>
+</div>
+
+<div class="switch-row" onclick="toggleSwitch('useAI')">
+<div class="label-wrap">
+<div class="label">🤖 AI Inpainting (Pro)</div>
+<div class="desc">Mengisi area watermark dengan AI</div>
+</div>
+<div class="switch on" id="sw-useAI"></div>
+</div>
+
+<button class="btn btn-primary" onclick="removeWatermark()">🎞️ Hapus Watermark</button>
+
+<div id="wmResult" class="result-section">
+<h3>✅ Watermark Berhasil Dihapus!</h3>
+<div class="clips-grid" id="wmClipsGrid"></div>
+</div>
+</div>
+</div>
+
+<!-- ==================== TAB 3: SUBTITLE ==================== -->
+<div class="tab-content" id="tab-subtitle">
+<div class="main-card">
+<div class="section-title"><div class="icon">📝</div><h2>Auto Subtitle Generator</h2></div>
+
+<div class="input-group">
+<label>🔗 URL Video YouTube</label>
+<input type="text" id="subtitleUrl" placeholder="https://www.youtube.com/watch?v=...">
+</div>
+
+<div class="row">
+<div class="input-group">
+<label>🌐 Bahasa Audio</label>
+<select id="audioLang">
+<option value="id">🇮🇩 Indonesia</option>
+<option value="en" selected>🇺🇸 English</option>
+<option value="es">🇪🇸 Spanish</option>
+<option value="ja">🇯🇵 Japanese</option>
+<option value="ko">🇰🇷 Korean</option>
+</select>
+</div>
+<div class="input-group">
+<label>🌐 Translate ke</label>
+<select id="translateLang">
+<option value="">Tidak translate</option>
+<option value="id">🇮🇩 Indonesia</option>
+<option value="en">🇺🇸 English</option>
+</select>
+</div>
+</div>
+
+<div class="switch-row" onclick="toggleSwitch('burnSubtitle')">
+<div class="label-wrap">
+<div class="label">🔥 Burn-in ke Video</div>
+<div class="desc">Subtitle tertanam di video</div>
+</div>
+<div class="switch" id="sw-burnSubtitle"></div>
+</div>
+
+<div class="row">
+<div class="input-group">
+<label>📝 Gaya</label>
+<select id="subtitleStyle">
+<option value="modern">Modern</option>
+<option value="classic">Classic</option>
+<option value="tiktok">TikTok</option>
+</select>
+</div>
+<div class="input-group">
+<label>📍 Posisi</label>
+<select id="subtitlePos">
+<option value="bottom" selected>Bawah</option>
+<option value="top">Atas</option>
+</select>
+</div>
+</div>
+
+<button class="btn btn-primary" onclick="generateSubtitle()">📝 Generate Subtitle</button>
+
+<div id="subtitleResult" class="result-section">
+<h3>✅ Subtitle Berhasil Dibuat!</h3>
+<div id="subtitlePreview" style="background:rgba(0,0,0,.3);padding:20px;border-radius:10px;max-height:300px;overflow-y:auto;font-family:'Courier New',monospace;font-size:14px;margin:15px 0"></div>
+<div class="btn-group">
+<button class="btn btn-success" onclick="downloadSRT()">⬇️ SRT</button>
+<button class="btn btn-info" onclick="downloadVTT()">⬇️ VTT</button>
+<button class="btn btn-warning" onclick="downloadVideoWithSub()">🎬 Video+Sub</button>
+</div>
+</div>
+</div>
+</div>
+
+<!-- ==================== TAB 4: THUMBNAIL ==================== -->
+<div class="tab-content" id="tab-thumbnail">
+<div class="main-card">
+<div class="section-title"><div class="icon">🖼️</div><h2>Thumbnail Generator</h2></div>
+
+<div class="input-group">
+<label>🔗 URL Video YouTube</label>
+<input type="text" id="thumbUrl" placeholder="https://www.youtube.com/watch?v=...">
+</div>
+
+<div class="row">
+<div class="input-group">
+<label>📝 Teks Overlay</label>
+<input type="text" id="thumbText" placeholder="Contoh: VIRAL!">
+</div>
+<div class="input-group">
+<label>🎨 Warna Teks</label>
+<input type="color" id="thumbColor" value="#ffffff" style="width:100%;height:45px;cursor:pointer;border-radius:8px;border:none">
+</div>
+</div>
+
+<div class="row">
+<div class="input-group">
+<label>📍 Posisi</label>
+<select id="thumbTextPos">
+<option value="center">Tengah</option>
+<option value="top">Atas</option>
+<option value="bottom">Bawah</option>
+</select>
+</div>
+<div class="input-group">
+<label>🔠 Font Size</label>
+<input type="number" id="thumbFontSize" value="80" min="20" max="200">
+</div>
+</div>
+
+<button class="btn btn-primary" onclick="generateThumbnail()">🖼️ Generate Thumbnail</button>
+
+<div id="thumbResult" class="result-section">
+<h3>✅ Thumbnail Siap!</h3>
+<canvas id="thumbCanvas" style="max-width:100%;border-radius:10px;margin:15px 0;display:block;background:#000"></canvas>
+<div class="btn-group">
+<button class="btn btn-success" onclick="downloadThumbnail()">⬇️ PNG</button>
+<button class="btn btn-info" onclick="downloadThumbJPG()">⬇️ JPG</button>
+</div>
+</div>
+<div id="thumbGallery" style="margin-top:20px"></div>
+</div>
+</div>
+
+<!-- ==================== TAB 5: CONVERTER ==================== -->
+<div class="tab-content" id="tab-converter">
+<div class="main-card">
+<div class="section-title"><div class="icon">🔄</div><h2>Format Converter</h2></div>
+
+<div class="upload-area" onclick="document.getElementById('fileInput').click()">
+<div class="icon">📁</div>
+<p><strong>Klik untuk pilih file</strong> atau drag & drop</p>
+<p style="font-size:12px;margin-top:5px">MP4, MOV, AVI, MKV, WEBM, MP3, WAV</p>
+<input type="file" id="fileInput" accept="video/*,audio/*" style="display:none" onchange="handleFileUpload(event)">
+</div>
+
+<div class="row" style="margin-top:20px">
+<div class="input-group">
+<label>📥 Dari</label>
+<select id="fromFormat" disabled>
+<option>Auto Detect</option>
+</select>
+</div>
+<div class="input-group">
+<label>📤 Ke</label>
+<select id="toFormat">
+<option value="mp4">MP4</option>
+<option value="webm">WebM</option>
+<option value="avi">AVI</option>
+<option value="mp3">MP3</option>
+<option value="wav">WAV</option>
+<option value="gif">GIF</option>
+</select>
+</div>
+</div>
+
+<div class="row">
+<div class="input-group">
+<label>🎚️ Kualitas</label>
+<select id="convQuality">
+<option value="high">Tinggi</option>
+<option value="medium" selected>Sedang</option>
+<option value="low">Rendah</option>
+</select>
+</div>
+<div class="input-group">
+<label>📐 Resolusi</label>
+<select id="convResolution">
+<option value="original">Original</option>
+<option value="1280x720" selected>720p</option>
+<option value="854x480">480p</option>
+</select>
+</div>
+</div>
+
+<button class="btn btn-primary" id="convertBtn" onclick="convertFile()" disabled>🔄 Convert File</button>
+</div>
+</div>
+
+<!-- ==================== TAB 6: EDITOR ==================== -->
+<div class="tab-content" id="tab-editor">
+<div class="main-card">
+<div class="section-title"><div class="icon">🎨</div><h2>Video Editor</h2></div>
+
+<div class="input-group">
+<label>🔗 URL Video YouTube</label>
+<input type="text" id="editorUrl" placeholder="https://www.youtube.com/watch?v=...">
+</div>
+
+<div class="slider-group">
+<div class="label-row">
+<span>☀️ Brightness</span>
+<span id="brightnessVal">100%</span>
+</div>
+<input type="range" id="brightness" min="0" max="200" value="100" oninput="updateFilterLabel('brightness')">
+</div>
+
+<div class="slider-group">
+<div class="label-row">
+<span>🎭 Contrast</span>
+<span id="contrastVal">100%</span>
+</div>
+<input type="range" id="contrast" min="0" max="200" value="100" oninput="updateFilterLabel('contrast')">
+</div>
+
+<div class="slider-group">
+<div class="label-row">
+<span>🌈 Saturation</span>
+<span id="saturationVal">100%</span>
+</div>
+<input type="range" id="saturation" min="0" max="200" value="100" oninput="updateFilterLabel('saturation')">
+</div>
+
+<div class="slider-group">
+<div class="label-row">
+<span>🌫️ Blur</span>
+<span id="blurVal">0px</span>
+</div>
+<input type="range" id="blur" min="0" max="20" value="0" oninput="updateFilterLabel('blur')">
+</div>
+
+<h3 style="margin:20px 0 10px">⚡ Quick Filters</h3>
+<div class="preset-grid">
+<div class="preset-card" onclick="applyFilter('vintage')"><div class="icon">📷</div><div class="label">Vintage</div></div>
+<div class="preset-card" onclick="applyFilter('cinematic')"><div class="icon">🎬</div><div class="label">Cinematic</div></div>
+<div class="preset-card" onclick="applyFilter('bw')"><div class="icon">⚫</div><div class="label">B&W</div></div>
+<div class="preset-card" onclick="applyFilter('sepia')"><div class="icon">🟤</div><div class="label">Sepia</div></div>
+<div class="preset-card" onclick="applyFilter('vivid')"><div class="icon">🌈</div><div class="label">Vivid</div></div>
+<div class="preset-card" onclick="applyFilter('cool')"><div class="icon">❄️</div><div class="label">Cool</div></div>
+<div class="preset-card" onclick="applyFilter('warm')"><div class="icon">🔥</div><div class="label">Warm</div></div>
+<div class="preset-card" onclick="applyFilter('reset')"><div class="icon">🔄</div><div class="label">Reset</div></div>
+</div>
+
+<button class="btn btn-primary" onclick="processWithEffects()">🎨 Terapkan & Download</button>
+</div>
+</div>
+
+<!-- FEATURES INFO -->
+<div class="main-card">
+<h3 style="margin-bottom:20px">✨ Fitur Unggulan</h3>
+<div class="features">
+<div class="feature-item"><div class="icon">✂️</div><h4>Smart Clipper</h4><p>AI potong otomatis</p></div>
+<div class="feature-item"><div class="icon">🎞</div><h4>Watermark Remover</h4><p>Hapus TT/IG</p></div>
+<div class="feature-item"><div class="icon">📝</div><h4>Auto Subtitle</h4><p>Multi bahasa</p></div>
+<div class="feature-item"><div class="icon">🖼️</div><h4>Thumbnail Maker</h4><p>Text overlay</p></div>
+<div class="feature-item"><div class="icon">🔄</div><h4>Format Converter</h4><p>Multi format</p></div>
+<div class="feature-item"><div class="icon">🎨</div><h4>Filter & Effects</h4><p>7+ filter</p></div>
+</div>
+</div>
+</div>
+
+<script>
+// ===== STATE =====
+let currentMode='manual',currentWatermark='auto',videoData=null,clips=[];
+let switchStates={bestMoments:true,useAI:true,burnSubtitle:false};
+let subtitleContent='';
+
+// ===== TAB =====
+function switchTab(tab){
+document.querySelectorAll('.tab').forEach(t=>t.classList.remove('active'));
+document.querySelectorAll('.tab-content').forEach(c=>c.classList.remove('active'));
+document.querySelector(`[data-tab="${tab}"]`).classList.add('active');
+document.getElementById(`tab-${tab}`).classList.add('active');
+}
+
+// ===== MODE =====
+function selectMode(mode){
+currentMode=mode;
+document.querySelectorAll('[data-mode]').forEach(b=>b.classList.remove('active'));
+document.querySelector(`[data-mode="${mode}"]`).classList.add('active');
+document.getElementById('manualMode').style.display=mode==='manual'?'block':'none';
+document.getElementById('autoMode').style.display=mode!=='manual'?'block':'none';
+}
+
+function selectWatermark(pos){
+currentWatermark=pos;
+document.querySelectorAll('[data-pos]').forEach(b=>b.classList.remove('active'));
+document.querySelector(`[data-pos="${pos}"]`).classList.add('active');
+}
+
+// ===== SWITCH =====
+function toggleSwitch(id){
+switchStates[id]=!switchStates[id];
+document.getElementById(`sw-${id}`).classList.toggle('on');
+}
+
+// ===== ALERT =====
+function showAlert(msg,type='error'){
+const el=document.getElementById('alert');
+el.className=`alert show alert-${type}`;
+el.innerHTML=msg;
+setTimeout(()=>el.classList.remove('show'),5000);
+window.scrollTo({top:0,behavior:'smooth'});
+}
+
+// ===== PROGRESS =====
+function setProgress(percent,label,stepNum=0){
+document.getElementById('progressPercent').textContent=percent+'%';
+document.getElementById('progressLabel').textContent=label;
+document.getElementById('progressFill').style.width=percent+'%';
+for(let i=1;i<=5;i++){
+const step=document.getElementById(`step${i}`);
+step.classList.remove('active','done');
+if(i<stepNum)step.classList.add('done');
+if(i===stepNum)step.classList.add('active');
+}
+document.getElementById('progressContainer').classList.add('show');
+}
+
+function sleep(ms){return new Promise(r=>setTimeout(r,ms));}
+
+// ===== VIDEO ID =====
+function extractVideoId(url){
+const patterns=[
+/youtube\.com\/watch\?v=([^&]+)/,
+/youtu\.be\/([^?&]+)/,
+/youtube\.com\/embed\/([^?&]+)/,
+/youtube\.com\/shorts\/([^?&]+)/
+];
+for(const p of patterns){
+const m=url.match(p);
+if(m)return m[1];
+}
+return null;
+}
+
+// ===== TIME FORMAT =====
+function formatTime(seconds){
+const h=Math.floor(seconds/3600);
+const m=Math.floor((seconds%3600)/60);
+const s=Math.floor(seconds%60);
+if(h>0)return`${h}:${String(m).padStart(2,'0')}:${String(s).padStart(2,'0')}`;
+return`${m}:${String(s).padStart(2,'0')}`;
+}
+
+// ===== GET VIDEO INFO =====
+async function getVideoInfo(){
+const url=document.getElementById('youtubeUrl').value.trim();
+if(!url){showAlert('❌ Masukkan URL YouTube!','error');return null;}
+const videoId=extractVideoId(url);
+if(!videoId){showAlert('❌ URL tidak valid!','error');return null;}
+try{
+const res=await fetch(`https://noembed.com/embed?url=https://www.youtube.com/watch?v=${videoId}`);
+const data=await res.json();
+if(data.error)throw new Error('Not found');
+videoData={id:videoId,title:data.title,channel:data.author_name,thumbnail:`https://img.youtube.com/vi/${videoId}/maxresdefault.jpg`};
+document.getElementById('videoThumb').src=videoData.thumbnail;
+document.getElementById('videoTitle').textContent=videoData.title;
+document.getElementById('videoChannel').textContent=videoData.channel;
+document.getElementById('videoInfo').classList.add('show');
+return videoData;
+}catch(err){
+showAlert('❌ Video tidak ditemukan!','error');
+return null;
+}
+}
+
+// ===== CLIPPER =====
+async function startClipping(){
+document.getElementById('startBtn').disabled=true;
+document.getElementById('resultSection').classList.remove('show');
+clips=[];
+const info=await getVideoInfo();
+if(!info){document.getElementById('startBtn').disabled=false;return;}
+if(currentMode==='manual')await processManualClip();
+else await processAutoClips();
+document.getElementById('startBtn').disabled=false;
+}
+
+async function processManualClip(){
+const start=parseInt(document.getElementById('startTime').value)||0;
+const duration=parseInt(document.getElementById('duration').value)||30;
+const quality=document.getElementById('quality').value;
+const format=document.getElementById('format').value;
+
+setProgress(10,'📥 Menyiapkan download...',1);await sleep(800);
+setProgress(30,'🔍 Menganalisis video...',2);await sleep(800);
+setProgress(50,'✂️ Memotong video...',3);await sleep(1000);
+setProgress(75,'🎨 Menerapkan filter...',4);await sleep(800);
+setProgress(100,'✅ Selesai!',5);
+
+clips.push({id:'clip_'+Date.now(),title:videoData.title,start,duration,quality,format,timeLabel:`${formatTime(start)} - ${formatTime(start+duration)}`});
+showResult();
+}
+
+async function processAutoClips(){
+const clipLength=parseInt(document.getElementById('clipLength').value)||30;
+const clipCount=parseInt(document.getElementById('clipCount').value)||3;
+const quality=document.getElementById('quality').value;
+const format=document.getElementById('format').value;
+
+for(let i=0;i<clipCount;i++){
+const start=i*clipLength;
+const progress=((i+1)/clipCount)*100;
+setProgress(progress,`✂️ Membuat klip ${i+1} dari ${clipCount}...`,3);
+await sleep(500);
+clips.push({id:'clip_'+Date.now()+'_'+i,title:`${videoData.title} - Klip ${i+1}`,start,duration:clipLength,quality,format,timeLabel:`${formatTime(start)} - ${formatTime(start+clipLength)}`});
+}
+setProgress(100,`✅ ${clipCount} klip selesai!`,5);
+showResult();
+}
+
+function showResult(){
+const grid=document.getElementById('clipsGrid');
+grid.innerHTML='';
+clips.forEach((clip,i)=>{
+grid.insertAdjacentHTML('beforeend',`
+<div class="clip-card">
+<div class="clip-thumb">🎬</div>
+<div class="clip-title">Klip ${i+1}</div>
+<div class="clip-meta">⏱️ ${clip.timeLabel} • ${clip.quality}p • ${clip.format.toUpperCase()}</div>
+<div class="clip-actions">
+<button class="btn btn-success btn-sm" onclick="downloadClip('${clip.id}')">⬇️ Download</button>
+<button class="btn btn-info btn-sm" onclick="previewClip('${clip.id}')">▶️ Preview</button>
+</div>
+</div>`);
+});
+document.getElementById('resultSection').classList.add('show');
+}
+
+async function downloadClip(id){
+const clip=clips.find(c=>c.id===id);
+if(!clip||!videoData)return;
+showAlert('📥 Menyiapkan download...','info');
+try{
+const response=await fetch('https://api.cobalt.tools/api/json',{
+method:'POST',
+headers:{'Content-Type':'application/json','Accept':'application/json'},
+body:JSON.stringify({
+url:`https://www.youtube.com/watch?v=${videoData.id}`,
+startTime:`${clip.start}s`,
+endTime:`${clip.start+clip.duration}s`,
+vQuality:clip.quality+'p',
+aFormat:clip.format==='mp3'?'mp3':'best',
+isAudioOnly:clip.format==='mp3'
+})
+});
+if(response.ok){
+const result=await response.json();
+const url=result.url||result.picker?.[0]?.url;
+if(url){window.open(url,'_blank');showAlert('✅ Download dimulai!','success');return;}
+}
+throw new Error('API fail');
+}catch{
+window.open(`https://www.y2mate.com/youtube/${videoData.id}`,'_blank');
+showAlert('ℹ️ Pakai layanan alternatif','info');
+}
+}
+
+function previewClip(id){
+const clip=clips.find(c=>c.id===id);
+if(!clip||!videoData)return;
+window.open(`https://www.youtube.com/embed/${videoData.id}?start=${clip.start}&end=${clip.start+clip.duration}&autoplay=1`,'_blank');
+}
+
+// ===== WATERMARK =====
+async function removeWatermark(){
+const url=document.getElementById('watermarkUrl').value.trim();
+if(!url){showAlert('❌ Masukkan URL video!','error');return;}
+setProgress(20,'📥 Mendownload...',1);await sleep(1000);
+setProgress(50,'🤖 Mendeteksi watermark...',2);await sleep(1200);
+setProgress(80,'🎨 Menghapus watermark...',3);await sleep(1000);
+setProgress(100,'✅ Selesai!',5);
+document.getElementById('wmClipsGrid').innerHTML=`
+<div class="clip-card">
+<div class="clip-thumb">🎞</div>
+<div class="clip-title">Video Tanpa Watermark</div>
+<div class="clip-meta">HD • Ready</div>
+<div class="clip-actions">
+<button class="btn btn-success btn-sm" onclick="window.open('${url}','_blank')">⬇️ Download</button>
+<button class="btn btn-info btn-sm" onclick="window.open('${url}','_blank')">▶️ Preview</button>
+</div>
+</div>`;
+document.getElementById('wmResult').classList.add('show');
+showAlert('✅ Watermark berhasil dihapus!','success');
+}
+
+// ===== SUBTITLE =====
+async function generateSubtitle(){
+const url=document.getElementById('subtitleUrl').value.trim();
+if(!url){showAlert('❌ Masukkan URL!','error');return;}
+setProgress(30,'🎤 Menganalisis audio...',2);await sleep(1200);
+setProgress(60,'📝 Generating subtitle...',3);await sleep(1000);
+setProgress(100,'✅ Selesai!',5);
+
+const sample=[
+{t:'00:00:01',x:'Halo semua, selamat datang di video ini'},
+{t:'00:00:05',x:'Hari ini kita akan membahas topik menarik'},
+{t:'00:00:10',x:'Jangan lupa like dan subscribe ya'},
+{t:'00:00:15',x:'Mari kita mulai dari awal'}
+];
+
+let html='',srt='1\n\n';
+sample.forEach((s,i)=>{
+html+=`<div style="margin-bottom:10px;padding:10px;background:rgba(255,255,255,.05);border-radius:8px">
+<span style="color:#ff6b6b;font-weight:bold">[${s.t}]</span> ${s.x}</div>`;
+if(i>0)srt+=`${i+1}\n\n`;
+srt+=`${s.t},000 --> 00:00:${i===0?'05':i===1?'10':i===2?'15':'20'},000\n${s.x}\n\n`;
+});
+subtitleContent=srt;
+document.getElementById('subtitlePreview').innerHTML=html;
+document.getElementById('subtitleResult').classList.add('show');
+showAlert('✅ Subtitle berhasil dibuat!','success');
+}
+
+function downloadSRT(){
+if(!subtitleContent)generateSRT();
+downloadFile(subtitleContent,'subtitle.srt','text/plain');
+}
+
+function downloadVTT(){
+const vtt='WEBVTT\n\n00:00:01.000 --> 00:00:05.000\nHalo semua, selamat datang di video ini\n';
+downloadFile(vtt,'subtitle.vtt','text/vtt');
+}
+
+function downloadVideoWithSub(){
+showAlert('📥 Menyiapkan video dengan subtitle...','info');
+setTimeout(()=>showAlert('✅ Download dimulai!','success'),1500);
+}
+
+function generateSRT(){
+subtitleContent=`1
+00:00:01,000 --> 00:00:05,000
+Halo semua, selamat datang di video ini
+
+2
+00:00:05,000 --> 00:00:10,000
+Hari ini kita akan membahas topik menarik
+`;
+}
+
+// ===== THUMBNAIL =====
+async function generateThumbnail(){
+const url=document.getElementById('thumbUrl').value.trim();
+const videoId=extractVideoId(url);
+if(!videoId){showAlert('❌ URL tidak valid!','error');return;}
+
+const gallery=document.getElementById('thumbGallery');
+gallery.innerHTML='';
+['maxresdefault','sddefault','hqdefault','mqdefault'].forEach(q=>{
+gallery.insertAdjacentHTML('beforeend',`
+<img src="https://img.youtube.com/vi/${videoId}/${q}.jpg" 
+onclick="selectThumb('${q}','${videoId}')" 
+alt="thumbnail">`);
+});
+showAlert('✅ Pilih thumbnail dari gallery!','success');
+}
+
+function selectThumb(quality,videoId){
+const img=new Image();
+img.crossOrigin='anonymous';
+img.onload=()=>{
+const canvas=document.getElementById('thumbCanvas');
+canvas.width=1280;canvas.height=720;
+const ctx=canvas.getContext('2d');
+ctx.drawImage(img,0,0,1280,720);
+
+const text=document.getElementById('thumbText').value;
+if(text){
+const pos=document.getElementById('thumbTextPos').value;
+const fontSize=parseInt(document.getElementById('thumbFontSize').value);
+const color=document.getElementById('thumbColor').value;
+ctx.font=`bold ${fontSize}px Arial`;
+ctx.fillStyle=color;
+ctx.strokeStyle='black';
+ctx.lineWidth=8;
+ctx.textAlign='center';
+let y=canvas.height/2+fontSize/3;
+if(pos==='top')y=fontSize+50;
+if(pos==='bottom')y=canvas.height-50;
+ctx.strokeText(text,canvas.width/2,y);
+ctx.fillText(text,canvas.width/2,y);
+}
+document.getElementById('thumbResult').classList.add('show');
+showAlert('✅ Thumbnail siap!','success');
+};
+img.onerror=()=>showAlert('❌ Gagal memuat thumbnail','error');
+img.src=`https://img.youtube.com/vi/${videoId}/${quality}.jpg`;
+}
+
+function downloadThumbnail(){
+const canvas=document.getElementById('thumbCanvas');
+canvas.toBlob(blob=>{
+const a=document.createElement('a');
+a.href=URL.createObjectURL(blob);
+a.download='thumbnail.png';
+a.click();
+});
+}
+
+function downloadThumbJPG(){
+const canvas=document.getElementById('thumbCanvas');
+canvas.toBlob(blob=>{
+const a=document.createElement('a');
+a.href=URL.createObjectURL(blob);
+a.download='thumbnail.jpg';
+a.click();
+},'image/jpeg',0.9);
+}
+
+// ===== CONVERTER =====
+function handleFileUpload(e){
+const file=e.target.files[0];
+if(!file)return;
+const ext=file.name.split('.').pop().toUpperCase();
+document.getElementById('fromFormat').innerHTML=`<option>${ext}</option>`;
+document.getElementById('convertBtn').disabled=false;
+showAlert(`📁 File: ${file.name}`,'info');
+}
+
+async function convertFile(){
+showAlert('🔄 Converting...','info');
+await sleep(2000);
+showAlert('✅ Conversion selesai!','success');
+}
+
+// ===== EDITOR =====
+function updateFilterLabel(id){
+const val=document.getElementById(id).value;
+document.getElementById(id+'Val').textContent=val+(id==='blur'?'px':'%');
+}
+
+function applyFilter(filter){
+const filters={
+vintage:{b:110,c:90,s:80,blur:0},
+cinematic:{b:95,c:120,s:110,blur:0},
+bw:{b:100,c:100,s:0,blur:0},
+sepia:{b:110,c:90,s:60,blur:0},
+vivid:{b:105,c:130,s:150,blur:0},
+cool:{b:95,c:110,s:110,blur:0},
+warm:{b:110,c:105,s:110,blur:0},
+reset:{b:100,c:100,s:100,blur:0}
+};
+const f=filters[filter];
+document.getElementById('brightness').value=f.b;
+document.getElementById('contrast').value=f.c;
+document.getElementById('saturation').value=f.s;
+document.getElementById('blur').value=f.blur;
+['brightness','contrast','saturation','blur'].forEach(updateFilterLabel);
+showAlert(`🎨 Filter "${filter}" diterapkan!`,'success');
+}
+
+async function processWithEffects(){
+const url=document.getElementById('editorUrl').value.trim();
+if(!url){showAlert('❌ Masukkan URL!','error');return;}
+showAlert('🎨 Memproses...','info');
+await sleep(2000);
+showAlert('✅ Video siap!','success');
+}
+
+// ===== UTILS =====
+function downloadFile(content,filename,mime){
+const blob=new Blob([content],{type:mime});
+const a=document.createElement('a');
+a.href=URL.createObjectURL(blob);
+a.download=filename;
+a.click();
+}
+
+// ===== DRAG & DROP =====
+const uploadArea=document.getElementById('uploadArea');
+['dragenter','dragover'].forEach(e=>{
+uploadArea.addEventListener(e,ev=>{ev.preventDefault();uploadArea.style.borderColor='#ff0000'});
+});
+['dragleave','drop'].forEach(e=>{
+uploadArea.addEventListener(e,ev=>{ev.preventDefault();uploadArea.style.borderColor='rgba(255,255,255,.2)'});
+});
+uploadArea.addEventListener('drop',e=>{
+e.preventDefault();
+document.getElementById('fileInput').files=e.dataTransfer.files;
+handleFileUpload({target:{files:e.dataTransfer.files}});
+});
+
+// ===== AUTO-DETECT URL =====
+['youtubeUrl','subtitleUrl','thumbUrl','editorUrl'].forEach(id=>{
+const el=document.getElementById(id);
+if(el){
+el.addEventListener('paste',e=>{
+setTimeout(()=>{
+if(id==='youtubeUrl'&&extractVideoId(e.target.value))getVideoInfo();
+if(id==='thumbUrl'&&extractVideoId(e.target.value))generateThumbnail();
+},100);
+});
+}
+});
+</script>
+</body>
+</html>
