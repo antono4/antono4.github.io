@@ -5,405 +5,398 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Antono | Principal Engineer Portfolio</title>
     <script src="https://cdn.tailwindcss.com"></script>
-    <script src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;600;800&family=JetBrains+Mono:wght@400;500;800&display=swap" rel="stylesheet">
+    <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     <style>
         [x-cloak] { display: none !important; }
         
-        body { 
-            font-family: 'Plus Jakarta Sans', sans-serif; 
+        body {
+            font-family: 'Plus Jakarta Sans', sans-serif;
             scroll-behavior: smooth;
             overflow-x: hidden;
             -webkit-font-smoothing: antialiased;
         }
-
-        .font-mono-custom {
-            font-family: 'JetBrains Mono', monospace;
-        }
-
-        /* Latar Belakang Mesh Hijau - Dark */
-        .bg-mesh-dark {
-            background-color: #020f0a;
-            background-image: 
-                radial-gradient(at 0% 0%, hsla(160, 100%, 15%, 0.4) 0px, transparent 50%),
-                radial-gradient(at 100% 0%, hsla(140, 100%, 10%, 0.4) 0px, transparent 50%),
-                radial-gradient(at 50% 100%, hsla(150, 100%, 12%, 0.4) 0px, transparent 50%);
-        }
-
-        /* Latar Belakang Mesh Hijau - Light */
-        .bg-mesh-light {
-            background-color: #f0fdf4;
-            background-image: 
-                radial-gradient(at 0% 0%, rgba(187, 247, 208, 0.4) 0px, transparent 40%),
-                radial-gradient(at 100% 100%, rgba(167, 243, 208, 0.3) 0px, transparent 40%),
-                radial-gradient(at 50% 50%, rgba(255, 255, 255, 1) 0px, transparent 100%);
-        }
-
-        /* Animasi Lanyard Drop */
-        @keyframes lanyardDrop {
-            0% { transform: translateY(-120%); opacity: 0; }
-            60% { transform: translateY(10px); opacity: 1; }
-            80% { transform: translateY(-5px); }
-            100% { transform: translateY(0); }
-        }
-
-        /* Animasi Tertiup Angin (Ayunan Halus untuk Kartu) */
-        @keyframes windSwayCard {
-            0%, 100% { transform: rotate(0.8deg) translateX(2px) translateY(0); }
-            33% { transform: rotate(-0.5deg) translateX(-1px) translateY(1px); }
-            66% { transform: rotate(0.3deg) translateX(1.5px) translateY(-0.5px); }
-        }
-
-        /* Animasi Gelombang Tali (SVG Path) */
-        @keyframes ribbonWave {
-            0%, 100% { d: path("M 46 -50 L 46 100 Q 46 130, 50 148"); }
-            50% { d: path("M 46 -50 L 48 100 Q 52 130, 50 148"); }
-        }
-
-        @keyframes ribbonWaveSecond {
-            0%, 100% { d: path("M 54 -50 L 54 100 Q 54 130, 50 148"); }
-            50% { d: path("M 54 -50 L 52 100 Q 48 130, 50 148"); }
-        }
-
-        .lanyard-drop-anim {
-            animation: lanyardDrop 1.8s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
-        }
-
-        .wind-effect-card {
-            animation: windSwayCard 6s ease-in-out infinite;
-            transform-origin: top center;
-        }
-
-        .ribbon-wave-1 {
-            animation: ribbonWave 4s ease-in-out infinite;
+        
+        .font-mono-custom { font-family: 'JetBrains Mono', monospace; }
+        
+        /* Animated gradient background */
+        .gradient-bg {
+            background: linear-gradient(-45deg, #020f0a, #0a1f15, #0d2818, #052e16);
+            background-size: 400% 400%;
+            animation: gradientShift 15s ease infinite;
         }
         
-        .ribbon-wave-2 {
-            animation: ribbonWaveSecond 4s ease-in-out infinite;
+        @keyframes gradientShift {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
         }
-
-        .lanyard-container-side {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
+        
+        /* Floating particles */
+        .particle {
+            position: absolute;
+            width: 4px;
+            height: 4px;
+            background: rgba(16, 185, 129, 0.4);
+            border-radius: 50%;
+            animation: float 20s infinite;
             pointer-events: none;
-            position: sticky;
-            top: 75px; 
-            z-index: 50;
         }
-
-        .lanyard-card-interactive {
-            pointer-events: auto;
-            margin-top: -5px;
+        
+        @keyframes float {
+            0%, 100% { transform: translateY(0) translateX(0); opacity: 0; }
+            10% { opacity: 1; }
+            90% { opacity: 1; }
+            100% { transform: translateY(-100vh) translateX(100px); opacity: 0; }
         }
-
-        /* Efek Kilau Holografik */
-        .holo-shimmer {
-            background: linear-gradient(
-                135deg,
-                rgba(255, 255, 255, 0) 0%,
-                rgba(255, 255, 255, 0.05) 25%,
-                rgba(16, 185, 129, 0.1) 50%,
-                rgba(255, 255, 255, 0.05) 75%,
-                rgba(255, 255, 255, 0) 100%
-            );
-            background-size: 400% 400%;
-            animation: holoFlow 15s ease infinite;
+        
+        /* Glowing orb effect */
+        .glow-orb {
+            position: absolute;
+            width: 400px;
+            height: 400px;
+            background: radial-gradient(circle, rgba(16, 185, 129, 0.15) 0%, transparent 70%);
+            border-radius: 50%;
+            filter: blur(60px);
+            animation: orbPulse 8s ease-in-out infinite;
+            pointer-events: none;
         }
-
-        @keyframes holoFlow {
-            0% { background-position: 0% 0%; }
-            50% { background-position: 100% 100%; }
-            100% { background-position: 0% 0%; }
+        
+        @keyframes orbPulse {
+            0%, 100% { transform: scale(1); opacity: 0.5; }
+            50% { transform: scale(1.2); opacity: 0.8; }
         }
-
-        .id-card-texture {
-            background-image: 
-                radial-gradient(circle at 2px 2px, rgba(16, 185, 129, 0.05) 1px, transparent 0);
-            background-size: 24px 24px;
-        }
-
-        .perspective-2000 {
-            perspective: 2000px;
-        }
-
-        .glass-nav {
-            background: rgba(255, 255, 255, 0.75);
-            border: 1px solid rgba(255, 255, 255, 0.4);
-        }
-        .dark .glass-nav {
-            background: rgba(6, 78, 59, 0.25);
+        
+        /* Glass morphism */
+        .glass {
+            background: rgba(255, 255, 255, 0.03);
+            backdrop-filter: blur(20px);
             border: 1px solid rgba(255, 255, 255, 0.08);
         }
-
-        /* Efek Daun Jatuh Realistis */
-        #leaves-container {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            pointer-events: none;
-            z-index: 5;
+        
+        .glass-light {
+            background: rgba(255, 255, 255, 0.6);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.4);
+        }
+        
+        /* Card hover effects */
+        .card-hover {
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+        
+        .card-hover:hover {
+            transform: translateY(-8px) scale(1.02);
+            box-shadow: 0 25px 50px -12px rgba(16, 185, 129, 0.25);
+        }
+        
+        /* Slide up animation */
+        .slide-up {
+            opacity: 0;
+            transform: translateY(60px);
+            transition: all 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+        
+        .slide-up.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        
+        /* Stagger animation delay */
+        .delay-100 { transition-delay: 100ms; }
+        .delay-200 { transition-delay: 200ms; }
+        .delay-300 { transition-delay: 300ms; }
+        .delay-400 { transition-delay: 400ms; }
+        .delay-500 { transition-delay: 500ms; }
+        
+        /* Neon glow text */
+        .neon-glow {
+            text-shadow: 0 0 10px rgba(16, 185, 129, 0.5), 0 0 20px rgba(16, 185, 129, 0.3), 0 0 40px rgba(16, 185, 129, 0.1);
+        }
+        
+        /* Image glow effect */
+        .img-glow {
+            box-shadow: 0 0 30px rgba(16, 185, 129, 0.4), 0 0 60px rgba(16, 185, 129, 0.2);
+        }
+        
+        /* Scroll indicator */
+        .scroll-indicator {
+            animation: scrollBounce 2s ease-in-out infinite;
+        }
+        
+        @keyframes scrollBounce {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(10px); }
+        }
+        
+        /* Marquee */
+        .marquee {
+            animation: marquee 30s linear infinite;
+        }
+        
+        @keyframes marquee {
+            0% { transform: translateX(0); }
+            100% { transform: translateX(-50%); }
+        }
+        
+        /* Magnetic button effect */
+        .magnetic-btn {
+            position: relative;
             overflow: hidden;
         }
         
-        .leaf {
+        .magnetic-btn::before {
+            content: '';
             position: absolute;
-            top: -10%;
-            background-size: contain;
-            background-repeat: no-repeat;
-            animation: fall linear infinite, sway ease-in-out infinite alternate;
-            filter: drop-shadow(0 2px 4px rgba(0,0,0,0.1));
+            top: var(--mouse-y, 50%);
+            left: var(--mouse-x, 50%);
+            width: 0;
+            height: 0;
+            background: rgba(255, 255, 255, 0.2);
+            border-radius: 50%;
+            transform: translate(-50%, -50%);
+            transition: width 0.6s, height 0.6s;
         }
         
-        @keyframes fall {
-            0% { top: -10%; opacity: 0; }
-            10% { opacity: var(--leaf-opacity); }
-            80% { opacity: var(--leaf-opacity); }
-            100% { top: 110%; opacity: 0; }
+        .magnetic-btn:hover::before {
+            width: 300px;
+            height: 300px;
         }
         
-        @keyframes sway {
-            0% { transform: translateX(calc(var(--sway-start) * 1px)) rotate(calc(var(--rot-start) * 1deg)); }
-            100% { transform: translateX(calc(var(--sway-end) * 1px)) rotate(calc(var(--rot-end) * 1deg)); }
+        /* Floating animation */
+        .float-animation {
+            animation: floatY 6s ease-in-out infinite;
+        }
+        
+        @keyframes floatY {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-20px); }
+        }
+        
+        /* Hexagon grid background */
+        .hex-pattern {
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='28' height='49' viewBox='0 0 28 49'%3E%3Cg fill-rule='evenodd'%3E%3Cg fill='%2310b981' fill-opacity='0.03'%3E%3Cpath d='M13.99 9.25l13 7.5v15l-13 7.5L1 31.75v-15l12.99-7.5zM3 17.9v12.7l10.99 6.34 11-6.35V17.9l-11-6.34L3 17.9zM0 15l12.98-7.5V0h-2v6.35L0 12.69v2.3zm0 18.5L12.98 41v8h-2v-6.85L0 35.81v-2.3zM15 0v7.5L27.99 15H28v-2.31h-.01L17 6.35V0h-2zm0 49v-8l12.99-7.5H28v2.31h-.01L17 42.15V49h-2z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+        }
+        
+        /* Custom scrollbar */
+        ::-webkit-scrollbar { width: 8px; }
+        ::-webkit-scrollbar-track { background: rgba(255, 255, 255, 0.05); }
+        ::-webkit-scrollbar-thumb { background: rgba(16, 185, 129, 0.3); border-radius: 4px; }
+        ::-webkit-scrollbar-thumb:hover { background: rgba(16, 185, 129, 0.5); }
+        
+        /* 3D Card tilt */
+        .tilt-3d {
+            transform-style: preserve-3d;
+            transition: transform 0.3s ease;
+        }
+        
+        /* Ripple effect */
+        .ripple {
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .ripple::after {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 0;
+            height: 0;
+            background: rgba(255, 255, 255, 0.3);
+            border-radius: 50%;
+            transform: translate(-50%, -50%);
+            transition: width 0.6s, height 0.6s;
+        }
+        
+        .ripple:active::after {
+            width: 200px;
+            height: 200px;
         }
     </style>
 </head>
-<body 
-    x-data="{ 
-        isDarkMode: false, 
-        activeTab: 'dashboard',
-        isLoaded: false,
-        rotation: { x: 0, y: 0 },
-        handleMouseMove(e) {
-            const centerX = window.innerWidth / 2;
-            const centerY = window.innerHeight / 2;
-            this.rotation.y = (e.clientX - centerX) / 60;
-            this.rotation.x = -(e.clientY - centerY) / 60;
-        }
-    }" 
-    x-init="setTimeout(() => { isLoaded = true; }, 200)"
-    @mousemove="handleMouseMove($event)"
-    :class="isDarkMode ? 'bg-mesh-dark text-emerald-100 dark' : 'bg-mesh-light text-emerald-950'"
-    class="min-h-screen transition-colors duration-1000 relative pb-24 md:pb-0">
+<body x-data="{
+    isDarkMode: true,
+    isMenuOpen: false,
+    scrollProgress: 0,
+    updateScroll() { this.scrollProgress = (window.scrollY / (document.body.scrollHeight - window.innerHeight)) * 100; }
+}" 
+@scroll.window="updateScroll()"
+:class="isDarkMode ? 'gradient-bg text-white' : 'bg-emerald-50/50 text-slate-900'"
+class="min-h-screen transition-all duration-500 relative">
 
-    <!-- Container Daun Jatuh -->
-    <div id="leaves-container"></div>
+    <!-- Animated Background Elements -->
+    <div class="fixed inset-0 overflow-hidden pointer-events-none z-0">
+        <div class="glow-orb" style="top: 10%; left: 10%;"></div>
+        <div class="glow-orb" style="bottom: 20%; right: 10%; animation-delay: -4s;"></div>
+        <div class="glow-orb" style="top: 50%; left: 50%; transform: translate(-50%, -50%); width: 600px; height: 600px; animation-delay: -8s;"></div>
+        
+        <!-- Hexagon Pattern -->
+        <div class="absolute inset-0 hex-pattern opacity-50"></div>
+    </div>
 
-    <!-- Navigasi Desktop -->
-    <nav class="fixed top-0 w-full z-[100] px-4 py-6">
-        <div id="main-nav" class="max-w-6xl mx-auto flex justify-between items-center px-6 py-3 rounded-2xl glass-nav backdrop-blur-2xl shadow-xl">
-            <div class="flex items-center gap-3 cursor-pointer group/logo" @click="activeTab = 'dashboard'">
-                <div class="w-10 h-10 rounded-xl bg-emerald-950 flex items-center justify-center text-emerald-400 font-black italic shadow-lg group-hover/logo:scale-110 transition-transform">A</div>
+    <!-- Scroll Progress Bar -->
+    <div class="fixed top-0 left-0 right-0 h-1 bg-emerald-900/20 z-50">
+        <div class="h-full bg-gradient-to-r from-emerald-500 to-teal-400 transition-all duration-150" :style="`width: ${scrollProgress}%`"></div>
+    </div>
+
+    <!-- Navigation -->
+    <nav class="fixed top-0 w-full z-40 px-6 py-4">
+        <div class="max-w-7xl mx-auto flex justify-between items-center">
+            <!-- Logo -->
+            <div class="flex items-center gap-4 group cursor-pointer" @click="window.scrollTo({top: 0, behavior: 'smooth'})">
+                <div class="relative">
+                    <div class="w-12 h-12 rounded-xl bg-gradient-to-br from-emerald-400 to-emerald-600 flex items-center justify-center shadow-lg shadow-emerald-500/30 group-hover:scale-110 transition-transform">
+                        <span class="text-xl font-black italic text-white">A</span>
+                    </div>
+                    <div class="absolute -inset-1 bg-emerald-400/20 rounded-xl blur-md -z-10 group-hover:bg-emerald-400/40 transition-all"></div>
+                </div>
                 <div class="flex flex-col">
-                    <span class="font-black text-base tracking-tight uppercase leading-none italic">ANTONO<span class="text-emerald-500">_</span></span>
-                    <span class="text-[8px] font-bold tracking-[0.4em] opacity-40 uppercase">Principal Architect</span>
+                    <span class="font-bold text-lg tracking-tight">ANTONO<span class="text-emerald-400">_</span></span>
+                    <span class="text-[10px] font-medium tracking-[0.3em] opacity-40 uppercase">Principal Architect</span>
                 </div>
             </div>
-            
-            <div class="flex gap-3 items-center">
-                <!-- Menu Desktop -->
-                <div class="hidden md:flex gap-8 text-[11px] font-bold uppercase tracking-[0.2em] opacity-60 mr-6">
-                    <button @click="activeTab = 'dashboard'" class="hover:text-emerald-600 transition-all" :class="activeTab === 'dashboard' ? 'text-emerald-600 opacity-100' : ''">Beranda</button>
-                    <button @click="activeTab = 'keahlian'" class="hover:text-emerald-600 transition-all" :class="activeTab === 'keahlian' ? 'text-emerald-600 opacity-100' : ''">Kemampuan</button>
-                    <button @click="activeTab = 'pengalaman'" class="hover:text-emerald-600 transition-all" :class="activeTab === 'pengalaman' ? 'text-emerald-600 opacity-100' : ''">Karir</button>
-                    <button @click="activeTab = 'kontak'" class="hover:text-emerald-600 transition-all" :class="activeTab === 'kontak' ? 'text-emerald-600 opacity-100' : ''">Kontak</button>
-                </div>
 
-                <a href="#" class="flex items-center gap-2 px-4 py-2 rounded-xl bg-emerald-600 text-white text-[10px] font-black uppercase tracking-widest hover:bg-emerald-500 transition-all shadow-lg hover:shadow-emerald-500/20 active:scale-95">
-                    <svg xmlns="http://www.w3.org/2000/svg" class="h-3 w-3" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M4 16v1a2 2 0 002 2h12a2 2 0 002-2v-1m-4-4l-4 4m0 0l-4-4m4 4V4" />
+            <!-- Desktop Menu -->
+            <div class="hidden md:flex items-center gap-8">
+                <template x-for="item in ['Tentang', 'Keahlian', 'Proyek', 'Pengalaman', 'Kontak']" :key="item">
+                    <button @click="document.getElementById(item.toLowerCase()).scrollIntoView({behavior: 'smooth'})" 
+                            class="text-sm font-medium opacity-60 hover:opacity-100 hover:text-emerald-400 transition-all relative group">
+                        <span x-text="item"></span>
+                        <span class="absolute -bottom-1 left-0 w-0 h-0.5 bg-emerald-400 group-hover:w-full transition-all duration-300"></span>
+                    </button>
+                </template>
+            </div>
+
+            <!-- Right Actions -->
+            <div class="flex items-center gap-4">
+                <a href="#" class="hidden sm:flex items-center gap-2 px-5 py-2.5 rounded-xl bg-gradient-to-r from-emerald-500 to-emerald-600 text-white text-sm font-semibold shadow-lg shadow-emerald-500/30 hover:shadow-emerald-500/50 hover:scale-105 transition-all magnetic-btn">
+                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a2 2 0 002 2h12a2 2 0 002-2v-1m-4-4l-4 4m0 0l-4-4m4 4V4"/>
                     </svg>
-                    <span>Download CV</span>
+                    Download CV
                 </a>
+                
+                <button @click="isDarkMode = !isDarkMode" class="w-10 h-10 rounded-xl glass flex items-center justify-center hover:bg-emerald-500/20 transition-all">
+                    <span x-text="isDarkMode ? '☀️' : '🌙'" class="text-lg"></span>
+                </button>
 
-                <button @click="isDarkMode = !isDarkMode" class="w-10 h-10 rounded-xl border border-current/10 flex items-center justify-center hover:bg-current/5 transition-all text-sm">
-                    <span x-text="isDarkMode ? '☀️' : '🌙'"></span>
+                <!-- Mobile Menu Button -->
+                <button @click="isMenuOpen = !isMenuOpen" class="md:hidden w-10 h-10 rounded-xl glass flex items-center justify-center">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/>
+                    </svg>
                 </button>
             </div>
         </div>
+
+        <!-- Mobile Menu -->
+        <div x-show="isMenuOpen" x-cloak x-transition class="md:hidden mt-4 p-6 rounded-2xl glass">
+            <template x-for="item in ['Tentang', 'Keahlian', 'Proyek', 'Pengalaman', 'Kontak']" :key="item">
+                <button @click="document.getElementById(item.toLowerCase()).scrollIntoView({behavior: 'smooth'}); isMenuOpen = false" 
+                        class="block w-full text-left py-3 text-lg font-medium hover:text-emerald-400 transition-colors">
+                    <span x-text="item"></span>
+                </button>
+            </template>
+        </div>
     </nav>
 
-    <!-- Konten Utama -->
-    <main class="max-w-7xl mx-auto px-6 pt-32 pb-32 relative z-10">
-        <div class="flex flex-col lg:flex-row items-start justify-between gap-12">
-            
-            <!-- Sisi Kiri: Konten Teks -->
-            <div class="w-full lg:w-3/5 xl:w-1/2 pt-4 md:pt-12">
-                <!-- Konten Beranda -->
-                <div x-show="activeTab === 'dashboard'" x-transition:enter="transition ease-out duration-700" x-transition:enter-start="opacity-0 translate-y-12">
-                    <header class="mb-12">
-                        <div class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-emerald-600/10 border border-emerald-600/20 text-emerald-700 dark:text-emerald-400 text-[10px] font-black uppercase tracking-widest mb-8">
-                            <span class="relative flex h-2 w-2">
-                                <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
-                                <span class="relative inline-flex rounded-full h-2 w-2 bg-emerald-500"></span>
-                            </span>
-                            Sistem Arsitektur Aktif
-                        </div>
-                        <h1 class="text-5xl md:text-8xl font-black uppercase italic mb-8 leading-[0.85] tracking-tighter">
-                            Membangun <br>
-                            <span class="text-transparent bg-clip-text bg-gradient-to-r from-emerald-600 to-teal-400">Efisiensi.</span>
-                        </h1>
-                        <p class="text-base md:text-xl opacity-60 max-w-lg font-medium leading-relaxed italic mb-12">
-                            Spesialis dalam merancang sistem backend terdistribusi dengan keandalan tinggi dan performa tanpa kompromi untuk skala enterprise.
-                        </p>
-                        
-                        <div class="flex flex-wrap gap-4">
-                            <button @click="activeTab = 'keahlian'" class="px-8 py-4 rounded-2xl bg-emerald-600 text-white font-black uppercase italic tracking-widest shadow-2xl hover:scale-105 transition-transform active:scale-95 text-sm">Lihat Stack</button>
-                            <button @click="activeTab = 'kontak'" class="px-8 py-4 rounded-2xl bg-white dark:bg-white/5 border border-slate-200 dark:border-white/10 font-black uppercase italic tracking-widest hover:bg-slate-50 dark:hover:bg-white/10 transition-colors text-sm">Hubungi Saya</button>
-                        </div>
-                    </header>
+    <!-- Hero Section -->
+    <section id="tentang" class="min-h-screen flex items-center relative z-10 px-6">
+        <div class="max-w-7xl mx-auto w-full pt-20">
+            <div class="grid lg:grid-cols-2 gap-12 items-center">
+                <!-- Left Content -->
+                <div class="space-y-8">
+                    <div class="inline-flex items-center gap-3 px-4 py-2 rounded-full glass text-emerald-400 text-sm font-medium">
+                        <span class="relative flex h-2 w-2">
+                            <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
+                            <span class="relative inline-flex rounded-full h-2 w-2 bg-emerald-500"></span>
+                        </span>
+                        Available for Projects
+                    </div>
 
-                    <div class="grid grid-cols-2 gap-8 border-t border-slate-200 dark:border-white/5 pt-12">
-                        <div>
-                            <span class="text-3xl font-black italic block mb-1">15+</span>
-                            <span class="text-[10px] font-bold opacity-40 uppercase tracking-widest">Tahun Pengalaman</span>
+                    <h1 class="text-5xl md:text-7xl lg:text-8xl font-extrabold leading-[0.9] tracking-tight">
+                        Membangun<br>
+                        <span class="text-transparent bg-clip-text bg-gradient-to-r from-emerald-400 via-teal-400 to-emerald-300 neon-glow">Dunia</span><br>
+                        Digital.
+                    </h1>
+
+                    <p class="text-lg md:text-xl opacity-60 max-w-lg leading-relaxed">
+                        Spesialis dalam merancang sistem backend terdistribusi dengan keandalan tinggi dan performa tanpa kompromi untuk skala enterprise.
+                    </p>
+
+                    <div class="flex flex-wrap gap-4">
+                        <button @click="document.getElementById('proyek').scrollIntoView({behavior: 'smooth'})" 
+                                class="px-8 py-4 rounded-2xl bg-gradient-to-r from-emerald-500 to-emerald-600 text-white font-bold shadow-lg shadow-emerald-500/30 hover:shadow-emerald-500/50 hover:scale-105 transition-all magnetic-btn ripple">
+                            Lihat Proyek
+                        </button>
+                        <button @click="document.getElementById('kontak').scrollIntoView({behavior: 'smooth'})" 
+                                class="px-8 py-4 rounded-2xl glass font-bold hover:bg-white/10 transition-all flex items-center gap-2">
+                            <span>Hubungi Saya</span>
+                            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"/>
+                            </svg>
+                        </button>
+                    </div>
+
+                    <!-- Stats -->
+                    <div class="grid grid-cols-3 gap-8 pt-8 border-t border-white/10">
+                        <div class="slide-up">
+                            <span class="text-4xl font-extrabold text-emerald-400">15+</span>
+                            <p class="text-sm opacity-40 mt-1">Tahun Pengalaman</p>
                         </div>
-                        <div>
-                            <span class="text-3xl font-black italic block mb-1">50+</span>
-                            <span class="text-[10px] font-bold opacity-40 uppercase tracking-widest">Sistem Arsitektur</span>
+                        <div class="slide-up delay-100">
+                            <span class="text-4xl font-extrabold text-emerald-400">50+</span>
+                            <p class="text-sm opacity-40 mt-1">Proyek Selesai</p>
+                        </div>
+                        <div class="slide-up delay-200">
+                            <span class="text-4xl font-extrabold text-emerald-400">100%</span>
+                            <p class="text-sm opacity-40 mt-1">Client Satisfaction</p>
                         </div>
                     </div>
                 </div>
 
-                <!-- Tab Kemampuan -->
-                <div x-show="activeTab === 'keahlian'" x-cloak x-transition:enter="transition ease-out duration-500" x-transition:enter-start="opacity-0 translate-y-12">
-                    <h2 class="text-5xl font-black uppercase italic mb-4 tracking-tighter"><span class="text-emerald-600">Kemampuan</span> & Produk.</h2>
-                    <p class="text-sm opacity-50 uppercase font-bold tracking-widest mb-10 italic">Integrasi estetika visual dengan fungsionalitas teknis.</p>
-                    
-                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
-                        <template x-for="category in [
-                            { title: 'Frontend Stack', skills: ['React.js', 'Vue.js', 'Tailwind CSS', 'Alpine.js', 'Next.js'] },
-                            { title: 'Design & Prototyping', skills: ['Figma', 'Adobe XD', 'Protopie', 'Framermotion'] },
-                            { title: 'UX Engineering', skills: ['Micro-interactions', 'Design Systems', 'Web Accessibility', 'State Management'] },
-                            { title: 'Modern UI Workflow', skills: ['Atomic Design', 'Responsive Architecture', 'PWA', 'Headless UI'] }
-                        ]" :key="category.title">
-                            <div class="p-8 rounded-[2rem] glass-nav shadow-lg border border-white/20">
-                                <h3 class="text-[11px] font-black uppercase tracking-[0.3em] mb-6 text-emerald-600" x-text="category.title"></h3>
-                                <div class="flex flex-wrap gap-2">
-                                    <template x-for="skill in category.skills" :key="skill">
-                                        <span class="px-3 py-1.5 rounded-xl bg-emerald-500/5 border border-emerald-500/10 text-[10px] font-bold uppercase tracking-wider" x-text="skill"></span>
-                                    </template>
+                <!-- Right Content - Profile Card -->
+                <div class="relative flex justify-center lg:justify-end">
+                    <div class="relative">
+                        <!-- Decorative elements -->
+                        <div class="absolute -inset-4 bg-gradient-to-r from-emerald-500/20 to-transparent rounded-3xl blur-2xl"></div>
+                        <div class="absolute -top-8 -right-8 w-32 h-32 border-2 border-emerald-500/30 rounded-full"></div>
+                        <div class="absolute -bottom-8 -left-8 w-24 h-24 border-2 border-emerald-500/20 rounded-full"></div>
+                        
+                        <!-- Main Card -->
+                        <div class="relative w-full max-w-md glass rounded-3xl p-8 card-hover float-animation">
+                            <div class="absolute top-0 left-0 right-0 h-24 bg-gradient-to-r from-emerald-600 to-emerald-500 rounded-t-3xl"></div>
+                            
+                            <div class="relative -mt-12 mb-6 flex justify-center">
+                                <div class="relative">
+                                    <div class="w-28 h-28 rounded-2xl overflow-hidden border-4 border-slate-900/50 img-glow">
+                                        <img src="https://avatars.githubusercontent.com/u/73228642?v=4" alt="Antono" class="w-full h-full object-cover">
+                                    </div>
+                                    <div class="absolute -bottom-2 -right-2 w-8 h-8 bg-emerald-500 rounded-full flex items-center justify-center border-4 border-slate-900">
+                                        <span class="text-sm">✓</span>
+                                    </div>
                                 </div>
                             </div>
-                        </template>
-                    </div>
-                </div>
 
-                <!-- Tab Karir -->
-                <div x-show="activeTab === 'pengalaman'" x-cloak x-transition:enter="transition ease-out duration-500" x-transition:enter-start="opacity-0 translate-y-12">
-                    <h2 class="text-5xl font-black uppercase italic mb-10 tracking-tighter">Rekam <span class="text-emerald-600">Jejak.</span></h2>
-                    <div class="space-y-6">
-                        <template x-for="(exp, index) in [
-                            { year: '2022 - SEKARANG', role: 'Principal Backend Engineer', comp: 'Fintech Solutions Indonesia' },
-                            { year: '2019 - 2022', role: 'Senior Systems Architect', comp: 'Global Tech Corp' },
-                            { year: '2015 - 2019', role: 'Backend Developer', comp: 'Innovation Lab' }
-                        ]" :key="index">
-                            <div class="p-8 rounded-[2.5rem] glass-nav shadow-lg border border-transparent hover:border-emerald-500/20 transition-all">
-                                <span class="text-[9px] font-black tracking-widest text-emerald-600 bg-emerald-600/10 px-4 py-1.5 rounded-full" x-text="exp.year"></span>
-                                <h4 class="text-2xl font-black uppercase italic mt-6 mb-2" x-text="exp.role"></h4>
-                                <p class="text-[10px] font-bold opacity-30 uppercase tracking-[0.4em]" x-text="exp.comp"></p>
-                            </div>
-                        </template>
-                    </div>
-                </div>
+                            <div class="text-center">
+                                <h3 class="text-2xl font-bold mb-1">Antono</h3>
+                                <p class="text-emerald-400 font-medium mb-4">Principal Backend Engineer</p>
+                                
+                                <div class="flex flex-wrap justify-center gap-2 mb-6">
+                                    <span class="px-3 py-1 rounded-full bg-emerald-500/10 text-emerald-400 text-xs font-medium">Fullstack</span>
+                                    <span class="px-3 py-1 rounded-full bg-emerald-500/10 text-emerald-400 text-xs font-medium">System Architect</span>
+                                    <span class="px-3 py-1 rounded-full bg-emerald-500/10 text-emerald-400 text-xs font-medium">Tech Lead</span>
+                                </div>
 
-                <!-- Tab Kontak -->
-                <div x-show="activeTab === 'kontak'" x-cloak x-transition:enter="transition ease-out duration-500" x-transition:enter-start="opacity-0 translate-y-12">
-                    <h2 class="text-5xl font-black uppercase italic mb-4 tracking-tighter">Hubungkan <span class="text-emerald-600">Sistem.</span></h2>
-                    <p class="text-sm opacity-50 uppercase font-bold tracking-widest mb-10 italic">Mari berkolaborasi membangun masa depan digital.</p>
-                    
-                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                        <a href="mailto:hello@antono.dev" class="group p-6 rounded-[2rem] glass-nav shadow-lg flex items-center gap-5 hover:bg-emerald-600 hover:scale-[1.02] transition-all duration-300">
-                            <div class="w-12 h-12 rounded-2xl bg-emerald-600/10 group-hover:bg-white/20 flex items-center justify-center text-xl">📧</div>
-                            <div>
-                                <span class="block text-[10px] font-black uppercase tracking-widest opacity-40 group-hover:text-white">Email</span>
-                                <span class="text-base font-black italic group-hover:text-white">hello@antono.dev</span>
-                            </div>
-                        </a>
-                        <a href="#" class="group p-6 rounded-[2rem] glass-nav shadow-lg flex items-center gap-5 hover:bg-emerald-600 hover:scale-[1.02] transition-all duration-300">
-                            <div class="w-12 h-12 rounded-2xl bg-emerald-600/10 group-hover:bg-white/20 flex items-center justify-center text-xl">💬</div>
-                            <div>
-                                <span class="block text-[10px] font-black uppercase tracking-widest opacity-40 group-hover:text-white">WhatsApp</span>
-                                <span class="text-base font-black italic group-hover:text-white">+62 812 3456 789</span>
-                            </div>
-                        </a>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Sisi Kanan: Lanyard (Kartu ID) -->
-            <div class="w-full lg:w-2/5 flex justify-center lg:justify-end mt-12 lg:mt-0">
-                <div class="lanyard-container-side w-full max-w-[320px]" :class="isLoaded ? 'lanyard-drop-anim' : 'opacity-0'">
-                    <div class="flex flex-col items-center w-full">
-                        <!-- Tali Lanyard -->
-                        <svg class="w-48 h-[160px] overflow-visible" viewBox="0 0 100 160" preserveAspectRatio="none">
-                            <defs>
-                                <pattern id="nylonWeave" width="4" height="4" patternUnits="userSpaceOnUse">
-                                    <path d="M-1,1 l2,-2 M0,4 l4,-4 M3,5 l2,-2" stroke="rgba(0,0,0,0.2)" stroke-width="0.5" />
-                                </pattern>
-                                <linearGradient id="ribbonMain" x1="0%" y1="0%" x2="100%" y2="0%">
-                                    <stop offset="0%" stop-color="#064e3b" />
-                                    <stop offset="50%" stop-color="#065f46" />
-                                    <stop offset="100%" stop-color="#064e3b" />
-                                </linearGradient>
-                            </defs>
-                            <g filter="drop-shadow(0px 4px 4px rgba(0,0,0,0.3))">
-                                <path class="ribbon-wave-1" d="M 46 -50 L 46 100 Q 46 130, 50 148" stroke="url(#ribbonMain)" stroke-width="7" fill="none" />
-                                <path class="ribbon-wave-2" d="M 54 -50 L 54 100 Q 54 130, 50 148" stroke="url(#ribbonMain)" stroke-width="7" fill="none" />
-                                <path class="ribbon-wave-1" d="M 46 -50 L 46 100 Q 46 130, 50 148" stroke="url(#nylonWeave)" stroke-width="7" fill="none" />
-                                <path class="ribbon-wave-2" d="M 54 -50 L 54 100 Q 54 130, 50 148" stroke="url(#nylonWeave)" stroke-width="7" fill="none" />
-                            </g>
-                            <g transform="translate(42, 144)">
-                                <rect width="16" height="14" rx="2" fill="#334155" />
-                                <rect x="1" y="1" width="14" height="12" rx="1.5" fill="#475569" />
-                                <circle cx="8" cy="7" r="2.5" fill="#1e293b" />
-                                <circle cx="8" cy="7" r="1" fill="#10b981" />
-                                <path d="M 8 14 L 8 20 M 4 20 L 12 20" stroke="#94a3b8" stroke-width="2.5" stroke-linecap="round" />
-                            </g>
-                        </svg>
-
-                        <!-- Kartu ID -->
-                        <div class="lanyard-card-interactive wind-effect-card">
-                            <div class="perspective-2000">
-                                <div class="transition-transform duration-500 ease-out" 
-                                     :style="`transform: rotateX(${rotation.x}deg) rotateY(${rotation.y}deg)`">
-                                    
-                                    <div class="w-[280px] h-[410px] rounded-[2rem] bg-slate-900/5 dark:bg-white/5 border border-white/40 backdrop-blur-xl p-1.5 shadow-[0_35px_60px_-15px_rgba(0,0,0,0.3)] relative overflow-hidden flex items-center justify-center">
-                                        <div class="w-[96%] h-[97%] rounded-[1.6rem] overflow-hidden relative flex flex-col transition-colors duration-500 id-card-texture border border-slate-200/50"
-                                             :class="isDarkMode ? 'bg-slate-900 text-white' : 'bg-white text-slate-900'">
-                                            <div class="absolute inset-0 holo-shimmer pointer-events-none opacity-40"></div>
-                                            <div class="h-16 bg-emerald-950 flex flex-col items-center justify-center relative">
-                                                <span class="relative z-10 text-[9px] font-black tracking-[0.4em] text-emerald-400 uppercase italic">IDENTITY ACCESS</span>
-                                            </div>
-                                            <div class="flex-1 p-5 flex flex-col items-center relative">
-                                                <div class="relative mb-4 mt-2">
-                                                    <div class="absolute -inset-2 rounded-2xl bg-gradient-to-br from-emerald-500/20 to-transparent blur-sm"></div>
-                                                    <div class="w-24 h-28 rounded-2xl bg-slate-100 p-1 border-2 border-emerald-950/5 shadow-xl overflow-hidden">
-                                                        <img src="https://avatars.githubusercontent.com/u/73228642?v=4" alt="Antono" class="w-full h-full object-cover rounded-xl">
-                                                    </div>
-                                                </div>
-                                                <div class="text-center w-full">
-                                                    <h3 class="text-xl font-black uppercase tracking-tighter leading-none mb-1">ANTONO</h3>
-                                                    <p class="text-[8px] font-black text-emerald-600 uppercase tracking-[0.2em] bg-emerald-50 px-3 py-1 rounded-full inline-block mb-4">PRINCIPAL ARCHITECT</p>
-                                                    
-                                                    <div class="grid grid-cols-2 gap-y-3 text-left font-mono-custom px-2 mt-4">
-                                                        <div><span class="text-[5px] opacity-40 uppercase block mb-1">Sektor</span><span class="text-[9px] font-bold uppercase">Alpha_7</span></div>
-                                                        <div><span class="text-[5px] opacity-40 uppercase block mb-1">Clearance</span><span class="text-[9px] font-bold uppercase text-emerald-500">Level 9</span></div>
-                                                        <div><span class="text-[5px] opacity-40 uppercase block mb-1">Status</span><span class="text-[9px] font-bold uppercase text-emerald-500">Aktif</span></div>
-                                                        <div><span class="text-[5px] opacity-40 uppercase block mb-1">No. ID</span><span class="text-[9px] font-bold uppercase">ANT-001X</span></div>
-                                                    </div>
-
-                                                    <div class="mt-8 w-full flex flex-col items-center opacity-60">
-                                                        <svg class="w-full h-10" preserveAspectRatio="none" viewBox="0 0 100 20">
-                                                            <rect x="0" y="0" width="2" height="20" fill="currentColor"/><rect x="4" y="0" width="1" height="20" fill="currentColor"/><rect x="7" y="0" width="3" height="20" fill="currentColor"/><rect x="12" y="0" width="1" height="20" fill="currentColor"/><rect x="15" y="0" width="4" height="20" fill="currentColor"/><rect x="22" y="0" width="2" height="20" fill="currentColor"/><rect x="26" y="0" width="1" height="20" fill="currentColor"/><rect x="30" y="0" width="5" height="20" fill="currentColor"/><rect x="37" y="0" width="2" height="20" fill="currentColor"/><rect x="41" y="0" width="1" height="20" fill="currentColor"/><rect x="44" y="0" width="3" height="20" fill="currentColor"/><rect x="50" y="0" width="2" height="20" fill="currentColor"/><rect x="54" y="0" width="4" height="20" fill="currentColor"/><rect x="60" y="0" width="1" height="20" fill="currentColor"/><rect x="63" y="0" width="2" height="20" fill="currentColor"/><rect x="68" y="0" width="3" height="20" fill="currentColor"/><rect x="74" y="0" width="1" height="20" fill="currentColor"/><rect x="78" y="0" width="4" height="20" fill="currentColor"/><rect x="84" y="0" width="2" height="20" fill="currentColor"/><rect x="88" y="0" width="1" height="20" fill="currentColor"/><rect x="91" y="0" width="5" height="20" fill="currentColor"/><rect x="98" y="0" width="2" height="20" fill="currentColor"/>
-                                                        </svg>
-                                                        <span class="text-[5px] font-mono-custom tracking-[0.3em] mt-1">SYS.ARCH.OP.99</span>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
+                                <div class="grid grid-cols-2 gap-4 text-sm">
+                                    <div class="glass rounded-xl p-3">
+                                        <span class="block text-xs opacity-40 mb-1">Location</span>
+                                        <span class="font-semibold">Indonesia 🇮🇩</span>
+                                    </div>
+                                    <div class="glass rounded-xl p-3">
+                                        <span class="block text-xs opacity-40 mb-1">Experience</span>
+                                        <span class="font-semibold">15+ Years</span>
                                     </div>
                                 </div>
                             </div>
@@ -411,37 +404,203 @@
                     </div>
                 </div>
             </div>
-        </div>
-    </main>
 
+            <!-- Scroll Indicator -->
+            <div class="absolute bottom-8 left-1/2 -translate-x-1/2 scroll-indicator">
+                <div class="flex flex-col items-center gap-2 opacity-40">
+                    <span class="text-xs font-medium tracking-widest">SCROLL</span>
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 14l-7 7m0 0l-7-7m7 7V3"/>
+                    </svg>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Marquee Section -->
+    <section class="py-8 border-y border-white/5 relative z-10 overflow-hidden">
+        <div class="flex whitespace-nowrap marquee">
+            <template x-for="i in 2" :key="i">
+                <div class="flex items-center gap-8 px-8">
+                    <template x-for="tech in ['React', 'Node.js', 'Python', 'AWS', 'Docker', 'PostgreSQL', 'MongoDB', 'GraphQL', 'Redis', 'Kubernetes']" :key="tech">
+                        <span class="text-sm font-bold opacity-30 hover:opacity-100 transition-opacity cursor-default" x-text="tech"></span>
+                    </template>
+                </div>
+            </template>
+        </div>
+    </section>
+
+    <!-- Skills Section -->
+    <section id="keahlian" class="py-24 relative z-10 px-6">
+        <div class="max-w-7xl mx-auto">
+            <div class="text-center mb-16">
+                <span class="text-emerald-400 text-sm font-bold tracking-widest uppercase">What I Do</span>
+                <h2 class="text-4xl md:text-6xl font-extrabold mt-4">Keahlian & <span class="text-emerald-400">Tech Stack</span></h2>
+            </div>
+
+            <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+                <!-- Skill Cards -->
+                <template x-for="(skill, index) in [
+                    { title: 'Frontend Development', icon: '🎨', items: ['React.js', 'Vue.js', 'Next.js', 'TypeScript', 'Tailwind CSS'], color: 'from-blue-500 to-cyan-500' },
+                    { title: 'Backend & APIs', icon: '⚙️', items: ['Node.js', 'Python', 'Go', 'GraphQL', 'REST API'], color: 'from-emerald-500 to-teal-500' },
+                    { title: 'Database & Storage', icon: '🗄️', items: ['PostgreSQL', 'MongoDB', 'Redis', 'Firebase', 'Supabase'], color: 'from-orange-500 to-red-500' },
+                    { title: 'Cloud & DevOps', icon: '☁️', items: ['AWS', 'Docker', 'Kubernetes', 'CI/CD', 'Terraform'], color: 'from-purple-500 to-pink-500' },
+                    { title: 'Mobile Development', icon: '📱', items: ['React Native', 'Flutter', 'iOS', 'Android'], color: 'from-indigo-500 to-purple-500' },
+                    { title: 'Design & UX', icon: '✨', items: ['Figma', 'UI/UX Design', 'Prototyping', 'Design Systems'], color: 'from-rose-500 to-pink-500' }
+                ]" :key="index">
+                    <div class="glass rounded-2xl p-6 card-hover group">
+                        <div class="flex items-center gap-4 mb-4">
+                            <div class="w-12 h-12 rounded-xl bg-gradient-to-br text-2xl flex items-center justify-center" :class="skill.color.split(' ')[0] + ' ' + skill.color.split(' ')[1]">
+                                <span x-text="skill.icon"></span>
+                            </div>
+                            <h3 class="text-lg font-bold" x-text="skill.title"></h3>
+                        </div>
+                        <div class="flex flex-wrap gap-2">
+                            <template x-for="item in skill.items" :key="item">
+                                <span class="px-3 py-1 rounded-lg bg-white/5 text-sm font-medium opacity-60 group-hover:opacity-100 transition-opacity" x-text="item"></span>
+                            </template>
+                        </div>
+                    </div>
+                </template>
+            </div>
+        </div>
+    </section>
+
+    <!-- Projects Section -->
+    <section id="proyek" class="py-24 relative z-10 px-6">
+        <div class="max-w-7xl mx-auto">
+            <div class="text-center mb-16">
+                <span class="text-emerald-400 text-sm font-bold tracking-widest uppercase">Portfolio</span>
+                <h2 class="text-4xl md:text-6xl font-extrabold mt-4">Proyek <span class="text-emerald-400">Unggulan</span></h2>
+            </div>
+
+            <div class="grid md:grid-cols-2 gap-8">
+                <template x-for="(project, index) in [
+                    { title: 'FinTech Dashboard', desc: 'Sistem monitoring real-time untuk platform fintech dengan analytics tingkat lanjut', tags: ['React', 'Node.js', 'PostgreSQL'], color: 'emerald' },
+                    { title: 'E-Commerce Platform', desc: 'Marketplace skala enterprise dengan microservices architecture', tags: ['Next.js', 'Go', 'Redis'], color: 'blue' },
+                    { title: 'IoT Monitoring System', desc: 'Platform monitoring perangkat IoT dengan dashboard interaktif', tags: ['Vue.js', 'Python', 'MQTT'], color: 'purple' },
+                    { title: 'Healthcare App', desc: 'Aplikasi telemedicine dengan fitur video call dan appointment scheduling', tags: ['React Native', 'Firebase', 'Twilio'], color: 'rose' }
+                ]" :key="index">
+                    <div class="group glass rounded-2xl overflow-hidden card-hover">
+                        <div class="h-48 bg-gradient-to-br" :class="`from-${project.color}-500/20 to-${project.color}-600/10`"></div>
+                        <div class="p-6">
+                            <h3 class="text-xl font-bold mb-2 group-hover:text-emerald-400 transition-colors" x-text="project.title"></h3>
+                            <p class="text-sm opacity-60 mb-4" x-text="project.desc"></p>
+                            <div class="flex flex-wrap gap-2 mb-4">
+                                <template x-for="tag in project.tags" :key="tag">
+                                    <span class="px-2 py-1 rounded bg-white/5 text-xs font-medium" x-text="tag"></span>
+                                </template>
+                            </div>
+                            <a href="#" class="inline-flex items-center gap-2 text-emerald-400 font-medium text-sm group-hover:gap-4 transition-all">
+                                View Project
+                                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"/>
+                                </svg>
+                            </a>
+                        </div>
+                    </div>
+                </template>
+            </div>
+        </div>
+    </section>
+
+    <!-- Experience Section -->
+    <section id="pengalaman" class="py-24 relative z-10 px-6">
+        <div class="max-w-7xl mx-auto">
+            <div class="text-center mb-16">
+                <span class="text-emerald-400 text-sm font-bold tracking-widest uppercase">Career Path</span>
+                <h2 class="text-4xl md:text-6xl font-extrabold mt-4">Pengalaman <span class="text-emerald-400">Kerja</span></h2>
+            </div>
+
+            <div class="relative">
+                <!-- Timeline Line -->
+                <div class="absolute left-4 md:left-1/2 top-0 bottom-0 w-0.5 bg-gradient-to-b from-emerald-500 via-teal-500 to-emerald-500/20"></div>
+
+                <!-- Timeline Items -->
+                <template x-for="(exp, index) in [
+                    { year: '2022 - Sekarang', role: 'Principal Backend Engineer', company: 'Fintech Solutions Indonesia', desc: 'Leading backend architecture for high-traffic financial systems processing millions of transactions daily.' },
+                    { year: '2019 - 2022', role: 'Senior Systems Architect', company: 'Global Tech Corp', desc: 'Designed and implemented microservices architecture serving 10M+ users globally.' },
+                    { year: '2016 - 2019', role: 'Full Stack Developer', company: 'Innovation Lab', desc: 'Built scalable web applications and RESTful APIs for various enterprise clients.' },
+                    { year: '2014 - 2016', role: 'Junior Developer', company: 'Tech Startup', desc: 'Started career building web applications and learning industry best practices.' }
+                ]" :key="index">
+                    <div class="relative pl-12 md:pl-0 mb-12" :class="index % 2 === 0 ? 'md:pr-[50%]' : 'md:pl-[50%]'">
+                        <!-- Timeline Dot -->
+                        <div class="absolute left-2 md:left-1/2 top-0 w-4 h-4 rounded-full bg-emerald-500 transform -translate-x-1/2 border-4 border-slate-900"></div>
+                        
+                        <div class="glass rounded-2xl p-6 card-hover" :class="index % 2 === 0 ? 'md:mr-8 md:text-right' : 'md:ml-8'">
+                            <span class="inline-block px-3 py-1 rounded-full bg-emerald-500/20 text-emerald-400 text-xs font-bold mb-2" x-text="exp.year"></span>
+                            <h3 class="text-xl font-bold mb-1" x-text="exp.role"></h3>
+                            <p class="text-emerald-400 text-sm font-medium mb-3" x-text="exp.company"></p>
+                            <p class="text-sm opacity-60" x-text="exp.desc"></p>
+                        </div>
+                    </div>
+                </template>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section id="kontak" class="py-24 relative z-10 px-6">
+        <div class="max-w-4xl mx-auto text-center">
+            <span class="text-emerald-400 text-sm font-bold tracking-widest uppercase">Get In Touch</span>
+            <h2 class="text-4xl md:text-6xl font-extrabold mt-4 mb-8">Mari <span class="text-emerald-400">Berkolaborasi</span></h2>
+            <p class="text-lg opacity-60 mb-12 max-w-2xl mx-auto">
+                Tertarik untuk bekerja sama? Jangan ragu untuk menghubungi saya. Saya selalu terbuka untuk diskusi tentang proyek baru dan peluang menarik.
+            </p>
+
+            <div class="grid sm:grid-cols-3 gap-6 mb-12">
+                <a href="mailto:hello@antono.dev" class="glass rounded-2xl p-6 card-hover group">
+                    <div class="text-4xl mb-4">📧</div>
+                    <h4 class="font-bold mb-1">Email</h4>
+                    <p class="text-sm opacity-60 group-hover:text-emerald-400 transition-colors">hello@antono.dev</p>
+                </a>
+                <a href="#" class="glass rounded-2xl p-6 card-hover group">
+                    <div class="text-4xl mb-4">💬</div>
+                    <h4 class="font-bold mb-1">WhatsApp</h4>
+                    <p class="text-sm opacity-60 group-hover:text-emerald-400 transition-colors">+62 812 3456 789</p>
+                </a>
+                <a href="https://linkedin.com/in/antono4" target="_blank" class="glass rounded-2xl p-6 card-hover group">
+                    <div class="text-4xl mb-4">💼</div>
+                    <h4 class="font-bold mb-1">LinkedIn</h4>
+                    <p class="text-sm opacity-60 group-hover:text-emerald-400 transition-colors">antono4</p>
+                </a>
+            </div>
+
+            <!-- Social Links -->
+            <div class="flex justify-center gap-4">
+                <a href="https://github.com/antono4" target="_blank" class="w-12 h-12 glass rounded-xl flex items-center justify-center hover:bg-emerald-500/20 transition-all">
+                    <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24"><path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/></svg>
+                </a>
+                <a href="https://twitter.com/antono4" target="_blank" class="w-12 h-12 glass rounded-xl flex items-center justify-center hover:bg-emerald-500/20 transition-all">
+                    <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
+                </a>
+                <a href="https://instagram.com/antono4" target="_blank" class="w-12 h-12 glass rounded-xl flex items-center justify-center hover:bg-emerald-500/20 transition-all">
+                    <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg>
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="py-8 border-t border-white/10 relative z-10 px-6">
+        <div class="max-w-7xl mx-auto flex flex-col md:flex-row justify-between items-center gap-4">
+            <p class="text-sm opacity-40">© 2024 Antono. All rights reserved.</p>
+            <p class="text-sm opacity-40">Built with 💚 and lots of ☕</p>
+        </div>
+    </footer>
+
+    <!-- Scroll Reveal Script -->
     <script>
         document.addEventListener('DOMContentLoaded', () => {
-            const container = document.getElementById('leaves-container');
-            const leafCount = 25;
-            const leafColors = ['%2310b981', '%23059669', '%2334d399', '%23047857'];
-            
-            for (let i = 0; i < leafCount; i++) {
-                let leaf = document.createElement('div');
-                leaf.className = 'leaf';
-                let size = Math.random() * 20 + 15;
-                let fallDuration = Math.random() * 8 + 6;
-                let swayDuration = Math.random() * 4 + 3;
-                let delay = Math.random() * -15;
-                let color = leafColors[Math.floor(Math.random() * leafColors.length)];
-                let svg = `data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="${color}"><path d="M17,8C8,10 5.9,16.17 3.82,21.34L5.71,22L6.66,19.7C7.14,19.87 7.64,20 8,20C19,20 22,3 22,3C21,5 14,5.25 9,6.25C4,7.25 2,11.5 2,13.5C2,15.5 3.75,17.25 3.75,17.25C7,8 17,8 17,8Z"/></svg>`;
-                leaf.style.width = size + 'px';
-                leaf.style.height = size + 'px';
-                leaf.style.left = Math.random() * 100 + 'vw';
-                leaf.style.backgroundImage = `url('${svg}')`;
-                leaf.style.animationDuration = `${fallDuration}s, ${swayDuration}s`;
-                leaf.style.animationDelay = `${delay}s, ${delay}s`;
-                leaf.style.setProperty('--leaf-opacity', (Math.random() * 0.4 + 0.2).toFixed(2)); 
-                leaf.style.setProperty('--sway-start', Math.random() * -60 - 20);
-                leaf.style.setProperty('--sway-end', Math.random() * 60 + 20);
-                leaf.style.setProperty('--rot-start', Math.random() * 180 - 90);
-                leaf.style.setProperty('--rot-end', Math.random() * 360 + 90);
-                container.appendChild(leaf);
-            }
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('visible');
+                    }
+                });
+            }, { threshold: 0.1 });
+
+            document.querySelectorAll('.slide-up').forEach(el => observer.observe(el));
         });
     </script>
 </body>
