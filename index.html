@@ -3,332 +3,642 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>LuxuryDrive | Sewa Mobil Premium & Eksklusif</title>
+    <title>Antono | Principal Fullstack Developer</title>
     <script src="https://cdn.tailwindcss.com"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Playfair+Display:wght@700;900&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <script>
-        tailwind.config = {
-            theme: {
-                extend: {
-                    fontFamily: {
-                        sans: ['Plus Jakarta Sans', 'sans-serif'],
-                        serif: ['Playfair Display', 'serif'],
-                    },
-                    colors: {
-                        brand: '#3B82F6', // Biru Cerah (Blue-500)
-                        brandDark: '#1D4ED8', // Biru Tua (Blue-700)
-                        premium: '#0F172A', // Navy Gelap (Slate-900)
-                        accent: '#60A5FA', // Biru Muda (Blue-400)
-                    }
-                }
-            }
-        }
-    </script>
+    <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+    
     <style>
-        .glass-nav {
-            background: rgba(15, 23, 42, 0.8);
-            backdrop-filter: blur(12px);
-            -webkit-backdrop-filter: blur(12px);
-            border-bottom: 1px solid rgba(59, 130, 246, 0.2);
+        [x-cloak] { display: none !important; }
+        
+        * { box-sizing: border-box; }
+        
+        body {
+            font-family: 'Inter', sans-serif;
+            background: #050505;
+            color: #fafafa;
+            margin: 0;
+            overflow-x: hidden;
         }
         
-        .hero-gradient {
-            background: linear-gradient(rgba(15, 23, 42, 0.7), rgba(15, 23, 42, 0.7)), url('https://images.unsplash.com/photo-1503376780353-7e6692767b70?auto=format&fit=crop&w=1920&q=80');
-            background-size: cover;
-            background-position: center;
+        .font-mono { font-family: 'JetBrains Mono', monospace; }
+        
+        /* Animated Grid Background */
+        .grid-bg {
+            position: fixed;
+            inset: 0;
+            background-image: 
+                linear-gradient(rgba(245, 158, 11, 0.03) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(245, 158, 11, 0.03) 1px, transparent 1px);
+            background-size: 60px 60px;
+            animation: gridMove 20s linear infinite;
         }
-
-        .car-card:hover {
-            transform: translateY(-10px);
-            box-shadow: 0 20px 40px rgba(59, 130, 246, 0.15);
+        
+        @keyframes gridMove {
+            0% { transform: translate(0, 0); }
+            100% { transform: translate(60px, 60px); }
         }
-
-        .transition-custom {
-            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        
+        /* Glowing orbs */
+        .orb {
+            position: fixed;
+            border-radius: 50%;
+            filter: blur(80px);
+            pointer-events: none;
+            animation: orbFloat 20s ease-in-out infinite;
         }
-
+        
+        .orb-1 {
+            width: 500px; height: 500px;
+            background: radial-gradient(circle, rgba(245, 158, 11, 0.15) 0%, transparent 70%);
+            top: -10%; right: -10%;
+            animation-delay: 0s;
+        }
+        
+        .orb-2 {
+            width: 400px; height: 400px;
+            background: radial-gradient(circle, rgba(234, 88, 12, 0.1) 0%, transparent 70%);
+            bottom: -5%; left: -5%;
+            animation-delay: -10s;
+        }
+        
+        .orb-3 {
+            width: 300px; height: 300px;
+            background: radial-gradient(circle, rgba(161, 98, 7, 0.1) 0%, transparent 70%);
+            top: 50%; left: 50%;
+            transform: translate(-50%, -50%);
+            animation-delay: -5s;
+        }
+        
+        @keyframes orbFloat {
+            0%, 100% { transform: translate(0, 0) scale(1); }
+            25% { transform: translate(30px, -30px) scale(1.05); }
+            50% { transform: translate(-20px, 20px) scale(0.95); }
+            75% { transform: translate(20px, 30px) scale(1.02); }
+        }
+        
+        /* Gradient text */
+        .gradient-text {
+            background: linear-gradient(135deg, #f59e0b 0%, #fbbf24 50%, #f59e0b 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        
+        /* Glass effect */
+        .glass {
+            background: rgba(255, 255, 255, 0.03);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.06);
+        }
+        
+        /* Glass hover */
+        .glass-hover {
+            transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+        
+        .glass-hover:hover {
+            background: rgba(255, 255, 255, 0.06);
+            border-color: rgba(245, 158, 11, 0.3);
+            transform: translateY(-8px);
+            box-shadow: 0 25px 50px -12px rgba(245, 158, 11, 0.15);
+        }
+        
+        /* Button glow */
+        .btn-glow {
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .btn-glow::before {
+            content: '';
+            position: absolute;
+            inset: -2px;
+            background: linear-gradient(135deg, #f59e0b, #fbbf24, #f59e0b);
+            border-radius: inherit;
+            z-index: -1;
+            opacity: 0;
+            transition: opacity 0.3s;
+            filter: blur(15px);
+        }
+        
+        .btn-glow:hover::before {
+            opacity: 1;
+        }
+        
+        /* Animated border */
+        .animated-border {
+            position: relative;
+        }
+        
+        .animated-border::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            border-radius: inherit;
+            padding: 2px;
+            background: linear-gradient(135deg, #f59e0b, transparent, #f59e0b);
+            -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+            mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+            -webkit-mask-composite: xor;
+            mask-composite: exclude;
+            animation: borderRotate 4s linear infinite;
+        }
+        
+        @keyframes borderRotate {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        
+        /* Typing cursor */
+        .cursor::after {
+            content: '|';
+            animation: blink 1s infinite;
+            color: #f59e0b;
+        }
+        
+        @keyframes blink {
+            0%, 50% { opacity: 1; }
+            51%, 100% { opacity: 0; }
+        }
+        
+        /* Slide up animation */
+        .slide-up {
+            opacity: 0;
+            transform: translateY(40px);
+            transition: all 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+        
+        .slide-up.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        
+        /* Marquee */
+        .marquee {
+            animation: marquee 40s linear infinite;
+        }
+        
+        @keyframes marquee {
+            0% { transform: translateX(0); }
+            100% { transform: translateX(-50%); }
+        }
+        
+        /* Floating animation */
+        .float {
+            animation: float 6s ease-in-out infinite;
+        }
+        
+        @keyframes float {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-20px); }
+        }
+        
+        /* Card shine effect */
+        .card-shine {
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .card-shine::after {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: linear-gradient(
+                to bottom right,
+                rgba(255, 255, 255, 0) 0%,
+                rgba(255, 255, 255, 0.03) 50%,
+                rgba(255, 255, 255, 0) 100%
+            );
+            transform: rotate(45deg);
+            transition: 0.8s;
+        }
+        
+        .card-shine:hover::after {
+            left: 100%;
+        }
+        
+        /* Scroll progress */
+        .scroll-progress {
+            position: fixed;
+            top: 0;
+            left: 0;
+            height: 3px;
+            background: linear-gradient(90deg, #f59e0b, #fbbf24);
+            z-index: 9999;
+            transition: width 0.1s;
+        }
+        
+        /* Custom scrollbar */
         ::-webkit-scrollbar { width: 8px; }
-        ::-webkit-scrollbar-track { background: #0F172A; }
-        ::-webkit-scrollbar-thumb { background: #3B82F6; border-radius: 10px; }
+        ::-webkit-scrollbar-track { background: #0a0a0a; }
+        ::-webkit-scrollbar-thumb { background: #f59e0b40; border-radius: 4px; }
+        ::-webkit-scrollbar-thumb:hover { background: #f59e0b80; }
+        
+        /* Stat counter animation */
+        .counter {
+            font-variant-numeric: tabular-nums;
+        }
+        
+        /* Hexagon pattern */
+        .hex-pattern {
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='28' height='49' viewBox='0 0 28 49'%3E%3Cg fill-rule='evenodd'%3E%3Cg fill='%23f59e0b' fill-opacity='0.03'%3E%3Cpath d='M13.99 9.25l13 7.5v15l-13 7.5L1 31.75v-15l12.99-7.5zM3 17.9v12.7l10.99 6.34 11-6.35V17.9l-11-6.34L3 17.9zM0 15l12.98-7.5V0h-2v6.35L0 12.69v2.3zm0 18.5L12.98 41v8h-2v-6.85L0 35.81v-2.3zM15 0v7.5L27.99 15H28v-2.31h-.01L17 6.35V0h-2zm0 49v-8l12.99-7.5H28v2.31h-.01L17 42.15V49h-2z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+        }
+        
+        /* Magnetic effect */
+        .magnetic {
+            transition: transform 0.3s ease;
+        }
+        
+        /* Glow effect on hover */
+        .glow-hover:hover {
+            box-shadow: 0 0 30px rgba(245, 158, 11, 0.3), 0 0 60px rgba(245, 158, 11, 0.1);
+        }
     </style>
 </head>
-<body class="bg-[#020617] text-white font-sans overflow-x-hidden">
+<body x-data="{
+    scrollProgress: 0,
+    activeSection: 'hero',
+    isMenuOpen: false,
+    updateScroll() { this.scrollProgress = (window.scrollY / (document.body.scrollHeight - window.innerHeight)) * 100; }
+}" 
+@scroll.window="updateScroll()"
+class="relative min-h-screen">
 
-    <!-- Navigasi -->
-    <nav class="fixed w-full z-50 glass-nav">
-        <div class="max-w-7xl mx-auto px-6 py-4 flex justify-between items-center">
-            <div class="flex items-center gap-2">
-                <i class="fa-solid fa-crown text-brand text-2xl"></i>
-                <span class="text-2xl font-extrabold tracking-tighter font-serif italic text-brand">LuxuryDrive</span>
+    <!-- Scroll Progress -->
+    <div class="scroll-progress" :style="`width: ${scrollProgress}%`"></div>
+
+    <!-- Background Elements -->
+    <div class="fixed inset-0 pointer-events-none">
+        <div class="grid-bg"></div>
+        <div class="orb orb-1"></div>
+        <div class="orb orb-2"></div>
+        <div class="orb orb-3"></div>
+        <div class="absolute inset-0 hex-pattern opacity-30"></div>
+    </div>
+
+    <!-- Navigation -->
+    <nav class="fixed top-0 w-full z-50 px-6 py-4">
+        <div class="max-w-7xl mx-auto flex justify-between items-center">
+            <!-- Logo -->
+            <div class="flex items-center gap-3 group cursor-pointer" @click="window.scrollTo({top: 0, behavior: 'smooth'})">
+                <div class="relative">
+                    <div class="w-12 h-12 rounded-xl bg-gradient-to-br from-amber-400 to-amber-600 flex items-center justify-center shadow-lg shadow-amber-500/20 group-hover:scale-110 transition-transform">
+                        <span class="text-xl font-black text-black">A</span>
+                    </div>
+                </div>
+                <div>
+                    <span class="font-bold text-lg tracking-tight">ANTONO<span class="text-amber-400">_</span></span>
+                </div>
             </div>
-            <div class="hidden md:flex items-center space-x-8 font-medium">
-                <a href="#beranda" class="hover:text-brand transition-colors">Beranda</a>
-                <a href="#koleksi" class="hover:text-brand transition-colors">Koleksi</a>
-                <a href="#layanan" class="hover:text-brand transition-colors">Layanan</a>
-                <a href="https://wa.me/6281234567890" class="bg-brand text-white px-6 py-2.5 rounded-full font-bold hover:bg-white hover:text-brand transition-all transform hover:scale-105 active:scale-95">
-                    Hubungi Kami
+
+            <!-- Desktop Menu -->
+            <div class="hidden md:flex items-center gap-8">
+                <template x-for="item in ['Tentang', 'Keahlian', 'Proyek', 'Pengalaman', 'Kontak']" :key="item">
+                    <button @click="document.getElementById(item.toLowerCase()).scrollIntoView({behavior: 'smooth'})" 
+                            class="text-sm font-medium opacity-50 hover:opacity-100 hover:text-amber-400 transition-all relative group">
+                        <span x-text="item"></span>
+                    </button>
+                </template>
+            </div>
+
+            <!-- Right Actions -->
+            <div class="flex items-center gap-4">
+                <a href="#" class="hidden sm:flex items-center gap-2 px-5 py-2.5 rounded-xl bg-gradient-to-r from-amber-500 to-amber-600 text-black text-sm font-bold shadow-lg shadow-amber-500/20 hover:shadow-amber-500/40 hover:scale-105 transition-all btn-glow">
+                    <i class="fa-solid fa-download"></i>
+                    Download CV
                 </a>
+                
+                <!-- Mobile Menu Button -->
+                <button @click="isMenuOpen = !isMenuOpen" class="md:hidden w-10 h-10 rounded-xl glass flex items-center justify-center">
+                    <i class="fa-solid fa-bars"></i>
+                </button>
             </div>
+        </div>
+
+        <!-- Mobile Menu -->
+        <div x-show="isMenuOpen" x-cloak x-transition class="md:hidden mt-4 p-6 rounded-2xl glass">
+            <template x-for="item in ['Tentang', 'Keahlian', 'Proyek', 'Pengalaman', 'Kontak']" :key="item">
+                <button @click="document.getElementById(item.toLowerCase()).scrollIntoView({behavior: 'smooth'}); isMenuOpen = false" 
+                        class="block w-full text-left py-3 text-lg font-medium hover:text-amber-400 transition-colors">
+                    <span x-text="item"></span>
+                </button>
+            </template>
         </div>
     </nav>
 
     <!-- Hero Section -->
-    <header id="beranda" class="h-screen hero-gradient flex items-center justify-center relative">
-        <div class="text-center px-6 max-w-4xl">
-            <h4 class="text-brand font-bold tracking-[0.3em] uppercase mb-4 animate-pulse">Definisi Kemewahan Modern</h4>
-            <h1 class="text-5xl md:text-8xl font-black font-serif mb-8 leading-tight">
-                Berkendara Dengan <span class="text-brand italic">Elegansi.</span>
-            </h1>
-            <p class="text-lg md:text-xl text-slate-300 mb-10 max-w-2xl mx-auto leading-relaxed">
-                Nikmati pengalaman berkendara tak terlupakan dengan koleksi mobil mewah terbaik di Indonesia. Pelayanan bintang lima, kenyamanan tanpa batas.
-            </p>
-            <div class="flex flex-col md:flex-row gap-4 justify-center">
-                <a href="#koleksi" class="bg-brand text-white px-10 py-4 rounded-full font-bold text-lg hover:bg-brandDark transition-custom shadow-lg shadow-brand/20">
-                    Eksplor Armada
-                </a>
-                <a href="#" class="border-2 border-white/30 backdrop-blur-md px-10 py-4 rounded-full font-bold text-lg hover:bg-white hover:text-premium transition-custom">
-                    Lihat Paket VVIP
-                </a>
-            </div>
-        </div>
-        <div class="absolute bottom-10 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2 text-brand/50">
-            <span class="text-[10px] tracking-widest uppercase font-bold">Scroll ke bawah</span>
-            <div class="w-px h-12 bg-gradient-to-b from-brand to-transparent"></div>
-        </div>
-    </header>
+    <section id="tentang" class="min-h-screen flex items-center relative z-10 px-6 pt-20">
+        <div class="max-w-7xl mx-auto w-full">
+            <div class="grid lg:grid-cols-2 gap-12 items-center">
+                <!-- Left Content -->
+                <div class="space-y-8">
+                    <div class="inline-flex items-center gap-3 px-4 py-2 rounded-full glass text-amber-400 text-sm font-medium">
+                        <span class="relative flex h-2 w-2">
+                            <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-amber-400 opacity-75"></span>
+                            <span class="relative inline-flex rounded-full h-2 w-2 bg-amber-500"></span>
+                        </span>
+                        Available for Projects
+                    </div>
 
-    <!-- Koleksi Armada -->
-    <section id="koleksi" class="py-24 px-6 bg-[#020617]">
-        <div class="max-w-7xl mx-auto text-center mb-16">
-            <h2 class="text-4xl md:text-5xl font-black font-serif mb-4">Koleksi <span class="text-brand">Unggulan</span></h2>
-            <div class="w-24 h-1 bg-brand mx-auto mb-6"></div>
-            <p class="text-slate-400">Dipilih secara khusus untuk melengkapi gaya hidup prestisius Anda.</p>
-        </div>
+                    <div class="space-y-4">
+                        <h1 class="text-5xl md:text-6xl lg:text-7xl font-black leading-[0.95] tracking-tight">
+                            <span class="block">Membangun</span>
+                            <span class="gradient-text">Solusi</span>
+                            <span class="block">Digital.</span>
+                        </h1>
+                    </div>
 
-        <div class="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-7xl mx-auto">
-            <!-- Mobil 1 -->
-            <div class="car-card transition-custom bg-premium rounded-3xl overflow-hidden border border-brand/10">
-                <div class="h-64 overflow-hidden relative group">
-                    <img src="https://images.unsplash.com/photo-1541899481282-d53bffe3c35d?auto=format&fit=crop&w=800&q=80" alt="Mercedes S-Class" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110">
-                    <div class="absolute top-4 right-4 bg-brand/90 backdrop-blur-md px-3 py-1 rounded-lg text-white text-xs font-bold border border-white/20 italic">
-                        Terlaris
-                    </div>
-                </div>
-                <div class="p-8">
-                    <div class="flex justify-between items-start mb-4">
-                        <h3 class="text-2xl font-bold font-serif">Mercedes-Benz S-Class</h3>
-                    </div>
-                    <div class="grid grid-cols-2 gap-y-3 gap-x-2 text-slate-400 text-sm mb-6">
-                        <span class="flex items-center gap-2"><i class="fa-solid fa-user text-brand w-4 text-center"></i> 4 Kursi</span>
-                        <span class="flex items-center gap-2"><i class="fa-solid fa-bolt text-brand w-4 text-center"></i> Matic</span>
-                        <span class="flex items-center gap-2"><i class="fa-solid fa-microchip text-brand w-4 text-center"></i> V6 Biturbo</span>
-                        <span class="flex items-center gap-2"><i class="fa-solid fa-gas-pump text-brand w-4 text-center"></i> Bensin (RON 98)</span>
-                    </div>
-                    <div class="flex justify-between items-center border-t border-white/5 pt-6">
-                        <div>
-                            <p class="text-[10px] text-slate-500 uppercase font-bold tracking-widest mb-1">Mulai Dari</p>
-                            <p class="text-xl font-black text-brand">Rp 4.5jt<span class="text-xs text-slate-400">/hari</span></p>
-                        </div>
-                        <button onclick="showBooking('Mercedes S-Class')" class="bg-brand text-white p-3 rounded-2xl hover:bg-brandDark transition-colors">
-                            <i class="fa-solid fa-arrow-right-long text-xl"></i>
+                    <p class="text-lg md:text-xl opacity-50 max-w-lg leading-relaxed">
+                        Spesialis dalam merancang dan mengembangkan sistem fullstack dengan performa tinggi untuk skala enterprise.
+                    </p>
+
+                    <div class="flex flex-wrap gap-4">
+                        <button @click="document.getElementById('proyek').scrollIntoView({behavior: 'smooth'})" 
+                                class="px-8 py-4 rounded-2xl bg-gradient-to-r from-amber-500 to-amber-600 text-black font-bold shadow-lg shadow-amber-500/30 hover:shadow-amber-500/50 hover:scale-105 transition-all btn-glow">
+                            Lihat Proyek
+                        </button>
+                        <button @click="document.getElementById('kontak').scrollIntoView({behavior: 'smooth'})" 
+                                class="px-8 py-4 rounded-2xl glass font-bold hover:bg-white/10 transition-all flex items-center gap-2">
+                            <span>Hubungi Saya</span>
+                            <i class="fa-solid fa-arrow-right"></i>
                         </button>
                     </div>
+
+                    <!-- Stats -->
+                    <div class="grid grid-cols-3 gap-8 pt-8 border-t border-white/10">
+                        <div class="slide-up">
+                            <span class="text-4xl font-black gradient-text">15+</span>
+                            <p class="text-sm opacity-40 mt-1">Tahun Pengalaman</p>
+                        </div>
+                        <div class="slide-up delay-100">
+                            <span class="text-4xl font-black gradient-text">50+</span>
+                            <p class="text-sm opacity-40 mt-1">Proyek Selesai</p>
+                        </div>
+                        <div class="slide-up delay-200">
+                            <span class="text-4xl font-black gradient-text">30+</span>
+                            <p class="text-sm opacity-40 mt-1">Technologies</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Right Content - Profile Card -->
+                <div class="relative flex justify-center lg:justify-end">
+                    <div class="relative">
+                        <!-- Decorative circles -->
+                        <div class="absolute -inset-8 border border-amber-500/20 rounded-full animate-pulse"></div>
+                        <div class="absolute -inset-16 border border-amber-500/10 rounded-full"></div>
+                        
+                        <!-- Main Card -->
+                        <div class="relative w-full max-w-sm glass rounded-3xl p-8 glow-hover float">
+                            <div class="absolute top-0 left-0 right-0 h-28 bg-gradient-to-r from-amber-500 to-amber-600 rounded-t-3xl"></div>
+                            
+                            <div class="relative -mt-14 mb-6 flex justify-center">
+                                <div class="relative">
+                                    <div class="w-28 h-28 rounded-2xl overflow-hidden border-4 border-black/50 shadow-lg shadow-amber-500/30">
+                                        <img src="https://avatars.githubusercontent.com/u/73228642?v=4" alt="Antono" class="w-full h-full object-cover">
+                                    </div>
+                                    <div class="absolute -bottom-2 -right-2 w-8 h-8 bg-amber-500 rounded-full flex items-center justify-center border-4 border-black">
+                                        <i class="fa-solid fa-check text-xs text-black"></i>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="text-center">
+                                <h3 class="text-2xl font-bold mb-1">Antono</h3>
+                                <p class="text-amber-400 font-medium mb-4">Principal Fullstack Developer</p>
+                                
+                                <div class="flex flex-wrap justify-center gap-2 mb-6">
+                                    <span class="px-3 py-1 rounded-full bg-amber-500/10 text-amber-400 text-xs font-medium">Backend</span>
+                                    <span class="px-3 py-1 rounded-full bg-amber-500/10 text-amber-400 text-xs font-medium">Frontend</span>
+                                    <span class="px-3 py-1 rounded-full bg-amber-500/10 text-amber-400 text-xs font-medium">DevOps</span>
+                                </div>
+
+                                <div class="grid grid-cols-2 gap-4 text-sm">
+                                    <div class="glass rounded-xl p-3">
+                                        <span class="block text-xs opacity-40 mb-1">Location</span>
+                                        <span class="font-semibold">Indonesia 🇮🇩</span>
+                                    </div>
+                                    <div class="glass rounded-xl p-3">
+                                        <span class="block text-xs opacity-40 mb-1">Experience</span>
+                                        <span class="font-semibold">15+ Years</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
 
-            <!-- Mobil 2 -->
-            <div class="car-card transition-custom bg-premium rounded-3xl overflow-hidden border border-brand/10">
-                <div class="h-64 overflow-hidden relative group">
-                    <img src="https://images.unsplash.com/photo-1617469767053-d3b523a0b982?auto=format&fit=crop&w=800&q=80" alt="Range Rover Vogue" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110">
-                </div>
-                <div class="p-8">
-                    <div class="flex justify-between items-start mb-4">
-                        <h3 class="text-2xl font-bold font-serif">Range Rover Vogue</h3>
-                    </div>
-                    <div class="grid grid-cols-2 gap-y-3 gap-x-2 text-slate-400 text-sm mb-6">
-                        <span class="flex items-center gap-2"><i class="fa-solid fa-user text-brand w-4 text-center"></i> 5 Kursi</span>
-                        <span class="flex items-center gap-2"><i class="fa-solid fa-bolt text-brand w-4 text-center"></i> 4x4</span>
-                        <span class="flex items-center gap-2"><i class="fa-solid fa-microchip text-brand w-4 text-center"></i> V8 Supercharged</span>
-                        <span class="flex items-center gap-2"><i class="fa-solid fa-gas-pump text-brand w-4 text-center"></i> Diesel / Bensin</span>
-                    </div>
-                    <div class="flex justify-between items-center border-t border-white/5 pt-6">
-                        <div>
-                            <p class="text-[10px] text-slate-500 uppercase font-bold tracking-widest mb-1">Mulai Dari</p>
-                            <p class="text-xl font-black text-brand">Rp 6.5jt<span class="text-xs text-slate-400">/hari</span></p>
-                        </div>
-                        <button onclick="showBooking('Range Rover')" class="bg-brand text-white p-3 rounded-2xl hover:bg-brandDark transition-colors">
-                            <i class="fa-solid fa-arrow-right-long text-xl"></i>
-                        </button>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Mobil 3 -->
-            <div class="car-card transition-custom bg-premium rounded-3xl overflow-hidden border border-brand/10">
-                <div class="h-64 overflow-hidden relative group">
-                    <img src="https://images.unsplash.com/photo-1563720223185-11003d516905?auto=format&fit=crop&w=800&q=80" alt="Toyota Alphard" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110">
-                </div>
-                <div class="p-8">
-                    <div class="flex justify-between items-start mb-4">
-                        <h3 class="text-2xl font-bold font-serif">Alphard Transformer</h3>
-                    </div>
-                    <div class="grid grid-cols-2 gap-y-3 gap-x-2 text-slate-400 text-sm mb-6">
-                        <span class="flex items-center gap-2"><i class="fa-solid fa-user text-brand w-4 text-center"></i> 6 Kursi</span>
-                        <span class="flex items-center gap-2"><i class="fa-solid fa-bolt text-brand w-4 text-center"></i> Matic</span>
-                        <span class="flex items-center gap-2"><i class="fa-solid fa-microchip text-brand w-4 text-center"></i> Inline-4 2.5L</span>
-                        <span class="flex items-center gap-2"><i class="fa-solid fa-leaf text-brand w-4 text-center"></i> Hybrid / Bensin</span>
-                    </div>
-                    <div class="flex justify-between items-center border-t border-white/5 pt-6">
-                        <div>
-                            <p class="text-[10px] text-slate-500 uppercase font-bold tracking-widest mb-1">Mulai Dari</p>
-                            <p class="text-xl font-black text-brand">Rp 2.8jt<span class="text-xs text-slate-400">/hari</span></p>
-                        </div>
-                        <button onclick="showBooking('Alphard')" class="bg-brand text-white p-3 rounded-2xl hover:bg-brandDark transition-colors">
-                            <i class="fa-solid fa-arrow-right-long text-xl"></i>
-                        </button>
-                    </div>
+            <!-- Scroll Indicator -->
+            <div class="absolute bottom-8 left-1/2 -translate-x-1/2">
+                <div class="flex flex-col items-center gap-2 opacity-40 animate-bounce">
+                    <span class="text-xs font-medium tracking-widest">SCROLL</span>
+                    <i class="fa-solid fa-chevron-down"></i>
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- Layanan VVIP -->
-    <section id="layanan" class="py-24 px-6 bg-premium">
-        <div class="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-16 items-center">
-            <div>
-                <h4 class="text-brand font-bold tracking-widest uppercase mb-4">Eksklusivitas Tanpa Batas</h4>
-                <h2 class="text-4xl md:text-6xl font-black font-serif mb-8 leading-tight">Pelayanan Premium <span class="italic font-normal">Bintang Lima.</span></h2>
-                <div class="space-y-6">
-                    <div class="flex gap-4">
-                        <div class="w-12 h-12 bg-brand/10 rounded-xl flex items-center justify-center flex-shrink-0">
-                            <i class="fa-solid fa-id-card text-brand text-xl"></i>
-                        </div>
-                        <div>
-                            <h5 class="font-bold text-xl mb-1 text-brand">Chauffeur Berpengalaman</h5>
-                            <p class="text-slate-400">Pengemudi profesional kami terlatih dengan protokol etiket tinggi dan keamanan maksimal.</p>
-                        </div>
-                    </div>
-                    <div class="flex gap-4">
-                        <div class="w-12 h-12 bg-brand/10 rounded-xl flex items-center justify-center flex-shrink-0">
-                            <i class="fa-solid fa-shield-halved text-brand text-xl"></i>
-                        </div>
-                        <div>
-                            <h5 class="font-bold text-xl mb-1 text-brand">Proteksi Keamanan Penuh</h5>
-                            <p class="text-slate-400">Setiap perjalanan dilengkapi dengan asuransi all-risk dan unit cadangan jika diperlukan.</p>
-                        </div>
-                    </div>
-                    <div class="flex gap-4">
-                        <div class="w-12 h-12 bg-brand/10 rounded-xl flex items-center justify-center flex-shrink-0">
-                            <i class="fa-solid fa-hand-sparkles text-brand text-xl"></i>
-                        </div>
-                        <div>
-                            <h5 class="font-bold text-xl mb-1 text-brand">Kebersihan Sempurna</h5>
-                            <p class="text-slate-400">Setiap unit disterilisasi dan diperiksa secara menyeluruh sebelum tiba di lokasi Anda.</p>
-                        </div>
-                    </div>
+    <!-- Marquee Section -->
+    <section class="py-6 border-y border-white/5 relative z-10 overflow-hidden">
+        <div class="flex whitespace-nowrap marquee">
+            <template x-for="i in 2" :key="i">
+                <div class="flex items-center gap-12 px-8">
+                    <template x-for="tech in ['React.js', 'Node.js', 'Python', 'AWS', 'Docker', 'PostgreSQL', 'MongoDB', 'GraphQL', 'Redis', 'Kubernetes', 'TypeScript', 'Go', 'Vue.js']" :key="tech">
+                        <span class="text-sm font-bold opacity-30 hover:opacity-100 hover:text-amber-400 transition-all cursor-default flex items-center gap-2">
+                            <i class="fa-solid fa-circle text-[6px] text-amber-500"></i>
+                            <span x-text="tech"></span>
+                        </span>
+                    </template>
                 </div>
+            </template>
+        </div>
+    </section>
+
+    <!-- Skills Section -->
+    <section id="keahlian" class="py-24 relative z-10 px-6">
+        <div class="max-w-7xl mx-auto">
+            <div class="text-center mb-16">
+                <span class="text-amber-400 text-sm font-bold tracking-widest uppercase">Expertise</span>
+                <h2 class="text-4xl md:text-6xl font-black mt-4">Keahlian & <span class="gradient-text">Tech Stack</span></h2>
             </div>
+
+            <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+                <template x-for="(skill, index) in [
+                    { title: 'Frontend Development', icon: 'fa-brands fa-react', items: ['React.js', 'Vue.js', 'Next.js', 'TypeScript', 'Tailwind CSS'], color: 'from-blue-500 to-cyan-500' },
+                    { title: 'Backend & APIs', icon: 'fa-solid fa-server', items: ['Node.js', 'Python', 'Go', 'GraphQL', 'REST API'], color: 'from-amber-500 to-orange-500' },
+                    { title: 'Database & Storage', icon: 'fa-solid fa-database', items: ['PostgreSQL', 'MongoDB', 'Redis', 'Firebase', 'Supabase'], color: 'from-emerald-500 to-teal-500' },
+                    { title: 'Cloud & DevOps', icon: 'fa-brands fa-aws', items: ['AWS', 'Docker', 'Kubernetes', 'CI/CD', 'Terraform'], color: 'from-purple-500 to-pink-500' },
+                    { title: 'Mobile Development', icon: 'fa-solid fa-mobile-screen', items: ['React Native', 'Flutter', 'iOS', 'Android'], color: 'from-indigo-500 to-violet-500' },
+                    { title: 'AI & Machine Learning', icon: 'fa-solid fa-brain', items: ['TensorFlow', 'PyTorch', 'OpenAI', 'LangChain', 'Hugging Face'], color: 'from-rose-500 to-red-500' }
+                ]" :key="index">
+                    <div class="glass rounded-2xl p-6 card-shine glass-hover group">
+                        <div class="flex items-center gap-4 mb-4">
+                            <div class="w-14 h-14 rounded-xl bg-gradient-to-br flex items-center justify-center text-2xl" :class="skill.color.split(' ')[0] + ' ' + skill.color.split(' ')[1]">
+                                <i :class="skill.icon" class="text-white"></i>
+                            </div>
+                            <h3 class="text-lg font-bold" x-text="skill.title"></h3>
+                        </div>
+                        <div class="flex flex-wrap gap-2">
+                            <template x-for="item in skill.items" :key="item">
+                                <span class="px-3 py-1 rounded-lg bg-white/5 text-sm font-medium opacity-50 group-hover:opacity-100 transition-opacity" x-text="item"></span>
+                            </template>
+                        </div>
+                    </div>
+                </template>
+            </div>
+        </div>
+    </section>
+
+    <!-- Projects Section -->
+    <section id="proyek" class="py-24 relative z-10 px-6">
+        <div class="max-w-7xl mx-auto">
+            <div class="text-center mb-16">
+                <span class="text-amber-400 text-sm font-bold tracking-widest uppercase">Portfolio</span>
+                <h2 class="text-4xl md:text-6xl font-black mt-4">Proyek <span class="gradient-text">Unggulan</span></h2>
+            </div>
+
+            <div class="grid md:grid-cols-2 gap-8">
+                <template x-for="(project, index) in [
+                    { title: 'FinTech Dashboard', desc: 'Sistem monitoring real-time untuk platform fintech dengan analytics tingkat lanjut dan machine learning predictions.', tags: ['React', 'Node.js', 'PostgreSQL', 'ML'], color: 'amber' },
+                    { title: 'E-Commerce Platform', desc: 'Marketplace skala enterprise dengan microservices architecture, handle 1M+ daily transactions.', tags: ['Next.js', 'Go', 'Redis', 'K8s'], color: 'blue' },
+                    { title: 'AI Content Platform', desc: 'Platform content generation dengan AI, supporting multi-language dan custom fine-tuning models.', tags: ['Python', 'FastAPI', 'LangChain', 'Vue'], color: 'purple' },
+                    { title: 'Healthcare App', desc: 'Aplikasi telemedicine dengan video call, appointment scheduling, dan AI-powered symptom checker.', tags: ['React Native', 'Firebase', 'Twilio', 'AI'], color: 'emerald' }
+                ]" :key="index">
+                    <div class="group glass rounded-3xl overflow-hidden glass-hover">
+                        <div class="h-56 bg-gradient-to-br" :class="`from-${project.color}-500/20 to-${project.color}-600/10 relative overflow-hidden`">
+                            <div class="absolute inset-0 flex items-center justify-center">
+                                <i :class="`fa-solid fa-${project.color === 'amber' ? 'chart-line' : project.color === 'blue' ? 'cart-shopping' : project.color === 'purple' ? 'robot' : 'heart-pulse'} text-8xl opacity-10`"></i>
+                            </div>
+                        </div>
+                        <div class="p-8">
+                            <h3 class="text-2xl font-bold mb-3 group-hover:text-amber-400 transition-colors" x-text="project.title"></h3>
+                            <p class="text-sm opacity-60 mb-6 leading-relaxed" x-text="project.desc"></p>
+                            <div class="flex flex-wrap gap-2 mb-6">
+                                <template x-for="tag in project.tags" :key="tag">
+                                    <span class="px-3 py-1 rounded-full bg-white/5 text-xs font-medium" x-text="tag"></span>
+                                </template>
+                            </div>
+                            <a href="#" class="inline-flex items-center gap-3 text-amber-400 font-bold group-hover:gap-4 transition-all">
+                                View Project
+                                <i class="fa-solid fa-arrow-right"></i>
+                            </a>
+                        </div>
+                    </div>
+                </template>
+            </div>
+        </div>
+    </section>
+
+    <!-- Experience Section -->
+    <section id="pengalaman" class="py-24 relative z-10 px-6">
+        <div class="max-w-7xl mx-auto">
+            <div class="text-center mb-16">
+                <span class="text-amber-400 text-sm font-bold tracking-widest uppercase">Career Path</span>
+                <h2 class="text-4xl md:text-6xl font-black mt-4">Pengalaman <span class="gradient-text">Kerja</span></h2>
+            </div>
+
             <div class="relative">
-                <div class="absolute -top-10 -left-10 w-40 h-40 bg-brand/20 rounded-full blur-3xl"></div>
-                <img src="https://images.unsplash.com/photo-1449965408869-eaa3f722e40d?auto=format&fit=crop&w=1000&q=80" alt="Chauffeur Service" class="rounded-[2rem] shadow-2xl border-4 border-brand/20 relative z-10">
-                <div class="absolute -bottom-6 -right-6 bg-brand p-8 rounded-3xl z-20 text-white shadow-xl shadow-brand/30">
-                    <p class="text-4xl font-black font-serif">24/7</p>
-                    <p class="font-bold uppercase tracking-widest text-[10px]">Layanan Siaga</p>
-                </div>
+                <!-- Timeline Line -->
+                <div class="absolute left-4 md:left-1/2 top-0 bottom-0 w-0.5 bg-gradient-to-b from-amber-500 via-amber-400 to-amber-500/20 transform -translate-x-1/2"></div>
+
+                <!-- Timeline Items -->
+                <template x-for="(exp, index) in [
+                    { year: '2022 - Sekarang', role: 'Principal Fullstack Developer', company: 'Tech Innovators Indonesia', desc: 'Leading architecture for high-traffic systems processing 10M+ daily requests. Managing team of 15 engineers.' },
+                    { year: '2019 - 2022', role: 'Senior Backend Engineer', company: 'Digital Solutions Corp', desc: 'Designed and implemented microservices architecture serving 5M+ users. Reduced latency by 60%.' },
+                    { year: '2016 - 2019', role: 'Full Stack Developer', company: 'Startup Hub', desc: 'Built scalable web applications and RESTful APIs for enterprise clients. Shipped 20+ products.' },
+                    { year: '2014 - 2016', role: 'Junior Developer', company: 'Web Agency', desc: 'Started career building responsive web applications and learning industry best practices.' }
+                ]" :key="index">
+                    <div class="relative pl-12 md:pl-0 mb-12" :class="index % 2 === 0 ? 'md:pr-[50%]' : 'md:pl-[50%]'">
+                        <!-- Timeline Dot -->
+                        <div class="absolute left-2 md:left-1/2 top-0 w-5 h-5 rounded-full bg-amber-500 transform -translate-x-1/2 border-4 border-black shadow-lg shadow-amber-500/30"></div>
+                        
+                        <div class="glass rounded-2xl p-6 glass-hover" :class="index % 2 === 0 ? 'md:mr-8 md:text-right' : 'md:ml-8'">
+                            <span class="inline-block px-4 py-1 rounded-full bg-amber-500/20 text-amber-400 text-xs font-bold mb-3" x-text="exp.year"></span>
+                            <h3 class="text-xl font-bold mb-1" x-text="exp.role"></h3>
+                            <p class="text-amber-400 text-sm font-medium mb-3" x-text="exp.company"></p>
+                            <p class="text-sm opacity-60 leading-relaxed" x-text="exp.desc"></p>
+                        </div>
+                    </div>
+                </template>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section id="kontak" class="py-24 relative z-10 px-6">
+        <div class="max-w-4xl mx-auto text-center">
+            <span class="text-amber-400 text-sm font-bold tracking-widest uppercase">Get In Touch</span>
+            <h2 class="text-4xl md:text-6xl font-black mt-4 mb-8">Mari <span class="gradient-text">Berkolaborasi</span></h2>
+            <p class="text-lg opacity-60 mb-12 max-w-2xl mx-auto leading-relaxed">
+                Tertarik untuk bekerja sama? Jangan ragu untuk menghubungi saya. Saya selalu terbuka untuk diskusi tentang proyek baru.
+            </p>
+
+            <div class="grid sm:grid-cols-3 gap-6 mb-12">
+                <a href="mailto:hello@antono.dev" class="glass rounded-2xl p-8 glass-hover group">
+                    <div class="text-5xl mb-4">📧</div>
+                    <h4 class="font-bold mb-2">Email</h4>
+                    <p class="text-sm opacity-60 group-hover:text-amber-400 transition-colors">hello@antono.dev</p>
+                </a>
+                <a href="#" class="glass rounded-2xl p-8 glass-hover group">
+                    <div class="text-5xl mb-4">💬</div>
+                    <h4 class="font-bold mb-2">WhatsApp</h4>
+                    <p class="text-sm opacity-60 group-hover:text-amber-400 transition-colors">+62 812 3456 789</p>
+                </a>
+                <a href="https://linkedin.com/in/antono4" target="_blank" class="glass rounded-2xl p-8 glass-hover group">
+                    <div class="text-5xl mb-4">💼</div>
+                    <h4 class="font-bold mb-2">LinkedIn</h4>
+                    <p class="text-sm opacity-60 group-hover:text-amber-400 transition-colors">antono4</p>
+                </a>
+            </div>
+
+            <!-- Social Links -->
+            <div class="flex justify-center gap-4">
+                <a href="https://github.com/antono4" target="_blank" class="w-14 h-14 glass rounded-xl flex items-center justify-center hover:bg-amber-500/20 hover:scale-110 transition-all">
+                    <i class="fa-brands fa-github text-xl"></i>
+                </a>
+                <a href="https://twitter.com/antono4" target="_blank" class="w-14 h-14 glass rounded-xl flex items-center justify-center hover:bg-amber-500/20 hover:scale-110 transition-all">
+                    <i class="fa-brands fa-x-twitter text-xl"></i>
+                </a>
+                <a href="https://instagram.com/antono4" target="_blank" class="w-14 h-14 glass rounded-xl flex items-center justify-center hover:bg-amber-500/20 hover:scale-110 transition-all">
+                    <i class="fa-brands fa-instagram text-xl"></i>
+                </a>
+                <a href="https://youtube.com/@antono4" target="_blank" class="w-14 h-14 glass rounded-xl flex items-center justify-center hover:bg-amber-500/20 hover:scale-110 transition-all">
+                    <i class="fa-brands fa-youtube text-xl"></i>
+                </a>
             </div>
         </div>
     </section>
 
     <!-- Footer -->
-    <footer class="bg-[#020617] pt-24 pb-12 px-6 border-t border-brand/10">
-        <div class="max-w-7xl mx-auto">
-            <div class="grid grid-cols-1 md:grid-cols-4 gap-12 mb-16">
-                <div class="col-span-1 md:col-span-2">
-                    <div class="flex items-center gap-2 mb-6">
-                        <i class="fa-solid fa-crown text-brand text-2xl"></i>
-                        <span class="text-3xl font-extrabold tracking-tighter font-serif italic text-brand">LuxuryDrive</span>
-                    </div>
-                    <p class="text-slate-400 max-w-sm mb-8">Penyedia jasa sewa mobil mewah nomor satu yang mengedepankan keamanan, privasi, dan kenyamanan Anda.</p>
-                    <div class="flex gap-4">
-                        <a href="#" class="w-10 h-10 bg-premium rounded-lg flex items-center justify-center hover:bg-brand hover:text-white transition-all"><i class="fa-brands fa-instagram text-brand group-hover:text-white"></i></a>
-                        <a href="#" class="w-10 h-10 bg-premium rounded-lg flex items-center justify-center hover:bg-brand hover:text-white transition-all"><i class="fa-brands fa-facebook-f text-brand group-hover:text-white"></i></a>
-                        <a href="#" class="w-10 h-10 bg-premium rounded-lg flex items-center justify-center hover:bg-brand hover:text-white transition-all"><i class="fa-brands fa-whatsapp text-brand group-hover:text-white"></i></a>
-                    </div>
-                </div>
-                <div>
-                    <h5 class="font-bold text-lg mb-6">Navigasi</h5>
-                    <ul class="space-y-4 text-slate-400 font-medium">
-                        <li><a href="#" class="hover:text-brand transition-colors">Armada</a></li>
-                        <li><a href="#" class="hover:text-brand transition-colors">Paket Sewa</a></li>
-                        <li><a href="#" class="hover:text-brand transition-colors">Testimoni</a></li>
-                        <li><a href="#" class="hover:text-brand transition-colors">Syarat & Ketentuan</a></li>
-                    </ul>
-                </div>
-                <div>
-                    <h5 class="font-bold text-lg mb-6">Hubungi Kami</h5>
-                    <p class="text-slate-400 mb-4 font-medium"><i class="fa-solid fa-location-dot text-brand mr-2"></i> Sudirman Central Business District, Jakarta</p>
-                    <p class="text-slate-400 mb-4 font-medium"><i class="fa-solid fa-phone text-brand mr-2"></i> +62 812 3456 7890</p>
-                    <p class="text-slate-400 font-medium"><i class="fa-solid fa-envelope text-brand mr-2"></i> booking@luxurydrive.com</p>
-                </div>
-            </div>
-            <div class="pt-12 border-t border-white/5 text-center text-slate-500 text-sm font-bold tracking-widest uppercase">
-                &copy; 2026 LuxuryDrive Indonesia. All Rights Reserved.
-            </div>
+    <footer class="py-8 border-t border-white/10 relative z-10 px-6">
+        <div class="max-w-7xl mx-auto flex flex-col md:flex-row justify-between items-center gap-4">
+            <p class="text-sm opacity-40">© 2024 Antono. All rights reserved.</p>
+            <p class="text-sm opacity-40 flex items-center gap-2">
+                Built with <span class="text-amber-400">❤️</span> and <span class="text-amber-400">☕</span>
+            </p>
         </div>
     </footer>
 
-    <!-- Booking Modal (Custom UI) -->
-    <div id="bookingModal" class="fixed inset-0 z-[100] flex items-center justify-center bg-[#020617]/95 backdrop-blur-xl hidden p-6">
-        <div class="bg-premium w-full max-w-lg rounded-[2.5rem] border border-brand/30 p-10 relative overflow-hidden">
-            <div class="absolute top-0 right-0 w-32 h-32 bg-brand/10 rounded-full -translate-y-10 translate-x-10 blur-2xl"></div>
-            <button onclick="closeModal()" class="absolute top-6 right-6 text-slate-400 hover:text-white"><i class="fa-solid fa-xmark text-2xl"></i></button>
-            <h3 class="text-3xl font-serif font-bold text-brand mb-2">Pesan Sekarang</h3>
-            <p class="text-slate-400 text-sm mb-8">Anda akan memesan unit <span id="carName" class="text-white font-bold"></span></p>
-            
-            <div class="space-y-4">
-                <input type="text" placeholder="Nama Lengkap" class="w-full bg-[#020617] border border-brand/20 rounded-2xl px-6 py-4 outline-none focus:border-brand transition-all text-white placeholder:text-slate-600">
-                <input type="tel" placeholder="Nomor WhatsApp" class="w-full bg-[#020617] border border-brand/20 rounded-2xl px-6 py-4 outline-none focus:border-brand transition-all text-white placeholder:text-slate-600">
-                <div class="flex gap-4">
-                    <input type="date" class="w-1/2 bg-[#020617] border border-brand/20 rounded-2xl px-6 py-4 outline-none focus:border-brand transition-all text-slate-400">
-                    <input type="number" placeholder="Durasi (Hari)" class="w-1/2 bg-[#020617] border border-brand/20 rounded-2xl px-6 py-4 outline-none focus:border-brand transition-all text-white placeholder:text-slate-600">
-                </div>
-                <button onclick="confirmOrder()" class="w-full bg-brand text-white py-5 rounded-2xl font-black text-lg hover:bg-brandDark transition-custom mt-4 shadow-lg shadow-brand/20">
-                    KIRIM PERMINTAAN
-                </button>
-            </div>
-        </div>
-    </div>
-
-    <!-- Floating WhatsApp -->
-    <a href="https://wa.me/6281234567890" class="fixed bottom-10 right-10 z-40 bg-[#25D366] text-white p-5 rounded-full shadow-2xl shadow-green-500/20 hover:scale-110 active:scale-95 transition-all flex items-center justify-center">
-        <i class="fa-brands fa-whatsapp text-3xl"></i>
-    </a>
-
+    <!-- Scroll Reveal Script -->
     <script>
-        function showBooking(car) {
-            document.getElementById('carName').innerText = car;
-            document.getElementById('bookingModal').classList.remove('hidden');
-            document.body.style.overflow = 'hidden';
-        }
+        document.addEventListener('DOMContentLoaded', () => {
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('visible');
+                    }
+                });
+            }, { threshold: 0.1 });
 
-        function closeModal() {
-            document.getElementById('bookingModal').classList.add('hidden');
-            document.body.style.overflow = 'auto';
-        }
-
-        function confirmOrder() {
-            const msgBox = document.createElement('div');
-            msgBox.className = 'fixed top-10 left-1/2 -translate-x-1/2 z-[110] bg-brand text-white px-8 py-4 rounded-2xl font-bold shadow-2xl animate-bounce';
-            msgBox.innerText = 'Permintaan Terkirim! Tim Concierge kami akan segera menghubungi Anda.';
-            document.body.appendChild(msgBox);
-            
-            setTimeout(() => {
-                msgBox.remove();
-                closeModal();
-            }, 3000);
-        }
+            document.querySelectorAll('.slide-up').forEach(el => observer.observe(el));
+        });
     </script>
 </body>
 </html>
-
