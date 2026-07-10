@@ -1,0 +1,644 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Antono | Principal Fullstack Developer</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+    
+    <style>
+        [x-cloak] { display: none !important; }
+        
+        * { box-sizing: border-box; }
+        
+        body {
+            font-family: 'Inter', sans-serif;
+            background: #050505;
+            color: #fafafa;
+            margin: 0;
+            overflow-x: hidden;
+        }
+        
+        .font-mono { font-family: 'JetBrains Mono', monospace; }
+        
+        /* Animated Grid Background */
+        .grid-bg {
+            position: fixed;
+            inset: 0;
+            background-image: 
+                linear-gradient(rgba(245, 158, 11, 0.03) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(245, 158, 11, 0.03) 1px, transparent 1px);
+            background-size: 60px 60px;
+            animation: gridMove 20s linear infinite;
+        }
+        
+        @keyframes gridMove {
+            0% { transform: translate(0, 0); }
+            100% { transform: translate(60px, 60px); }
+        }
+        
+        /* Glowing orbs */
+        .orb {
+            position: fixed;
+            border-radius: 50%;
+            filter: blur(80px);
+            pointer-events: none;
+            animation: orbFloat 20s ease-in-out infinite;
+        }
+        
+        .orb-1 {
+            width: 500px; height: 500px;
+            background: radial-gradient(circle, rgba(245, 158, 11, 0.15) 0%, transparent 70%);
+            top: -10%; right: -10%;
+            animation-delay: 0s;
+        }
+        
+        .orb-2 {
+            width: 400px; height: 400px;
+            background: radial-gradient(circle, rgba(234, 88, 12, 0.1) 0%, transparent 70%);
+            bottom: -5%; left: -5%;
+            animation-delay: -10s;
+        }
+        
+        .orb-3 {
+            width: 300px; height: 300px;
+            background: radial-gradient(circle, rgba(161, 98, 7, 0.1) 0%, transparent 70%);
+            top: 50%; left: 50%;
+            transform: translate(-50%, -50%);
+            animation-delay: -5s;
+        }
+        
+        @keyframes orbFloat {
+            0%, 100% { transform: translate(0, 0) scale(1); }
+            25% { transform: translate(30px, -30px) scale(1.05); }
+            50% { transform: translate(-20px, 20px) scale(0.95); }
+            75% { transform: translate(20px, 30px) scale(1.02); }
+        }
+        
+        /* Gradient text */
+        .gradient-text {
+            background: linear-gradient(135deg, #f59e0b 0%, #fbbf24 50%, #f59e0b 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        
+        /* Glass effect */
+        .glass {
+            background: rgba(255, 255, 255, 0.03);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.06);
+        }
+        
+        /* Glass hover */
+        .glass-hover {
+            transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+        
+        .glass-hover:hover {
+            background: rgba(255, 255, 255, 0.06);
+            border-color: rgba(245, 158, 11, 0.3);
+            transform: translateY(-8px);
+            box-shadow: 0 25px 50px -12px rgba(245, 158, 11, 0.15);
+        }
+        
+        /* Button glow */
+        .btn-glow {
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .btn-glow::before {
+            content: '';
+            position: absolute;
+            inset: -2px;
+            background: linear-gradient(135deg, #f59e0b, #fbbf24, #f59e0b);
+            border-radius: inherit;
+            z-index: -1;
+            opacity: 0;
+            transition: opacity 0.3s;
+            filter: blur(15px);
+        }
+        
+        .btn-glow:hover::before {
+            opacity: 1;
+        }
+        
+        /* Animated border */
+        .animated-border {
+            position: relative;
+        }
+        
+        .animated-border::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            border-radius: inherit;
+            padding: 2px;
+            background: linear-gradient(135deg, #f59e0b, transparent, #f59e0b);
+            -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+            mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+            -webkit-mask-composite: xor;
+            mask-composite: exclude;
+            animation: borderRotate 4s linear infinite;
+        }
+        
+        @keyframes borderRotate {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        
+        /* Typing cursor */
+        .cursor::after {
+            content: '|';
+            animation: blink 1s infinite;
+            color: #f59e0b;
+        }
+        
+        @keyframes blink {
+            0%, 50% { opacity: 1; }
+            51%, 100% { opacity: 0; }
+        }
+        
+        /* Slide up animation */
+        .slide-up {
+            opacity: 0;
+            transform: translateY(40px);
+            transition: all 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+        
+        .slide-up.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        
+        /* Marquee */
+        .marquee {
+            animation: marquee 40s linear infinite;
+        }
+        
+        @keyframes marquee {
+            0% { transform: translateX(0); }
+            100% { transform: translateX(-50%); }
+        }
+        
+        /* Floating animation */
+        .float {
+            animation: float 6s ease-in-out infinite;
+        }
+        
+        @keyframes float {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-20px); }
+        }
+        
+        /* Card shine effect */
+        .card-shine {
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .card-shine::after {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: linear-gradient(
+                to bottom right,
+                rgba(255, 255, 255, 0) 0%,
+                rgba(255, 255, 255, 0.03) 50%,
+                rgba(255, 255, 255, 0) 100%
+            );
+            transform: rotate(45deg);
+            transition: 0.8s;
+        }
+        
+        .card-shine:hover::after {
+            left: 100%;
+        }
+        
+        /* Scroll progress */
+        .scroll-progress {
+            position: fixed;
+            top: 0;
+            left: 0;
+            height: 3px;
+            background: linear-gradient(90deg, #f59e0b, #fbbf24);
+            z-index: 9999;
+            transition: width 0.1s;
+        }
+        
+        /* Custom scrollbar */
+        ::-webkit-scrollbar { width: 8px; }
+        ::-webkit-scrollbar-track { background: #0a0a0a; }
+        ::-webkit-scrollbar-thumb { background: #f59e0b40; border-radius: 4px; }
+        ::-webkit-scrollbar-thumb:hover { background: #f59e0b80; }
+        
+        /* Stat counter animation */
+        .counter {
+            font-variant-numeric: tabular-nums;
+        }
+        
+        /* Hexagon pattern */
+        .hex-pattern {
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='28' height='49' viewBox='0 0 28 49'%3E%3Cg fill-rule='evenodd'%3E%3Cg fill='%23f59e0b' fill-opacity='0.03'%3E%3Cpath d='M13.99 9.25l13 7.5v15l-13 7.5L1 31.75v-15l12.99-7.5zM3 17.9v12.7l10.99 6.34 11-6.35V17.9l-11-6.34L3 17.9zM0 15l12.98-7.5V0h-2v6.35L0 12.69v2.3zm0 18.5L12.98 41v8h-2v-6.85L0 35.81v-2.3zM15 0v7.5L27.99 15H28v-2.31h-.01L17 6.35V0h-2zm0 49v-8l12.99-7.5H28v2.31h-.01L17 42.15V49h-2z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+        }
+        
+        /* Magnetic effect */
+        .magnetic {
+            transition: transform 0.3s ease;
+        }
+        
+        /* Glow effect on hover */
+        .glow-hover:hover {
+            box-shadow: 0 0 30px rgba(245, 158, 11, 0.3), 0 0 60px rgba(245, 158, 11, 0.1);
+        }
+    </style>
+</head>
+<body x-data="{
+    scrollProgress: 0,
+    activeSection: 'hero',
+    isMenuOpen: false,
+    updateScroll() { this.scrollProgress = (window.scrollY / (document.body.scrollHeight - window.innerHeight)) * 100; }
+}" 
+@scroll.window="updateScroll()"
+class="relative min-h-screen">
+
+    <!-- Scroll Progress -->
+    <div class="scroll-progress" :style="`width: ${scrollProgress}%`"></div>
+
+    <!-- Background Elements -->
+    <div class="fixed inset-0 pointer-events-none">
+        <div class="grid-bg"></div>
+        <div class="orb orb-1"></div>
+        <div class="orb orb-2"></div>
+        <div class="orb orb-3"></div>
+        <div class="absolute inset-0 hex-pattern opacity-30"></div>
+    </div>
+
+    <!-- Navigation -->
+    <nav class="fixed top-0 w-full z-50 px-6 py-4">
+        <div class="max-w-7xl mx-auto flex justify-between items-center">
+            <!-- Logo -->
+            <div class="flex items-center gap-3 group cursor-pointer" @click="window.scrollTo({top: 0, behavior: 'smooth'})">
+                <div class="relative">
+                    <div class="w-12 h-12 rounded-xl bg-gradient-to-br from-amber-400 to-amber-600 flex items-center justify-center shadow-lg shadow-amber-500/20 group-hover:scale-110 transition-transform">
+                        <span class="text-xl font-black text-black">A</span>
+                    </div>
+                </div>
+                <div>
+                    <span class="font-bold text-lg tracking-tight">ANTONO<span class="text-amber-400">_</span></span>
+                </div>
+            </div>
+
+            <!-- Desktop Menu -->
+            <div class="hidden md:flex items-center gap-8">
+                <template x-for="item in ['Tentang', 'Keahlian', 'Proyek', 'Pengalaman', 'Kontak']" :key="item">
+                    <button @click="document.getElementById(item.toLowerCase()).scrollIntoView({behavior: 'smooth'})" 
+                            class="text-sm font-medium opacity-50 hover:opacity-100 hover:text-amber-400 transition-all relative group">
+                        <span x-text="item"></span>
+                    </button>
+                </template>
+            </div>
+
+            <!-- Right Actions -->
+            <div class="flex items-center gap-4">
+                <a href="#" class="hidden sm:flex items-center gap-2 px-5 py-2.5 rounded-xl bg-gradient-to-r from-amber-500 to-amber-600 text-black text-sm font-bold shadow-lg shadow-amber-500/20 hover:shadow-amber-500/40 hover:scale-105 transition-all btn-glow">
+                    <i class="fa-solid fa-download"></i>
+                    Download CV
+                </a>
+                
+                <!-- Mobile Menu Button -->
+                <button @click="isMenuOpen = !isMenuOpen" class="md:hidden w-10 h-10 rounded-xl glass flex items-center justify-center">
+                    <i class="fa-solid fa-bars"></i>
+                </button>
+            </div>
+        </div>
+
+        <!-- Mobile Menu -->
+        <div x-show="isMenuOpen" x-cloak x-transition class="md:hidden mt-4 p-6 rounded-2xl glass">
+            <template x-for="item in ['Tentang', 'Keahlian', 'Proyek', 'Pengalaman', 'Kontak']" :key="item">
+                <button @click="document.getElementById(item.toLowerCase()).scrollIntoView({behavior: 'smooth'}); isMenuOpen = false" 
+                        class="block w-full text-left py-3 text-lg font-medium hover:text-amber-400 transition-colors">
+                    <span x-text="item"></span>
+                </button>
+            </template>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section id="tentang" class="min-h-screen flex items-center relative z-10 px-6 pt-20">
+        <div class="max-w-7xl mx-auto w-full">
+            <div class="grid lg:grid-cols-2 gap-12 items-center">
+                <!-- Left Content -->
+                <div class="space-y-8">
+                    <div class="inline-flex items-center gap-3 px-4 py-2 rounded-full glass text-amber-400 text-sm font-medium">
+                        <span class="relative flex h-2 w-2">
+                            <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-amber-400 opacity-75"></span>
+                            <span class="relative inline-flex rounded-full h-2 w-2 bg-amber-500"></span>
+                        </span>
+                        Available for Projects
+                    </div>
+
+                    <div class="space-y-4">
+                        <h1 class="text-5xl md:text-6xl lg:text-7xl font-black leading-[0.95] tracking-tight">
+                            <span class="block">Membangun</span>
+                            <span class="gradient-text">Solusi</span>
+                            <span class="block">Digital.</span>
+                        </h1>
+                    </div>
+
+                    <p class="text-lg md:text-xl opacity-50 max-w-lg leading-relaxed">
+                        Spesialis dalam merancang dan mengembangkan sistem fullstack dengan performa tinggi untuk skala enterprise.
+                    </p>
+
+                    <div class="flex flex-wrap gap-4">
+                        <button @click="document.getElementById('proyek').scrollIntoView({behavior: 'smooth'})" 
+                                class="px-8 py-4 rounded-2xl bg-gradient-to-r from-amber-500 to-amber-600 text-black font-bold shadow-lg shadow-amber-500/30 hover:shadow-amber-500/50 hover:scale-105 transition-all btn-glow">
+                            Lihat Proyek
+                        </button>
+                        <button @click="document.getElementById('kontak').scrollIntoView({behavior: 'smooth'})" 
+                                class="px-8 py-4 rounded-2xl glass font-bold hover:bg-white/10 transition-all flex items-center gap-2">
+                            <span>Hubungi Saya</span>
+                            <i class="fa-solid fa-arrow-right"></i>
+                        </button>
+                    </div>
+
+                    <!-- Stats -->
+                    <div class="grid grid-cols-3 gap-8 pt-8 border-t border-white/10">
+                        <div class="slide-up">
+                            <span class="text-4xl font-black gradient-text">15+</span>
+                            <p class="text-sm opacity-40 mt-1">Tahun Pengalaman</p>
+                        </div>
+                        <div class="slide-up delay-100">
+                            <span class="text-4xl font-black gradient-text">50+</span>
+                            <p class="text-sm opacity-40 mt-1">Proyek Selesai</p>
+                        </div>
+                        <div class="slide-up delay-200">
+                            <span class="text-4xl font-black gradient-text">30+</span>
+                            <p class="text-sm opacity-40 mt-1">Technologies</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Right Content - Profile Card -->
+                <div class="relative flex justify-center lg:justify-end">
+                    <div class="relative">
+                        <!-- Decorative circles -->
+                        <div class="absolute -inset-8 border border-amber-500/20 rounded-full animate-pulse"></div>
+                        <div class="absolute -inset-16 border border-amber-500/10 rounded-full"></div>
+                        
+                        <!-- Main Card -->
+                        <div class="relative w-full max-w-sm glass rounded-3xl p-8 glow-hover float">
+                            <div class="absolute top-0 left-0 right-0 h-28 bg-gradient-to-r from-amber-500 to-amber-600 rounded-t-3xl"></div>
+                            
+                            <div class="relative -mt-14 mb-6 flex justify-center">
+                                <div class="relative">
+                                    <div class="w-28 h-28 rounded-2xl overflow-hidden border-4 border-black/50 shadow-lg shadow-amber-500/30">
+                                        <img src="https://avatars.githubusercontent.com/u/73228642?v=4" alt="Antono" class="w-full h-full object-cover">
+                                    </div>
+                                    <div class="absolute -bottom-2 -right-2 w-8 h-8 bg-amber-500 rounded-full flex items-center justify-center border-4 border-black">
+                                        <i class="fa-solid fa-check text-xs text-black"></i>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="text-center">
+                                <h3 class="text-2xl font-bold mb-1">Antono</h3>
+                                <p class="text-amber-400 font-medium mb-4">Principal Fullstack Developer</p>
+                                
+                                <div class="flex flex-wrap justify-center gap-2 mb-6">
+                                    <span class="px-3 py-1 rounded-full bg-amber-500/10 text-amber-400 text-xs font-medium">Backend</span>
+                                    <span class="px-3 py-1 rounded-full bg-amber-500/10 text-amber-400 text-xs font-medium">Frontend</span>
+                                    <span class="px-3 py-1 rounded-full bg-amber-500/10 text-amber-400 text-xs font-medium">DevOps</span>
+                                </div>
+
+                                <div class="grid grid-cols-2 gap-4 text-sm">
+                                    <div class="glass rounded-xl p-3">
+                                        <span class="block text-xs opacity-40 mb-1">Location</span>
+                                        <span class="font-semibold">Indonesia 🇮🇩</span>
+                                    </div>
+                                    <div class="glass rounded-xl p-3">
+                                        <span class="block text-xs opacity-40 mb-1">Experience</span>
+                                        <span class="font-semibold">15+ Years</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Scroll Indicator -->
+            <div class="absolute bottom-8 left-1/2 -translate-x-1/2">
+                <div class="flex flex-col items-center gap-2 opacity-40 animate-bounce">
+                    <span class="text-xs font-medium tracking-widest">SCROLL</span>
+                    <i class="fa-solid fa-chevron-down"></i>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Marquee Section -->
+    <section class="py-6 border-y border-white/5 relative z-10 overflow-hidden">
+        <div class="flex whitespace-nowrap marquee">
+            <template x-for="i in 2" :key="i">
+                <div class="flex items-center gap-12 px-8">
+                    <template x-for="tech in ['React.js', 'Node.js', 'Python', 'AWS', 'Docker', 'PostgreSQL', 'MongoDB', 'GraphQL', 'Redis', 'Kubernetes', 'TypeScript', 'Go', 'Vue.js']" :key="tech">
+                        <span class="text-sm font-bold opacity-30 hover:opacity-100 hover:text-amber-400 transition-all cursor-default flex items-center gap-2">
+                            <i class="fa-solid fa-circle text-[6px] text-amber-500"></i>
+                            <span x-text="tech"></span>
+                        </span>
+                    </template>
+                </div>
+            </template>
+        </div>
+    </section>
+
+    <!-- Skills Section -->
+    <section id="keahlian" class="py-24 relative z-10 px-6">
+        <div class="max-w-7xl mx-auto">
+            <div class="text-center mb-16">
+                <span class="text-amber-400 text-sm font-bold tracking-widest uppercase">Expertise</span>
+                <h2 class="text-4xl md:text-6xl font-black mt-4">Keahlian & <span class="gradient-text">Tech Stack</span></h2>
+            </div>
+
+            <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+                <template x-for="(skill, index) in [
+                    { title: 'Frontend Development', icon: 'fa-brands fa-react', items: ['React.js', 'Vue.js', 'Next.js', 'TypeScript', 'Tailwind CSS'], color: 'from-blue-500 to-cyan-500' },
+                    { title: 'Backend & APIs', icon: 'fa-solid fa-server', items: ['Node.js', 'Python', 'Go', 'GraphQL', 'REST API'], color: 'from-amber-500 to-orange-500' },
+                    { title: 'Database & Storage', icon: 'fa-solid fa-database', items: ['PostgreSQL', 'MongoDB', 'Redis', 'Firebase', 'Supabase'], color: 'from-emerald-500 to-teal-500' },
+                    { title: 'Cloud & DevOps', icon: 'fa-brands fa-aws', items: ['AWS', 'Docker', 'Kubernetes', 'CI/CD', 'Terraform'], color: 'from-purple-500 to-pink-500' },
+                    { title: 'Mobile Development', icon: 'fa-solid fa-mobile-screen', items: ['React Native', 'Flutter', 'iOS', 'Android'], color: 'from-indigo-500 to-violet-500' },
+                    { title: 'AI & Machine Learning', icon: 'fa-solid fa-brain', items: ['TensorFlow', 'PyTorch', 'OpenAI', 'LangChain', 'Hugging Face'], color: 'from-rose-500 to-red-500' }
+                ]" :key="index">
+                    <div class="glass rounded-2xl p-6 card-shine glass-hover group">
+                        <div class="flex items-center gap-4 mb-4">
+                            <div class="w-14 h-14 rounded-xl bg-gradient-to-br flex items-center justify-center text-2xl" :class="skill.color.split(' ')[0] + ' ' + skill.color.split(' ')[1]">
+                                <i :class="skill.icon" class="text-white"></i>
+                            </div>
+                            <h3 class="text-lg font-bold" x-text="skill.title"></h3>
+                        </div>
+                        <div class="flex flex-wrap gap-2">
+                            <template x-for="item in skill.items" :key="item">
+                                <span class="px-3 py-1 rounded-lg bg-white/5 text-sm font-medium opacity-50 group-hover:opacity-100 transition-opacity" x-text="item"></span>
+                            </template>
+                        </div>
+                    </div>
+                </template>
+            </div>
+        </div>
+    </section>
+
+    <!-- Projects Section -->
+    <section id="proyek" class="py-24 relative z-10 px-6">
+        <div class="max-w-7xl mx-auto">
+            <div class="text-center mb-16">
+                <span class="text-amber-400 text-sm font-bold tracking-widest uppercase">Portfolio</span>
+                <h2 class="text-4xl md:text-6xl font-black mt-4">Proyek <span class="gradient-text">Unggulan</span></h2>
+            </div>
+
+            <div class="grid md:grid-cols-2 gap-8">
+                <template x-for="(project, index) in [
+                    { title: 'FinTech Dashboard', desc: 'Sistem monitoring real-time untuk platform fintech dengan analytics tingkat lanjut dan machine learning predictions.', tags: ['React', 'Node.js', 'PostgreSQL', 'ML'], color: 'amber' },
+                    { title: 'E-Commerce Platform', desc: 'Marketplace skala enterprise dengan microservices architecture, handle 1M+ daily transactions.', tags: ['Next.js', 'Go', 'Redis', 'K8s'], color: 'blue' },
+                    { title: 'AI Content Platform', desc: 'Platform content generation dengan AI, supporting multi-language dan custom fine-tuning models.', tags: ['Python', 'FastAPI', 'LangChain', 'Vue'], color: 'purple' },
+                    { title: 'Healthcare App', desc: 'Aplikasi telemedicine dengan video call, appointment scheduling, dan AI-powered symptom checker.', tags: ['React Native', 'Firebase', 'Twilio', 'AI'], color: 'emerald' }
+                ]" :key="index">
+                    <div class="group glass rounded-3xl overflow-hidden glass-hover">
+                        <div class="h-56 bg-gradient-to-br" :class="`from-${project.color}-500/20 to-${project.color}-600/10 relative overflow-hidden`">
+                            <div class="absolute inset-0 flex items-center justify-center">
+                                <i :class="`fa-solid fa-${project.color === 'amber' ? 'chart-line' : project.color === 'blue' ? 'cart-shopping' : project.color === 'purple' ? 'robot' : 'heart-pulse'} text-8xl opacity-10`"></i>
+                            </div>
+                        </div>
+                        <div class="p-8">
+                            <h3 class="text-2xl font-bold mb-3 group-hover:text-amber-400 transition-colors" x-text="project.title"></h3>
+                            <p class="text-sm opacity-60 mb-6 leading-relaxed" x-text="project.desc"></p>
+                            <div class="flex flex-wrap gap-2 mb-6">
+                                <template x-for="tag in project.tags" :key="tag">
+                                    <span class="px-3 py-1 rounded-full bg-white/5 text-xs font-medium" x-text="tag"></span>
+                                </template>
+                            </div>
+                            <a href="#" class="inline-flex items-center gap-3 text-amber-400 font-bold group-hover:gap-4 transition-all">
+                                View Project
+                                <i class="fa-solid fa-arrow-right"></i>
+                            </a>
+                        </div>
+                    </div>
+                </template>
+            </div>
+        </div>
+    </section>
+
+    <!-- Experience Section -->
+    <section id="pengalaman" class="py-24 relative z-10 px-6">
+        <div class="max-w-7xl mx-auto">
+            <div class="text-center mb-16">
+                <span class="text-amber-400 text-sm font-bold tracking-widest uppercase">Career Path</span>
+                <h2 class="text-4xl md:text-6xl font-black mt-4">Pengalaman <span class="gradient-text">Kerja</span></h2>
+            </div>
+
+            <div class="relative">
+                <!-- Timeline Line -->
+                <div class="absolute left-4 md:left-1/2 top-0 bottom-0 w-0.5 bg-gradient-to-b from-amber-500 via-amber-400 to-amber-500/20 transform -translate-x-1/2"></div>
+
+                <!-- Timeline Items -->
+                <template x-for="(exp, index) in [
+                    { year: '2022 - Sekarang', role: 'Principal Fullstack Developer', company: 'Tech Innovators Indonesia', desc: 'Leading architecture for high-traffic systems processing 10M+ daily requests. Managing team of 15 engineers.' },
+                    { year: '2019 - 2022', role: 'Senior Backend Engineer', company: 'Digital Solutions Corp', desc: 'Designed and implemented microservices architecture serving 5M+ users. Reduced latency by 60%.' },
+                    { year: '2016 - 2019', role: 'Full Stack Developer', company: 'Startup Hub', desc: 'Built scalable web applications and RESTful APIs for enterprise clients. Shipped 20+ products.' },
+                    { year: '2014 - 2016', role: 'Junior Developer', company: 'Web Agency', desc: 'Started career building responsive web applications and learning industry best practices.' }
+                ]" :key="index">
+                    <div class="relative pl-12 md:pl-0 mb-12" :class="index % 2 === 0 ? 'md:pr-[50%]' : 'md:pl-[50%]'">
+                        <!-- Timeline Dot -->
+                        <div class="absolute left-2 md:left-1/2 top-0 w-5 h-5 rounded-full bg-amber-500 transform -translate-x-1/2 border-4 border-black shadow-lg shadow-amber-500/30"></div>
+                        
+                        <div class="glass rounded-2xl p-6 glass-hover" :class="index % 2 === 0 ? 'md:mr-8 md:text-right' : 'md:ml-8'">
+                            <span class="inline-block px-4 py-1 rounded-full bg-amber-500/20 text-amber-400 text-xs font-bold mb-3" x-text="exp.year"></span>
+                            <h3 class="text-xl font-bold mb-1" x-text="exp.role"></h3>
+                            <p class="text-amber-400 text-sm font-medium mb-3" x-text="exp.company"></p>
+                            <p class="text-sm opacity-60 leading-relaxed" x-text="exp.desc"></p>
+                        </div>
+                    </div>
+                </template>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section id="kontak" class="py-24 relative z-10 px-6">
+        <div class="max-w-4xl mx-auto text-center">
+            <span class="text-amber-400 text-sm font-bold tracking-widest uppercase">Get In Touch</span>
+            <h2 class="text-4xl md:text-6xl font-black mt-4 mb-8">Mari <span class="gradient-text">Berkolaborasi</span></h2>
+            <p class="text-lg opacity-60 mb-12 max-w-2xl mx-auto leading-relaxed">
+                Tertarik untuk bekerja sama? Jangan ragu untuk menghubungi saya. Saya selalu terbuka untuk diskusi tentang proyek baru.
+            </p>
+
+            <div class="grid sm:grid-cols-3 gap-6 mb-12">
+                <a href="mailto:hello@antono.dev" class="glass rounded-2xl p-8 glass-hover group">
+                    <div class="text-5xl mb-4">📧</div>
+                    <h4 class="font-bold mb-2">Email</h4>
+                    <p class="text-sm opacity-60 group-hover:text-amber-400 transition-colors">hello@antono.dev</p>
+                </a>
+                <a href="#" class="glass rounded-2xl p-8 glass-hover group">
+                    <div class="text-5xl mb-4">💬</div>
+                    <h4 class="font-bold mb-2">WhatsApp</h4>
+                    <p class="text-sm opacity-60 group-hover:text-amber-400 transition-colors">+62 812 3456 789</p>
+                </a>
+                <a href="https://linkedin.com/in/antono4" target="_blank" class="glass rounded-2xl p-8 glass-hover group">
+                    <div class="text-5xl mb-4">💼</div>
+                    <h4 class="font-bold mb-2">LinkedIn</h4>
+                    <p class="text-sm opacity-60 group-hover:text-amber-400 transition-colors">antono4</p>
+                </a>
+            </div>
+
+            <!-- Social Links -->
+            <div class="flex justify-center gap-4">
+                <a href="https://github.com/antono4" target="_blank" class="w-14 h-14 glass rounded-xl flex items-center justify-center hover:bg-amber-500/20 hover:scale-110 transition-all">
+                    <i class="fa-brands fa-github text-xl"></i>
+                </a>
+                <a href="https://twitter.com/antono4" target="_blank" class="w-14 h-14 glass rounded-xl flex items-center justify-center hover:bg-amber-500/20 hover:scale-110 transition-all">
+                    <i class="fa-brands fa-x-twitter text-xl"></i>
+                </a>
+                <a href="https://instagram.com/antono4" target="_blank" class="w-14 h-14 glass rounded-xl flex items-center justify-center hover:bg-amber-500/20 hover:scale-110 transition-all">
+                    <i class="fa-brands fa-instagram text-xl"></i>
+                </a>
+                <a href="https://youtube.com/@antono4" target="_blank" class="w-14 h-14 glass rounded-xl flex items-center justify-center hover:bg-amber-500/20 hover:scale-110 transition-all">
+                    <i class="fa-brands fa-youtube text-xl"></i>
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="py-8 border-t border-white/10 relative z-10 px-6">
+        <div class="max-w-7xl mx-auto flex flex-col md:flex-row justify-between items-center gap-4">
+            <p class="text-sm opacity-40">© 2024 Antono. All rights reserved.</p>
+            <p class="text-sm opacity-40 flex items-center gap-2">
+                Built with <span class="text-amber-400">❤️</span> and <span class="text-amber-400">☕</span>
+            </p>
+        </div>
+    </footer>
+
+    <!-- Scroll Reveal Script -->
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('visible');
+                    }
+                });
+            }, { threshold: 0.1 });
+
+            document.querySelectorAll('.slide-up').forEach(el => observer.observe(el));
+        });
+    </script>
+</body>
+</html>

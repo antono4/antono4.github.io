@@ -1,0 +1,253 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Aplikasi Deteksi Gambar AI - GitHub Pages</title>
+    <link rel="preconnect" href="https://cdn.tailwindcss.com">
+    <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+    <!-- Tailwind CSS untuk tampilan yang menarik -->
+    <script defer src="https://cdn.tailwindcss.com"></script>
+    <!-- Memuat TensorFlow.js, Model MobileNet, dan Model COCO-SSD -->
+    <script defer src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs"></script>
+    <script defer src="https://cdn.jsdelivr.net/npm/@tensorflow-models/mobilenet"></script>
+    <script defer src="https://cdn.jsdelivr.net/npm/@tensorflow-models/coco-ssd"></script>
+</head>
+<body class="bg-gray-100 min-h-screen flex flex-col items-center justify-center p-5">
+
+    <div class="bg-white p-8 rounded-lg shadow-lg max-w-md w-full text-center">
+        <h1 class="text-2xl font-bold mb-4 text-blue-600">Detektor Gambar AI 🤖</h1>
+        <p class="text-gray-600 mb-6">Unggah gambar di bawah ini untuk dianalisis oleh AI langsung di browser Anda.</p>
+
+        <!-- Area Input Gambar -->
+        <input type="file" id="imageUpload" accept="image/*" class="hidden" />
+        <label id="uploadLabel" for="imageUpload" class="cursor-pointer bg-blue-500 hover:bg-blue-600 text-white font-semibold py-2 px-4 rounded-lg inline-block mb-4 transition duration-200" aria-describedby="status">
+            Pilih Gambar atau Tarik & Lepas di sini
+        </label>
+
+        <div class="flex justify-center gap-3 mb-4">
+            <button id="modeClassify" class="px-4 py-2 rounded-full bg-emerald-600 text-white font-semibold shadow-sm">Klasifikasi</button>
+            <button id="modeDetect" class="px-4 py-2 rounded-full bg-slate-200 text-slate-700 font-semibold shadow-sm">Deteksi Objek</button>
+        </div>
+
+        <!-- Preview Gambar -->
+        <div class="relative flex justify-center mb-4">
+            <img id="imagePreview" class="max-h-64 rounded-lg hidden" alt="Pratinjau Gambar" />
+            <div id="overlayBoxes" class="pointer-events-none absolute inset-0"></div>
+        </div>
+
+        <!-- Status & Hasil Prediksi -->
+        <div id="status" class="text-amber-600 font-medium mb-2">Memuat Model AI (Mohon Tunggu)...</div>
+        <div id="result" class="text-left bg-gray-50 p-4 rounded border border-gray-200 hidden">
+            <h3 class="font-bold text-gray-700 mb-2">Hasil Analisis AI:</h3>
+            <ol id="predictionList" class="list-decimal list-inside text-gray-600"></ol>
+        </div>
+    </div>
+
+    <script>
+        const imageUpload = document.getElementById('imageUpload');
+        const uploadLabel = document.getElementById('uploadLabel');
+        const imagePreview = document.getElementById('imagePreview');
+        const overlayBoxes = document.getElementById('overlayBoxes');
+        const status = document.getElementById('status');
+        const result = document.getElementById('result');
+        const predictionList = document.getElementById('predictionList');
+        const modeClassifyButton = document.getElementById('modeClassify');
+        const modeDetectButton = document.getElementById('modeDetect');
+        const TOP_K = 7;
+
+        let mobilenetModel = null;
+        let cocoModel = null;
+        let modelMode = 'classification';
+
+        function updateStatus(text, colorClass = 'text-blue-600') {
+            status.innerText = text;
+            status.className = `${colorClass} font-medium mb-2`;
+        }
+
+        function setActiveMode(mode) {
+            modelMode = mode;
+            modeClassifyButton.classList.toggle('bg-emerald-600', mode === 'classification');
+            modeClassifyButton.classList.toggle('text-white', mode === 'classification');
+            modeClassifyButton.classList.toggle('bg-slate-200', mode !== 'classification');
+            modeClassifyButton.classList.toggle('text-slate-700', mode !== 'classification');
+
+            modeDetectButton.classList.toggle('bg-emerald-600', mode === 'detection');
+            modeDetectButton.classList.toggle('text-white', mode === 'detection');
+            modeDetectButton.classList.toggle('bg-slate-200', mode !== 'detection');
+            modeDetectButton.classList.toggle('text-slate-700', mode !== 'detection');
+
+            updateStatus(mode === 'classification' ? 'Mode klasifikasi aktif. Unggah gambar.' : 'Mode deteksi objek aktif. Unggah gambar.');
+            overlayBoxes.innerHTML = '';
+            result.classList.add('hidden');
+        }
+
+        async function initAI() {
+            try {
+                await tf.ready();
+                const hasWebgl = tf.findBackend && tf.findBackend('webgl');
+                if (hasWebgl) {
+                    await tf.setBackend('webgl');
+                    await tf.ready();
+                }
+
+                const [mobilenetLoaded, cocoLoaded] = await Promise.all([
+                    mobilenet.load({ version: 3, alpha: 1.0 }),
+                    cocoSsd.load(),
+                ]);
+
+                mobilenetModel = mobilenetLoaded;
+                cocoModel = cocoLoaded;
+                setActiveMode('classification');
+                updateStatus('AI siap! Pilih mode dan unggah gambar.', 'text-green-600');
+            } catch (error) {
+                console.error('Init AI error:', error);
+                updateStatus('Gagal memuat model AI. Coba muat ulang halaman.', 'text-red-600');
+            }
+        }
+
+        function drawBoxes(predictions) {
+            overlayBoxes.innerHTML = '';
+            const rect = imagePreview.getBoundingClientRect();
+            const scaleX = imagePreview.naturalWidth ? imagePreview.clientWidth / imagePreview.naturalWidth : 1;
+            const scaleY = imagePreview.naturalHeight ? imagePreview.clientHeight / imagePreview.naturalHeight : 1;
+
+            predictions.forEach((item) => {
+                const box = document.createElement('div');
+                box.className = 'absolute border-2 border-emerald-500 rounded-lg pointer-events-none';
+                box.style.left = `${item.bbox[0] * scaleX}px`;
+                box.style.top = `${item.bbox[1] * scaleY}px`;
+                box.style.width = `${item.bbox[2] * scaleX}px`;
+                box.style.height = `${item.bbox[3] * scaleY}px`;
+                box.style.boxShadow = '0 0 0 2px rgba(16,185,129,0.3)';
+
+                const label = document.createElement('span');
+                label.className = 'absolute top-0 left-0 bg-emerald-600 text-white text-[10px] px-1 py-0.5 rounded-br-md';
+                label.innerText = `${item.class} ${Math.round(item.score * 100)}%`;
+                box.appendChild(label);
+                overlayBoxes.appendChild(box);
+            });
+        }
+
+        async function handleFileUpload(file) {
+            if (!file) return;
+            const reader = new FileReader();
+
+            reader.onload = (event) => {
+                imagePreview.src = event.target.result;
+                imagePreview.classList.remove('hidden');
+                result.classList.add('hidden');
+                predictionList.innerHTML = '';
+                overlayBoxes.innerHTML = '';
+                updateStatus('Sedang menganalisis gambar...', 'text-blue-600');
+
+                imagePreview.onload = async () => {
+                    try {
+                        if (modelMode === 'classification') {
+                            if (!mobilenetModel) {
+                                updateStatus('Model klasifikasi belum siap. Mohon tunggu.', 'text-amber-600');
+                                return;
+                            }
+                            const predictions = await mobilenetModel.classify(imagePreview, TOP_K);
+                            displayPredictions(predictions);
+                        } else {
+                            if (!cocoModel) {
+                                updateStatus('Model deteksi objek belum siap. Mohon tunggu.', 'text-amber-600');
+                                return;
+                            }
+                            const detections = await cocoModel.detect(imagePreview);
+                            displayDetectionResults(detections);
+                            drawBoxes(detections);
+                        }
+                    } catch (error) {
+                        console.error('Analysis error:', error);
+                        updateStatus('Terjadi kesalahan saat analisis. Coba ulangi.', 'text-red-600');
+                    }
+                };
+            };
+
+            reader.readAsDataURL(file);
+        }
+
+        imageUpload.addEventListener('change', (e) => {
+            const file = e.target.files[0];
+            handleFileUpload(file);
+        });
+
+        uploadLabel.addEventListener('dragover', (e) => {
+            e.preventDefault();
+            uploadLabel.classList.add('bg-blue-600');
+        });
+
+        uploadLabel.addEventListener('dragleave', () => {
+            uploadLabel.classList.remove('bg-blue-600');
+        });
+
+        uploadLabel.addEventListener('drop', (e) => {
+            e.preventDefault();
+            uploadLabel.classList.remove('bg-blue-600');
+            const file = e.dataTransfer.files[0];
+            if (file && file.type.startsWith('image/')) {
+                imageUpload.files = e.dataTransfer.files;
+                handleFileUpload(file);
+            } else {
+                updateStatus('Silakan seret file gambar yang valid.', 'text-amber-600');
+            }
+        });
+
+        modeClassifyButton.addEventListener('click', () => setActiveMode('classification'));
+        modeDetectButton.addEventListener('click', () => setActiveMode('detection'));
+
+        function displayPredictions(predictions) {
+            updateStatus('Analisis selesai! Berikut prediksi terbaik dari AI.', 'text-green-600');
+            predictionList.innerHTML = '';
+
+            predictions.forEach((prediction) => {
+                const li = document.createElement('li');
+                const probability = (prediction.probability * 100).toFixed(2);
+                li.innerHTML = `
+                    <div class="flex justify-between items-center gap-4 mb-2">
+                        <span class="font-semibold text-gray-800">${prediction.className}</span>
+                        <span class="text-sm text-gray-500">${probability}%</span>
+                    </div>
+                    <div class="h-2 rounded-full bg-gray-200 overflow-hidden mb-2">
+                        <div class="h-full rounded-full bg-blue-500" style="width: ${probability}%"></div>
+                    </div>
+                `;
+                predictionList.appendChild(li);
+            });
+
+            result.classList.remove('hidden');
+        }
+
+        function displayDetectionResults(detections) {
+            if (!detections.length) {
+                updateStatus('Tidak ditemukan objek dalam gambar.', 'text-amber-600');
+                predictionList.innerHTML = '<li class="text-gray-500">Tidak ada objek terdeteksi.</li>';
+                result.classList.remove('hidden');
+                return;
+            }
+
+            updateStatus('Deteksi objek selesai! Lihat hasilnya di bawah.', 'text-green-600');
+            predictionList.innerHTML = '';
+
+            detections.forEach((item) => {
+                const li = document.createElement('li');
+                const score = (item.score * 100).toFixed(2);
+                li.innerHTML = `
+                    <div class="flex justify-between items-center gap-4 mb-2">
+                        <span class="font-semibold text-gray-800">${item.class}</span>
+                        <span class="text-sm text-gray-500">${score}%</span>
+                    </div>
+                    <div class="text-[10px] text-slate-500">Kotak: [${Math.round(item.bbox[0])}, ${Math.round(item.bbox[1])}, ${Math.round(item.bbox[2])}, ${Math.round(item.bbox[3])}]</div>
+                `;
+                predictionList.appendChild(li);
+            });
+
+            result.classList.remove('hidden');
+        }
+
+        window.addEventListener('load', initAI);
+    </script>
+</body>
+</html>
