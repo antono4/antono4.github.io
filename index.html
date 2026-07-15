@@ -29,8 +29,8 @@
             position: fixed;
             inset: 0;
             background-image: 
-                linear-gradient(rgba(245, 158, 11, 0.03) 1px, transparent 1px),
-                linear-gradient(90deg, rgba(245, 158, 11, 0.03) 1px, transparent 1px);
+                linear-gradient(rgba(56, 189, 248, 0.03) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(56, 189, 248, 0.03) 1px, transparent 1px);
             background-size: 60px 60px;
             animation: gridMove 20s linear infinite;
         }
@@ -51,21 +51,21 @@
         
         .orb-1 {
             width: 500px; height: 500px;
-            background: radial-gradient(circle, rgba(245, 158, 11, 0.15) 0%, transparent 70%);
+            background: radial-gradient(circle, rgba(56, 189, 248, 0.15) 0%, transparent 70%);
             top: -10%; right: -10%;
             animation-delay: 0s;
         }
         
         .orb-2 {
             width: 400px; height: 400px;
-            background: radial-gradient(circle, rgba(234, 88, 12, 0.1) 0%, transparent 70%);
+            background: radial-gradient(circle, rgba(14, 165, 233, 0.1) 0%, transparent 70%);
             bottom: -5%; left: -5%;
             animation-delay: -10s;
         }
         
         .orb-3 {
             width: 300px; height: 300px;
-            background: radial-gradient(circle, rgba(161, 98, 7, 0.1) 0%, transparent 70%);
+            background: radial-gradient(circle, rgba(2, 132, 199, 0.1) 0%, transparent 70%);
             top: 50%; left: 50%;
             transform: translate(-50%, -50%);
             animation-delay: -5s;
@@ -80,7 +80,7 @@
         
         /* Gradient text */
         .gradient-text {
-            background: linear-gradient(135deg, #f59e0b 0%, #fbbf24 50%, #f59e0b 100%);
+            background: linear-gradient(135deg, #38bdf8 0%, #7dd3fc 50%, #38bdf8 100%);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             background-clip: text;
@@ -101,9 +101,9 @@
         
         .glass-hover:hover {
             background: rgba(255, 255, 255, 0.06);
-            border-color: rgba(245, 158, 11, 0.3);
+            border-color: rgba(56, 189, 248, 0.3);
             transform: translateY(-8px);
-            box-shadow: 0 25px 50px -12px rgba(245, 158, 11, 0.15);
+            box-shadow: 0 25px 50px -12px rgba(56, 189, 248, 0.15);
         }
         
         /* Button glow */
@@ -116,7 +116,7 @@
             content: '';
             position: absolute;
             inset: -2px;
-            background: linear-gradient(135deg, #f59e0b, #fbbf24, #f59e0b);
+            background: linear-gradient(135deg, #38bdf8, #7dd3fc, #38bdf8);
             border-radius: inherit;
             z-index: -1;
             opacity: 0;
@@ -139,7 +139,7 @@
             inset: 0;
             border-radius: inherit;
             padding: 2px;
-            background: linear-gradient(135deg, #f59e0b, transparent, #f59e0b);
+            background: linear-gradient(135deg, #38bdf8, transparent, #38bdf8);
             -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
             mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
             -webkit-mask-composite: xor;
@@ -156,7 +156,7 @@
         .cursor::after {
             content: '|';
             animation: blink 1s infinite;
-            color: #f59e0b;
+            color: #38bdf8;
         }
         
         @keyframes blink {
@@ -229,7 +229,7 @@
             top: 0;
             left: 0;
             height: 3px;
-            background: linear-gradient(90deg, #f59e0b, #fbbf24);
+            background: linear-gradient(90deg, #38bdf8, #7dd3fc);
             z-index: 9999;
             transition: width 0.1s;
         }
@@ -237,8 +237,8 @@
         /* Custom scrollbar */
         ::-webkit-scrollbar { width: 8px; }
         ::-webkit-scrollbar-track { background: #0a0a0a; }
-        ::-webkit-scrollbar-thumb { background: #f59e0b40; border-radius: 4px; }
-        ::-webkit-scrollbar-thumb:hover { background: #f59e0b80; }
+        ::-webkit-scrollbar-thumb { background: #38bdf840; border-radius: 4px; }
+        ::-webkit-scrollbar-thumb:hover { background: #38bdf880; }
         
         /* Stat counter animation */
         .counter {
@@ -247,7 +247,7 @@
         
         /* Hexagon pattern */
         .hex-pattern {
-            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='28' height='49' viewBox='0 0 28 49'%3E%3Cg fill-rule='evenodd'%3E%3Cg fill='%23f59e0b' fill-opacity='0.03'%3E%3Cpath d='M13.99 9.25l13 7.5v15l-13 7.5L1 31.75v-15l12.99-7.5zM3 17.9v12.7l10.99 6.34 11-6.35V17.9l-11-6.34L3 17.9zM0 15l12.98-7.5V0h-2v6.35L0 12.69v2.3zm0 18.5L12.98 41v8h-2v-6.85L0 35.81v-2.3zM15 0v7.5L27.99 15H28v-2.31h-.01L17 6.35V0h-2zm0 49v-8l12.99-7.5H28v2.31h-.01L17 42.15V49h-2z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='28' height='49' viewBox='0 0 28 49'%3E%3Cg fill-rule='evenodd'%3E%3Cg fill='%2338bdf8' fill-opacity='0.03'%3E%3Cpath d='M13.99 9.25l13 7.5v15l-13 7.5L1 31.75v-15l12.99-7.5zM3 17.9v12.7l10.99 6.34 11-6.35V17.9l-11-6.34L3 17.9zM0 15l12.98-7.5V0h-2v6.35L0 12.69v2.3zm0 18.5L12.98 41v8h-2v-6.85L0 35.81v-2.3zM15 0v7.5L27.99 15H28v-2.31h-.01L17 6.35V0h-2zm0 49v-8l12.99-7.5H28v2.31h-.01L17 42.15V49h-2z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
         }
         
         /* Magnetic effect */
@@ -257,7 +257,7 @@
         
         /* Glow effect on hover */
         .glow-hover:hover {
-            box-shadow: 0 0 30px rgba(245, 158, 11, 0.3), 0 0 60px rgba(245, 158, 11, 0.1);
+            box-shadow: 0 0 30px rgba(56, 189, 248, 0.3), 0 0 60px rgba(56, 189, 248, 0.1);
         }
     </style>
 </head>
@@ -288,12 +288,12 @@ class="relative min-h-screen">
             <!-- Logo -->
             <div class="flex items-center gap-3 group cursor-pointer" @click="window.scrollTo({top: 0, behavior: 'smooth'})">
                 <div class="relative">
-                    <div class="w-12 h-12 rounded-xl bg-gradient-to-br from-amber-400 to-amber-600 flex items-center justify-center shadow-lg shadow-amber-500/20 group-hover:scale-110 transition-transform">
+                    <div class="w-12 h-12 rounded-xl bg-gradient-to-br from-sky-400 to-sky-600 flex items-center justify-center shadow-lg shadow-sky-500/20 group-hover:scale-110 transition-transform">
                         <span class="text-xl font-black text-black">A</span>
                     </div>
                 </div>
                 <div>
-                    <span class="font-bold text-lg tracking-tight">ANTONO<span class="text-amber-400">_</span></span>
+                    <span class="font-bold text-lg tracking-tight">ANTONO<span class="text-sky-400">_</span></span>
                 </div>
             </div>
 
@@ -301,7 +301,7 @@ class="relative min-h-screen">
             <div class="hidden md:flex items-center gap-8">
                 <template x-for="item in ['Tentang', 'Keahlian', 'Proyek', 'Pengalaman', 'Kontak']" :key="item">
                     <button @click="document.getElementById(item.toLowerCase()).scrollIntoView({behavior: 'smooth'})" 
-                            class="text-sm font-medium opacity-50 hover:opacity-100 hover:text-amber-400 transition-all relative group">
+                            class="text-sm font-medium opacity-50 hover:opacity-100 hover:text-sky-400 transition-all relative group">
                         <span x-text="item"></span>
                     </button>
                 </template>
@@ -309,7 +309,7 @@ class="relative min-h-screen">
 
             <!-- Right Actions -->
             <div class="flex items-center gap-4">
-                <a href="#" class="hidden sm:flex items-center gap-2 px-5 py-2.5 rounded-xl bg-gradient-to-r from-amber-500 to-amber-600 text-black text-sm font-bold shadow-lg shadow-amber-500/20 hover:shadow-amber-500/40 hover:scale-105 transition-all btn-glow">
+                <a href="#" class="hidden sm:flex items-center gap-2 px-5 py-2.5 rounded-xl bg-gradient-to-r to-sky-500 to-sky-600 text-black text-sm font-bold shadow-lg shadow-sky-500/20 hover:shadow-sky-500/40 hover:scale-105 transition-all btn-glow">
                     <i class="fa-solid fa-download"></i>
                     Download CV
                 </a>
@@ -325,7 +325,7 @@ class="relative min-h-screen">
         <div x-show="isMenuOpen" x-cloak x-transition class="md:hidden mt-4 p-6 rounded-2xl glass">
             <template x-for="item in ['Tentang', 'Keahlian', 'Proyek', 'Pengalaman', 'Kontak']" :key="item">
                 <button @click="document.getElementById(item.toLowerCase()).scrollIntoView({behavior: 'smooth'}); isMenuOpen = false" 
-                        class="block w-full text-left py-3 text-lg font-medium hover:text-amber-400 transition-colors">
+                        class="block w-full text-left py-3 text-lg font-medium hover:text-sky-400 transition-colors">
                     <span x-text="item"></span>
                 </button>
             </template>
@@ -338,10 +338,10 @@ class="relative min-h-screen">
             <div class="grid lg:grid-cols-2 gap-12 items-center">
                 <!-- Left Content -->
                 <div class="space-y-8">
-                    <div class="inline-flex items-center gap-3 px-4 py-2 rounded-full glass text-amber-400 text-sm font-medium">
+                    <div class="inline-flex items-center gap-3 px-4 py-2 rounded-full glass text-sky-400 text-sm font-medium">
                         <span class="relative flex h-2 w-2">
-                            <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-amber-400 opacity-75"></span>
-                            <span class="relative inline-flex rounded-full h-2 w-2 bg-amber-500"></span>
+                            <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-sky-400 opacity-75"></span>
+                            <span class="relative inline-flex rounded-full h-2 w-2 bg-sky-500"></span>
                         </span>
                         Available for Projects
                     </div>
@@ -360,7 +360,7 @@ class="relative min-h-screen">
 
                     <div class="flex flex-wrap gap-4">
                         <button @click="document.getElementById('proyek').scrollIntoView({behavior: 'smooth'})" 
-                                class="px-8 py-4 rounded-2xl bg-gradient-to-r from-amber-500 to-amber-600 text-black font-bold shadow-lg shadow-amber-500/30 hover:shadow-amber-500/50 hover:scale-105 transition-all btn-glow">
+                                class="px-8 py-4 rounded-2xl bg-gradient-to-r to-sky-500 to-sky-600 text-black font-bold shadow-lg shadow-sky-500/30 hover:shadow-sky-500/50 hover:scale-105 transition-all btn-glow">
                             Lihat Proyek
                         </button>
                         <button @click="document.getElementById('kontak').scrollIntoView({behavior: 'smooth'})" 
@@ -391,19 +391,19 @@ class="relative min-h-screen">
                 <div class="relative flex justify-center lg:justify-end">
                     <div class="relative">
                         <!-- Decorative circles -->
-                        <div class="absolute -inset-8 border border-amber-500/20 rounded-full animate-pulse"></div>
-                        <div class="absolute -inset-16 border border-amber-500/10 rounded-full"></div>
+                        <div class="absolute -inset-8 border border-sky-500/20 rounded-full animate-pulse"></div>
+                        <div class="absolute -inset-16 border border-sky-500/10 rounded-full"></div>
                         
                         <!-- Main Card -->
                         <div class="relative w-full max-w-sm glass rounded-3xl p-8 glow-hover float">
-                            <div class="absolute top-0 left-0 right-0 h-28 bg-gradient-to-r from-amber-500 to-amber-600 rounded-t-3xl"></div>
+                            <div class="absolute top-0 left-0 right-0 h-28 bg-gradient-to-r to-sky-500 to-sky-600 rounded-t-3xl"></div>
                             
                             <div class="relative -mt-14 mb-6 flex justify-center">
                                 <div class="relative">
-                                    <div class="w-28 h-28 rounded-2xl overflow-hidden border-4 border-black/50 shadow-lg shadow-amber-500/30">
+                                    <div class="w-28 h-28 rounded-2xl overflow-hidden border-4 border-black/50 shadow-lg shadow-sky-500/30">
                                         <img src="https://avatars.githubusercontent.com/u/73228642?v=4" alt="Antono" class="w-full h-full object-cover">
                                     </div>
-                                    <div class="absolute -bottom-2 -right-2 w-8 h-8 bg-amber-500 rounded-full flex items-center justify-center border-4 border-black">
+                                    <div class="absolute -bottom-2 -right-2 w-8 h-8 bg-sky-500 rounded-full flex items-center justify-center border-4 border-black">
                                         <i class="fa-solid fa-check text-xs text-black"></i>
                                     </div>
                                 </div>
@@ -411,12 +411,12 @@ class="relative min-h-screen">
 
                             <div class="text-center">
                                 <h3 class="text-2xl font-bold mb-1">Antono</h3>
-                                <p class="text-amber-400 font-medium mb-4">Principal Fullstack Developer</p>
+                                <p class="text-sky-400 font-medium mb-4">Principal Fullstack Developer</p>
                                 
                                 <div class="flex flex-wrap justify-center gap-2 mb-6">
-                                    <span class="px-3 py-1 rounded-full bg-amber-500/10 text-amber-400 text-xs font-medium">Backend</span>
-                                    <span class="px-3 py-1 rounded-full bg-amber-500/10 text-amber-400 text-xs font-medium">Frontend</span>
-                                    <span class="px-3 py-1 rounded-full bg-amber-500/10 text-amber-400 text-xs font-medium">DevOps</span>
+                                    <span class="px-3 py-1 rounded-full bg-sky-500/10 text-sky-400 text-xs font-medium">Backend</span>
+                                    <span class="px-3 py-1 rounded-full bg-sky-500/10 text-sky-400 text-xs font-medium">Frontend</span>
+                                    <span class="px-3 py-1 rounded-full bg-sky-500/10 text-sky-400 text-xs font-medium">DevOps</span>
                                 </div>
 
                                 <div class="grid grid-cols-2 gap-4 text-sm">
@@ -451,8 +451,8 @@ class="relative min-h-screen">
             <template x-for="i in 2" :key="i">
                 <div class="flex items-center gap-12 px-8">
                     <template x-for="tech in ['React.js', 'Node.js', 'Python', 'AWS', 'Docker', 'PostgreSQL', 'MongoDB', 'GraphQL', 'Redis', 'Kubernetes', 'TypeScript', 'Go', 'Vue.js']" :key="tech">
-                        <span class="text-sm font-bold opacity-30 hover:opacity-100 hover:text-amber-400 transition-all cursor-default flex items-center gap-2">
-                            <i class="fa-solid fa-circle text-[6px] text-amber-500"></i>
+                        <span class="text-sm font-bold opacity-30 hover:opacity-100 hover:text-sky-400 transition-all cursor-default flex items-center gap-2">
+                            <i class="fa-solid fa-circle text-[6px] text-sky-500"></i>
                             <span x-text="tech"></span>
                         </span>
                     </template>
@@ -465,14 +465,14 @@ class="relative min-h-screen">
     <section id="keahlian" class="py-24 relative z-10 px-6">
         <div class="max-w-7xl mx-auto">
             <div class="text-center mb-16">
-                <span class="text-amber-400 text-sm font-bold tracking-widest uppercase">Expertise</span>
+                <span class="text-sky-400 text-sm font-bold tracking-widest uppercase">Expertise</span>
                 <h2 class="text-4xl md:text-6xl font-black mt-4">Keahlian & <span class="gradient-text">Tech Stack</span></h2>
             </div>
 
             <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
                 <template x-for="(skill, index) in [
                     { title: 'Frontend Development', icon: 'fa-brands fa-react', items: ['React.js', 'Vue.js', 'Next.js', 'TypeScript', 'Tailwind CSS'], color: 'from-blue-500 to-cyan-500' },
-                    { title: 'Backend & APIs', icon: 'fa-solid fa-server', items: ['Node.js', 'Python', 'Go', 'GraphQL', 'REST API'], color: 'from-amber-500 to-orange-500' },
+                    { title: 'Backend & APIs', icon: 'fa-solid fa-server', items: ['Node.js', 'Python', 'Go', 'GraphQL', 'REST API'], color: 'sky' },
                     { title: 'Database & Storage', icon: 'fa-solid fa-database', items: ['PostgreSQL', 'MongoDB', 'Redis', 'Firebase', 'Supabase'], color: 'from-emerald-500 to-teal-500' },
                     { title: 'Cloud & DevOps', icon: 'fa-brands fa-aws', items: ['AWS', 'Docker', 'Kubernetes', 'CI/CD', 'Terraform'], color: 'from-purple-500 to-pink-500' },
                     { title: 'Mobile Development', icon: 'fa-solid fa-mobile-screen', items: ['React Native', 'Flutter', 'iOS', 'Android'], color: 'from-indigo-500 to-violet-500' },
@@ -500,13 +500,13 @@ class="relative min-h-screen">
     <section id="proyek" class="py-24 relative z-10 px-6">
         <div class="max-w-7xl mx-auto">
             <div class="text-center mb-16">
-                <span class="text-amber-400 text-sm font-bold tracking-widest uppercase">Portfolio</span>
+                <span class="text-sky-400 text-sm font-bold tracking-widest uppercase">Portfolio</span>
                 <h2 class="text-4xl md:text-6xl font-black mt-4">Proyek <span class="gradient-text">Unggulan</span></h2>
             </div>
 
             <div class="grid md:grid-cols-2 gap-8">
                 <template x-for="(project, index) in [
-                    { title: 'FinTech Dashboard', desc: 'Sistem monitoring real-time untuk platform fintech dengan analytics tingkat lanjut dan machine learning predictions.', tags: ['React', 'Node.js', 'PostgreSQL', 'ML'], color: 'amber' },
+                    { title: 'FinTech Dashboard', desc: 'Sistem monitoring real-time untuk platform fintech dengan analytics tingkat lanjut dan machine learning predictions.', tags: ['React', 'Node.js', 'PostgreSQL', 'ML'], color: 'sky' },
                     { title: 'E-Commerce Platform', desc: 'Marketplace skala enterprise dengan microservices architecture, handle 1M+ daily transactions.', tags: ['Next.js', 'Go', 'Redis', 'K8s'], color: 'blue' },
                     { title: 'AI Content Platform', desc: 'Platform content generation dengan AI, supporting multi-language dan custom fine-tuning models.', tags: ['Python', 'FastAPI', 'LangChain', 'Vue'], color: 'purple' },
                     { title: 'Healthcare App', desc: 'Aplikasi telemedicine dengan video call, appointment scheduling, dan AI-powered symptom checker.', tags: ['React Native', 'Firebase', 'Twilio', 'AI'], color: 'emerald' }
@@ -514,18 +514,18 @@ class="relative min-h-screen">
                     <div class="group glass rounded-3xl overflow-hidden glass-hover">
                         <div class="h-56 bg-gradient-to-br" :class="`from-${project.color}-500/20 to-${project.color}-600/10 relative overflow-hidden`">
                             <div class="absolute inset-0 flex items-center justify-center">
-                                <i :class="`fa-solid fa-${project.color === 'amber' ? 'chart-line' : project.color === 'blue' ? 'cart-shopping' : project.color === 'purple' ? 'robot' : 'heart-pulse'} text-8xl opacity-10`"></i>
+                                <i :class="`fa-solid fa-${project.color === 'sky' ? 'chart-line' : project.color === 'blue' ? 'cart-shopping' : project.color === 'purple' ? 'robot' : 'heart-pulse'} text-8xl opacity-10`"></i>
                             </div>
                         </div>
                         <div class="p-8">
-                            <h3 class="text-2xl font-bold mb-3 group-hover:text-amber-400 transition-colors" x-text="project.title"></h3>
+                            <h3 class="text-2xl font-bold mb-3 group-hover:text-sky-400 transition-colors" x-text="project.title"></h3>
                             <p class="text-sm opacity-60 mb-6 leading-relaxed" x-text="project.desc"></p>
                             <div class="flex flex-wrap gap-2 mb-6">
                                 <template x-for="tag in project.tags" :key="tag">
                                     <span class="px-3 py-1 rounded-full bg-white/5 text-xs font-medium" x-text="tag"></span>
                                 </template>
                             </div>
-                            <a href="#" class="inline-flex items-center gap-3 text-amber-400 font-bold group-hover:gap-4 transition-all">
+                            <a href="#" class="inline-flex items-center gap-3 text-sky-400 font-bold group-hover:gap-4 transition-all">
                                 View Project
                                 <i class="fa-solid fa-arrow-right"></i>
                             </a>
@@ -540,13 +540,13 @@ class="relative min-h-screen">
     <section id="pengalaman" class="py-24 relative z-10 px-6">
         <div class="max-w-7xl mx-auto">
             <div class="text-center mb-16">
-                <span class="text-amber-400 text-sm font-bold tracking-widest uppercase">Career Path</span>
+                <span class="text-sky-400 text-sm font-bold tracking-widest uppercase">Career Path</span>
                 <h2 class="text-4xl md:text-6xl font-black mt-4">Pengalaman <span class="gradient-text">Kerja</span></h2>
             </div>
 
             <div class="relative">
                 <!-- Timeline Line -->
-                <div class="absolute left-4 md:left-1/2 top-0 bottom-0 w-0.5 bg-gradient-to-b from-amber-500 via-amber-400 to-amber-500/20 transform -translate-x-1/2"></div>
+                <div class="absolute left-4 md:left-1/2 top-0 bottom-0 w-0.5 bg-gradient-to-b to-sky-500 via-sky-400 to-sky-500/20 transform -translate-x-1/2"></div>
 
                 <!-- Timeline Items -->
                 <template x-for="(exp, index) in [
@@ -557,12 +557,12 @@ class="relative min-h-screen">
                 ]" :key="index">
                     <div class="relative pl-12 md:pl-0 mb-12" :class="index % 2 === 0 ? 'md:pr-[50%]' : 'md:pl-[50%]'">
                         <!-- Timeline Dot -->
-                        <div class="absolute left-2 md:left-1/2 top-0 w-5 h-5 rounded-full bg-amber-500 transform -translate-x-1/2 border-4 border-black shadow-lg shadow-amber-500/30"></div>
+                        <div class="absolute left-2 md:left-1/2 top-0 w-5 h-5 rounded-full bg-sky-500 transform -translate-x-1/2 border-4 border-black shadow-lg shadow-sky-500/30"></div>
                         
                         <div class="glass rounded-2xl p-6 glass-hover" :class="index % 2 === 0 ? 'md:mr-8 md:text-right' : 'md:ml-8'">
-                            <span class="inline-block px-4 py-1 rounded-full bg-amber-500/20 text-amber-400 text-xs font-bold mb-3" x-text="exp.year"></span>
+                            <span class="inline-block px-4 py-1 rounded-full bg-sky-500/20 text-sky-400 text-xs font-bold mb-3" x-text="exp.year"></span>
                             <h3 class="text-xl font-bold mb-1" x-text="exp.role"></h3>
-                            <p class="text-amber-400 text-sm font-medium mb-3" x-text="exp.company"></p>
+                            <p class="text-sky-400 text-sm font-medium mb-3" x-text="exp.company"></p>
                             <p class="text-sm opacity-60 leading-relaxed" x-text="exp.desc"></p>
                         </div>
                     </div>
@@ -574,7 +574,7 @@ class="relative min-h-screen">
     <!-- Contact Section -->
     <section id="kontak" class="py-24 relative z-10 px-6">
         <div class="max-w-4xl mx-auto text-center">
-            <span class="text-amber-400 text-sm font-bold tracking-widest uppercase">Get In Touch</span>
+            <span class="text-sky-400 text-sm font-bold tracking-widest uppercase">Get In Touch</span>
             <h2 class="text-4xl md:text-6xl font-black mt-4 mb-8">Mari <span class="gradient-text">Berkolaborasi</span></h2>
             <p class="text-lg opacity-60 mb-12 max-w-2xl mx-auto leading-relaxed">
                 Tertarik untuk bekerja sama? Jangan ragu untuk menghubungi saya. Saya selalu terbuka untuk diskusi tentang proyek baru.
@@ -584,32 +584,32 @@ class="relative min-h-screen">
                 <a href="mailto:hello@antono.dev" class="glass rounded-2xl p-8 glass-hover group">
                     <div class="text-5xl mb-4">📧</div>
                     <h4 class="font-bold mb-2">Email</h4>
-                    <p class="text-sm opacity-60 group-hover:text-amber-400 transition-colors">hello@antono.dev</p>
+                    <p class="text-sm opacity-60 group-hover:text-sky-400 transition-colors">hello@antono.dev</p>
                 </a>
                 <a href="#" class="glass rounded-2xl p-8 glass-hover group">
                     <div class="text-5xl mb-4">💬</div>
                     <h4 class="font-bold mb-2">WhatsApp</h4>
-                    <p class="text-sm opacity-60 group-hover:text-amber-400 transition-colors">+62 812 3456 789</p>
+                    <p class="text-sm opacity-60 group-hover:text-sky-400 transition-colors">+62 812 3456 789</p>
                 </a>
                 <a href="https://linkedin.com/in/antono4" target="_blank" class="glass rounded-2xl p-8 glass-hover group">
                     <div class="text-5xl mb-4">💼</div>
                     <h4 class="font-bold mb-2">LinkedIn</h4>
-                    <p class="text-sm opacity-60 group-hover:text-amber-400 transition-colors">antono4</p>
+                    <p class="text-sm opacity-60 group-hover:text-sky-400 transition-colors">antono4</p>
                 </a>
             </div>
 
             <!-- Social Links -->
             <div class="flex justify-center gap-4">
-                <a href="https://github.com/antono4" target="_blank" class="w-14 h-14 glass rounded-xl flex items-center justify-center hover:bg-amber-500/20 hover:scale-110 transition-all">
+                <a href="https://github.com/antono4" target="_blank" class="w-14 h-14 glass rounded-xl flex items-center justify-center hover:bg-sky-500/20 hover:scale-110 transition-all">
                     <i class="fa-brands fa-github text-xl"></i>
                 </a>
-                <a href="https://twitter.com/antono4" target="_blank" class="w-14 h-14 glass rounded-xl flex items-center justify-center hover:bg-amber-500/20 hover:scale-110 transition-all">
+                <a href="https://twitter.com/antono4" target="_blank" class="w-14 h-14 glass rounded-xl flex items-center justify-center hover:bg-sky-500/20 hover:scale-110 transition-all">
                     <i class="fa-brands fa-x-twitter text-xl"></i>
                 </a>
-                <a href="https://instagram.com/antono4" target="_blank" class="w-14 h-14 glass rounded-xl flex items-center justify-center hover:bg-amber-500/20 hover:scale-110 transition-all">
+                <a href="https://instagram.com/antono4" target="_blank" class="w-14 h-14 glass rounded-xl flex items-center justify-center hover:bg-sky-500/20 hover:scale-110 transition-all">
                     <i class="fa-brands fa-instagram text-xl"></i>
                 </a>
-                <a href="https://youtube.com/@antono4" target="_blank" class="w-14 h-14 glass rounded-xl flex items-center justify-center hover:bg-amber-500/20 hover:scale-110 transition-all">
+                <a href="https://youtube.com/@antono4" target="_blank" class="w-14 h-14 glass rounded-xl flex items-center justify-center hover:bg-sky-500/20 hover:scale-110 transition-all">
                     <i class="fa-brands fa-youtube text-xl"></i>
                 </a>
             </div>
@@ -621,7 +621,7 @@ class="relative min-h-screen">
         <div class="max-w-7xl mx-auto flex flex-col md:flex-row justify-between items-center gap-4">
             <p class="text-sm opacity-40">© 2024 Antono. All rights reserved.</p>
             <p class="text-sm opacity-40 flex items-center gap-2">
-                Built with <span class="text-amber-400">❤️</span> and <span class="text-amber-400">☕</span>
+                Built with <span class="text-sky-400">❤️</span> and <span class="text-sky-400">☕</span>
             </p>
         </div>
     </footer>
