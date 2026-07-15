@@ -693,7 +693,12 @@
             transform: translate(-50%, -50%);
         }
 
-        /* Mobile Menu */
+        
+        /* ==========================================
+           PROFESSIONAL MOBILE MENU
+           ========================================== */
+        
+        /* Menu Container */
         .mobile-menu {
             position: fixed;
             inset: 0;
@@ -701,158 +706,235 @@
             left: 0;
             right: 0;
             bottom: 0;
-            background: linear-gradient(135deg, rgba(10, 25, 47, 0.98) 0%, rgba(30, 58, 95, 0.98) 100%);
-            backdrop-filter: blur(20px);
-            -webkit-backdrop-filter: blur(20px);
-            z-index: 200;
+            z-index: 9999;
             display: flex;
             flex-direction: column;
-            padding: 1.5rem;
-            padding-top: 5rem;
             transform: translateX(100%);
-            transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.4s ease;
-            opacity: 0;
-            visibility: hidden;
-            will-change: transform, opacity;
-            overflow-y: auto;
+            transition: transform 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+            will-change: transform;
         }
-
+        
         .mobile-menu.active {
             transform: translateX(0);
-            opacity: 1;
-            visibility: visible;
         }
-
-        /* Mobile Menu Header (Logo + Close) */
-        .mobile-menu-header {
+        
+        /* Menu Overlay (Background) */
+        .mobile-menu-overlay {
             position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
+            inset: 0;
+            background: linear-gradient(180deg, rgba(10, 15, 30, 0.98) 0%, rgba(20, 35, 60, 0.98) 100%);
+            backdrop-filter: blur(30px);
+            -webkit-backdrop-filter: blur(30px);
+        }
+        
+        /* Menu Content */
+        .mobile-menu-content {
+            position: relative;
+            z-index: 2;
+            display: flex;
+            flex-direction: column;
+            height: 100%;
+            padding: 0;
+        }
+        
+        /* Header Bar */
+        .mobile-menu-header {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            padding: 1.5rem;
-            background: linear-gradient(135deg, rgba(10, 25, 47, 0.95) 0%, rgba(30, 58, 95, 0.95) 100%);
-            border-bottom: 1px solid var(--border);
+            padding: 1rem 1.5rem;
+            background: rgba(10, 15, 30, 0.8);
+            border-bottom: 1px solid rgba(135, 206, 235, 0.15);
         }
-
+        
+        /* Logo Section */
         .mobile-menu-logo {
             display: flex;
             align-items: center;
             gap: 0.75rem;
         }
-
+        
         .mobile-logo-icon {
-            width: 40px;
-            height: 40px;
-            background: linear-gradient(135deg, #87ceeb 0%, #00bfff 100%);
-            border-radius: 10px;
+            width: 42px;
+            height: 42px;
+            background: linear-gradient(135deg, #87ceeb 0%, #4facfe 100%);
+            border-radius: 12px;
             display: flex;
             align-items: center;
             justify-content: center;
-            box-shadow: 0 4px 15px rgba(135, 206, 235, 0.4);
+            box-shadow: 0 4px 20px rgba(79, 172, 254, 0.35);
         }
-
+        
         .mobile-logo-icon i {
-            color: #0a1929;
+            color: #0a192f;
             font-size: 1.1rem;
         }
-
+        
         .mobile-logo-text {
-            font-size: 1.3rem;
+            font-size: 1.25rem;
             font-weight: 800;
+            letter-spacing: -0.02em;
         }
-
+        
+        /* Close Button */
         .mobile-close-btn {
             width: 44px;
             height: 44px;
-            background: rgba(255, 255, 255, 0.1);
-            border: 1px solid rgba(255, 255, 255, 0.2);
-            border-radius: 50%;
+            background: rgba(135, 206, 235, 0.1);
+            border: 1px solid rgba(135, 206, 235, 0.2);
+            border-radius: 12px;
             display: flex;
             align-items: center;
             justify-content: center;
-            color: white;
+            color: #87ceeb;
             font-size: 1.1rem;
             cursor: pointer;
-            transition: all 0.3s;
+            transition: all 0.3s ease;
         }
-
+        
         .mobile-close-btn:hover {
             background: #87ceeb;
-            color: #0a1929;
-            border-color: #87ceeb;
+            color: #0a192f;
+            transform: rotate(90deg);
         }
-
-        /* Mobile Nav */
+        
+        /* Navigation Container */
+        .mobile-nav-container {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            padding: 2rem 1.5rem;
+            overflow-y: auto;
+        }
+        
+        /* Navigation Links */
         .mobile-nav {
             display: flex;
             flex-direction: column;
-            gap: 0.5rem;
-            width: 100%;
-            max-width: 400px;
+            gap: 0.75rem;
+            max-width: 320px;
             margin: 0 auto;
-            flex: 1;
-            justify-content: center;
+            width: 100%;
         }
-
+        
         .mobile-nav-link {
             display: flex;
             align-items: center;
-            gap: 1rem;
-            padding: 1rem 1.5rem;
-            color: rgba(255, 255, 255, 0.8);
-            font-size: 1.2rem;
-            font-weight: 600;
+            gap: 1.25rem;
+            padding: 1.1rem 1.5rem;
+            background: rgba(135, 206, 235, 0.05);
+            border: 1px solid rgba(135, 206, 235, 0.1);
             border-radius: 16px;
-            transition: all 0.3s;
-            border: 1px solid transparent;
+            color: rgba(255, 255, 255, 0.85);
+            font-size: 1.05rem;
+            font-weight: 600;
+            transition: all 0.35s ease;
+            opacity: 0;
+            transform: translateX(30px);
         }
-
+        
+        .mobile-menu.active .mobile-nav-link {
+            opacity: 1;
+            transform: translateX(0);
+        }
+        
+        .mobile-menu.active .mobile-nav-link:nth-child(1) { transition-delay: 0.1s; }
+        .mobile-menu.active .mobile-nav-link:nth-child(2) { transition-delay: 0.15s; }
+        .mobile-menu.active .mobile-nav-link:nth-child(3) { transition-delay: 0.2s; }
+        .mobile-menu.active .mobile-nav-link:nth-child(4) { transition-delay: 0.25s; }
+        
         .mobile-nav-link:hover {
-            background: rgba(135, 206, 235, 0.15);
+            background: rgba(135, 206, 235, 0.12);
+            border-color: rgba(135, 206, 235, 0.3);
             color: #87ceeb;
-            border-color: rgba(135, 206, 235, 0.4);
+            transform: translateX(8px);
         }
-
+        
         .mobile-nav-link i {
-            font-size: 1.3rem;
-            width: 32px;
+            font-size: 1.25rem;
+            width: 28px;
             text-align: center;
+            color: #4facfe;
+            transition: all 0.3s ease;
+        }
+        
+        .mobile-nav-link:hover i {
             color: #87ceeb;
+            transform: scale(1.1);
         }
-
-        /* Mobile CTA */
+        
+        .mobile-nav-link span {
+            flex: 1;
+        }
+        
+        .mobile-nav-link .nav-arrow {
+            opacity: 0;
+            transform: translateX(-10px);
+            transition: all 0.3s ease;
+        }
+        
+        .mobile-nav-link:hover .nav-arrow {
+            opacity: 1;
+            transform: translateX(0);
+        }
+        
+        /* CTA Section */
         .mobile-cta {
-            width: 100%;
-            max-width: 400px;
-            margin: 2rem auto 0;
-            padding-bottom: 2rem;
+            padding: 1.5rem;
+            background: rgba(10, 15, 30, 0.6);
+            border-top: 1px solid rgba(135, 206, 235, 0.1);
         }
-
+        
+        .mobile-cta-inner {
+            max-width: 320px;
+            margin: 0 auto;
+        }
+        
         .mobile-contact-btn {
             display: flex;
             align-items: center;
             justify-content: center;
             gap: 0.75rem;
             width: 100%;
-            padding: 1.25rem 2rem;
-            background: linear-gradient(135deg, #87ceeb 0%, #00bfff 50%, #1e90ff 100%);
-            color: #0a1929;
-            font-size: 1.1rem;
+            padding: 1.1rem 2rem;
+            background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+            color: #0a192f;
+            font-size: 1rem;
             font-weight: 700;
-            border-radius: 16px;
-            box-shadow: 0 8px 30px rgba(135, 206, 235, 0.4);
-            transition: all 0.3s;
+            border-radius: 14px;
+            box-shadow: 0 8px 32px rgba(79, 172, 254, 0.35);
+            transition: all 0.35s ease;
+            opacity: 0;
+            transform: translateY(20px);
         }
-
+        
+        .mobile-menu.active .mobile-contact-btn {
+            opacity: 1;
+            transform: translateY(0);
+            transition-delay: 0.35s;
+        }
+        
         .mobile-contact-btn:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 12px 40px rgba(135, 206, 235, 0.5);
+            transform: translateY(-3px);
+            box-shadow: 0 12px 40px rgba(79, 172, 254, 0.45);
+        }
+        
+        .mobile-contact-btn i {
+            font-size: 1.1rem;
+        }
+        
+        /* Footer Info */
+        .mobile-menu-footer {
+            padding: 1rem 1.5rem;
+            text-align: center;
+        }
+        
+        .mobile-menu-footer p {
+            color: rgba(255, 255, 255, 0.4);
+            font-size: 0.75rem;
         }
 
-        /* Legacy classes for compatibility */
         .mobile-menu-link {
             font-size: 1.2rem;
             font-weight: 600;
@@ -1004,49 +1086,68 @@
         </div>
     </nav>
 
-    <!-- Mobile Menu -->
+        <!-- Mobile Menu -->
     <div class="mobile-menu" :class="{ 'active': isMenuOpen }">
-        <!-- Header with Logo and Close Button -->
-        <div class="mobile-menu-header">
-            <div class="mobile-menu-logo">
-                <div class="mobile-logo-icon">
-                    <i class="fa-solid fa-crown"></i>
+        <!-- Overlay Background -->
+        <div class="mobile-menu-overlay"></div>
+        
+        <!-- Menu Content -->
+        <div class="mobile-menu-content">
+            <!-- Header -->
+            <div class="mobile-menu-header">
+                <div class="mobile-menu-logo">
+                    <div class="mobile-logo-icon">
+                        <i class="fa-solid fa-crown"></i>
+                    </div>
+                    <span class="mobile-logo-text">
+                        <span class="text-white">Luxury</span><span style="color: #87ceeb;">Drive</span>
+                    </span>
                 </div>
-                <span class="mobile-logo-text">
-                    <span class="text-white">Luxury</span><span class="text-gold">Drive</span>
-                </span>
+                <button @click="isMenuOpen = false" class="mobile-close-btn">
+                    <i class="fa-solid fa-times"></i>
+                </button>
             </div>
-            <button @click="isMenuOpen = false" class="mobile-close-btn">
-                <i class="fa-solid fa-times"></i>
-            </button>
-        </div>
-
-        <!-- Menu Links - Centered -->
-        <nav class="mobile-nav">
-            <a href="#beranda" @click="scrollTo('beranda')" class="mobile-nav-link">
-                <i class="fa-solid fa-home"></i>
-                <span>Beranda</span>
-            </a>
-            <a href="#koleksi" @click="scrollTo('koleksi')" class="mobile-nav-link">
-                <i class="fa-solid fa-car"></i>
-                <span>Koleksi</span>
-            </a>
-            <a href="#layanan" @click="scrollTo('layanan')" class="mobile-nav-link">
-                <i class="fa-solid fa-concierge-bell"></i>
-                <span>Layanan</span>
-            </a>
-            <a href="#testimoni" @click="scrollTo('testimoni')" class="mobile-nav-link">
-                <i class="fa-solid fa-quote-left"></i>
-                <span>Testimoni</span>
-            </a>
-        </nav>
-
-        <!-- Hubungi Kami Button - Bottom -->
-        <div class="mobile-cta">
-            <a href="https://wa.me/6281234567890" class="mobile-contact-btn">
-                <i class="fa-solid fa-phone"></i>
-                <span>Hubungi Kami</span>
-            </a>
+            
+            <!-- Navigation -->
+            <div class="mobile-nav-container">
+                <nav class="mobile-nav">
+                    <a href="#beranda" @click="scrollTo('beranda')" class="mobile-nav-link">
+                        <i class="fa-solid fa-home"></i>
+                        <span>Beranda</span>
+                        <i class="fa-solid fa-chevron-right nav-arrow"></i>
+                    </a>
+                    <a href="#koleksi" @click="scrollTo('koleksi')" class="mobile-nav-link">
+                        <i class="fa-solid fa-car"></i>
+                        <span>Koleksi</span>
+                        <i class="fa-solid fa-chevron-right nav-arrow"></i>
+                    </a>
+                    <a href="#layanan" @click="scrollTo('layanan')" class="mobile-nav-link">
+                        <i class="fa-solid fa-concierge-bell"></i>
+                        <span>Layanan</span>
+                        <i class="fa-solid fa-chevron-right nav-arrow"></i>
+                    </a>
+                    <a href="#testimoni" @click="scrollTo('testimoni')" class="mobile-nav-link">
+                        <i class="fa-solid fa-quote-left"></i>
+                        <span>Testimoni</span>
+                        <i class="fa-solid fa-chevron-right nav-arrow"></i>
+                    </a>
+                </nav>
+            </div>
+            
+            <!-- CTA -->
+            <div class="mobile-cta">
+                <div class="mobile-cta-inner">
+                    <a href="https://wa.me/6281234567890" class="mobile-contact-btn">
+                        <i class="fa-solid fa-phone"></i>
+                        <span>Hubungi Kami</span>
+                    </a>
+                </div>
+            </div>
+            
+            <!-- Footer -->
+            <div class="mobile-menu-footer">
+                <p>Premium Car Rental Service 2026</p>
+            </div>
         </div>
     </div>
 
