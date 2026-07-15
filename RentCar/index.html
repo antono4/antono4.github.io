@@ -697,19 +697,24 @@
         .mobile-menu {
             position: fixed;
             inset: 0;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
             background: rgba(5, 5, 8, 0.98);
             backdrop-filter: blur(20px);
             -webkit-backdrop-filter: blur(20px);
             z-index: 200;
             display: flex;
             flex-direction: column;
-            justify-content: center;
-            align-items: center;
+            padding: 1.5rem;
+            padding-top: 5rem;
             transform: translateX(100%);
             transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.4s ease;
             opacity: 0;
             visibility: hidden;
             will-change: transform, opacity;
+            overflow-y: auto;
         }
 
         .mobile-menu.active {
@@ -718,66 +723,66 @@
             visibility: visible;
         }
 
-        .mobile-menu-link {
-            font-size: 1.75rem;
-            font-weight: 700;
-            color: white;
-            padding: 1rem 2rem;
-            transition: all 0.3s;
-            position: relative;
-        }
-
-        .mobile-menu-link:hover {
-            color: var(--gold);
-            transform: translateX(10px);
-        }
-
-        .mobile-menu-link::before {
-            content: '';
+        /* Mobile Menu Header (Logo + Close) */
+        .mobile-menu-header {
             position: absolute;
+            top: 0;
             left: 0;
-            top: 50%;
-            transform: translateY(-50%);
-            width: 0;
-            height: 2px;
-            background: var(--gold-gradient);
-            transition: width 0.3s;
+            right: 0;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1.5rem;
+            background: rgba(5, 5, 8, 0.9);
+            border-bottom: 1px solid var(--border);
         }
 
-        .mobile-menu-link:hover::before {
-            width: 20px;
-        }
-
-
-        /* Mobile Menu Logo */
         .mobile-menu-logo {
             display: flex;
             align-items: center;
             gap: 0.75rem;
-            margin-bottom: 2rem;
-            padding-bottom: 1.5rem;
-            border-bottom: 1px solid var(--border);
         }
 
         .mobile-logo-icon {
-            width: 44px;
-            height: 44px;
+            width: 40px;
+            height: 40px;
             background: var(--gold-gradient);
-            border-radius: 12px;
+            border-radius: 10px;
             display: flex;
             align-items: center;
             justify-content: center;
-            box-shadow: 0 4px 20px rgba(201, 162, 39, 0.3);
+            box-shadow: 0 4px 15px rgba(201, 162, 39, 0.3);
         }
 
         .mobile-logo-icon i {
             color: var(--dark);
-            font-size: 1.25rem;
+            font-size: 1.1rem;
         }
 
         .mobile-logo-text {
-            font-size: 1.5rem;
+            font-size: 1.3rem;
             font-weight: 800;
+        }
+
+        .mobile-close-btn {
+            width: 44px;
+            height: 44px;
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 1.1rem;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .mobile-close-btn:hover {
+            background: var(--gold);
+            color: var(--dark);
+            border-color: var(--gold);
         }
 
         /* Mobile Nav */
@@ -786,7 +791,10 @@
             flex-direction: column;
             gap: 0.5rem;
             width: 100%;
-            max-width: 300px;
+            max-width: 400px;
+            margin: 0 auto;
+            flex: 1;
+            justify-content: center;
         }
 
         .mobile-nav-link {
@@ -795,30 +803,32 @@
             gap: 1rem;
             padding: 1rem 1.5rem;
             color: rgba(255, 255, 255, 0.8);
-            font-size: 1.1rem;
+            font-size: 1.2rem;
             font-weight: 600;
             border-radius: 16px;
             transition: all 0.3s;
+            border: 1px solid transparent;
         }
 
         .mobile-nav-link:hover {
             background: rgba(201, 162, 39, 0.1);
             color: var(--gold);
-            transform: translateX(8px);
+            border-color: rgba(201, 162, 39, 0.3);
         }
 
         .mobile-nav-link i {
-            font-size: 1.25rem;
-            width: 28px;
+            font-size: 1.3rem;
+            width: 32px;
             text-align: center;
+            color: var(--gold);
         }
 
         /* Mobile CTA */
         .mobile-cta {
-            margin-top: auto;
-            padding-top: 2rem;
             width: 100%;
-            max-width: 300px;
+            max-width: 400px;
+            margin: 2rem auto 0;
+            padding-bottom: 2rem;
         }
 
         .mobile-contact-btn {
@@ -838,33 +848,21 @@
         }
 
         .mobile-contact-btn:hover {
-            transform: translateY(-3px);
+            transform: translateY(-2px);
             box-shadow: 0 12px 40px rgba(201, 162, 39, 0.5);
         }
 
-        .mobile-close-btn {
-            position: absolute;
-            top: 1.5rem;
-            right: 1.5rem;
-            width: 50px;
-            height: 50px;
-            background: rgba(255, 255, 255, 0.1);
-            border: 1px solid rgba(255, 255, 255, 0.2);
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: white;
-            font-size: 1.25rem;
-            cursor: pointer;
+        /* Legacy classes for compatibility */
+        .mobile-menu-link {
+            font-size: 1.2rem;
+            font-weight: 600;
+            color: rgba(255, 255, 255, 0.8);
+            padding: 1rem 1.5rem;
             transition: all 0.3s;
         }
 
-        .mobile-close-btn:hover {
-            background: var(--gold);
-            color: var(--dark);
-            border-color: var(--gold);
-            transform: rotate(90deg);
+        .mobile-menu-link:hover {
+            color: var(--gold);
         }
 
         /* Responsive */
@@ -1007,23 +1005,24 @@
     </nav>
 
     <!-- Mobile Menu -->
+    <!-- Mobile Menu -->
     <div class="mobile-menu" :class="{ 'active': isMenuOpen }">
-        <!-- Logo Header -->
-        <div class="mobile-menu-logo">
-            <div class="mobile-logo-icon">
-                <i class="fa-solid fa-crown"></i>
+        <!-- Header with Logo and Close Button -->
+        <div class="mobile-menu-header">
+            <div class="mobile-menu-logo">
+                <div class="mobile-logo-icon">
+                    <i class="fa-solid fa-crown"></i>
+                </div>
+                <span class="mobile-logo-text">
+                    <span class="text-white">Luxury</span><span class="text-gold">Drive</span>
+                </span>
             </div>
-            <span class="mobile-logo-text">
-                <span class="text-white">Luxury</span><span class="text-gold">Drive</span>
-            </span>
+            <button @click="isMenuOpen = false" class="mobile-close-btn">
+                <i class="fa-solid fa-times"></i>
+            </button>
         </div>
 
-        <!-- Close Button -->
-        <button @click="isMenuOpen = false" class="mobile-close-btn">
-            <i class="fa-solid fa-times"></i>
-        </button>
-
-        <!-- Menu Links -->
+        <!-- Menu Links - Centered -->
         <nav class="mobile-nav">
             <a href="#beranda" @click="scrollTo('beranda')" class="mobile-nav-link">
                 <i class="fa-solid fa-home"></i>
@@ -1043,7 +1042,7 @@
             </a>
         </nav>
 
-        <!-- Hubungi Kami Button -->
+        <!-- Hubungi Kami Button - Bottom -->
         <div class="mobile-cta">
             <a href="https://wa.me/6281234567890" class="mobile-contact-btn">
                 <i class="fa-solid fa-phone"></i>
