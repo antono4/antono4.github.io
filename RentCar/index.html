@@ -744,6 +744,100 @@
             width: 20px;
         }
 
+
+        /* Mobile Menu Logo */
+        .mobile-menu-logo {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            margin-bottom: 2rem;
+            padding-bottom: 1.5rem;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .mobile-logo-icon {
+            width: 44px;
+            height: 44px;
+            background: var(--gold-gradient);
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 4px 20px rgba(201, 162, 39, 0.3);
+        }
+
+        .mobile-logo-icon i {
+            color: var(--dark);
+            font-size: 1.25rem;
+        }
+
+        .mobile-logo-text {
+            font-size: 1.5rem;
+            font-weight: 800;
+        }
+
+        /* Mobile Nav */
+        .mobile-nav {
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+            width: 100%;
+            max-width: 300px;
+        }
+
+        .mobile-nav-link {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            padding: 1rem 1.5rem;
+            color: rgba(255, 255, 255, 0.8);
+            font-size: 1.1rem;
+            font-weight: 600;
+            border-radius: 16px;
+            transition: all 0.3s;
+        }
+
+        .mobile-nav-link:hover {
+            background: rgba(201, 162, 39, 0.1);
+            color: var(--gold);
+            transform: translateX(8px);
+        }
+
+        .mobile-nav-link i {
+            font-size: 1.25rem;
+            width: 28px;
+            text-align: center;
+        }
+
+        /* Mobile CTA */
+        .mobile-cta {
+            margin-top: auto;
+            padding-top: 2rem;
+            width: 100%;
+            max-width: 300px;
+        }
+
+        .mobile-contact-btn {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.75rem;
+            width: 100%;
+            padding: 1.25rem 2rem;
+            background: var(--gold-gradient);
+            color: var(--dark);
+            font-size: 1.1rem;
+            font-weight: 700;
+            border-radius: 16px;
+            box-shadow: 0 8px 30px rgba(201, 162, 39, 0.4);
+            transition: all 0.3s;
+        }
+
+        .mobile-contact-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 12px 40px rgba(201, 162, 39, 0.5);
+        }
+
         .mobile-close-btn {
             position: absolute;
             top: 1.5rem;
@@ -909,18 +1003,44 @@
 
     <!-- Mobile Menu -->
     <div class="mobile-menu" :class="{ 'active': isMenuOpen }">
+        <!-- Logo Header -->
+        <div class="mobile-menu-logo">
+            <div class="mobile-logo-icon">
+                <i class="fa-solid fa-crown"></i>
+            </div>
+            <span class="mobile-logo-text">
+                <span class="text-white">Luxury</span><span class="text-gold">Drive</span>
+            </span>
+        </div>
+
         <!-- Close Button -->
         <button @click="isMenuOpen = false" class="mobile-close-btn">
             <i class="fa-solid fa-times"></i>
         </button>
-        
+
         <!-- Menu Links -->
-        <div class="flex flex-col items-center gap-6">
-            <a href="#beranda" @click="scrollTo('beranda')" class="mobile-menu-link">Beranda</a>
-            <a href="#koleksi" @click="scrollTo('koleksi')" class="mobile-menu-link">Koleksi</a>
-            <a href="#layanan" @click="scrollTo('layanan')" class="mobile-menu-link">Layanan</a>
-            <a href="#testimoni" @click="scrollTo('testimoni')" class="mobile-menu-link">Testimoni</a>
-            <a href="https://wa.me/6281234567890" class="btn-primary mt-8">
+        <nav class="mobile-nav">
+            <a href="#beranda" @click="scrollTo('beranda')" class="mobile-nav-link">
+                <i class="fa-solid fa-home"></i>
+                <span>Beranda</span>
+            </a>
+            <a href="#koleksi" @click="scrollTo('koleksi')" class="mobile-nav-link">
+                <i class="fa-solid fa-car"></i>
+                <span>Koleksi</span>
+            </a>
+            <a href="#layanan" @click="scrollTo('layanan')" class="mobile-nav-link">
+                <i class="fa-solid fa-concierge-bell"></i>
+                <span>Layanan</span>
+            </a>
+            <a href="#testimoni" @click="scrollTo('testimoni')" class="mobile-nav-link">
+                <i class="fa-solid fa-quote-left"></i>
+                <span>Testimoni</span>
+            </a>
+        </nav>
+
+        <!-- Hubungi Kami Button -->
+        <div class="mobile-cta">
+            <a href="https://wa.me/6281234567890" class="mobile-contact-btn">
                 <i class="fa-solid fa-phone"></i>
                 <span>Hubungi Kami</span>
             </a>
