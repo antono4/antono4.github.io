@@ -996,7 +996,7 @@
                 <!-- Mobile Toggle -->
                 <button @click="isMenuOpen = !isMenuOpen" 
                         class="lg:hidden w-14 h-14 rounded-2xl bg-white/5 border border-white/10 flex items-center justify-center transition-all hover:bg-white/10"
-                        x-data="{ open: false }" @toggle-menu.window="open = !open">
+                        >
                     <i class="fa-solid fa-bars text-lg transition-transform duration-300" :class="isMenuOpen ? 'opacity-0 rotate-90 scale-50' : 'opacity-100 rotate-0 scale-100'"></i>
                     <i class="fa-solid fa-times text-lg absolute transition-transform duration-300" :class="isMenuOpen ? 'opacity-100 rotate-0 scale-100' : 'opacity-0 -rotate-90 scale-50'"></i>
                 </button>
