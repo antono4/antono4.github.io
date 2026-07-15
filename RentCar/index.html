@@ -1,0 +1,950 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LuxuryDrive | Sewa Mobil Premium & Eksklusif</title>
+    <meta name="description" content="LuxuryDrive - Penyedia jasa sewa mobil mewah premium di Indonesia dengan pelayanan bintang lima">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700;800;900&family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
+
+    <style>
+        :root {
+            --gold: #D4AF37;
+            --gold-light: #F4D03F;
+            --gold-dark: #996515;
+            --dark: #0a0a0f;
+            --dark-card: rgba(20, 20, 30, 0.8);
+            --border: rgba(212, 175, 55, 0.2);
+        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        html { scroll-behavior: smooth; }
+        body {
+            font-family: 'Inter', sans-serif;
+            background: var(--dark);
+            color: white;
+            overflow-x: hidden;
+        }
+        ::-webkit-scrollbar { width: 6px; }
+        ::-webkit-scrollbar-track { background: var(--dark); }
+        ::-webkit-scrollbar-thumb { background: linear-gradient(var(--gold), var(--gold-dark)); border-radius: 3px; }
+        ::selection { background: var(--gold); color: var(--dark); }
+        
+        #particles {
+            position: fixed;
+            inset: 0;
+            pointer-events: none;
+            z-index: 1;
+        }
+
+        .hero-section {
+            position: relative;
+            min-height: 100vh;
+            overflow: hidden;
+        }
+
+        .hero-bg {
+            position: absolute;
+            inset: 0;
+            background: 
+                radial-gradient(ellipse at 30% 70%, rgba(212, 175, 55, 0.15) 0%, transparent 50%),
+                radial-gradient(ellipse at 70% 30%, rgba(212, 175, 55, 0.1) 0%, transparent 50%),
+                linear-gradient(180deg, rgba(10, 10, 15, 0.5) 0%, rgba(10, 10, 15, 0.9) 60%, var(--dark) 100%);
+        }
+
+        .hero-car {
+            position: absolute;
+            bottom: 0;
+            right: 0;
+            width: 60%;
+            height: 80%;
+            background: url('https://images.unsplash.com/photo-1503376780353-7e6692767b70?auto=format&fit=crop&w=1920&q=80') center/contain no-repeat;
+            mask-image: linear-gradient(to left, rgba(0,0,0,0.6) 0%, transparent 80%);
+            -webkit-mask-image: linear-gradient(to left, rgba(0,0,0,0.6) 0%, transparent 80%);
+            filter: brightness(0.7) contrast(1.1);
+            animation: carFloat 8s ease-in-out infinite;
+        }
+
+        @keyframes carFloat {
+            0%, 100% { transform: translateY(0) scale(1); }
+            50% { transform: translateY(-20px) scale(1.02); }
+        }
+
+        .glow-orb {
+            position: absolute;
+            border-radius: 50%;
+            filter: blur(100px);
+            animation: orbFloat 20s ease-in-out infinite;
+            pointer-events: none;
+        }
+
+        .glow-orb-1 {
+            width: 600px; height: 600px;
+            background: radial-gradient(circle, rgba(212, 175, 55, 0.2) 0%, transparent 70%);
+            top: 20%; right: 10%;
+        }
+
+        .glow-orb-2 {
+            width: 400px; height: 400px;
+            background: radial-gradient(circle, rgba(212, 175, 55, 0.15) 0%, transparent 70%);
+            bottom: 10%; left: 20%;
+            animation-delay: -10s;
+        }
+
+        @keyframes orbFloat {
+            0%, 100% { transform: translate(0, 0) scale(1); }
+            25% { transform: translate(30px, -30px) scale(1.05); }
+            50% { transform: translate(-20px, 20px) scale(0.95); }
+            75% { transform: translate(20px, 30px) scale(1.02); }
+        }
+
+        .nav-glass {
+            background: rgba(10, 10, 15, 0.8);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border-bottom: 1px solid var(--border);
+        }
+
+        .nav-link {
+            position: relative;
+            color: rgba(255, 255, 255, 0.7);
+            transition: all 0.3s;
+        }
+        .nav-link:hover { color: var(--gold); }
+        .nav-link::after {
+            content: '';
+            position: absolute;
+            bottom: -4px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: var(--gold);
+            transition: width 0.3s;
+        }
+        .nav-link:hover::after { width: 100%; }
+
+        .logo-icon {
+            width: 48px; height: 48px;
+            background: linear-gradient(135deg, var(--gold), var(--gold-dark));
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 8px 32px rgba(212, 175, 55, 0.3);
+        }
+
+        .btn-gold {
+            background: linear-gradient(135deg, var(--gold), var(--gold-dark));
+            color: var(--dark);
+            font-weight: 700;
+            padding: 1rem 2rem;
+            border-radius: 100px;
+            transition: all 0.3s;
+            box-shadow: 0 8px 32px rgba(212, 175, 55, 0.3);
+            display: inline-flex;
+            align-items: center;
+            gap: 0.75rem;
+        }
+        .btn-gold:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 12px 48px rgba(212, 175, 55, 0.5);
+        }
+
+        .btn-outline {
+            border: 2px solid rgba(255, 255, 255, 0.3);
+            padding: 1rem 2rem;
+            border-radius: 100px;
+            transition: all 0.3s;
+            backdrop-filter: blur(10px);
+            display: inline-flex;
+            align-items: center;
+            gap: 0.75rem;
+        }
+        .btn-outline:hover {
+            border-color: var(--gold);
+            color: var(--gold);
+            background: rgba(212, 175, 55, 0.1);
+        }
+
+        .glass-card {
+            background: var(--dark-card);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border: 1px solid var(--border);
+            border-radius: 24px;
+            transition: all 0.5s cubic-bezier(0.23, 1, 0.32, 1);
+        }
+        .glass-card:hover {
+            border-color: var(--gold);
+            transform: translateY(-12px);
+            box-shadow: 0 32px 64px rgba(0, 0, 0, 0.5), 0 0 60px rgba(212, 175, 55, 0.15);
+        }
+
+        .car-card {
+            perspective: 1000px;
+        }
+        .car-card-inner {
+            transition: transform 0.6s;
+            transform-style: preserve-3d;
+        }
+        .car-card:hover .car-card-inner {
+            transform: rotateY(5deg) rotateX(5deg);
+        }
+
+        .car-image-container {
+            position: relative;
+            overflow: hidden;
+            border-radius: 20px 20px 0 0;
+        }
+        .car-image-container::after {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(180deg, transparent 50%, rgba(10, 10, 15, 0.9) 100%);
+        }
+        .car-image {
+            transition: transform 0.8s cubic-bezier(0.23, 1, 0.32, 1);
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        .car-card:hover .car-image {
+            transform: scale(1.1);
+        }
+
+        .text-gold {
+            background: linear-gradient(135deg, var(--gold-light), var(--gold), var(--gold-dark));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .stat-number {
+            font-size: clamp(2.5rem, 5vw, 4rem);
+            font-weight: 900;
+            background: linear-gradient(135deg, var(--gold-light), var(--gold));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            line-height: 1;
+        }
+
+        .reveal {
+            opacity: 0;
+            transform: translateY(60px);
+            transition: all 0.8s cubic-bezier(0.23, 1, 0.32, 1);
+        }
+        .reveal.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .marquee-track {
+            display: flex;
+            animation: marquee 30s linear infinite;
+        }
+        @keyframes marquee {
+            0% { transform: translateX(0); }
+            100% { transform: translateX(-50%); }
+        }
+
+        .float { animation: float 6s ease-in-out infinite; }
+        @keyframes float {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-20px); }
+        }
+
+        .glow-pulse { animation: glowPulse 2s ease-in-out infinite; }
+        @keyframes glowPulse {
+            0%, 100% { box-shadow: 0 0 20px rgba(212, 175, 55, 0.3); }
+            50% { box-shadow: 0 0 40px rgba(212, 175, 55, 0.6); }
+        }
+
+        .luxury-badge {
+            background: linear-gradient(135deg, var(--gold), var(--gold-dark));
+            color: var(--dark);
+            font-size: 0.7rem;
+            font-weight: 800;
+            padding: 0.4rem 1rem;
+            border-radius: 100px;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            display: inline-block;
+        }
+
+        .feature-icon {
+            width: 64px; height: 64px;
+            background: linear-gradient(135deg, rgba(212, 175, 55, 0.2), rgba(212, 175, 55, 0.05));
+            border: 1px solid var(--border);
+            border-radius: 16px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            color: var(--gold);
+            transition: all 0.3s;
+        }
+        .glass-card:hover .feature-icon {
+            background: linear-gradient(135deg, var(--gold), var(--gold-dark));
+            color: var(--dark);
+            border-color: transparent;
+        }
+
+        .whatsapp-float {
+            position: fixed;
+            bottom: 32px;
+            right: 32px;
+            width: 64px; height: 64px;
+            background: #25D366;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 1.75rem;
+            box-shadow: 0 8px 32px rgba(37, 211, 102, 0.4);
+            transition: all 0.3s;
+            z-index: 50;
+        }
+        .whatsapp-float:hover {
+            transform: scale(1.1);
+            box-shadow: 0 12px 48px rgba(37, 211, 102, 0.6);
+        }
+
+        .modal-overlay {
+            position: fixed;
+            inset: 0;
+            background: rgba(10, 10, 15, 0.95);
+            backdrop-filter: blur(20px);
+            z-index: 100;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 24px;
+        }
+        .modal-content {
+            background: var(--dark-card);
+            border: 1px solid var(--border);
+            border-radius: 32px;
+            max-width: 500px;
+            width: 100%;
+            padding: 48px;
+            position: relative;
+        }
+        .luxury-input {
+            width: 100%;
+            background: rgba(10, 10, 15, 0.8);
+            border: 1px solid var(--border);
+            border-radius: 16px;
+            padding: 16px 24px;
+            color: white;
+            outline: none;
+            transition: all 0.3s;
+        }
+        .luxury-input:focus {
+            border-color: var(--gold);
+            box-shadow: 0 0 20px rgba(212, 175, 55, 0.2);
+        }
+        .luxury-input::placeholder { color: rgba(255, 255, 255, 0.3); }
+
+        .scroll-progress {
+            position: fixed;
+            top: 0;
+            left: 0;
+            height: 3px;
+            background: linear-gradient(90deg, var(--gold), var(--gold-light), var(--gold));
+            z-index: 100;
+        }
+    </style>
+</head>
+
+<body x-data="{
+    scrollProgress: 0,
+    isMenuOpen: false,
+    activeModal: false,
+    selectedCar: '',
+    updateScroll() {
+        this.scrollProgress = (window.scrollY / (document.body.scrollHeight - window.innerHeight)) * 100;
+    }
+}" 
+@scroll.window="updateScroll()">
+
+    <div class="scroll-progress" :style="`width: ${scrollProgress}%`"></div>
+    <canvas id="particles"></canvas>
+
+    <nav class="fixed top-0 left-0 right-0 z-50 nav-glass">
+        <div class="max-w-7xl mx-auto px-6 py-4">
+            <div class="flex justify-between items-center">
+                <a href="#" class="flex items-center gap-3 group">
+                    <div class="logo-icon group-hover:scale-110 transition-transform">
+                        <i class="fa-solid fa-crown text-dark text-xl"></i>
+                    </div>
+                    <span class="text-2xl font-black tracking-tight" style="font-family: 'Playfair Display', serif;">
+                        <span class="text-white">Luxury</span><span class="text-gold">Drive</span>
+                    </span>
+                </a>
+                <div class="hidden md:flex items-center gap-10">
+                    <a href="#beranda" class="nav-link font-medium">Beranda</a>
+                    <a href="#koleksi" class="nav-link font-medium">Koleksi</a>
+                    <a href="#layanan" class="nav-link font-medium">Layanan</a>
+                    <a href="#testimoni" class="nav-link font-medium">Testimoni</a>
+                    <a href="https://wa.me/6281234567890" class="btn-gold">
+                        <i class="fa-solid fa-phone"></i>
+                        <span>Hubungi Kami</span>
+                    </a>
+                </div>
+                <button @click="isMenuOpen = !isMenuOpen" class="md:hidden w-12 h-12 rounded-xl bg-white/5 border border-white/10 flex items-center justify-center">
+                    <i class="fa-solid fa-bars" x-show="!isMenuOpen"></i>
+                    <i class="fa-solid fa-times" x-show="isMenuOpen" x-cloak></i>
+                </button>
+            </div>
+            <div x-show="isMenuOpen" x-cloak x-transition class="md:hidden mt-4 p-6 glass-card">
+                <div class="flex flex-col gap-4">
+                    <a href="#beranda" @click="isMenuOpen = false" class="text-lg font-medium hover:text-gold transition-colors py-2">Beranda</a>
+                    <a href="#koleksi" @click="isMenuOpen = false" class="text-lg font-medium hover:text-gold transition-colors py-2">Koleksi</a>
+                    <a href="#layanan" @click="isMenuOpen = false" class="text-lg font-medium hover:text-gold transition-colors py-2">Layanan</a>
+                    <a href="#testimoni" @click="isMenuOpen = false" class="text-lg font-medium hover:text-gold transition-colors py-2">Testimoni</a>
+                    <a href="https://wa.me/6281234567890" class="btn-gold justify-center mt-2">
+                        <i class="fa-solid fa-phone"></i>
+                        <span>Hubungi Kami</span>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <section id="beranda" class="hero-section flex items-center relative z-10">
+        <div class="hero-bg"></div>
+        <div class="glow-orb glow-orb-1"></div>
+        <div class="glow-orb glow-orb-2"></div>
+        <div class="hero-car"></div>
+
+        <div class="relative z-10 text-center px-6 max-w-5xl mx-auto">
+            <div class="inline-flex items-center gap-2 px-5 py-2 rounded-full bg-white/5 border border-white/10 mb-8 reveal">
+                <span class="w-2 h-2 bg-green-500 rounded-full animate-pulse"></span>
+                <span class="text-sm font-medium text-gold tracking-wider">PREMIUM RENTAL SERVICE</span>
+            </div>
+
+            <h1 class="text-5xl md:text-7xl lg:text-8xl font-black mb-8 leading-[1.1] reveal" style="transition-delay: 0.1s;">
+                <span class="block text-white">Berkendara Dengan</span>
+                <span class="block text-gold" style="font-family: 'Playfair Display', serif; font-style: italic;">
+                    Kemewahan Sejati
+                </span>
+            </h1>
+
+            <p class="text-lg md:text-xl text-white/60 max-w-2xl mx-auto mb-12 leading-relaxed reveal" style="transition-delay: 0.2s;">
+                Nikmati pengalaman berkendara tak terlupakan dengan koleksi mobil mewah terbaik Indonesia. 
+                Pelayanan eksklusif 24/7 dengan chauffeur profesional.
+            </p>
+
+            <div class="flex flex-col sm:flex-row gap-4 justify-center reveal" style="transition-delay: 0.3s;">
+                <a href="#koleksi" class="btn-gold text-lg">
+                    <span>Eksplor Armada</span>
+                    <i class="fa-solid fa-arrow-right"></i>
+                </a>
+                <a href="#layanan" class="btn-outline text-lg">
+                    <i class="fa-solid fa-play"></i>
+                    <span>Paket VVIP</span>
+                </a>
+            </div>
+
+            <div class="grid grid-cols-3 gap-8 mt-20 pt-12 border-t border-white/10 reveal" style="transition-delay: 0.4s;">
+                <div>
+                    <div class="stat-number">500+</div>
+                    <div class="text-white/50 text-sm mt-2">Unit Premium</div>
+                </div>
+                <div>
+                    <div class="stat-number">10K+</div>
+                    <div class="text-white/50 text-sm mt-2">Pelanggan Puas</div>
+                </div>
+                <div>
+                    <div class="stat-number">24/7</div>
+                    <div class="text-white/50 text-sm mt-2">Layanan Siaga</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="absolute bottom-10 left-1/2 -translate-x-1/2 flex flex-col items-center gap-4 text-gold/50">
+            <span class="text-xs tracking-[0.3em] uppercase font-bold">Scroll</span>
+            <div class="w-px h-16 bg-gradient-to-b from-gold/50 to-transparent relative">
+                <div class="absolute top-0 left-1/2 -translate-x-1/2 w-2 h-2 bg-gold rounded-full animate-bounce"></div>
+            </div>
+        </div>
+    </section>
+
+    <section class="py-8 border-y border-white/5 relative overflow-hidden z-10">
+        <div class="marquee-track">
+            <div class="flex items-center gap-16 px-8">
+                <span class="text-2xl font-bold text-white/20 whitespace-nowrap">Mercedes-Benz</span>
+                <span class="text-gold">◆</span>
+                <span class="text-2xl font-bold text-white/20 whitespace-nowrap">BMW</span>
+                <span class="text-gold">◆</span>
+                <span class="text-2xl font-bold text-white/20 whitespace-nowrap">Audi</span>
+                <span class="text-gold">◆</span>
+                <span class="text-2xl font-bold text-white/20 whitespace-nowrap">Porsche</span>
+                <span class="text-gold">◆</span>
+                <span class="text-2xl font-bold text-white/20 whitespace-nowrap">Rolls Royce</span>
+                <span class="text-gold">◆</span>
+                <span class="text-2xl font-bold text-white/20 whitespace-nowrap">Bentley</span>
+                <span class="text-gold">◆</span>
+                <span class="text-2xl font-bold text-white/20 whitespace-nowrap">Lamborghini</span>
+            </div>
+            <div class="flex items-center gap-16 px-8">
+                <span class="text-2xl font-bold text-white/20 whitespace-nowrap">Mercedes-Benz</span>
+                <span class="text-gold">◆</span>
+                <span class="text-2xl font-bold text-white/20 whitespace-nowrap">BMW</span>
+                <span class="text-gold">◆</span>
+                <span class="text-2xl font-bold text-white/20 whitespace-nowrap">Audi</span>
+                <span class="text-gold">◆</span>
+                <span class="text-2xl font-bold text-white/20 whitespace-nowrap">Porsche</span>
+                <span class="text-gold">◆</span>
+                <span class="text-2xl font-bold text-white/20 whitespace-nowrap">Rolls Royce</span>
+                <span class="text-gold">◆</span>
+                <span class="text-2xl font-bold text-white/20 whitespace-nowrap">Bentley</span>
+                <span class="text-gold">◆</span>
+                <span class="text-2xl font-bold text-white/20 whitespace-nowrap">Lamborghini</span>
+            </div>
+        </div>
+    </section>
+
+    <section id="koleksi" class="py-32 px-6 relative z-10">
+        <div class="max-w-7xl mx-auto">
+            <div class="text-center mb-20 reveal">
+                <span class="luxury-badge mb-6">Koleksi Pilihan</span>
+                <h2 class="text-4xl md:text-6xl font-black mb-6">
+                    Armada <span class="text-gold" style="font-family: 'Playfair Display', serif;">Terbaik</span>
+                </h2>
+                <p class="text-white/50 max-w-xl mx-auto">
+                    Setiap unit dipilih dengan standar tertinggi untuk pengalaman berkendara sempurna
+                </p>
+            </div>
+
+            <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <div class="car-card glass-card reveal" style="transition-delay: 0.1s;">
+                    <div class="car-card-inner">
+                        <div class="car-image-container h-56">
+                            <img src="https://images.unsplash.com/photo-1541899481282-d53bffe3c35d?auto=format&fit=crop&w=800&q=80" alt="Mercedes S-Class" class="car-image">
+                            <span class="absolute top-4 right-4 z-10 luxury-badge">Terlaris</span>
+                        </div>
+                        <div class="p-6">
+                            <h3 class="text-xl font-bold mb-4" style="font-family: 'Playfair Display', serif;">Mercedes-Benz S-Class</h3>
+                            <div class="grid grid-cols-2 gap-3 text-sm text-white/50 mb-6">
+                                <span class="flex items-center gap-2"><i class="fa-solid fa-user text-gold"></i> 4 Kursi</span>
+                                <span class="flex items-center gap-2"><i class="fa-solid fa-gear text-gold"></i> Automatic</span>
+                                <span class="flex items-center gap-2"><i class="fa-solid fa-tachometer text-gold"></i> V6 Biturbo</span>
+                                <span class="flex items-center gap-2"><i class="fa-solid fa-gas-pump text-gold"></i> Premium</span>
+                            </div>
+                            <div class="flex justify-between items-center pt-4 border-t border-white/10">
+                                <div>
+                                    <span class="text-xs text-white/40">Mulai dari</span>
+                                    <div class="text-2xl font-black text-gold">Rp 4.5jt<span class="text-sm text-white/40">/hari</span></div>
+                                </div>
+                                <button @click="activeModal = true; selectedCar = 'Mercedes-Benz S-Class'" class="w-12 h-12 bg-gold text-dark rounded-xl flex items-center justify-center hover:bg-gold-light transition-colors glow-pulse">
+                                    <i class="fa-solid fa-arrow-right"></i>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="car-card glass-card reveal" style="transition-delay: 0.2s;">
+                    <div class="car-card-inner">
+                        <div class="car-image-container h-56">
+                            <img src="https://images.unsplash.com/photo-1555215695-3004980ad54e?auto=format&fit=crop&w=800&q=80" alt="BMW 7 Series" class="car-image">
+                            <span class="absolute top-4 right-4 z-10 luxury-badge">Baru</span>
+                        </div>
+                        <div class="p-6">
+                            <h3 class="text-xl font-bold mb-4" style="font-family: 'Playfair Display', serif;">BMW 7 Series</h3>
+                            <div class="grid grid-cols-2 gap-3 text-sm text-white/50 mb-6">
+                                <span class="flex items-center gap-2"><i class="fa-solid fa-user text-gold"></i> 4 Kursi</span>
+                                <span class="flex items-center gap-2"><i class="fa-solid fa-gear text-gold"></i> Automatic</span>
+                                <span class="flex items-center gap-2"><i class="fa-solid fa-tachometer text-gold"></i> V8 TwinPower</span>
+                                <span class="flex items-center gap-2"><i class="fa-solid fa-gas-pump text-gold"></i> Premium</span>
+                            </div>
+                            <div class="flex justify-between items-center pt-4 border-t border-white/10">
+                                <div>
+                                    <span class="text-xs text-white/40">Mulai dari</span>
+                                    <div class="text-2xl font-black text-gold">Rp 5.0jt<span class="text-sm text-white/40">/hari</span></div>
+                                </div>
+                                <button @click="activeModal = true; selectedCar = 'BMW 7 Series'" class="w-12 h-12 bg-gold text-dark rounded-xl flex items-center justify-center hover:bg-gold-light transition-colors glow-pulse">
+                                    <i class="fa-solid fa-arrow-right"></i>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="car-card glass-card reveal" style="transition-delay: 0.3s;">
+                    <div class="car-card-inner">
+                        <div class="car-image-container h-56">
+                            <img src="https://images.unsplash.com/photo-1606220838315-056192d5e927?auto=format&fit=crop&w=800&q=80" alt="Audi A8" class="car-image">
+                        </div>
+                        <div class="p-6">
+                            <h3 class="text-xl font-bold mb-4" style="font-family: 'Playfair Display', serif;">Audi A8 L</h3>
+                            <div class="grid grid-cols-2 gap-3 text-sm text-white/50 mb-6">
+                                <span class="flex items-center gap-2"><i class="fa-solid fa-user text-gold"></i> 4 Kursi</span>
+                                <span class="flex items-center gap-2"><i class="fa-solid fa-gear text-gold"></i> Automatic</span>
+                                <span class="flex items-center gap-2"><i class="fa-solid fa-tachometer text-gold"></i> W12 Quattro</span>
+                                <span class="flex items-center gap-2"><i class="fa-solid fa-gas-pump text-gold"></i> Premium</span>
+                            </div>
+                            <div class="flex justify-between items-center pt-4 border-t border-white/10">
+                                <div>
+                                    <span class="text-xs text-white/40">Mulai dari</span>
+                                    <div class="text-2xl font-black text-gold">Rp 5.5jt<span class="text-sm text-white/40">/hari</span></div>
+                                </div>
+                                <button @click="activeModal = true; selectedCar = 'Audi A8 L'" class="w-12 h-12 bg-gold text-dark rounded-xl flex items-center justify-center hover:bg-gold-light transition-colors glow-pulse">
+                                    <i class="fa-solid fa-arrow-right"></i>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="car-card glass-card reveal" style="transition-delay: 0.4s;">
+                    <div class="car-card-inner">
+                        <div class="car-image-container h-56">
+                            <img src="https://images.unsplash.com/photo-1614162692292-7ac56d7f7f1e?auto=format&fit=crop&w=800&q=80" alt="Porsche Panamera" class="car-image">
+                        </div>
+                        <div class="p-6">
+                            <h3 class="text-xl font-bold mb-4" style="font-family: 'Playfair Display', serif;">Porsche Panamera</h3>
+                            <div class="grid grid-cols-2 gap-3 text-sm text-white/50 mb-6">
+                                <span class="flex items-center gap-2"><i class="fa-solid fa-user text-gold"></i> 4 Kursi</span>
+                                <span class="flex items-center gap-2"><i class="fa-solid fa-gear text-gold"></i> PDK</span>
+                                <span class="flex items-center gap-2"><i class="fa-solid fa-tachometer text-gold"></i> V6 Turbo</span>
+                                <span class="flex items-center gap-2"><i class="fa-solid fa-gas-pump text-gold"></i> Premium</span>
+                            </div>
+                            <div class="flex justify-between items-center pt-4 border-t border-white/10">
+                                <div>
+                                    <span class="text-xs text-white/40">Mulai dari</span>
+                                    <div class="text-2xl font-black text-gold">Rp 6.0jt<span class="text-sm text-white/40">/hari</span></div>
+                                </div>
+                                <button @click="activeModal = true; selectedCar = 'Porsche Panamera'" class="w-12 h-12 bg-gold text-dark rounded-xl flex items-center justify-center hover:bg-gold-light transition-colors glow-pulse">
+                                    <i class="fa-solid fa-arrow-right"></i>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="car-card glass-card reveal" style="transition-delay: 0.5s;">
+                    <div class="car-card-inner">
+                        <div class="car-image-container h-56">
+                            <img src="https://images.unsplash.com/photo-1563720360172-67b8f3dce741?auto=format&fit=crop&w=800&q=80" alt="Rolls Royce Ghost" class="car-image">
+                            <span class="absolute top-4 right-4 z-10 luxury-badge">VIP</span>
+                        </div>
+                        <div class="p-6">
+                            <h3 class="text-xl font-bold mb-4" style="font-family: 'Playfair Display', serif;">Rolls Royce Ghost</h3>
+                            <div class="grid grid-cols-2 gap-3 text-sm text-white/50 mb-6">
+                                <span class="flex items-center gap-2"><i class="fa-solid fa-user text-gold"></i> 4 Kursi</span>
+                                <span class="flex items-center gap-2"><i class="fa-solid fa-gear text-gold"></i> Automatic</span>
+                                <span class="flex items-center gap-2"><i class="fa-solid fa-tachometer text-gold"></i> V12 Twin</span>
+                                <span class="flex items-center gap-2"><i class="fa-solid fa-gas-pump text-gold"></i> Premium</span>
+                            </div>
+                            <div class="flex justify-between items-center pt-4 border-t border-white/10">
+                                <div>
+                                    <span class="text-xs text-white/40">Mulai dari</span>
+                                    <div class="text-2xl font-black text-gold">Rp 15jt<span class="text-sm text-white/40">/hari</span></div>
+                                </div>
+                                <button @click="activeModal = true; selectedCar = 'Rolls Royce Ghost'" class="w-12 h-12 bg-gold text-dark rounded-xl flex items-center justify-center hover:bg-gold-light transition-colors glow-pulse">
+                                    <i class="fa-solid fa-arrow-right"></i>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="car-card glass-card reveal" style="transition-delay: 0.6s;">
+                    <div class="car-card-inner">
+                        <div class="car-image-container h-56">
+                            <img src="https://images.unsplash.com/photo-1544636331-e26879cd4d9b?auto=format&fit=crop&w=800&q=80" alt="Bentley Continental" class="car-image">
+                        </div>
+                        <div class="p-6">
+                            <h3 class="text-xl font-bold mb-4" style="font-family: 'Playfair Display', serif;">Bentley Continental</h3>
+                            <div class="grid grid-cols-2 gap-3 text-sm text-white/50 mb-6">
+                                <span class="flex items-center gap-2"><i class="fa-solid fa-user text-gold"></i> 4 Kursi</span>
+                                <span class="flex items-center gap-2"><i class="fa-solid fa-gear text-gold"></i> Automatic</span>
+                                <span class="flex items-center gap-2"><i class="fa-solid fa-tachometer text-gold"></i> W12 Speed</span>
+                                <span class="flex items-center gap-2"><i class="fa-solid fa-gas-pump text-gold"></i> Premium</span>
+                            </div>
+                            <div class="flex justify-between items-center pt-4 border-t border-white/10">
+                                <div>
+                                    <span class="text-xs text-white/40">Mulai dari</span>
+                                    <div class="text-2xl font-black text-gold">Rp 12jt<span class="text-sm text-white/40">/hari</span></div>
+                                </div>
+                                <button @click="activeModal = true; selectedCar = 'Bentley Continental'" class="w-12 h-12 bg-gold text-dark rounded-xl flex items-center justify-center hover:bg-gold-light transition-colors glow-pulse">
+                                    <i class="fa-solid fa-arrow-right"></i>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="layanan" class="py-32 px-6 relative z-10">
+        <div class="absolute inset-0 bg-gradient-to-b from-transparent via-gold/5 to-transparent"></div>
+        <div class="max-w-7xl mx-auto relative">
+            <div class="text-center mb-20 reveal">
+                <span class="luxury-badge mb-6">Mengapa Kami</span>
+                <h2 class="text-4xl md:text-6xl font-black mb-6">
+                    Layanan <span class="text-gold" style="font-family: 'Playfair Display', serif;">Premium</span>
+                </h2>
+                <p class="text-white/50 max-w-xl mx-auto">
+                    Komitmen kami untuk memberikan pengalaman terbaik dalam setiap perjalanan
+                </p>
+            </div>
+
+            <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
+                <div class="glass-card p-8 text-center reveal" style="transition-delay: 0.1s;">
+                    <div class="feature-icon mx-auto mb-6"><i class="fa-solid fa-shield-halved"></i></div>
+                    <h3 class="text-lg font-bold mb-3">Asuransi All-Risk</h3>
+                    <p class="text-white/50 text-sm">Perlindungan komprehensif untuk ketenangan pikiran Anda</p>
+                </div>
+                <div class="glass-card p-8 text-center reveal" style="transition-delay: 0.2s;">
+                    <div class="feature-icon mx-auto mb-6"><i class="fa-solid fa-clock"></i></div>
+                    <h3 class="text-lg font-bold mb-3">Layanan 24/7</h3>
+                    <p class="text-white/50 text-sm">Tim concierge siap membantu kapan saja, di mana saja</p>
+                </div>
+                <div class="glass-card p-8 text-center reveal" style="transition-delay: 0.3s;">
+                    <div class="feature-icon mx-auto mb-6"><i class="fa-solid fa-car"></i></div>
+                    <h3 class="text-lg font-bold mb-3">Unit Premium</h3>
+                    <p class="text-white/50 text-sm">Koleksi mobil mewah terbaru dengan kondisi prima</p>
+                </div>
+                <div class="glass-card p-8 text-center reveal" style="transition-delay: 0.4s;">
+                    <div class="feature-icon mx-auto mb-6"><i class="fa-solid fa-user-tie"></i></div>
+                    <h3 class="text-lg font-bold mb-3">Chauffeur Profesional</h3>
+                    <p class="text-white/50 text-sm">Sopir berpengalaman dengan pengetahuan lokal</p>
+                </div>
+            </div>
+
+            <div class="glass-card p-12 mt-20 flex flex-col md:flex-row items-center justify-between gap-8 reveal">
+                <div class="text-center md:text-left">
+                    <h3 class="text-3xl font-bold mb-3" style="font-family: 'Playfair Display', serif;">
+                        Siap untuk Pengalaman <span class="text-gold">Luxury?</span>
+                    </h3>
+                    <p class="text-white/50">Hubungi kami sekarang untuk konsultasi gratis</p>
+                </div>
+                <div class="flex gap-4">
+                    <a href="https://wa.me/6281234567890" class="btn-gold">
+                        <i class="fa-brands fa-whatsapp"></i>
+                        <span>WhatsApp</span>
+                    </a>
+                    <a href="tel:+6281234567890" class="btn-outline">
+                        <i class="fa-solid fa-phone"></i>
+                        <span>Telepon</span>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="testimoni" class="py-32 px-6 relative z-10">
+        <div class="max-w-5xl mx-auto">
+            <div class="text-center mb-20 reveal">
+                <span class="luxury-badge mb-6">Testimoni</span>
+                <h2 class="text-4xl md:text-6xl font-black mb-6">
+                    Kata <span class="text-gold" style="font-family: 'Playfair Display', serif;">Mereka</span>
+                </h2>
+            </div>
+
+            <div class="grid md:grid-cols-3 gap-6">
+                <div class="glass-card p-8 reveal" style="transition-delay: 0.1s;">
+                    <div class="flex gap-1 text-gold mb-4">
+                        <i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i>
+                    </div>
+                    <p class="text-white/70 mb-6 italic">"Pelayanan sangat profesional. Mobil dalam kondisi prima dan chauffeur sangat berpengalaman. Sangat merekomendasikan!"</p>
+                    <div class="flex items-center gap-4">
+                        <div class="w-12 h-12 rounded-full bg-gradient-to-br from-gold to-gold-dark flex items-center justify-center text-dark font-bold">RH</div>
+                        <div>
+                            <div class="font-bold">Rudi Hermawan</div>
+                            <div class="text-white/50 text-sm">Dirut, PT Energi Indonesia</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="glass-card p-8 reveal" style="transition-delay: 0.2s;">
+                    <div class="flex gap-1 text-gold mb-4">
+                        <i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i>
+                    </div>
+                    <p class="text-white/70 mb-6 italic">"Used LuxuryDrive for our wedding transport. The Rolls Royce Ghost was absolutely stunning. True luxury experience!"</p>
+                    <div class="flex items-center gap-4">
+                        <div class="w-12 h-12 rounded-full bg-gradient-to-br from-gold to-gold-dark flex items-center justify-center text-dark font-bold">SA</div>
+                        <div>
+                            <div class="font-bold">Sarah Angelina</div>
+                            <div class="text-white/50 text-sm">Wedding Organizer</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="glass-card p-8 reveal" style="transition-delay: 0.3s;">
+                    <div class="flex gap-1 text-gold mb-4">
+                        <i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i>
+                    </div>
+                    <p class="text-white/70 mb-6 italic">"Best car rental service in Jakarta. The attention to detail and customer service is unmatched. Will definitely book again."</p>
+                    <div class="flex items-center gap-4">
+                        <div class="w-12 h-12 rounded-full bg-gradient-to-br from-gold to-gold-dark flex items-center justify-center text-dark font-bold">MJ</div>
+                        <div>
+                            <div class="font-bold">Michael Johnson</div>
+                            <div class="text-white/50 text-sm">Expatriate, Singapore</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer class="py-20 px-6 border-t border-white/10 relative z-10">
+        <div class="max-w-7xl mx-auto">
+            <div class="grid md:grid-cols-4 gap-12 mb-16">
+                <div class="md:col-span-2">
+                    <div class="flex items-center gap-3 mb-6">
+                        <div class="logo-icon"><i class="fa-solid fa-crown text-dark text-xl"></i></div>
+                        <span class="text-2xl font-black" style="font-family: 'Playfair Display', serif;">
+                            <span class="text-white">Luxury</span><span class="text-gold">Drive</span>
+                        </span>
+                    </div>
+                    <p class="text-white/50 max-w-sm mb-8">
+                        Penyedia jasa sewa mobil mewah premium nomor satu di Indonesia. 
+                        Keamanan, kenyamanan, dan kemewahan adalah prioritas kami.
+                    </p>
+                    <div class="flex gap-4">
+                        <a href="#" class="w-12 h-12 glass-card flex items-center justify-center hover:bg-gold hover:text-dark transition-all"><i class="fa-brands fa-instagram"></i></a>
+                        <a href="#" class="w-12 h-12 glass-card flex items-center justify-center hover:bg-gold hover:text-dark transition-all"><i class="fa-brands fa-facebook-f"></i></a>
+                        <a href="#" class="w-12 h-12 glass-card flex items-center justify-center hover:bg-gold hover:text-dark transition-all"><i class="fa-brands fa-youtube"></i></a>
+                        <a href="#" class="w-12 h-12 glass-card flex items-center justify-center hover:bg-gold hover:text-dark transition-all"><i class="fa-brands fa-linkedin-in"></i></a>
+                    </div>
+                </div>
+                <div>
+                    <h4 class="font-bold mb-6 text-gold">Navigasi</h4>
+                    <ul class="space-y-4 text-white/50">
+                        <li><a href="#beranda" class="hover:text-gold transition-colors">Beranda</a></li>
+                        <li><a href="#koleksi" class="hover:text-gold transition-colors">Koleksi</a></li>
+                        <li><a href="#layanan" class="hover:text-gold transition-colors">Layanan</a></li>
+                        <li><a href="#testimoni" class="hover:text-gold transition-colors">Testimoni</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 class="font-bold mb-6 text-gold">Hubungi Kami</h4>
+                    <ul class="space-y-4 text-white/50">
+                        <li class="flex items-start gap-3"><i class="fa-solid fa-location-dot text-gold mt-1"></i><span>SCBD Lot 8, Jakarta Selatan</span></li>
+                        <li class="flex items-start gap-3"><i class="fa-solid fa-phone text-gold mt-1"></i><span>+62 812 3456 7890</span></li>
+                        <li class="flex items-start gap-3"><i class="fa-solid fa-envelope text-gold mt-1"></i><span>booking@luxurydrive.id</span></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="pt-8 border-t border-white/10 text-center text-white/30 text-sm">
+                © 2026 LuxuryDrive Indonesia. All Rights Reserved.
+            </div>
+        </div>
+    </footer>
+
+    <a href="https://wa.me/6281234567890" class="whatsapp-float" aria-label="Chat WhatsApp">
+        <i class="fa-brands fa-whatsapp"></i>
+    </a>
+
+    <div x-show="activeModal" x-cloak class="modal-overlay" @click.self="activeModal = false">
+        <div class="modal-content" @click.stop>
+            <button @click="activeModal = false" class="absolute top-6 right-6 w-10 h-10 rounded-full bg-white/10 flex items-center justify-center hover:bg-white/20 transition-colors">
+                <i class="fa-solid fa-times"></i>
+            </button>
+            <h3 class="text-3xl font-bold mb-2" style="font-family: 'Playfair Display', serif;">
+                Pesan <span class="text-gold">Sekarang</span>
+            </h3>
+            <p class="text-white/50 mb-8">Anda akan memesan: <span class="text-gold font-bold" x-text="selectedCar"></span></p>
+            <form @submit.prevent="submitBooking" class="space-y-4">
+                <input type="text" placeholder="Nama Lengkap" x-model="form.name" class="luxury-input" required>
+                <input type="tel" placeholder="Nomor WhatsApp" x-model="form.phone" class="luxury-input" required>
+                <div class="grid grid-cols-2 gap-4">
+                    <input type="date" x-model="form.date" class="luxury-input" required>
+                    <input type="number" placeholder="Durasi (hari)" x-model="form.days" min="1" class="luxury-input" required>
+                </div>
+                <button type="submit" class="btn-gold w-full justify-center py-4 text-lg">
+                    <i class="fa-solid fa-paper-plane"></i>
+                    <span>Kirim Permintaan</span>
+                </button>
+            </form>
+        </div>
+    </div>
+
+    <script>
+        const canvas = document.getElementById('particles');
+        const ctx = canvas.getContext('2d');
+        let particles = [];
+
+        function resizeCanvas() {
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+        }
+
+        function createParticle() {
+            return {
+                x: Math.random() * canvas.width,
+                y: Math.random() * canvas.height,
+                size: Math.random() * 2 + 0.5,
+                speedX: Math.random() * 0.5 + 0.1,
+                speedY: Math.random() * 0.2 - 0.1,
+                opacity: Math.random() * 0.5 + 0.2
+            };
+        }
+
+        function initParticles() {
+            particles = [];
+            for (let i = 0; i < 80; i++) {
+                particles.push(createParticle());
+            }
+        }
+
+        function animateParticles() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            particles.forEach(p => {
+                p.x += p.speedX;
+                p.y += p.speedY;
+                if (p.x > canvas.width) p.x = 0;
+                if (p.y < 0) p.y = canvas.height;
+                if (p.y > canvas.height) p.y = 0;
+                ctx.beginPath();
+                ctx.arc(p.x, p.y, p.size, 0, Math.PI * 2);
+                ctx.fillStyle = Math.random() > 0.7 ? `rgba(212, 175, 55, ${p.opacity})` : `rgba(255, 255, 255, ${p.opacity})`;
+                ctx.fill();
+            });
+            requestAnimationFrame(animateParticles);
+        }
+
+        function initScrollReveal() {
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('visible');
+                    }
+                });
+            }, { threshold: 0.1 });
+            document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+        }
+
+        document.addEventListener('alpine:init', () => {
+            Alpine.data('form', () => ({
+                name: '', phone: '', date: '', days: 1,
+                submit() {
+                    const msg = document.createElement('div');
+                    msg.className = 'fixed top-8 left-1/2 -translate-x-1/2 z-[110] bg-gold text-dark px-8 py-4 rounded-2xl font-bold shadow-2xl';
+                    msg.innerHTML = '<i class="fa-solid fa-check-circle mr-2"></i> Permintaan terkirim! Tim kami akan menghubungi Anda.';
+                    document.body.appendChild(msg);
+                    setTimeout(() => msg.remove(), 4000);
+                    this.activeModal = false;
+                }
+            }));
+        });
+
+        window.addEventListener('load', () => {
+            resizeCanvas();
+            initParticles();
+            animateParticles();
+            initScrollReveal();
+        });
+        window.addEventListener('resize', resizeCanvas);
+    </script>
+</body>
+</html>
