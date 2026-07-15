@@ -3,510 +3,281 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>LuxuryDrive | Sewa Mobil Premium & Eksklusif</title>
-    <meta name="description" content="LuxuryDrive - Penyedia jasa sewa mobil mewah premium di Indonesia dengan pelayanan bintang lima">
+    <title>LuxuryDrive | Premium Car Rental Experience 2026</title>
+    <meta name="description" content="LuxuryDrive - Experience the pinnacle of automotive luxury. Premium car rental with cutting-edge technology.">
+    <meta name="theme-color" content="#050508">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700;800;900&family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     <script src="https://cdn.tailwindcss.com"></script>
     <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
 
     <style>
         :root {
-            --gold: #D4AF37;
-            --gold-light: #F4D03F;
-            --gold-dark: #996515;
-            --dark: #0a0a0f;
-            --dark-card: rgba(20, 20, 30, 0.8);
-            --border: rgba(212, 175, 55, 0.2);
+            --gold: #C9A227;
+            --gold-light: #E8D48A;
+            --gold-dark: #8B7020;
+            --gold-radiant: linear-gradient(135deg, #F5E6A3, #C9A227, #8B7020);
+            --dark: #050508;
+            --dark-card: rgba(15, 15, 22, 0.85);
+            --border-subtle: rgba(201, 162, 39, 0.15);
+            --border-glow: rgba(201, 162, 39, 0.4);
         }
         * { margin: 0; padding: 0; box-sizing: border-box; }
-        html { scroll-behavior: smooth; }
-        body {
-            font-family: 'Inter', sans-serif;
-            background: var(--dark);
-            color: white;
-            overflow-x: hidden;
-        }
-        ::-webkit-scrollbar { width: 6px; }
+        html { scroll-behavior: smooth; scrollbar-width: thin; scrollbar-color: var(--gold) var(--dark); }
+        body { font-family: 'Plus Jakarta Sans', sans-serif; background: var(--dark); color: white; overflow-x: hidden; }
+        .font-elegant { font-family: 'Cormorant Garamond', serif; }
+        ::-webkit-scrollbar { width: 8px; }
         ::-webkit-scrollbar-track { background: var(--dark); }
-        ::-webkit-scrollbar-thumb { background: linear-gradient(var(--gold), var(--gold-dark)); border-radius: 3px; }
+        ::-webkit-scrollbar-thumb { background: var(--gold-radiant); border-radius: 4px; }
         ::selection { background: var(--gold); color: var(--dark); }
         
-        #particles {
-            position: fixed;
-            inset: 0;
-            pointer-events: none;
-            z-index: 1;
-        }
-
-        .hero-section {
-            position: relative;
-            min-height: 100vh;
-            overflow: hidden;
-        }
-
-        .hero-bg {
-            position: absolute;
-            inset: 0;
-            background: 
-                radial-gradient(ellipse at 30% 70%, rgba(212, 175, 55, 0.15) 0%, transparent 50%),
-                radial-gradient(ellipse at 70% 30%, rgba(212, 175, 55, 0.1) 0%, transparent 50%),
-                linear-gradient(180deg, rgba(10, 10, 15, 0.5) 0%, rgba(10, 10, 15, 0.9) 60%, var(--dark) 100%);
-        }
-
-        .hero-car {
-            position: absolute;
-            bottom: 0;
-            right: 0;
-            width: 60%;
-            height: 80%;
-            background: url('https://images.unsplash.com/photo-1503376780353-7e6692767b70?auto=format&fit=crop&w=1920&q=80') center/contain no-repeat;
-            mask-image: linear-gradient(to left, rgba(0,0,0,0.6) 0%, transparent 80%);
-            -webkit-mask-image: linear-gradient(to left, rgba(0,0,0,0.6) 0%, transparent 80%);
-            filter: brightness(0.7) contrast(1.1);
-            animation: carFloat 8s ease-in-out infinite;
-        }
-
-        @keyframes carFloat {
-            0%, 100% { transform: translateY(0) scale(1); }
-            50% { transform: translateY(-20px) scale(1.02); }
-        }
-
-        .glow-orb {
-            position: absolute;
-            border-radius: 50%;
-            filter: blur(100px);
-            animation: orbFloat 20s ease-in-out infinite;
-            pointer-events: none;
-        }
-
-        .glow-orb-1 {
-            width: 600px; height: 600px;
-            background: radial-gradient(circle, rgba(212, 175, 55, 0.2) 0%, transparent 70%);
-            top: 20%; right: 10%;
-        }
-
-        .glow-orb-2 {
-            width: 400px; height: 400px;
-            background: radial-gradient(circle, rgba(212, 175, 55, 0.15) 0%, transparent 70%);
-            bottom: 10%; left: 20%;
-            animation-delay: -10s;
-        }
-
-        @keyframes orbFloat {
-            0%, 100% { transform: translate(0, 0) scale(1); }
-            25% { transform: translate(30px, -30px) scale(1.05); }
-            50% { transform: translate(-20px, 20px) scale(0.95); }
-            75% { transform: translate(20px, 30px) scale(1.02); }
-        }
-
-        .nav-glass {
-            background: rgba(10, 10, 15, 0.8);
-            backdrop-filter: blur(20px);
-            -webkit-backdrop-filter: blur(20px);
-            border-bottom: 1px solid var(--border);
-        }
-
-        .nav-link {
-            position: relative;
-            color: rgba(255, 255, 255, 0.7);
-            transition: all 0.3s;
-        }
+        #particles-canvas, #light-trails { position: fixed; inset: 0; pointer-events: none; z-index: 0; }
+        
+        .magical-bg { position: fixed; inset: 0; z-index: 0; overflow: hidden; }
+        .aurora { position: absolute; width: 150%; height: 150%; top: -25%; left: -25%; background: radial-gradient(ellipse 80% 60% at 20% 30%, rgba(201, 162, 39, 0.08) 0%, transparent 50%), radial-gradient(ellipse 60% 80% at 80% 70%, rgba(201, 162, 39, 0.06) 0%, transparent 50%); animation: auroraMove 30s ease-in-out infinite; }
+        @keyframes auroraMove { 0%, 100% { transform: translate(0, 0); } 25% { transform: translate(2%, -2%); } 50% { transform: translate(-1%, 2%); } 75% { transform: translate(-2%, -1%); } }
+        
+        .geo-shape { position: absolute; border: 1px solid var(--border-subtle); opacity: 0.3; animation: geoFloat 20s ease-in-out infinite; }
+        .geo-shape-1 { width: 200px; height: 200px; border-radius: 30% 70% 70% 30% / 30% 30% 70% 70%; top: 10%; left: 5%; }
+        .geo-shape-2 { width: 150px; height: 150px; border-radius: 50%; top: 60%; right: 10%; animation-delay: -5s; }
+        .geo-shape-3 { width: 100px; height: 100px; border-radius: 10px; transform: rotate(45deg); bottom: 20%; left: 15%; animation-delay: -10s; }
+        @keyframes geoFloat { 0%, 100% { transform: translate(0, 0) rotate(0deg); opacity: 0.3; } 50% { transform: translate(20px, -30px) rotate(5deg); opacity: 0.5; } }
+        
+        .nav-container { background: rgba(5, 5, 8, 0.8); backdrop-filter: blur(30px) saturate(180%); border-bottom: 1px solid var(--border-subtle); }
+        .nav-link { position: relative; color: rgba(255, 255, 255, 0.6); font-weight: 500; transition: all 0.4s; padding: 0.5rem 0; }
+        .nav-link::before { content: ''; position: absolute; bottom: 0; left: 50%; width: 0; height: 1px; background: var(--gold-radiant); transition: all 0.4s; transform: translateX(-50%); }
         .nav-link:hover { color: var(--gold); }
-        .nav-link::after {
-            content: '';
-            position: absolute;
-            bottom: -4px;
-            left: 0;
-            width: 0;
-            height: 2px;
-            background: var(--gold);
-            transition: width 0.3s;
+        .nav-link:hover::before { width: 100%; }
+        
+        .logo-emblem { width: 52px; height: 52px; background: var(--gold-radiant); border-radius: 16px; display: flex; align-items: center; justify-content: center; position: relative; overflow: hidden; transition: all 0.4s; }
+        .logo-emblem::before { content: ''; position: absolute; inset: 2px; border-radius: 14px; background: var(--dark); z-index: 0; }
+        .logo-emblem::after { content: ''; position: absolute; inset: 0; background: var(--gold-radiant); opacity: 0; transition: opacity 0.4s; }
+        .logo-emblem:hover { transform: scale(1.05) rotate(3deg); box-shadow: 0 0 40px rgba(201, 162, 39, 0.4); }
+        .logo-emblem:hover::after { opacity: 0.2; }
+        .logo-emblem i { position: relative; z-index: 1; color: var(--gold); font-size: 1.4rem; transition: all 0.4s; }
+        .logo-emblem:hover i { color: var(--gold-light); }
+        
+        .hero-section { position: relative; min-height: 100vh; display: flex; align-items: center; overflow: hidden; }
+        .hero-car-showcase { position: absolute; right: -5%; bottom: -10%; width: 75%; height: 90%; mask-image: linear-gradient(to left, rgba(0,0,0,0.8) 0%, rgba(0,0,0,0.4) 50%, transparent 100%); z-index: 2; }
+        .hero-car-img { width: 100%; height: 100%; object-fit: cover; filter: brightness(0.8) contrast(1.1) saturate(1.1); animation: carReveal 2s ease-out forwards, carFloat 8s ease-in-out infinite 2s; }
+        @keyframes carReveal { from { opacity: 0; transform: scale(1.1) translateX(50px); } to { opacity: 1; transform: scale(1) translateX(0); } }
+        @keyframes carFloat { 0%, 100% { transform: translateY(0) scale(1); } 50% { transform: translateY(-15px) scale(1.02); } }
+        
+        .hero-glow { position: absolute; border-radius: 50%; filter: blur(120px); pointer-events: none; }
+        .hero-glow-1 { width: 800px; height: 800px; background: radial-gradient(circle, rgba(201, 162, 39, 0.15) 0%, transparent 70%); top: -20%; right: -10%; animation: glowPulse1 8s ease-in-out infinite; }
+        .hero-glow-2 { width: 600px; height: 600px; background: radial-gradient(circle, rgba(201, 162, 39, 0.1) 0%, transparent 70%); bottom: -10%; left: 20%; animation: glowPulse2 10s ease-in-out infinite; }
+        @keyframes glowPulse1 { 0%, 100% { opacity: 0.6; transform: scale(1); } 50% { opacity: 1; transform: scale(1.1); } }
+        @keyframes glowPulse2 { 0%, 100% { opacity: 0.4; transform: scale(1); } 50% { opacity: 0.8; transform: scale(1.2); } }
+        
+        .btn-luxury { position: relative; display: inline-flex; align-items: center; justify-content: center; gap: 0.75rem; padding: 1.1rem 2.5rem; background: var(--gold-radiant); color: var(--dark); font-weight: 700; font-size: 0.95rem; border-radius: 100px; border: none; cursor: pointer; overflow: hidden; transition: all 0.4s; box-shadow: 0 4px 20px rgba(201, 162, 39, 0.3); }
+        .btn-luxury::before { content: ''; position: absolute; inset: 0; background: linear-gradient(135deg, rgba(255,255,255,0.3), transparent); opacity: 0; transition: opacity 0.4s; }
+        .btn-luxury:hover { transform: translateY(-3px) scale(1.02); box-shadow: 0 12px 40px rgba(201, 162, 39, 0.4), 0 0 60px rgba(201, 162, 39, 0.2); }
+        .btn-luxury:hover::before { opacity: 1; }
+        .btn-luxury:active { transform: translateY(-1px) scale(0.98); }
+        .btn-luxury span, .btn-luxury i { position: relative; z-index: 1; }
+        
+        .ripple { position: absolute; border-radius: 50%; background: rgba(255, 255, 255, 0.4); transform: scale(0); animation: rippleEffect 0.6s ease-out; pointer-events: none; }
+        @keyframes rippleEffect { to { transform: scale(4); opacity: 0; } }
+        
+        .glass-card { position: relative; background: var(--dark-card); backdrop-filter: blur(40px) saturate(150%); border: 1px solid var(--border-subtle); border-radius: 28px; overflow: hidden; transition: all 0.5s; }
+        .glass-card::before { content: ''; position: absolute; inset: 0; background: linear-gradient(135deg, rgba(201, 162, 39, 0.1), transparent); opacity: 0; transition: opacity 0.5s; }
+        .glass-card:hover { border-color: var(--border-glow); transform: translateY(-12px) scale(1.02); box-shadow: 0 30px 60px rgba(0, 0, 0, 0.5), 0 0 80px rgba(201, 162, 39, 0.1); }
+        .glass-card:hover::before { opacity: 1; }
+        
+        .car-card { perspective: 1500px; transform-style: preserve-3d; }
+        .car-card-inner { position: relative; transform-style: preserve-3d; transition: transform 0.6s; }
+        .car-card:hover .car-card-inner { transform: rotateY(-8deg) rotateX(5deg) translateZ(20px); }
+        .car-card-glare { position: absolute; inset: 0; background: linear-gradient(135deg, rgba(255, 255, 255, 0.1) 0%, transparent 50%, rgba(255, 255, 255, 0.05) 100%); opacity: 0; transition: opacity 0.5s; pointer-events: none; border-radius: inherit; }
+        .car-card:hover .car-card-glare { opacity: 1; }
+        .car-image-wrapper { position: relative; overflow: hidden; border-radius: 24px 24px 0 0; }
+        .car-image-wrapper::after { content: ''; position: absolute; inset: 0; background: linear-gradient(180deg, transparent 40%, rgba(15, 15, 22, 0.9) 100%); }
+        .car-image { width: 100%; height: 100%; object-fit: cover; transition: transform 0.8s; }
+        .car-card:hover .car-image { transform: scale(1.15) translateY(-5%); }
+        
+        .badge-luxury { display: inline-flex; align-items: center; padding: 0.5rem 1.2rem; background: var(--gold-radiant); color: var(--dark); font-size: 0.7rem; font-weight: 800; text-transform: uppercase; letter-spacing: 0.15em; border-radius: 100px; box-shadow: 0 4px 20px rgba(201, 162, 39, 0.3); }
+        .text-luxury { background: linear-gradient(135deg, var(--gold-light) 0%, var(--gold) 50%, var(--gold-dark) 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
+        .stat-number { font-size: clamp(3rem, 6vw, 5rem); font-weight: 800; background: linear-gradient(135deg, var(--gold-light), var(--gold)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; line-height: 1; }
+        
+        .reveal { opacity: 0; transform: translateY(80px); filter: blur(10px); transition: all 1s; }
+        .reveal.visible { opacity: 1; transform: translateY(0); filter: blur(0); }
+        .reveal-delay-1 { transition-delay: 0.1s; } .reveal-delay-2 { transition-delay: 0.2s; } .reveal-delay-3 { transition-delay: 0.3s; }
+        .reveal-delay-4 { transition-delay: 0.4s; } .reveal-delay-5 { transition-delay: 0.5s; } .reveal-delay-6 { transition-delay: 0.6s; }
+        
+        .marquee-container { overflow: hidden; position: relative; }
+        .marquee-container::before, .marquee-container::after { content: ''; position: absolute; top: 0; bottom: 0; width: 200px; z-index: 10; }
+        .marquee-container::before { left: 0; background: linear-gradient(to right, var(--dark), transparent); }
+        .marquee-container::after { right: 0; background: linear-gradient(to left, var(--dark), transparent); }
+        .marquee-track { display: flex; animation: marqueeScroll 40s linear infinite; }
+        @keyframes marqueeScroll { 0% { transform: translateX(0); } 100% { transform: translateX(-50%); } }
+        
+        .feature-icon-box { width: 72px; height: 72px; background: linear-gradient(135deg, rgba(201, 162, 39, 0.15), rgba(201, 162, 39, 0.05)); border: 1px solid var(--border-subtle); border-radius: 20px; display: flex; align-items: center; justify-content: center; font-size: 1.6rem; color: var(--gold); transition: all 0.5s; }
+        .glass-card:hover .feature-icon-box { background: var(--gold-radiant); color: var(--dark); border-color: transparent; transform: scale(1.1) rotate(5deg); box-shadow: 0 10px 30px rgba(201, 162, 39, 0.4); }
+        
+        .testimonial-card { position: relative; }
+        .testimonial-card::before { content: '"'; position: absolute; top: 20px; left: 30px; font-size: 8rem; font-family: 'Cormorant Garamond', serif; color: var(--gold); opacity: 0.15; line-height: 1; }
+        .testimonial-avatar { width: 56px; height: 56px; background: var(--gold-radiant); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: 800; color: var(--dark); font-size: 1.1rem; }
+        
+        .whatsapp-float { position: fixed; bottom: 40px; right: 40px; width: 68px; height: 68px; background: linear-gradient(135deg, #25D366, #128C7E); border-radius: 50%; display: flex; align-items: center; justify-content: center; color: white; font-size: 2rem; box-shadow: 0 8px 30px rgba(37, 211, 102, 0.4); transition: all 0.4s; z-index: 100; }
+        .whatsapp-float::before { content: ''; position: absolute; inset: -4px; border-radius: 50%; border: 2px solid #25D366; opacity: 0; animation: whatsappPulse 2s infinite; }
+        @keyframes whatsappPulse { 0% { transform: scale(1); opacity: 0.5; } 100% { transform: scale(1.3); opacity: 0; } }
+        .whatsapp-float:hover { transform: scale(1.15); box-shadow: 0 12px 50px rgba(37, 211, 102, 0.5), 0 0 0 8px rgba(37, 211, 102, 0.1); }
+        
+        .ai-chat-toggle { position: fixed; bottom: 130px; right: 40px; width: 60px; height: 60px; background: var(--gold-radiant); border-radius: 50%; display: flex; align-items: center; justify-content: center; color: var(--dark); font-size: 1.5rem; box-shadow: 0 8px 30px rgba(201, 162, 39, 0.4); transition: all 0.4s; z-index: 100; cursor: pointer; border: none; }
+        .ai-chat-toggle:hover { transform: scale(1.1) rotate(10deg); box-shadow: 0 12px 40px rgba(201, 162, 39, 0.5); }
+        
+        .ai-chat-box { position: fixed; bottom: 200px; right: 40px; width: 380px; max-height: 500px; background: var(--dark-card); backdrop-filter: blur(40px); border: 1px solid var(--border-glow); border-radius: 24px; overflow: hidden; z-index: 100; box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5); transform: scale(0.9) translateY(20px); opacity: 0; pointer-events: none; transition: all 0.4s; }
+        .ai-chat-box.active { transform: scale(1) translateY(0); opacity: 1; pointer-events: auto; }
+        
+        .modal-backdrop { position: fixed; inset: 0; background: rgba(5, 5, 8, 0.95); backdrop-filter: blur(20px); z-index: 200; display: flex; align-items: center; justify-content: center; padding: 24px; opacity: 0; pointer-events: none; transition: opacity 0.4s; }
+        .modal-backdrop.active { opacity: 1; pointer-events: auto; }
+        .modal-container { width: 100%; max-width: 520px; background: var(--dark-card); backdrop-filter: blur(40px); border: 1px solid var(--border-glow); border-radius: 32px; padding: 48px; position: relative; transform: scale(0.9) translateY(30px); transition: transform 0.5s; }
+        .modal-backdrop.active .modal-container { transform: scale(1) translateY(0); }
+        .modal-close { position: absolute; top: 20px; right: 20px; width: 44px; height: 44px; background: rgba(255, 255, 255, 0.05); border: 1px solid rgba(255, 255, 255, 0.1); border-radius: 50%; display: flex; align-items: center; justify-content: center; color: white; cursor: pointer; transition: all 0.3s; }
+        .modal-close:hover { background: var(--gold); color: var(--dark); border-color: var(--gold); }
+        
+        .input-luxury { width: 100%; background: rgba(10, 10, 18, 0.8); border: 1px solid var(--border-subtle); border-radius: 16px; padding: 18px 24px; color: white; font-size: 1rem; outline: none; transition: all 0.4s; }
+        .input-luxury:focus { border-color: var(--gold); box-shadow: 0 0 0 3px rgba(201, 162, 39, 0.1), 0 0 30px rgba(201, 162, 39, 0.15); }
+        .input-luxury::placeholder { color: rgba(255, 255, 255, 0.3); }
+        
+        .scroll-progress { position: fixed; top: 0; left: 0; height: 4px; background: var(--gold-radiant); z-index: 300; box-shadow: 0 0 20px rgba(201, 162, 39, 0.5); }
+        
+        .mobile-menu { position: fixed; inset: 0; background: var(--dark); z-index: 150; display: flex; flex-direction: column; justify-content: center; align-items: center; transform: translateX(100%); transition: transform 0.5s; }
+        .mobile-menu.active { transform: translateX(0); }
+        
+        .cursor-glow { position: fixed; width: 400px; height: 400px; border-radius: 50%; background: radial-gradient(circle, rgba(201, 162, 39, 0.1), transparent 70%); pointer-events: none; z-index: 1; transform: translate(-50%, -50%); }
+        
+        @media (max-width: 768px) {
+            .hero-car-showcase { width: 100%; right: 0; opacity: 0.5; }
+            .whatsapp-float, .ai-chat-toggle { right: 20px; bottom: 20px; }
+            .ai-chat-toggle { bottom: 100px; }
+            .ai-chat-box { right: 20px; width: calc(100% - 40px); bottom: 180px; }
+            .modal-container { padding: 32px 24px; border-radius: 24px; }
         }
-        .nav-link:hover::after { width: 100%; }
-
-        .logo-icon {
-            width: 48px; height: 48px;
-            background: linear-gradient(135deg, var(--gold), var(--gold-dark));
-            border-radius: 12px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            box-shadow: 0 8px 32px rgba(212, 175, 55, 0.3);
-        }
-
-        .btn-gold {
-            background: linear-gradient(135deg, var(--gold), var(--gold-dark));
-            color: var(--dark);
-            font-weight: 700;
-            padding: 1rem 2rem;
-            border-radius: 100px;
-            transition: all 0.3s;
-            box-shadow: 0 8px 32px rgba(212, 175, 55, 0.3);
-            display: inline-flex;
-            align-items: center;
-            gap: 0.75rem;
-        }
-        .btn-gold:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 12px 48px rgba(212, 175, 55, 0.5);
-        }
-
-        .btn-outline {
-            border: 2px solid rgba(255, 255, 255, 0.3);
-            padding: 1rem 2rem;
-            border-radius: 100px;
-            transition: all 0.3s;
-            backdrop-filter: blur(10px);
-            display: inline-flex;
-            align-items: center;
-            gap: 0.75rem;
-        }
-        .btn-outline:hover {
-            border-color: var(--gold);
-            color: var(--gold);
-            background: rgba(212, 175, 55, 0.1);
-        }
-
-        .glass-card {
-            background: var(--dark-card);
-            backdrop-filter: blur(20px);
-            -webkit-backdrop-filter: blur(20px);
-            border: 1px solid var(--border);
-            border-radius: 24px;
-            transition: all 0.5s cubic-bezier(0.23, 1, 0.32, 1);
-        }
-        .glass-card:hover {
-            border-color: var(--gold);
-            transform: translateY(-12px);
-            box-shadow: 0 32px 64px rgba(0, 0, 0, 0.5), 0 0 60px rgba(212, 175, 55, 0.15);
-        }
-
-        .car-card {
-            perspective: 1000px;
-        }
-        .car-card-inner {
-            transition: transform 0.6s;
-            transform-style: preserve-3d;
-        }
-        .car-card:hover .car-card-inner {
-            transform: rotateY(5deg) rotateX(5deg);
-        }
-
-        .car-image-container {
-            position: relative;
-            overflow: hidden;
-            border-radius: 20px 20px 0 0;
-        }
-        .car-image-container::after {
-            content: '';
-            position: absolute;
-            inset: 0;
-            background: linear-gradient(180deg, transparent 50%, rgba(10, 10, 15, 0.9) 100%);
-        }
-        .car-image {
-            transition: transform 0.8s cubic-bezier(0.23, 1, 0.32, 1);
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-        }
-        .car-card:hover .car-image {
-            transform: scale(1.1);
-        }
-
-        .text-gold {
-            background: linear-gradient(135deg, var(--gold-light), var(--gold), var(--gold-dark));
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-        }
-
-        .stat-number {
-            font-size: clamp(2.5rem, 5vw, 4rem);
-            font-weight: 900;
-            background: linear-gradient(135deg, var(--gold-light), var(--gold));
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-            line-height: 1;
-        }
-
-        .reveal {
-            opacity: 0;
-            transform: translateY(60px);
-            transition: all 0.8s cubic-bezier(0.23, 1, 0.32, 1);
-        }
-        .reveal.visible {
-            opacity: 1;
-            transform: translateY(0);
-        }
-
-        .marquee-track {
-            display: flex;
-            animation: marquee 30s linear infinite;
-        }
-        @keyframes marquee {
-            0% { transform: translateX(0); }
-            100% { transform: translateX(-50%); }
-        }
-
-        .float { animation: float 6s ease-in-out infinite; }
-        @keyframes float {
-            0%, 100% { transform: translateY(0px); }
-            50% { transform: translateY(-20px); }
-        }
-
-        .glow-pulse { animation: glowPulse 2s ease-in-out infinite; }
-        @keyframes glowPulse {
-            0%, 100% { box-shadow: 0 0 20px rgba(212, 175, 55, 0.3); }
-            50% { box-shadow: 0 0 40px rgba(212, 175, 55, 0.6); }
-        }
-
-        .luxury-badge {
-            background: linear-gradient(135deg, var(--gold), var(--gold-dark));
-            color: var(--dark);
-            font-size: 0.7rem;
-            font-weight: 800;
-            padding: 0.4rem 1rem;
-            border-radius: 100px;
-            text-transform: uppercase;
-            letter-spacing: 0.1em;
-            display: inline-block;
-        }
-
-        .feature-icon {
-            width: 64px; height: 64px;
-            background: linear-gradient(135deg, rgba(212, 175, 55, 0.2), rgba(212, 175, 55, 0.05));
-            border: 1px solid var(--border);
-            border-radius: 16px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 1.5rem;
-            color: var(--gold);
-            transition: all 0.3s;
-        }
-        .glass-card:hover .feature-icon {
-            background: linear-gradient(135deg, var(--gold), var(--gold-dark));
-            color: var(--dark);
-            border-color: transparent;
-        }
-
-        .whatsapp-float {
-            position: fixed;
-            bottom: 32px;
-            right: 32px;
-            width: 64px; height: 64px;
-            background: #25D366;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: white;
-            font-size: 1.75rem;
-            box-shadow: 0 8px 32px rgba(37, 211, 102, 0.4);
-            transition: all 0.3s;
-            z-index: 50;
-        }
-        .whatsapp-float:hover {
-            transform: scale(1.1);
-            box-shadow: 0 12px 48px rgba(37, 211, 102, 0.6);
-        }
-
-        .modal-overlay {
-            position: fixed;
-            inset: 0;
-            background: rgba(10, 10, 15, 0.95);
-            backdrop-filter: blur(20px);
-            z-index: 100;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            padding: 24px;
-        }
-        .modal-content {
-            background: var(--dark-card);
-            border: 1px solid var(--border);
-            border-radius: 32px;
-            max-width: 500px;
-            width: 100%;
-            padding: 48px;
-            position: relative;
-        }
-        .luxury-input {
-            width: 100%;
-            background: rgba(10, 10, 15, 0.8);
-            border: 1px solid var(--border);
-            border-radius: 16px;
-            padding: 16px 24px;
-            color: white;
-            outline: none;
-            transition: all 0.3s;
-        }
-        .luxury-input:focus {
-            border-color: var(--gold);
-            box-shadow: 0 0 20px rgba(212, 175, 55, 0.2);
-        }
-        .luxury-input::placeholder { color: rgba(255, 255, 255, 0.3); }
-
-        .scroll-progress {
-            position: fixed;
-            top: 0;
-            left: 0;
-            height: 3px;
-            background: linear-gradient(90deg, var(--gold), var(--gold-light), var(--gold));
-            z-index: 100;
-        }
+        @media (prefers-reduced-motion: reduce) { *, *::before, *::after { animation-duration: 0.01ms !important; transition-duration: 0.01ms !important; } }
     </style>
 </head>
 
 <body x-data="{
-    scrollProgress: 0,
-    isMenuOpen: false,
-    activeModal: false,
-    selectedCar: '',
-    updateScroll() {
-        this.scrollProgress = (window.scrollY / (document.body.scrollHeight - window.innerHeight)) * 100;
-    }
-}" 
-@scroll.window="updateScroll()">
+    scrollProgress: 0, isMenuOpen: false, isChatOpen: false, isModalOpen: false, selectedCar: '',
+    form: { name: '', phone: '', date: '', days: 1 },
+    updateScroll() { this.scrollProgress = (window.scrollY / (document.body.scrollHeight - window.innerHeight)) * 100; },
+    openModal(car) { this.selectedCar = car; this.isModalOpen = true; document.body.style.overflow = 'hidden'; },
+    closeModal() { this.isModalOpen = false; document.body.style.overflow = ''; },
+    submitForm() {
+        const toast = document.createElement('div');
+        toast.className = 'fixed top-8 left-1/2 -translate-x-1/2 z-[300] px-8 py-4 rounded-2xl font-bold flex items-center gap-3';
+        toast.style.cssText = 'background: var(--gold-radiant); color: var(--dark); box-shadow: 0 10px 40px rgba(201, 162, 39, 0.4);';
+        toast.innerHTML = '<i class=\"fas fa-check-circle\"></i> Permintaan terkirim! Tim LuxuryDrive akan menghubungi Anda.';
+        document.body.appendChild(toast);
+        setTimeout(() => toast.remove(), 4000);
+        this.closeModal();
+    },
+    toggleChat() { this.isChatOpen = !this.isChatOpen; },
+    scrollToSection(id) { document.getElementById(id)?.scrollIntoView({ behavior: 'smooth' }); this.isMenuOpen = false; }
+}" @scroll.window="updateScroll()">
 
     <div class="scroll-progress" :style="`width: ${scrollProgress}%`"></div>
-    <canvas id="particles"></canvas>
+    <div class="cursor-glow" x-data="{ x: 0, y: 0 }" x-on:mousemove.window="x = $event.clientX; y = $event.clientY; $el.style.left = x + 'px'; $el.style.top = y + 'px'"></div>
+    <canvas id="particles-canvas"></canvas>
+    <canvas id="light-trails"></canvas>
 
-    <nav class="fixed top-0 left-0 right-0 z-50 nav-glass">
+    <div class="magical-bg">
+        <div class="aurora"></div>
+        <div class="geo-shape geo-shape-1"></div>
+        <div class="geo-shape geo-shape-2"></div>
+        <div class="geo-shape geo-shape-3"></div>
+        <div class="hero-glow hero-glow-1"></div>
+        <div class="hero-glow hero-glow-2"></div>
+    </div>
+
+    <nav class="fixed top-0 left-0 right-0 z-50 nav-container">
         <div class="max-w-7xl mx-auto px-6 py-4">
             <div class="flex justify-between items-center">
-                <a href="#" class="flex items-center gap-3 group">
-                    <div class="logo-icon group-hover:scale-110 transition-transform">
-                        <i class="fa-solid fa-crown text-dark text-xl"></i>
-                    </div>
-                    <span class="text-2xl font-black tracking-tight" style="font-family: 'Playfair Display', serif;">
-                        <span class="text-white">Luxury</span><span class="text-gold">Drive</span>
-                    </span>
+                <a href="#" class="flex items-center gap-3 group" @click.prevent="window.scrollTo({top: 0, behavior: 'smooth'})">
+                    <div class="logo-emblem"><i class="fa-solid fa-crown"></i></div>
+                    <span class="text-2xl font-bold tracking-tight"><span class="text-white">Luxury</span><span class="text-luxury">Drive</span></span>
                 </a>
-                <div class="hidden md:flex items-center gap-10">
-                    <a href="#beranda" class="nav-link font-medium">Beranda</a>
-                    <a href="#koleksi" class="nav-link font-medium">Koleksi</a>
-                    <a href="#layanan" class="nav-link font-medium">Layanan</a>
-                    <a href="#testimoni" class="nav-link font-medium">Testimoni</a>
-                    <a href="https://wa.me/6281234567890" class="btn-gold">
-                        <i class="fa-solid fa-phone"></i>
-                        <span>Hubungi Kami</span>
-                    </a>
+                <div class="hidden lg:flex items-center gap-10">
+                    <a href="#beranda" class="nav-link" @click.prevent="scrollToSection('beranda')">Beranda</a>
+                    <a href="#koleksi" class="nav-link" @click.prevent="scrollToSection('koleksi')">Koleksi</a>
+                    <a href="#layanan" class="nav-link" @click.prevent="scrollToSection('layanan')">Layanan</a>
+                    <a href="#testimoni" class="nav-link" @click.prevent="scrollToSection('testimoni')">Testimoni</a>
+                    <a href="https://wa.me/6281234567890" class="btn-luxury"><i class="fa-solid fa-phone"></i><span>Hubungi Kami</span></a>
                 </div>
-                <button @click="isMenuOpen = !isMenuOpen" class="md:hidden w-12 h-12 rounded-xl bg-white/5 border border-white/10 flex items-center justify-center">
-                    <i class="fa-solid fa-bars" x-show="!isMenuOpen"></i>
-                    <i class="fa-solid fa-times" x-show="isMenuOpen" x-cloak></i>
+                <button @click="isMenuOpen = !isMenuOpen" class="lg:hidden w-14 h-14 rounded-2xl bg-white/5 border border-white/10 flex items-center justify-center hover:bg-white/10">
+                    <i class="fa-solid fa-bars text-lg" x-show="!isMenuOpen"></i>
+                    <i class="fa-solid fa-times text-lg" x-show="isMenuOpen" x-cloak></i>
                 </button>
-            </div>
-            <div x-show="isMenuOpen" x-cloak x-transition class="md:hidden mt-4 p-6 glass-card">
-                <div class="flex flex-col gap-4">
-                    <a href="#beranda" @click="isMenuOpen = false" class="text-lg font-medium hover:text-gold transition-colors py-2">Beranda</a>
-                    <a href="#koleksi" @click="isMenuOpen = false" class="text-lg font-medium hover:text-gold transition-colors py-2">Koleksi</a>
-                    <a href="#layanan" @click="isMenuOpen = false" class="text-lg font-medium hover:text-gold transition-colors py-2">Layanan</a>
-                    <a href="#testimoni" @click="isMenuOpen = false" class="text-lg font-medium hover:text-gold transition-colors py-2">Testimoni</a>
-                    <a href="https://wa.me/6281234567890" class="btn-gold justify-center mt-2">
-                        <i class="fa-solid fa-phone"></i>
-                        <span>Hubungi Kami</span>
-                    </a>
-                </div>
             </div>
         </div>
     </nav>
 
-    <section id="beranda" class="hero-section flex items-center relative z-10">
-        <div class="hero-bg"></div>
-        <div class="glow-orb glow-orb-1"></div>
-        <div class="glow-orb glow-orb-2"></div>
-        <div class="hero-car"></div>
+    <div class="mobile-menu" :class="{ 'active': isMenuOpen }">
+        <div class="flex flex-col items-center gap-8">
+            <a href="#beranda" @click="scrollToSection('beranda')" class="text-3xl font-bold text-white hover:text-luxury transition-colors">Beranda</a>
+            <a href="#koleksi" @click="scrollToSection('koleksi')" class="text-3xl font-bold text-white hover:text-luxury transition-colors">Koleksi</a>
+            <a href="#layanan" @click="scrollToSection('layanan')" class="text-3xl font-bold text-white hover:text-luxury transition-colors">Layanan</a>
+            <a href="#testimoni" @click="scrollToSection('testimoni')" class="text-3xl font-bold text-white hover:text-luxury transition-colors">Testimoni</a>
+            <a href="https://wa.me/6281234567890" class="btn-luxury mt-4"><i class="fa-solid fa-phone"></i><span>Hubungi Kami</span></a>
+        </div>
+    </div>
 
-        <div class="relative z-10 text-center px-6 max-w-5xl mx-auto">
-            <div class="inline-flex items-center gap-2 px-5 py-2 rounded-full bg-white/5 border border-white/10 mb-8 reveal">
-                <span class="w-2 h-2 bg-green-500 rounded-full animate-pulse"></span>
-                <span class="text-sm font-medium text-gold tracking-wider">PREMIUM RENTAL SERVICE</span>
-            </div>
-
-            <h1 class="text-5xl md:text-7xl lg:text-8xl font-black mb-8 leading-[1.1] reveal" style="transition-delay: 0.1s;">
-                <span class="block text-white">Berkendara Dengan</span>
-                <span class="block text-gold" style="font-family: 'Playfair Display', serif; font-style: italic;">
-                    Kemewahan Sejati
-                </span>
-            </h1>
-
-            <p class="text-lg md:text-xl text-white/60 max-w-2xl mx-auto mb-12 leading-relaxed reveal" style="transition-delay: 0.2s;">
-                Nikmati pengalaman berkendara tak terlupakan dengan koleksi mobil mewah terbaik Indonesia. 
-                Pelayanan eksklusif 24/7 dengan chauffeur profesional.
-            </p>
-
-            <div class="flex flex-col sm:flex-row gap-4 justify-center reveal" style="transition-delay: 0.3s;">
-                <a href="#koleksi" class="btn-gold text-lg">
-                    <span>Eksplor Armada</span>
-                    <i class="fa-solid fa-arrow-right"></i>
-                </a>
-                <a href="#layanan" class="btn-outline text-lg">
-                    <i class="fa-solid fa-play"></i>
-                    <span>Paket VVIP</span>
-                </a>
-            </div>
-
-            <div class="grid grid-cols-3 gap-8 mt-20 pt-12 border-t border-white/10 reveal" style="transition-delay: 0.4s;">
-                <div>
-                    <div class="stat-number">500+</div>
-                    <div class="text-white/50 text-sm mt-2">Unit Premium</div>
+    <section id="beranda" class="hero-section relative z-10 px-6 pt-32">
+        <div class="hero-car-showcase">
+            <img src="https://images.unsplash.com/photo-1503376780353-7e6692767b70?auto=format&fit=crop&w=1920&q=80" alt="Luxury Car" class="hero-car-img">
+        </div>
+        <div class="max-w-7xl mx-auto w-full relative z-10">
+            <div class="max-w-3xl">
+                <div class="inline-flex items-center gap-3 px-6 py-3 rounded-full bg-white/5 border border-white/10 mb-8 reveal">
+                    <span class="w-2.5 h-2.5 bg-green-500 rounded-full animate-pulse"></span>
+                    <span class="text-sm font-semibold text-luxury tracking-wider">PREMIUM RENTAL SERVICE 2026</span>
                 </div>
-                <div>
-                    <div class="stat-number">10K+</div>
-                    <div class="text-white/50 text-sm mt-2">Pelanggan Puas</div>
+                <h1 class="text-5xl sm:text-6xl md:text-7xl lg:text-8xl font-black mb-8 leading-[1.05] reveal reveal-delay-1">
+                    <span class="block text-white">Pengalaman</span>
+                    <span class="block text-luxury font-elegant italic">Kemewahan</span>
+                    <span class="block text-white">Tanpa Batas.</span>
+                </h1>
+                <p class="text-lg sm:text-xl text-white/50 max-w-xl mb-12 leading-relaxed reveal reveal-delay-2">
+                    Selamat datang di era baru penyewaan mobil mewah. LuxuryDrive menghadirkan pengalaman berkendara eksklusif dengan teknologi tercanggih dan pelayanan premium 24/7.
+                </p>
+                <div class="flex flex-wrap gap-4 reveal reveal-delay-3">
+                    <a href="#koleksi" class="btn-luxury text-lg"><span>Eksplor Armada</span><i class="fa-solid fa-arrow-right"></i></a>
+                    <button class="px-8 py-4 rounded-full border-2 border-white/20 backdrop-blur-md text-lg font-semibold hover:border-luxury hover:text-luxury transition-all"><i class="fa-solid fa-play mr-2"></i><span>Paket Eksklusif</span></button>
                 </div>
-                <div>
-                    <div class="stat-number">24/7</div>
-                    <div class="text-white/50 text-sm mt-2">Layanan Siaga</div>
+                <div class="grid grid-cols-3 gap-8 mt-20 pt-12 border-t border-white/10 reveal reveal-delay-4">
+                    <div><div class="stat-number">500+</div><div class="text-white/40 text-sm mt-3">Unit Premium</div></div>
+                    <div><div class="stat-number">10K+</div><div class="text-white/40 text-sm mt-3">Pelanggan Puas</div></div>
+                    <div><div class="stat-number">24/7</div><div class="text-white/40 text-sm mt-3">Layanan Siaga</div></div>
                 </div>
             </div>
         </div>
-
-        <div class="absolute bottom-10 left-1/2 -translate-x-1/2 flex flex-col items-center gap-4 text-gold/50">
+        <div class="absolute bottom-12 left-1/2 -translate-x-1/2 flex flex-col items-center gap-4 text-luxury/50">
             <span class="text-xs tracking-[0.3em] uppercase font-bold">Scroll</span>
-            <div class="w-px h-16 bg-gradient-to-b from-gold/50 to-transparent relative">
-                <div class="absolute top-0 left-1/2 -translate-x-1/2 w-2 h-2 bg-gold rounded-full animate-bounce"></div>
-            </div>
+            <div class="w-px h-20 bg-gradient-to-b from-luxury/50 to-transparent relative"><div class="absolute top-0 left-1/2 -translate-x-1/2 w-3 h-3 bg-luxury rounded-full animate-bounce"></div></div>
         </div>
     </section>
 
-    <section class="py-8 border-y border-white/5 relative overflow-hidden z-10">
+    <section class="py-10 border-y border-white/5 relative z-10 marquee-container">
         <div class="marquee-track">
             <div class="flex items-center gap-16 px-8">
-                <span class="text-2xl font-bold text-white/20 whitespace-nowrap">Mercedes-Benz</span>
-                <span class="text-gold">◆</span>
-                <span class="text-2xl font-bold text-white/20 whitespace-nowrap">BMW</span>
-                <span class="text-gold">◆</span>
-                <span class="text-2xl font-bold text-white/20 whitespace-nowrap">Audi</span>
-                <span class="text-gold">◆</span>
-                <span class="text-2xl font-bold text-white/20 whitespace-nowrap">Porsche</span>
-                <span class="text-gold">◆</span>
-                <span class="text-2xl font-bold text-white/20 whitespace-nowrap">Rolls Royce</span>
-                <span class="text-gold">◆</span>
-                <span class="text-2xl font-bold text-white/20 whitespace-nowrap">Bentley</span>
-                <span class="text-gold">◆</span>
-                <span class="text-2xl font-bold text-white/20 whitespace-nowrap">Lamborghini</span>
+                <span class="text-2xl font-bold text-white/20 whitespace-nowrap font-elegant italic">Mercedes-Benz</span><span class="text-luxury text-xl">◆</span>
+                <span class="text-2xl font-bold text-white/20 whitespace-nowrap font-elegant italic">BMW</span><span class="text-luxury text-xl">◆</span>
+                <span class="text-2xl font-bold text-white/20 whitespace-nowrap font-elegant italic">Audi</span><span class="text-luxury text-xl">◆</span>
+                <span class="text-2xl font-bold text-white/20 whitespace-nowrap font-elegant italic">Porsche</span><span class="text-luxury text-xl">◆</span>
+                <span class="text-2xl font-bold text-white/20 whitespace-nowrap font-elegant italic">Rolls Royce</span><span class="text-luxury text-xl">◆</span>
+                <span class="text-2xl font-bold text-white/20 whitespace-nowrap font-elegant italic">Bentley</span><span class="text-luxury text-xl">◆</span>
+                <span class="text-2xl font-bold text-white/20 whitespace-nowrap font-elegant italic">Lamborghini</span>
             </div>
             <div class="flex items-center gap-16 px-8">
-                <span class="text-2xl font-bold text-white/20 whitespace-nowrap">Mercedes-Benz</span>
-                <span class="text-gold">◆</span>
-                <span class="text-2xl font-bold text-white/20 whitespace-nowrap">BMW</span>
-                <span class="text-gold">◆</span>
-                <span class="text-2xl font-bold text-white/20 whitespace-nowrap">Audi</span>
-                <span class="text-gold">◆</span>
-                <span class="text-2xl font-bold text-white/20 whitespace-nowrap">Porsche</span>
-                <span class="text-gold">◆</span>
-                <span class="text-2xl font-bold text-white/20 whitespace-nowrap">Rolls Royce</span>
-                <span class="text-gold">◆</span>
-                <span class="text-2xl font-bold text-white/20 whitespace-nowrap">Bentley</span>
-                <span class="text-gold">◆</span>
-                <span class="text-2xl font-bold text-white/20 whitespace-nowrap">Lamborghini</span>
+                <span class="text-2xl font-bold text-white/20 whitespace-nowrap font-elegant italic">Mercedes-Benz</span><span class="text-luxury text-xl">◆</span>
+                <span class="text-2xl font-bold text-white/20 whitespace-nowrap font-elegant italic">BMW</span><span class="text-luxury text-xl">◆</span>
+                <span class="text-2xl font-bold text-white/20 whitespace-nowrap font-elegant italic">Audi</span><span class="text-luxury text-xl">◆</span>
+                <span class="text-2xl font-bold text-white/20 whitespace-nowrap font-elegant italic">Porsche</span><span class="text-luxury text-xl">◆</span>
+                <span class="text-2xl font-bold text-white/20 whitespace-nowrap font-elegant italic">Rolls Royce</span><span class="text-luxury text-xl">◆</span>
+                <span class="text-2xl font-bold text-white/20 whitespace-nowrap font-elegant italic">Bentley</span><span class="text-luxury text-xl">◆</span>
+                <span class="text-2xl font-bold text-white/20 whitespace-nowrap font-elegant italic">Lamborghini</span>
             </div>
         </div>
     </section>
@@ -514,284 +285,45 @@
     <section id="koleksi" class="py-32 px-6 relative z-10">
         <div class="max-w-7xl mx-auto">
             <div class="text-center mb-20 reveal">
-                <span class="luxury-badge mb-6">Koleksi Pilihan</span>
-                <h2 class="text-4xl md:text-6xl font-black mb-6">
-                    Armada <span class="text-gold" style="font-family: 'Playfair Display', serif;">Terbaik</span>
-                </h2>
-                <p class="text-white/50 max-w-xl mx-auto">
-                    Setiap unit dipilih dengan standar tertinggi untuk pengalaman berkendara sempurna
-                </p>
+                <span class="badge-luxury mb-6">Koleksi Pilihan 2026</span>
+                <h2 class="text-4xl sm:text-5xl md:text-6xl font-black mb-6">Armada <span class="text-luxury font-elegant italic">Terbaik</span></h2>
+                <p class="text-white/50 max-w-xl mx-auto text-lg">Setiap unit dipilih dengan standar tertinggi. Nikmati performa dan kenyamanan terbaik di kelasnya.</p>
             </div>
-
             <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-                <div class="car-card glass-card reveal" style="transition-delay: 0.1s;">
-                    <div class="car-card-inner">
-                        <div class="car-image-container h-56">
-                            <img src="https://images.unsplash.com/photo-1541899481282-d53bffe3c35d?auto=format&fit=crop&w=800&q=80" alt="Mercedes S-Class" class="car-image">
-                            <span class="absolute top-4 right-4 z-10 luxury-badge">Terlaris</span>
-                        </div>
-                        <div class="p-6">
-                            <h3 class="text-xl font-bold mb-4" style="font-family: 'Playfair Display', serif;">Mercedes-Benz S-Class</h3>
-                            <div class="grid grid-cols-2 gap-3 text-sm text-white/50 mb-6">
-                                <span class="flex items-center gap-2"><i class="fa-solid fa-user text-gold"></i> 4 Kursi</span>
-                                <span class="flex items-center gap-2"><i class="fa-solid fa-gear text-gold"></i> Automatic</span>
-                                <span class="flex items-center gap-2"><i class="fa-solid fa-tachometer text-gold"></i> V6 Biturbo</span>
-                                <span class="flex items-center gap-2"><i class="fa-solid fa-gas-pump text-gold"></i> Premium</span>
-                            </div>
-                            <div class="flex justify-between items-center pt-4 border-t border-white/10">
-                                <div>
-                                    <span class="text-xs text-white/40">Mulai dari</span>
-                                    <div class="text-2xl font-black text-gold">Rp 4.5jt<span class="text-sm text-white/40">/hari</span></div>
-                                </div>
-                                <button @click="activeModal = true; selectedCar = 'Mercedes-Benz S-Class'" class="w-12 h-12 bg-gold text-dark rounded-xl flex items-center justify-center hover:bg-gold-light transition-colors glow-pulse">
-                                    <i class="fa-solid fa-arrow-right"></i>
-                                </button>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="car-card glass-card reveal" style="transition-delay: 0.2s;">
-                    <div class="car-card-inner">
-                        <div class="car-image-container h-56">
-                            <img src="https://images.unsplash.com/photo-1555215695-3004980ad54e?auto=format&fit=crop&w=800&q=80" alt="BMW 7 Series" class="car-image">
-                            <span class="absolute top-4 right-4 z-10 luxury-badge">Baru</span>
-                        </div>
-                        <div class="p-6">
-                            <h3 class="text-xl font-bold mb-4" style="font-family: 'Playfair Display', serif;">BMW 7 Series</h3>
-                            <div class="grid grid-cols-2 gap-3 text-sm text-white/50 mb-6">
-                                <span class="flex items-center gap-2"><i class="fa-solid fa-user text-gold"></i> 4 Kursi</span>
-                                <span class="flex items-center gap-2"><i class="fa-solid fa-gear text-gold"></i> Automatic</span>
-                                <span class="flex items-center gap-2"><i class="fa-solid fa-tachometer text-gold"></i> V8 TwinPower</span>
-                                <span class="flex items-center gap-2"><i class="fa-solid fa-gas-pump text-gold"></i> Premium</span>
-                            </div>
-                            <div class="flex justify-between items-center pt-4 border-t border-white/10">
-                                <div>
-                                    <span class="text-xs text-white/40">Mulai dari</span>
-                                    <div class="text-2xl font-black text-gold">Rp 5.0jt<span class="text-sm text-white/40">/hari</span></div>
-                                </div>
-                                <button @click="activeModal = true; selectedCar = 'BMW 7 Series'" class="w-12 h-12 bg-gold text-dark rounded-xl flex items-center justify-center hover:bg-gold-light transition-colors glow-pulse">
-                                    <i class="fa-solid fa-arrow-right"></i>
-                                </button>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="car-card glass-card reveal" style="transition-delay: 0.3s;">
-                    <div class="car-card-inner">
-                        <div class="car-image-container h-56">
-                            <img src="https://images.unsplash.com/photo-1606220838315-056192d5e927?auto=format&fit=crop&w=800&q=80" alt="Audi A8" class="car-image">
-                        </div>
-                        <div class="p-6">
-                            <h3 class="text-xl font-bold mb-4" style="font-family: 'Playfair Display', serif;">Audi A8 L</h3>
-                            <div class="grid grid-cols-2 gap-3 text-sm text-white/50 mb-6">
-                                <span class="flex items-center gap-2"><i class="fa-solid fa-user text-gold"></i> 4 Kursi</span>
-                                <span class="flex items-center gap-2"><i class="fa-solid fa-gear text-gold"></i> Automatic</span>
-                                <span class="flex items-center gap-2"><i class="fa-solid fa-tachometer text-gold"></i> W12 Quattro</span>
-                                <span class="flex items-center gap-2"><i class="fa-solid fa-gas-pump text-gold"></i> Premium</span>
-                            </div>
-                            <div class="flex justify-between items-center pt-4 border-t border-white/10">
-                                <div>
-                                    <span class="text-xs text-white/40">Mulai dari</span>
-                                    <div class="text-2xl font-black text-gold">Rp 5.5jt<span class="text-sm text-white/40">/hari</span></div>
-                                </div>
-                                <button @click="activeModal = true; selectedCar = 'Audi A8 L'" class="w-12 h-12 bg-gold text-dark rounded-xl flex items-center justify-center hover:bg-gold-light transition-colors glow-pulse">
-                                    <i class="fa-solid fa-arrow-right"></i>
-                                </button>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="car-card glass-card reveal" style="transition-delay: 0.4s;">
-                    <div class="car-card-inner">
-                        <div class="car-image-container h-56">
-                            <img src="https://images.unsplash.com/photo-1614162692292-7ac56d7f7f1e?auto=format&fit=crop&w=800&q=80" alt="Porsche Panamera" class="car-image">
-                        </div>
-                        <div class="p-6">
-                            <h3 class="text-xl font-bold mb-4" style="font-family: 'Playfair Display', serif;">Porsche Panamera</h3>
-                            <div class="grid grid-cols-2 gap-3 text-sm text-white/50 mb-6">
-                                <span class="flex items-center gap-2"><i class="fa-solid fa-user text-gold"></i> 4 Kursi</span>
-                                <span class="flex items-center gap-2"><i class="fa-solid fa-gear text-gold"></i> PDK</span>
-                                <span class="flex items-center gap-2"><i class="fa-solid fa-tachometer text-gold"></i> V6 Turbo</span>
-                                <span class="flex items-center gap-2"><i class="fa-solid fa-gas-pump text-gold"></i> Premium</span>
-                            </div>
-                            <div class="flex justify-between items-center pt-4 border-t border-white/10">
-                                <div>
-                                    <span class="text-xs text-white/40">Mulai dari</span>
-                                    <div class="text-2xl font-black text-gold">Rp 6.0jt<span class="text-sm text-white/40">/hari</span></div>
-                                </div>
-                                <button @click="activeModal = true; selectedCar = 'Porsche Panamera'" class="w-12 h-12 bg-gold text-dark rounded-xl flex items-center justify-center hover:bg-gold-light transition-colors glow-pulse">
-                                    <i class="fa-solid fa-arrow-right"></i>
-                                </button>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="car-card glass-card reveal" style="transition-delay: 0.5s;">
-                    <div class="car-card-inner">
-                        <div class="car-image-container h-56">
-                            <img src="https://images.unsplash.com/photo-1563720360172-67b8f3dce741?auto=format&fit=crop&w=800&q=80" alt="Rolls Royce Ghost" class="car-image">
-                            <span class="absolute top-4 right-4 z-10 luxury-badge">VIP</span>
-                        </div>
-                        <div class="p-6">
-                            <h3 class="text-xl font-bold mb-4" style="font-family: 'Playfair Display', serif;">Rolls Royce Ghost</h3>
-                            <div class="grid grid-cols-2 gap-3 text-sm text-white/50 mb-6">
-                                <span class="flex items-center gap-2"><i class="fa-solid fa-user text-gold"></i> 4 Kursi</span>
-                                <span class="flex items-center gap-2"><i class="fa-solid fa-gear text-gold"></i> Automatic</span>
-                                <span class="flex items-center gap-2"><i class="fa-solid fa-tachometer text-gold"></i> V12 Twin</span>
-                                <span class="flex items-center gap-2"><i class="fa-solid fa-gas-pump text-gold"></i> Premium</span>
-                            </div>
-                            <div class="flex justify-between items-center pt-4 border-t border-white/10">
-                                <div>
-                                    <span class="text-xs text-white/40">Mulai dari</span>
-                                    <div class="text-2xl font-black text-gold">Rp 15jt<span class="text-sm text-white/40">/hari</span></div>
-                                </div>
-                                <button @click="activeModal = true; selectedCar = 'Rolls Royce Ghost'" class="w-12 h-12 bg-gold text-dark rounded-xl flex items-center justify-center hover:bg-gold-light transition-colors glow-pulse">
-                                    <i class="fa-solid fa-arrow-right"></i>
-                                </button>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="car-card glass-card reveal" style="transition-delay: 0.6s;">
-                    <div class="car-card-inner">
-                        <div class="car-image-container h-56">
-                            <img src="https://images.unsplash.com/photo-1544636331-e26879cd4d9b?auto=format&fit=crop&w=800&q=80" alt="Bentley Continental" class="car-image">
-                        </div>
-                        <div class="p-6">
-                            <h3 class="text-xl font-bold mb-4" style="font-family: 'Playfair Display', serif;">Bentley Continental</h3>
-                            <div class="grid grid-cols-2 gap-3 text-sm text-white/50 mb-6">
-                                <span class="flex items-center gap-2"><i class="fa-solid fa-user text-gold"></i> 4 Kursi</span>
-                                <span class="flex items-center gap-2"><i class="fa-solid fa-gear text-gold"></i> Automatic</span>
-                                <span class="flex items-center gap-2"><i class="fa-solid fa-tachometer text-gold"></i> W12 Speed</span>
-                                <span class="flex items-center gap-2"><i class="fa-solid fa-gas-pump text-gold"></i> Premium</span>
-                            </div>
-                            <div class="flex justify-between items-center pt-4 border-t border-white/10">
-                                <div>
-                                    <span class="text-xs text-white/40">Mulai dari</span>
-                                    <div class="text-2xl font-black text-gold">Rp 12jt<span class="text-sm text-white/40">/hari</span></div>
-                                </div>
-                                <button @click="activeModal = true; selectedCar = 'Bentley Continental'" class="w-12 h-12 bg-gold text-dark rounded-xl flex items-center justify-center hover:bg-gold-light transition-colors glow-pulse">
-                                    <i class="fa-solid fa-arrow-right"></i>
-                                </button>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+                <div class="car-card reveal reveal-delay-1"><div class="glass-card"><div class="car-card-inner"><div class="car-card-glare"></div><div class="car-image-wrapper h-60"><img src="https://images.unsplash.com/photo-1541899481282-d53bffe3c35d?auto=format&fit=crop&w=800&q=80" alt="Mercedes S-Class" class="car-image"><span class="absolute top-5 right-5 z-10 badge-luxury">Terlaris</span></div><div class="p-8"><h3 class="text-2xl font-bold mb-4 font-elegant">Mercedes-Benz S-Class</h3><div class="grid grid-cols-2 gap-4 text-sm text-white/50 mb-8"><span class="flex items-center gap-2"><i class="fa-solid fa-user text-luxury"></i> 4 Kursi</span><span class="flex items-center gap-2"><i class="fa-solid fa-gear text-luxury"></i> Automatic</span><span class="flex items-center gap-2"><i class="fa-solid fa-tachometer text-luxury"></i> V6 Biturbo</span><span class="flex items-center gap-2"><i class="fa-solid fa-gas-pump text-luxury"></i> Premium</span></div><div class="flex justify-between items-center pt-6 border-t border-white/10"><div><span class="text-xs text-white/40 block">Mulai dari</span><div class="text-3xl font-black text-luxury">Rp 4.5jt<span class="text-sm text-white/40">/hari</span></div></div><button @click="openModal('Mercedes-Benz S-Class')" class="w-14 h-14 rounded-2xl bg-luxury text-dark flex items-center justify-center hover:opacity-90 transition-all shadow-lg shadow-luxury/30"><i class="fa-solid fa-arrow-right text-xl"></i></button></div></div></div></div>
+                <div class="car-card reveal reveal-delay-2"><div class="glass-card"><div class="car-card-inner"><div class="car-card-glare"></div><div class="car-image-wrapper h-60"><img src="https://images.unsplash.com/photo-1555215695-3004980ad54e?auto=format&fit=crop&w=800&q=80" alt="BMW 7 Series" class="car-image"><span class="absolute top-5 right-5 z-10 badge-luxury">Baru</span></div><div class="p-8"><h3 class="text-2xl font-bold mb-4 font-elegant">BMW 7 Series</h3><div class="grid grid-cols-2 gap-4 text-sm text-white/50 mb-8"><span class="flex items-center gap-2"><i class="fa-solid fa-user text-luxury"></i> 4 Kursi</span><span class="flex items-center gap-2"><i class="fa-solid fa-gear text-luxury"></i> Automatic</span><span class="flex items-center gap-2"><i class="fa-solid fa-tachometer text-luxury"></i> V8 TwinPower</span><span class="flex items-center gap-2"><i class="fa-solid fa-gas-pump text-luxury"></i> Premium</span></div><div class="flex justify-between items-center pt-6 border-t border-white/10"><div><span class="text-xs text-white/40 block">Mulai dari</span><div class="text-3xl font-black text-luxury">Rp 5.0jt<span class="text-sm text-white/40">/hari</span></div></div><button @click="openModal('BMW 7 Series')" class="w-14 h-14 rounded-2xl bg-luxury text-dark flex items-center justify-center hover:opacity-90 transition-all shadow-lg shadow-luxury/30"><i class="fa-solid fa-arrow-right text-xl"></i></button></div></div></div></div>
+                <div class="car-card reveal reveal-delay-3"><div class="glass-card"><div class="car-card-inner"><div class="car-card-glare"></div><div class="car-image-wrapper h-60"><img src="https://images.unsplash.com/photo-1606220838315-056192d5e927?auto=format&fit=crop&w=800&q=80" alt="Audi A8" class="car-image"></div><div class="p-8"><h3 class="text-2xl font-bold mb-4 font-elegant">Audi A8 L</h3><div class="grid grid-cols-2 gap-4 text-sm text-white/50 mb-8"><span class="flex items-center gap-2"><i class="fa-solid fa-user text-luxury"></i> 4 Kursi</span><span class="flex items-center gap-2"><i class="fa-solid fa-gear text-luxury"></i> Automatic</span><span class="flex items-center gap-2"><i class="fa-solid fa-tachometer text-luxury"></i> W12 Quattro</span><span class="flex items-center gap-2"><i class="fa-solid fa-gas-pump text-luxury"></i> Premium</span></div><div class="flex justify-between items-center pt-6 border-t border-white/10"><div><span class="text-xs text-white/40 block">Mulai dari</span><div class="text-3xl font-black text-luxury">Rp 5.5jt<span class="text-sm text-white/40">/hari</span></div></div><button @click="openModal('Audi A8 L')" class="w-14 h-14 rounded-2xl bg-luxury text-dark flex items-center justify-center hover:opacity-90 transition-all shadow-lg shadow-luxury/30"><i class="fa-solid fa-arrow-right text-xl"></i></button></div></div></div></div>
+                <div class="car-card reveal reveal-delay-4"><div class="glass-card"><div class="car-card-inner"><div class="car-card-glare"></div><div class="car-image-wrapper h-60"><img src="https://images.unsplash.com/photo-1614162692292-7ac56d7f7f1e?auto=format&fit=crop&w=800&q=80" alt="Porsche Panamera" class="car-image"></div><div class="p-8"><h3 class="text-2xl font-bold mb-4 font-elegant">Porsche Panamera</h3><div class="grid grid-cols-2 gap-4 text-sm text-white/50 mb-8"><span class="flex items-center gap-2"><i class="fa-solid fa-user text-luxury"></i> 4 Kursi</span><span class="flex items-center gap-2"><i class="fa-solid fa-gear text-luxury"></i> PDK</span><span class="flex items-center gap-2"><i class="fa-solid fa-tachometer text-luxury"></i> V6 Turbo</span><span class="flex items-center gap-2"><i class="fa-solid fa-gas-pump text-luxury"></i> Premium</span></div><div class="flex justify-between items-center pt-6 border-t border-white/10"><div><span class="text-xs text-white/40 block">Mulai dari</span><div class="text-3xl font-black text-luxury">Rp 6.0jt<span class="text-sm text-white/40">/hari</span></div></div><button @click="openModal('Porsche Panamera')" class="w-14 h-14 rounded-2xl bg-luxury text-dark flex items-center justify-center hover:opacity-90 transition-all shadow-lg shadow-luxury/30"><i class="fa-solid fa-arrow-right text-xl"></i></button></div></div></div></div>
+                <div class="car-card reveal reveal-delay-5"><div class="glass-card"><div class="car-card-inner"><div class="car-card-glare"></div><div class="car-image-wrapper h-60"><img src="https://images.unsplash.com/photo-1563720360172-67b8f3dce741?auto=format&fit=crop&w=800&q=80" alt="Rolls Royce Ghost" class="car-image"><span class="absolute top-5 right-5 z-10 badge-luxury">VIP</span></div><div class="p-8"><h3 class="text-2xl font-bold mb-4 font-elegant">Rolls Royce Ghost</h3><div class="grid grid-cols-2 gap-4 text-sm text-white/50 mb-8"><span class="flex items-center gap-2"><i class="fa-solid fa-user text-luxury"></i> 4 Kursi</span><span class="flex items-center gap-2"><i class="fa-solid fa-gear text-luxury"></i> Automatic</span><span class="flex items-center gap-2"><i class="fa-solid fa-tachometer text-luxury"></i> V12 Twin</span><span class="flex items-center gap-2"><i class="fa-solid fa-gas-pump text-luxury"></i> Premium</span></div><div class="flex justify-between items-center pt-6 border-t border-white/10"><div><span class="text-xs text-white/40 block">Mulai dari</span><div class="text-3xl font-black text-luxury">Rp 15jt<span class="text-sm text-white/40">/hari</span></div></div><button @click="openModal('Rolls Royce Ghost')" class="w-14 h-14 rounded-2xl bg-luxury text-dark flex items-center justify-center hover:opacity-90 transition-all shadow-lg shadow-luxury/30"><i class="fa-solid fa-arrow-right text-xl"></i></button></div></div></div></div>
+                <div class="car-card reveal reveal-delay-6"><div class="glass-card"><div class="car-card-inner"><div class="car-card-glare"></div><div class="car-image-wrapper h-60"><img src="https://images.unsplash.com/photo-1544636331-e26879cd4d9b?auto=format&fit=crop&w=800&q=80" alt="Bentley Continental" class="car-image"></div><div class="p-8"><h3 class="text-2xl font-bold mb-4 font-elegant">Bentley Continental</h3><div class="grid grid-cols-2 gap-4 text-sm text-white/50 mb-8"><span class="flex items-center gap-2"><i class="fa-solid fa-user text-luxury"></i> 4 Kursi</span><span class="flex items-center gap-2"><i class="fa-solid fa-gear text-luxury"></i> Automatic</span><span class="flex items-center gap-2"><i class="fa-solid fa-tachometer text-luxury"></i> W12 Speed</span><span class="flex items-center gap-2"><i class="fa-solid fa-gas-pump text-luxury"></i> Premium</span></div><div class="flex justify-between items-center pt-6 border-t border-white/10"><div><span class="text-xs text-white/40 block">Mulai dari</span><div class="text-3xl font-black text-luxury">Rp 12jt<span class="text-sm text-white/40">/hari</span></div></div><button @click="openModal('Bentley Continental')" class="w-14 h-14 rounded-2xl bg-luxury text-dark flex items-center justify-center hover:opacity-90 transition-all shadow-lg shadow-luxury/30"><i class="fa-solid fa-arrow-right text-xl"></i></button></div></div></div></div>
             </div>
         </div>
     </section>
 
     <section id="layanan" class="py-32 px-6 relative z-10">
-        <div class="absolute inset-0 bg-gradient-to-b from-transparent via-gold/5 to-transparent"></div>
+        <div class="absolute inset-0 bg-gradient-to-b from-transparent via-luxury/5 to-transparent"></div>
         <div class="max-w-7xl mx-auto relative">
-            <div class="text-center mb-20 reveal">
-                <span class="luxury-badge mb-6">Mengapa Kami</span>
-                <h2 class="text-4xl md:text-6xl font-black mb-6">
-                    Layanan <span class="text-gold" style="font-family: 'Playfair Display', serif;">Premium</span>
-                </h2>
-                <p class="text-white/50 max-w-xl mx-auto">
-                    Komitmen kami untuk memberikan pengalaman terbaik dalam setiap perjalanan
-                </p>
+            <div class="text-center mb-20 reveal"><span class="badge-luxury mb-6">Mengapa LuxuryDrive</span><h2 class="text-4xl sm:text-5xl md:text-6xl font-black mb-6">Layanan <span class="text-luxury font-elegant italic">Premium</span></h2><p class="text-white/50 max-w-xl mx-auto text-lg">Komitmen kami untuk memberikan pengalaman terbaik di setiap perjalanan</p></div>
+            <div class="grid sm:grid-cols-2 lg:grid-cols-4 gap-6">
+                <div class="glass-card p-10 text-center reveal reveal-delay-1"><div class="feature-icon-box mx-auto mb-6"><i class="fa-solid fa-shield-halved"></i></div><h3 class="text-xl font-bold mb-3">Asuransi All-Risk</h3><p class="text-white/50 text-sm">Perlindungan menyeluruh untuk ketenangan pikiran Anda</p></div>
+                <div class="glass-card p-10 text-center reveal reveal-delay-2"><div class="feature-icon-box mx-auto mb-6"><i class="fa-solid fa-clock"></i></div><h3 class="text-xl font-bold mb-3">Layanan 24/7</h3><p class="text-white/50 text-sm">Tim concierge selalu siap membantu kapan saja</p></div>
+                <div class="glass-card p-10 text-center reveal reveal-delay-3"><div class="feature-icon-box mx-auto mb-6"><i class="fa-solid fa-car"></i></div><h3 class="text-xl font-bold mb-3">Unit Premium</h3><p class="text-white/50 text-sm">Koleksi mobil terbaru dengan kondisi prima</p></div>
+                <div class="glass-card p-10 text-center reveal reveal-delay-4"><div class="feature-icon-box mx-auto mb-6"><i class="fa-solid fa-user-tie"></i></div><h3 class="text-xl font-bold mb-3">Chauffeur Pro</h3><p class="text-white/50 text-sm">Sopir berpengalaman dengan layanan eksklusif</p></div>
             </div>
-
-            <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
-                <div class="glass-card p-8 text-center reveal" style="transition-delay: 0.1s;">
-                    <div class="feature-icon mx-auto mb-6"><i class="fa-solid fa-shield-halved"></i></div>
-                    <h3 class="text-lg font-bold mb-3">Asuransi All-Risk</h3>
-                    <p class="text-white/50 text-sm">Perlindungan komprehensif untuk ketenangan pikiran Anda</p>
-                </div>
-                <div class="glass-card p-8 text-center reveal" style="transition-delay: 0.2s;">
-                    <div class="feature-icon mx-auto mb-6"><i class="fa-solid fa-clock"></i></div>
-                    <h3 class="text-lg font-bold mb-3">Layanan 24/7</h3>
-                    <p class="text-white/50 text-sm">Tim concierge siap membantu kapan saja, di mana saja</p>
-                </div>
-                <div class="glass-card p-8 text-center reveal" style="transition-delay: 0.3s;">
-                    <div class="feature-icon mx-auto mb-6"><i class="fa-solid fa-car"></i></div>
-                    <h3 class="text-lg font-bold mb-3">Unit Premium</h3>
-                    <p class="text-white/50 text-sm">Koleksi mobil mewah terbaru dengan kondisi prima</p>
-                </div>
-                <div class="glass-card p-8 text-center reveal" style="transition-delay: 0.4s;">
-                    <div class="feature-icon mx-auto mb-6"><i class="fa-solid fa-user-tie"></i></div>
-                    <h3 class="text-lg font-bold mb-3">Chauffeur Profesional</h3>
-                    <p class="text-white/50 text-sm">Sopir berpengalaman dengan pengetahuan lokal</p>
-                </div>
-            </div>
-
             <div class="glass-card p-12 mt-20 flex flex-col md:flex-row items-center justify-between gap-8 reveal">
-                <div class="text-center md:text-left">
-                    <h3 class="text-3xl font-bold mb-3" style="font-family: 'Playfair Display', serif;">
-                        Siap untuk Pengalaman <span class="text-gold">Luxury?</span>
-                    </h3>
-                    <p class="text-white/50">Hubungi kami sekarang untuk konsultasi gratis</p>
-                </div>
-                <div class="flex gap-4">
-                    <a href="https://wa.me/6281234567890" class="btn-gold">
-                        <i class="fa-brands fa-whatsapp"></i>
-                        <span>WhatsApp</span>
-                    </a>
-                    <a href="tel:+6281234567890" class="btn-outline">
-                        <i class="fa-solid fa-phone"></i>
-                        <span>Telepon</span>
-                    </a>
-                </div>
+                <div class="text-center md:text-left"><h3 class="text-3xl md:text-4xl font-bold mb-3 font-elegant">Siap untuk Pengalaman <span class="text-luxury">Luxury?</span></h3><p class="text-white/50">Hubungi kami sekarang untuk konsultasi gratis</p></div>
+                <div class="flex flex-wrap gap-4"><a href="https://wa.me/6281234567890" class="btn-luxury"><i class="fa-brands fa-whatsapp"></i><span>WhatsApp</span></a><a href="tel:+6281234567890" class="px-8 py-4 rounded-full border-2 border-white/20 text-lg font-semibold hover:border-luxury hover:text-luxury transition-all"><i class="fa-solid fa-phone mr-2"></i><span>Telepon</span></a></div>
             </div>
         </div>
     </section>
 
     <section id="testimoni" class="py-32 px-6 relative z-10">
-        <div class="max-w-5xl mx-auto">
-            <div class="text-center mb-20 reveal">
-                <span class="luxury-badge mb-6">Testimoni</span>
-                <h2 class="text-4xl md:text-6xl font-black mb-6">
-                    Kata <span class="text-gold" style="font-family: 'Playfair Display', serif;">Mereka</span>
-                </h2>
-            </div>
-
-            <div class="grid md:grid-cols-3 gap-6">
-                <div class="glass-card p-8 reveal" style="transition-delay: 0.1s;">
-                    <div class="flex gap-1 text-gold mb-4">
-                        <i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i>
-                    </div>
-                    <p class="text-white/70 mb-6 italic">"Pelayanan sangat profesional. Mobil dalam kondisi prima dan chauffeur sangat berpengalaman. Sangat merekomendasikan!"</p>
-                    <div class="flex items-center gap-4">
-                        <div class="w-12 h-12 rounded-full bg-gradient-to-br from-gold to-gold-dark flex items-center justify-center text-dark font-bold">RH</div>
-                        <div>
-                            <div class="font-bold">Rudi Hermawan</div>
-                            <div class="text-white/50 text-sm">Dirut, PT Energi Indonesia</div>
-                        </div>
-                    </div>
-                </div>
-                <div class="glass-card p-8 reveal" style="transition-delay: 0.2s;">
-                    <div class="flex gap-1 text-gold mb-4">
-                        <i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i>
-                    </div>
-                    <p class="text-white/70 mb-6 italic">"Used LuxuryDrive for our wedding transport. The Rolls Royce Ghost was absolutely stunning. True luxury experience!"</p>
-                    <div class="flex items-center gap-4">
-                        <div class="w-12 h-12 rounded-full bg-gradient-to-br from-gold to-gold-dark flex items-center justify-center text-dark font-bold">SA</div>
-                        <div>
-                            <div class="font-bold">Sarah Angelina</div>
-                            <div class="text-white/50 text-sm">Wedding Organizer</div>
-                        </div>
-                    </div>
-                </div>
-                <div class="glass-card p-8 reveal" style="transition-delay: 0.3s;">
-                    <div class="flex gap-1 text-gold mb-4">
-                        <i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i>
-                    </div>
-                    <p class="text-white/70 mb-6 italic">"Best car rental service in Jakarta. The attention to detail and customer service is unmatched. Will definitely book again."</p>
-                    <div class="flex items-center gap-4">
-                        <div class="w-12 h-12 rounded-full bg-gradient-to-br from-gold to-gold-dark flex items-center justify-center text-dark font-bold">MJ</div>
-                        <div>
-                            <div class="font-bold">Michael Johnson</div>
-                            <div class="text-white/50 text-sm">Expatriate, Singapore</div>
-                        </div>
-                    </div>
-                </div>
+        <div class="max-w-6xl mx-auto">
+            <div class="text-center mb-20 reveal"><span class="badge-luxury mb-6">Testimoni</span><h2 class="text-4xl sm:text-5xl md:text-6xl font-black mb-6">Kata <span class="text-luxury font-elegant italic">Mereka</span></h2></div>
+            <div class="grid md:grid-cols-3 gap-8">
+                <div class="testimonial-card glass-card p-10 reveal reveal-delay-1"><div class="flex gap-1 text-luxury mb-6"><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i></div><p class="text-white/70 mb-8 italic leading-relaxed">"Pelayanan sangat profesional. Mobil dalam kondisi prima dan chauffeur sangat berpengalaman. Sangat merekomendasikan!"</p><div class="flex items-center gap-4"><div class="testimonial-avatar">RH</div><div><div class="font-bold">Rudi Hermawan</div><div class="text-white/40 text-sm">Dirut, PT Energi Indonesia</div></div></div></div>
+                <div class="testimonial-card glass-card p-10 reveal reveal-delay-2"><div class="flex gap-1 text-luxury mb-6"><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i></div><p class="text-white/70 mb-8 italic leading-relaxed">"Used LuxuryDrive for our wedding transport. The Rolls Royce Ghost was absolutely stunning. True luxury experience!"</p><div class="flex items-center gap-4"><div class="testimonial-avatar">SA</div><div><div class="font-bold">Sarah Angelina</div><div class="text-white/40 text-sm">Wedding Organizer</div></div></div></div>
+                <div class="testimonial-card glass-card p-10 reveal reveal-delay-3"><div class="flex gap-1 text-luxury mb-6"><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i></div><p class="text-white/70 mb-8 italic leading-relaxed">"Best car rental service in Jakarta. The attention to detail and customer service is unmatched. Will definitely book again."</p><div class="flex items-center gap-4"><div class="testimonial-avatar">MJ</div><div><div class="font-bold">Michael Johnson</div><div class="text-white/40 text-sm">Expatriate, Singapore</div></div></div></div>
             </div>
         </div>
     </section>
@@ -799,152 +331,131 @@
     <footer class="py-20 px-6 border-t border-white/10 relative z-10">
         <div class="max-w-7xl mx-auto">
             <div class="grid md:grid-cols-4 gap-12 mb-16">
-                <div class="md:col-span-2">
-                    <div class="flex items-center gap-3 mb-6">
-                        <div class="logo-icon"><i class="fa-solid fa-crown text-dark text-xl"></i></div>
-                        <span class="text-2xl font-black" style="font-family: 'Playfair Display', serif;">
-                            <span class="text-white">Luxury</span><span class="text-gold">Drive</span>
-                        </span>
-                    </div>
-                    <p class="text-white/50 max-w-sm mb-8">
-                        Penyedia jasa sewa mobil mewah premium nomor satu di Indonesia. 
-                        Keamanan, kenyamanan, dan kemewahan adalah prioritas kami.
-                    </p>
-                    <div class="flex gap-4">
-                        <a href="#" class="w-12 h-12 glass-card flex items-center justify-center hover:bg-gold hover:text-dark transition-all"><i class="fa-brands fa-instagram"></i></a>
-                        <a href="#" class="w-12 h-12 glass-card flex items-center justify-center hover:bg-gold hover:text-dark transition-all"><i class="fa-brands fa-facebook-f"></i></a>
-                        <a href="#" class="w-12 h-12 glass-card flex items-center justify-center hover:bg-gold hover:text-dark transition-all"><i class="fa-brands fa-youtube"></i></a>
-                        <a href="#" class="w-12 h-12 glass-card flex items-center justify-center hover:bg-gold hover:text-dark transition-all"><i class="fa-brands fa-linkedin-in"></i></a>
-                    </div>
-                </div>
-                <div>
-                    <h4 class="font-bold mb-6 text-gold">Navigasi</h4>
-                    <ul class="space-y-4 text-white/50">
-                        <li><a href="#beranda" class="hover:text-gold transition-colors">Beranda</a></li>
-                        <li><a href="#koleksi" class="hover:text-gold transition-colors">Koleksi</a></li>
-                        <li><a href="#layanan" class="hover:text-gold transition-colors">Layanan</a></li>
-                        <li><a href="#testimoni" class="hover:text-gold transition-colors">Testimoni</a></li>
-                    </ul>
-                </div>
-                <div>
-                    <h4 class="font-bold mb-6 text-gold">Hubungi Kami</h4>
-                    <ul class="space-y-4 text-white/50">
-                        <li class="flex items-start gap-3"><i class="fa-solid fa-location-dot text-gold mt-1"></i><span>SCBD Lot 8, Jakarta Selatan</span></li>
-                        <li class="flex items-start gap-3"><i class="fa-solid fa-phone text-gold mt-1"></i><span>+62 812 3456 7890</span></li>
-                        <li class="flex items-start gap-3"><i class="fa-solid fa-envelope text-gold mt-1"></i><span>booking@luxurydrive.id</span></li>
-                    </ul>
-                </div>
+                <div class="md:col-span-2"><div class="flex items-center gap-3 mb-6"><div class="logo-emblem"><i class="fa-solid fa-crown"></i></div><span class="text-2xl font-bold"><span class="text-white">Luxury</span><span class="text-luxury">Drive</span></span></div><p class="text-white/50 max-w-md mb-8 leading-relaxed">Penyedia jasa sewa mobil mewah premium nomor satu di Indonesia. Keamanan, kenyamanan, dan kemewahan adalah prioritas kami sejak 2020.</p><div class="flex gap-4"><a href="#" class="w-12 h-12 glass-card flex items-center justify-center hover:bg-luxury hover:text-dark transition-all"><i class="fa-brands fa-instagram"></i></a><a href="#" class="w-12 h-12 glass-card flex items-center justify-center hover:bg-luxury hover:text-dark transition-all"><i class="fa-brands fa-facebook-f"></i></a><a href="#" class="w-12 h-12 glass-card flex items-center justify-center hover:bg-luxury hover:text-dark transition-all"><i class="fa-brands fa-youtube"></i></a><a href="#" class="w-12 h-12 glass-card flex items-center justify-center hover:bg-luxury hover:text-dark transition-all"><i class="fa-brands fa-linkedin-in"></i></a></div></div>
+                <div><h4 class="font-bold mb-6 text-luxury">Navigasi</h4><ul class="space-y-4 text-white/50"><li><a href="#beranda" class="hover:text-luxury transition-colors">Beranda</a></li><li><a href="#koleksi" class="hover:text-luxury transition-colors">Koleksi</a></li><li><a href="#layanan" class="hover:text-luxury transition-colors">Layanan</a></li><li><a href="#testimoni" class="hover:text-luxury transition-colors">Testimoni</a></li></ul></div>
+                <div><h4 class="font-bold mb-6 text-luxury">Hubungi Kami</h4><ul class="space-y-4 text-white/50"><li class="flex items-start gap-3"><i class="fa-solid fa-location-dot text-luxury mt-1"></i><span>SCBD Lot 8, Jakarta Selatan</span></li><li class="flex items-start gap-3"><i class="fa-solid fa-phone text-luxury mt-1"></i><span>+62 812 3456 7890</span></li><li class="flex items-start gap-3"><i class="fa-solid fa-envelope text-luxury mt-1"></i><span>booking@luxurydrive.id</span></li></ul></div>
             </div>
-            <div class="pt-8 border-t border-white/10 text-center text-white/30 text-sm">
-                © 2026 LuxuryDrive Indonesia. All Rights Reserved.
-            </div>
+            <div class="pt-8 border-t border-white/10 text-center text-white/30 text-sm">© 2026 LuxuryDrive Indonesia. All Rights Reserved.</div>
         </div>
     </footer>
 
-    <a href="https://wa.me/6281234567890" class="whatsapp-float" aria-label="Chat WhatsApp">
-        <i class="fa-brands fa-whatsapp"></i>
-    </a>
+    <a href="https://wa.me/6281234567890" class="whatsapp-float" aria-label="Chat WhatsApp"><i class="fa-brands fa-whatsapp"></i></a>
+    <button class="ai-chat-toggle" @click="toggleChat()" aria-label="AI Assistant"><i class="fa-solid fa-robot"></i></button>
 
-    <div x-show="activeModal" x-cloak class="modal-overlay" @click.self="activeModal = false">
-        <div class="modal-content" @click.stop>
-            <button @click="activeModal = false" class="absolute top-6 right-6 w-10 h-10 rounded-full bg-white/10 flex items-center justify-center hover:bg-white/20 transition-colors">
-                <i class="fa-solid fa-times"></i>
-            </button>
-            <h3 class="text-3xl font-bold mb-2" style="font-family: 'Playfair Display', serif;">
-                Pesan <span class="text-gold">Sekarang</span>
-            </h3>
-            <p class="text-white/50 mb-8">Anda akan memesan: <span class="text-gold font-bold" x-text="selectedCar"></span></p>
-            <form @submit.prevent="submitBooking" class="space-y-4">
-                <input type="text" placeholder="Nama Lengkap" x-model="form.name" class="luxury-input" required>
-                <input type="tel" placeholder="Nomor WhatsApp" x-model="form.phone" class="luxury-input" required>
-                <div class="grid grid-cols-2 gap-4">
-                    <input type="date" x-model="form.date" class="luxury-input" required>
-                    <input type="number" placeholder="Durasi (hari)" x-model="form.days" min="1" class="luxury-input" required>
-                </div>
-                <button type="submit" class="btn-gold w-full justify-center py-4 text-lg">
-                    <i class="fa-solid fa-paper-plane"></i>
-                    <span>Kirim Permintaan</span>
-                </button>
+    <div class="ai-chat-box" :class="{ 'active': isChatOpen }">
+        <div class="p-6 border-b border-white/10"><div class="flex items-center gap-3"><div class="w-12 h-12 rounded-full bg-luxury flex items-center justify-center"><i class="fa-solid fa-robot text-dark text-xl"></i></div><div><div class="font-bold">Luxury AI Assistant</div><div class="text-white/50 text-sm flex items-center gap-2"><span class="w-2 h-2 bg-green-500 rounded-full"></span>Online</div></div></div></div>
+        <div class="p-6 h-80 overflow-y-auto">
+            <div class="flex gap-3 mb-4"><div class="w-8 h-8 rounded-full bg-luxury flex items-center justify-center flex-shrink-0"><i class="fa-solid fa-robot text-dark text-sm"></i></div><div class="glass-card p-4 rounded-2xl rounded-tl-sm"><p class="text-sm">Selamat datang di LuxuryDrive! 👋<br><br>Saya AI assistant yang siap membantu Anda. Ada yang bisa saya bantu hari ini?</p></div></div>
+            <div class="flex flex-col gap-2">
+                <button class="text-left p-3 glass-card rounded-xl text-sm hover:bg-white/10 transition-all">🚗 Saya ingin melihat koleksi mobil</button>
+                <button class="text-left p-3 glass-card rounded-xl text-sm hover:bg-white/10 transition-all">💰 Berapa harga sewa mobil mewah?</button>
+                <button class="text-left p-3 glass-card rounded-xl text-sm hover:bg-white/10 transition-all">📞 Cara menghubungi LuxuryDrive?</button>
+            </div>
+        </div>
+        <div class="p-4 border-t border-white/10"><div class="flex gap-2"><input type="text" placeholder="Ketik pesan..." class="flex-1 input-luxury text-sm py-3"><button class="w-12 h-12 rounded-xl bg-luxury text-dark flex items-center justify-center hover:opacity-90 transition-all"><i class="fa-solid fa-paper-plane"></i></button></div></div>
+    </div>
+
+    <div class="modal-backdrop" :class="{ 'active': isModalOpen }" @click.self="closeModal()">
+        <div class="modal-container">
+            <button class="modal-close" @click="closeModal()"><i class="fa-solid fa-times"></i></button>
+            <h3 class="text-3xl font-bold mb-2 font-elegant">Pesan <span class="text-luxury">Sekarang</span></h3>
+            <p class="text-white/50 mb-8">Anda akan memesan: <span class="text-luxury font-bold" x-text="selectedCar"></span></p>
+            <form @submit.prevent="submitForm()" class="space-y-4">
+                <input type="text" placeholder="Nama Lengkap" x-model="form.name" class="input-luxury" required>
+                <input type="tel" placeholder="Nomor WhatsApp" x-model="form.phone" class="input-luxury" required>
+                <div class="grid grid-cols-2 gap-4"><input type="date" x-model="form.date" class="input-luxury" required><input type="number" placeholder="Durasi (hari)" x-model="form.days" min="1" class="input-luxury" required></div>
+                <button type="submit" class="btn-luxury w-full justify-center py-5 text-lg mt-6"><i class="fa-solid fa-paper-plane"></i><span>Kirim Permintaan</span></button>
             </form>
         </div>
     </div>
 
     <script>
-        const canvas = document.getElementById('particles');
-        const ctx = canvas.getContext('2d');
+        const particlesCanvas = document.getElementById('particles-canvas');
+        const particlesCtx = particlesCanvas.getContext('2d');
+        const lightTrailsCanvas = document.getElementById('light-trails');
+        const lightCtx = lightTrailsCanvas.getContext('2d');
         let particles = [];
-
-        function resizeCanvas() {
-            canvas.width = window.innerWidth;
-            canvas.height = window.innerHeight;
+        let trails = [];
+        
+        function resizeCanvases() {
+            particlesCanvas.width = window.innerWidth;
+            particlesCanvas.height = window.innerHeight;
+            lightTrailsCanvas.width = window.innerWidth;
+            lightTrailsCanvas.height = window.innerHeight;
         }
-
-        function createParticle() {
-            return {
-                x: Math.random() * canvas.width,
-                y: Math.random() * canvas.height,
-                size: Math.random() * 2 + 0.5,
-                speedX: Math.random() * 0.5 + 0.1,
-                speedY: Math.random() * 0.2 - 0.1,
-                opacity: Math.random() * 0.5 + 0.2
-            };
-        }
-
-        function initParticles() {
-            particles = [];
-            for (let i = 0; i < 80; i++) {
-                particles.push(createParticle());
+        
+        class Particle {
+            constructor() { this.reset(); }
+            reset() {
+                this.x = Math.random() * particlesCanvas.width;
+                this.y = Math.random() * particlesCanvas.height;
+                this.size = Math.random() * 2 + 0.5;
+                this.speedX = Math.random() * 0.3 + 0.1;
+                this.speedY = Math.random() * 0.2 - 0.1;
+                this.opacity = Math.random() * 0.5 + 0.2;
+                this.hue = Math.random() > 0.6 ? 45 : 200;
+            }
+            update() {
+                this.x += this.speedX;
+                this.y += this.speedY;
+                if (this.x > particlesCanvas.width) this.x = 0;
+                if (this.y < 0) this.y = particlesCanvas.height;
+                if (this.y > particlesCanvas.height) this.y = 0;
+            }
+            draw() {
+                particlesCtx.beginPath();
+                particlesCtx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+                particlesCtx.fillStyle = this.hue === 45 ? `rgba(201, 162, 39, ${this.opacity})` : `rgba(255, 255, 255, ${this.opacity})`;
+                particlesCtx.fill();
+                if (this.hue === 45 && this.size > 1.5) { particlesCtx.shadowBlur = 15; particlesCtx.shadowColor = 'rgba(201, 162, 39, 0.5)'; }
             }
         }
-
-        function animateParticles() {
-            ctx.clearRect(0, 0, canvas.width, canvas.height);
-            particles.forEach(p => {
-                p.x += p.speedX;
-                p.y += p.speedY;
-                if (p.x > canvas.width) p.x = 0;
-                if (p.y < 0) p.y = canvas.height;
-                if (p.y > canvas.height) p.y = 0;
-                ctx.beginPath();
-                ctx.arc(p.x, p.y, p.size, 0, Math.PI * 2);
-                ctx.fillStyle = Math.random() > 0.7 ? `rgba(212, 175, 55, ${p.opacity})` : `rgba(255, 255, 255, ${p.opacity})`;
-                ctx.fill();
-            });
-            requestAnimationFrame(animateParticles);
+        
+        class Trail {
+            constructor(x, y) { this.x = x; this.y = y; this.size = Math.random() * 3 + 2; this.opacity = 0.6; this.decay = Math.random() * 0.02 + 0.01; }
+            update() { this.opacity -= this.decay; this.size *= 0.98; }
+            draw() { lightCtx.beginPath(); lightCtx.arc(this.x, this.y, this.size, 0, Math.PI * 2); lightCtx.fillStyle = `rgba(201, 162, 39, ${this.opacity})`; lightCtx.fill(); }
+            isDead() { return this.opacity <= 0; }
         }
-
+        
+        function initParticles() { particles = []; for (let i = 0; i < 100; i++) particles.push(new Particle()); }
+        
+        let mouseTrailTimer = 0;
+        document.addEventListener('mousemove', (e) => { mouseTrailTimer++; if (mouseTrailTimer % 3 === 0) trails.push(new Trail(e.clientX, e.clientY)); });
+        
+        function animate() {
+            particlesCtx.clearRect(0, 0, particlesCanvas.width, particlesCanvas.height);
+            particles.forEach(p => { p.update(); p.draw(); });
+            lightCtx.clearRect(0, 0, lightTrailsCanvas.width, lightTrailsCanvas.height);
+            trails = trails.filter(t => !t.isDead());
+            trails.forEach(t => { t.update(); t.draw(); });
+            if (trails.length > 50) trails = trails.slice(-50);
+            requestAnimationFrame(animate);
+        }
+        
         function initScrollReveal() {
-            const observer = new IntersectionObserver((entries) => {
-                entries.forEach(entry => {
-                    if (entry.isIntersecting) {
-                        entry.target.classList.add('visible');
-                    }
-                });
-            }, { threshold: 0.1 });
+            const observer = new IntersectionObserver((entries) => { entries.forEach(entry => { if (entry.isIntersecting) entry.target.classList.add('visible'); }); }, { threshold: 0.1, rootMargin: '0px 0px -50px 0px' });
             document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
         }
-
-        document.addEventListener('alpine:init', () => {
-            Alpine.data('form', () => ({
-                name: '', phone: '', date: '', days: 1,
-                submit() {
-                    const msg = document.createElement('div');
-                    msg.className = 'fixed top-8 left-1/2 -translate-x-1/2 z-[110] bg-gold text-dark px-8 py-4 rounded-2xl font-bold shadow-2xl';
-                    msg.innerHTML = '<i class="fa-solid fa-check-circle mr-2"></i> Permintaan terkirim! Tim kami akan menghubungi Anda.';
-                    document.body.appendChild(msg);
-                    setTimeout(() => msg.remove(), 4000);
-                    this.activeModal = false;
-                }
-            }));
+        
+        document.querySelectorAll('.btn-luxury').forEach(btn => {
+            btn.addEventListener('click', function(e) {
+                const ripple = document.createElement('span');
+                ripple.className = 'ripple';
+                const rect = this.getBoundingClientRect();
+                ripple.style.left = e.clientX - rect.left + 'px';
+                ripple.style.top = e.clientY - rect.top + 'px';
+                this.appendChild(ripple);
+                setTimeout(() => ripple.remove(), 600);
+            });
         });
-
-        window.addEventListener('load', () => {
-            resizeCanvas();
-            initParticles();
-            animateParticles();
-            initScrollReveal();
+        
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function(e) { e.preventDefault(); const target = document.querySelector(this.getAttribute('href')); if (target) target.scrollIntoView({ behavior: 'smooth' }); });
         });
-        window.addEventListener('resize', resizeCanvas);
+        
+        window.addEventListener('load', () => { resizeCanvases(); initParticles(); animate(); initScrollReveal(); });
+        window.addEventListener('resize', resizeCanvases);
     </script>
 </body>
 </html>
