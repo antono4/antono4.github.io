@@ -16,7 +16,14 @@
         
         body {
             font-family: 'Inter', sans-serif;
-            background: #050505;
+            background: linear-gradient(180deg, 
+                #0f0c29 0%, 
+                #302b63 30%, 
+                #24243e 50%,
+                #e94560 75%,
+                #ff6b35 90%,
+                #ff9f1c 100%);
+            background-attachment: fixed;
             color: #fafafa;
             margin: 0;
             overflow-x: hidden;
@@ -24,20 +31,113 @@
         
         .font-mono { font-family: 'JetBrains Mono', monospace; }
         
-        /* Animated Grid Background */
-        .grid-bg {
+        /* Stars Background */
+        .stars-bg {
             position: fixed;
             inset: 0;
-            background-image: 
-                linear-gradient(rgba(56, 189, 248, 0.03) 1px, transparent 1px),
-                linear-gradient(90deg, rgba(56, 189, 248, 0.03) 1px, transparent 1px);
-            background-size: 60px 60px;
-            animation: gridMove 20s linear infinite;
+            background: 
+                radial-gradient(2px 2px at 20px 30px, #fff, transparent),
+                radial-gradient(2px 2px at 40px 70px, rgba(255,255,255,0.8), transparent),
+                radial-gradient(1px 1px at 90px 40px, #fff, transparent),
+                radial-gradient(2px 2px at 160px 120px, rgba(255,255,255,0.9), transparent),
+                radial-gradient(1px 1px at 230px 80px, #fff, transparent),
+                radial-gradient(2px 2px at 300px 150px, rgba(255,255,255,0.7), transparent),
+                radial-gradient(1px 1px at 370px 200px, #fff, transparent),
+                radial-gradient(2px 2px at 450px 60px, rgba(255,255,255,0.8), transparent),
+                radial-gradient(1px 1px at 520px 180px, #fff, transparent),
+                radial-gradient(2px 2px at 600px 100px, rgba(255,255,255,0.9), transparent),
+                radial-gradient(1px 1px at 680px 220px, #fff, transparent),
+                radial-gradient(2px 2px at 750px 50px, rgba(255,255,255,0.7), transparent),
+                radial-gradient(1px 1px at 820px 140px, #fff, transparent),
+                radial-gradient(2px 2px at 900px 190px, rgba(255,255,255,0.8), transparent),
+                radial-gradient(1px 1px at 980px 70px, #fff, transparent),
+                radial-gradient(2px 2px at 1050px 160px, rgba(255,255,255,0.9), transparent),
+                radial-gradient(1px 1px at 1130px 90px, #fff, transparent),
+                radial-gradient(2px 2px at 1200px 200px, rgba(255,255,255,0.7), transparent);
+            background-size: 100% 100%;
+            animation: twinkle 4s ease-in-out infinite;
         }
         
-        @keyframes gridMove {
-            0% { transform: translate(0, 0); }
-            100% { transform: translate(60px, 60px); }
+        @keyframes twinkle {
+            0%, 100% { opacity: 1; }
+        /* Shooting Stars */
+        .shooting-star {
+            position: fixed;
+            width: 4px;
+            height: 4px;
+            background: linear-gradient(90deg, #fff, transparent);
+            border-radius: 50%;
+            animation: shoot 3s ease-in-out infinite;
+            opacity: 0;
+        }
+        
+        .shooting-star::before {
+            content: '';
+            position: absolute;
+            width: 100px;
+            height: 2px;
+            background: linear-gradient(90deg, rgba(255,255,255,0.8), transparent);
+            right: 4px;
+            top: 1px;
+            border-radius: 2px;
+        }
+        
+        .shooting-star-1 {
+            top: 10%;
+            left: -100px;
+            animation-delay: 0s;
+        }
+        
+        .shooting-star-2 {
+            top: 25%;
+            left: -100px;
+            animation-delay: 1.5s;
+            width: 3px;
+            height: 3px;
+        }
+        
+        .shooting-star-3 {
+            top: 15%;
+            left: -100px;
+            animation-delay: 0.8s;
+        }
+        
+        .shooting-star-4 {
+            top: 35%;
+            left: -100px;
+            animation-delay: 2.5s;
+            width: 3px;
+            height: 3px;
+        }
+        
+        .shooting-star-5 {
+            top: 5%;
+            left: -100px;
+            animation-delay: 4s;
+        }
+        
+        @keyframes shoot {
+            0% {
+                transform: translateX(0) translateY(0);
+                opacity: 0;
+            }
+            5% {
+                opacity: 1;
+            }
+            30% {
+                transform: translateX(calc(100vw + 200px)) translateY(150px);
+                opacity: 1;
+            }
+            35% {
+                opacity: 0;
+            }
+            100% {
+                transform: translateX(calc(100vw + 200px)) translateY(150px);
+                opacity: 0;
+            }
+        }
+            50% { opacity: 0.7; }
+        }
         }
         
         /* Glowing orbs */
@@ -50,23 +150,23 @@
         }
         
         .orb-1 {
-            width: 500px; height: 500px;
-            background: radial-gradient(circle, rgba(56, 189, 248, 0.15) 0%, transparent 70%);
-            top: -10%; right: -10%;
+            width: 600px; height: 600px;
+            background: radial-gradient(circle, rgba(255, 107, 53, 0.3) 0%, transparent 70%);
+            top: 60%; right: -15%;
             animation-delay: 0s;
         }
         
         .orb-2 {
-            width: 400px; height: 400px;
-            background: radial-gradient(circle, rgba(14, 165, 233, 0.1) 0%, transparent 70%);
-            bottom: -5%; left: -5%;
+            width: 500px; height: 500px;
+            background: radial-gradient(circle, rgba(233, 69, 96, 0.25) 0%, transparent 70%);
+            bottom: -10%; left: -10%;
             animation-delay: -10s;
         }
         
         .orb-3 {
-            width: 300px; height: 300px;
-            background: radial-gradient(circle, rgba(2, 132, 199, 0.1) 0%, transparent 70%);
-            top: 50%; left: 50%;
+            width: 400px; height: 400px;
+            background: radial-gradient(circle, rgba(255, 159, 28, 0.2) 0%, transparent 70%);
+            top: 70%; left: 50%;
             transform: translate(-50%, -50%);
             animation-delay: -5s;
         }
@@ -80,7 +180,7 @@
         
         /* Gradient text */
         .gradient-text {
-            background: linear-gradient(135deg, #38bdf8 0%, #7dd3fc 50%, #38bdf8 100%);
+            background: linear-gradient(135deg, #ff9f1c 0%, #ff6b35 50%, #e94560 100%);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             background-clip: text;
@@ -275,7 +375,7 @@ class="relative min-h-screen">
 
     <!-- Background Elements -->
     <div class="fixed inset-0 pointer-events-none">
-        <div class="grid-bg"></div>
+        <div class="stars-bg"></div>
         <div class="orb orb-1"></div>
         <div class="orb orb-2"></div>
         <div class="orb orb-3"></div>
