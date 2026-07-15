@@ -681,24 +681,6 @@
             box-shadow: 0 0 20px rgba(201, 162, 39, 0.5);
         }
 
-        /* Mobile Menu */
-        .mobile-menu {
-            position: fixed;
-            inset: 0;
-            background: var(--dark);
-            z-index: 150;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            transform: translateX(100%);
-            transition: transform 0.5s;
-        }
-
-        .mobile-menu.active {
-            transform: translateX(0);
-        }
-
         /* Cursor Glow */
         .cursor-glow {
             position: fixed;
@@ -709,6 +691,82 @@
             pointer-events: none;
             z-index: 1;
             transform: translate(-50%, -50%);
+        }
+
+        /* Mobile Menu */
+        .mobile-menu {
+            position: fixed;
+            inset: 0;
+            background: rgba(5, 5, 8, 0.98);
+            backdrop-filter: blur(20px);
+            z-index: 200;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            transform: translateX(100%);
+            transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            opacity: 0;
+        }
+
+        .mobile-menu.active {
+            transform: translateX(0);
+            opacity: 1;
+        }
+
+        .mobile-menu-link {
+            font-size: 1.75rem;
+            font-weight: 700;
+            color: white;
+            padding: 1rem 2rem;
+            transition: all 0.3s;
+            position: relative;
+        }
+
+        .mobile-menu-link:hover {
+            color: var(--gold);
+            transform: translateX(10px);
+        }
+
+        .mobile-menu-link::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 0;
+            height: 2px;
+            background: var(--gold-gradient);
+            transition: width 0.3s;
+        }
+
+        .mobile-menu-link:hover::before {
+            width: 20px;
+        }
+
+        .mobile-close-btn {
+            position: absolute;
+            top: 1.5rem;
+            right: 1.5rem;
+            width: 50px;
+            height: 50px;
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 1.25rem;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .mobile-close-btn:hover {
+            background: var(--gold);
+            color: var(--dark);
+            border-color: var(--gold);
+            transform: rotate(90deg);
         }
 
         /* Responsive */
@@ -842,8 +900,8 @@
                 <!-- Mobile Toggle -->
                 <button @click="isMenuOpen = !isMenuOpen" 
                         class="lg:hidden w-14 h-14 rounded-2xl bg-white/5 border border-white/10 flex items-center justify-center transition-all hover:bg-white/10">
-                    <i class="fa-solid fa-bars text-lg" x-show="!isMenuOpen"></i>
-                    <i class="fa-solid fa-times text-lg" x-show="isMenuOpen" x-cloak></i>
+                    <span x-show="!isMenuOpen"><i class="fa-solid fa-bars text-lg"></i></span>
+                    <span x-show="isMenuOpen"><i class="fa-solid fa-times text-lg"></i></span>
                 </button>
             </div>
         </div>
@@ -851,12 +909,18 @@
 
     <!-- Mobile Menu -->
     <div class="mobile-menu" :class="{ 'active': isMenuOpen }">
-        <div class="flex flex-col items-center gap-8">
-            <a href="#beranda" @click="scrollTo('beranda')" class="text-3xl font-bold text-white hover:text-gold transition-colors">Beranda</a>
-            <a href="#koleksi" @click="scrollTo('koleksi')" class="text-3xl font-bold text-white hover:text-gold transition-colors">Koleksi</a>
-            <a href="#layanan" @click="scrollTo('layanan')" class="text-3xl font-bold text-white hover:text-gold transition-colors">Layanan</a>
-            <a href="#testimoni" @click="scrollTo('testimoni')" class="text-3xl font-bold text-white hover:text-gold transition-colors">Testimoni</a>
-            <a href="https://wa.me/6281234567890" class="btn-primary mt-4">
+        <!-- Close Button -->
+        <button @click="isMenuOpen = false" class="mobile-close-btn">
+            <i class="fa-solid fa-times"></i>
+        </button>
+        
+        <!-- Menu Links -->
+        <div class="flex flex-col items-center gap-6">
+            <a href="#beranda" @click="scrollTo('beranda')" class="mobile-menu-link">Beranda</a>
+            <a href="#koleksi" @click="scrollTo('koleksi')" class="mobile-menu-link">Koleksi</a>
+            <a href="#layanan" @click="scrollTo('layanan')" class="mobile-menu-link">Layanan</a>
+            <a href="#testimoni" @click="scrollTo('testimoni')" class="mobile-menu-link">Testimoni</a>
+            <a href="https://wa.me/6281234567890" class="btn-primary mt-8">
                 <i class="fa-solid fa-phone"></i>
                 <span>Hubungi Kami</span>
             </a>
