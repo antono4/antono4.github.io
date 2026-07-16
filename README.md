@@ -31,7 +31,7 @@ I love building:
   <a href="https://antono4.github.io" target="_blank">
     <img src="https://img.shields.io/badge/Portfolio-222?style=for-the-badge&logo=google-chrome&logoColor=white" alt="Portfolio" />
   </a>
-  <a href="mailto:your.email@example.com" target="_blank">
+  <a href="mailto:antonockr1@gmail.com" target="_blank">
     <img src="https://img.shields.io/badge/Email-D14836?style=for-the-badge&logo=gmail&logoColor=white" alt="Email" />
   </a>
 </p>
