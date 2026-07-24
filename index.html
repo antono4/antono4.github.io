@@ -599,7 +599,7 @@
         // Set current year dynamically
         document.getElementById('currentYear').textContent = new Date().getFullYear();
         
-        // ID Card with Lanyard - 360 Rotation Animation
+        // ID Card with Lanyard - Static Display
         (function() {
             const cardSystem = document.getElementById('cardSystem');
             if (!cardSystem) return;
@@ -607,33 +607,7 @@
             // Remove cursor classes since no dragging
             cardSystem.classList.remove('cursor-grab', 'active:cursor-grabbing');
             
-            // Remove rotation animation - card stays static
-            
-            // Hide card when scrolling down, show when scrolling up
-            let lastScrollY = window.scrollY;
-            let ticking = false;
-            
-            window.addEventListener('scroll', function() {
-                if (!ticking) {
-                    window.requestAnimationFrame(function() {
-                        const currentScrollY = window.scrollY;
-                        
-                        if (currentScrollY > lastScrollY && currentScrollY > 100) {
-                            // Scrolling down - hide card
-                            cardSystem.style.opacity = '0';
-                            cardSystem.style.pointerEvents = 'none';
-                        } else {
-                            // Scrolling up - show card
-                            cardSystem.style.opacity = '1';
-                            cardSystem.style.pointerEvents = 'auto';
-                        }
-                        
-                        lastScrollY = currentScrollY;
-                        ticking = false;
-                    });
-                    ticking = true;
-                }
-            });
+            // Card stays static - no scroll effects
         })();
 
         // 3D Particle Effect
