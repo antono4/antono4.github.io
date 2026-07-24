@@ -8,7 +8,7 @@
     <meta name="description" content="Antono - Principal Fullstack Developer with 15+ years of experience architecting enterprise-scale solutions. Specialized in scalable systems, cloud infrastructure, and AI integration.">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500&family=Dancing+Script:wght@500;600&display=swap" rel="stylesheet">
     <script src="https://cdn.tailwindcss.com"></script>
     <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
@@ -128,11 +128,204 @@
             transition: all 0.3s ease;
         }
 
-        .glass-card:hover {
-            background: var(--bg-card-hover);
-            border-color: var(--border-accent);
-            transform: translateY(-4px);
-            box-shadow: 0 20px 40px -12px rgba(59, 130, 246, 0.15);
+        /* ===== ID Card Style ===== */
+        .id-card {
+            position: relative;
+            background: linear-gradient(135deg, #1a1f35 0%, #0f172a 50%, #1a1f35 100%);
+            border-radius: 12px;
+            padding: 20px;
+            overflow: hidden;
+            transition: all 0.4s ease;
+            border: 2px solid transparent;
+            background-clip: padding-box;
+        }
+
+        .id-card::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            border-radius: 12px;
+            padding: 2px;
+            background: linear-gradient(135deg, #3b82f6, #06b6d4, #8b5cf6, #3b82f6);
+            background-size: 300% 300%;
+            animation: gradientBorder 4s ease infinite;
+            -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+            mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+            -webkit-mask-composite: xor;
+            mask-composite: exclude;
+        }
+
+        @keyframes gradientBorder {
+            0%, 100% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+        }
+
+        .id-card:hover {
+            transform: translateY(-4px) rotateX(2deg);
+            box-shadow: 
+                0 25px 50px -12px rgba(59, 130, 246, 0.25),
+                0 0 40px rgba(59, 130, 246, 0.1);
+        }
+
+        /* Holographic Effect */
+        .id-card::after {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: linear-gradient(
+                45deg,
+                transparent 30%,
+                rgba(59, 130, 246, 0.03) 40%,
+                rgba(139, 92, 246, 0.05) 50%,
+                rgba(6, 182, 212, 0.03) 60%,
+                transparent 70%
+            );
+            transform: rotate(30deg);
+            pointer-events: none;
+            animation: holographic 6s linear infinite;
+        }
+
+        @keyframes holographic {
+            0% { transform: rotate(30deg) translateX(-10%); }
+            100% { transform: rotate(30deg) translateX(10%); }
+        }
+
+        /* ID Card Photo Frame */
+        .id-photo-frame {
+            width: 90px;
+            height: 110px;
+            border: 3px solid rgba(59, 130, 246, 0.5);
+            border-radius: 8px;
+            overflow: hidden;
+            position: relative;
+            box-shadow: 
+                inset 0 0 20px rgba(59, 130, 246, 0.2),
+                0 4px 15px rgba(0, 0, 0, 0.3);
+        }
+
+        .id-photo-frame::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 30%;
+            background: linear-gradient(to bottom, rgba(59, 130, 246, 0.1), transparent);
+            z-index: 1;
+        }
+
+        /* ID Card Details */
+        .id-field {
+            font-family: 'JetBrains Mono', monospace;
+        }
+
+        .id-label {
+            font-size: 8px;
+            color: #64748b;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 2px;
+        }
+
+        .id-value {
+            font-size: 13px;
+            color: #f8fafc;
+            font-weight: 500;
+        }
+
+        /* ID Card Barcode */
+        .id-barcode {
+            display: flex;
+            gap: 2px;
+            height: 30px;
+            align-items: flex-end;
+        }
+
+        .barcode-bar {
+            width: 2px;
+            background: #64748b;
+            border-radius: 1px;
+        }
+
+        /* ID Badge */
+        .id-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 4px;
+            padding: 4px 10px;
+            background: linear-gradient(135deg, rgba(59, 130, 246, 0.2), rgba(139, 92, 246, 0.2));
+            border: 1px solid rgba(59, 130, 246, 0.3);
+            border-radius: 20px;
+            font-size: 10px;
+            color: #60a5fa;
+        }
+
+        .id-badge::before {
+            content: '';
+            width: 6px;
+            height: 6px;
+            background: #10b981;
+            border-radius: 50%;
+            animation: pulse 2s ease-in-out infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 1; transform: scale(1); }
+            50% { opacity: 0.5; transform: scale(0.8); }
+        }
+
+        /* Signature Area */
+        .id-signature {
+            font-family: 'Dancing Script', cursive;
+            font-size: 16px;
+            color: #94a3b8;
+            border-bottom: 1px solid rgba(148, 163, 184, 0.3);
+            padding-bottom: 4px;
+        }
+
+        /* ID Number Text */
+        .id-number {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 10px;
+            color: #475569;
+            letter-spacing: 2px;
+        }
+
+        /* Chip Design */
+        .id-chip {
+            width: 40px;
+            height: 30px;
+            background: linear-gradient(135deg, #fbbf24 0%, #d97706 50%, #fbbf24 100%);
+            border-radius: 6px;
+            position: relative;
+            overflow: hidden;
+            box-shadow: 0 2px 8px rgba(251, 191, 36, 0.3);
+        }
+
+        .id-chip::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 30px;
+            height: 20px;
+            border: 1px solid rgba(0, 0, 0, 0.2);
+            border-radius: 3px;
+        }
+
+        .id-chip::after {
+            content: '';
+            position: absolute;
+            top: 4px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 24px;
+            height: 10px;
+            border: 1px solid rgba(0, 0, 0, 0.15);
         }
 
         /* ===== Gradient Text ===== */
@@ -485,33 +678,82 @@
 
                 <!-- Right Content - Profile Card -->
                 <div class="slide-up flex justify-center lg:justify-end">
-                    <div class="glass-card p-8 max-w-md w-full text-center">
-                        <div class="relative inline-block mb-6">
-                            <div class="w-32 h-32 rounded-full ring-4 ring-blue-500/30 overflow-hidden">
+                    <!-- ID Card -->
+                    <div class="id-card max-w-sm w-full">
+                        <!-- Top Section -->
+                        <div class="flex gap-4 mb-4">
+                            <!-- Photo -->
+                            <div class="id-photo-frame flex-shrink-0">
                                 <img src="https://avatars.githubusercontent.com/u/73228642?v=4" alt="Antono" class="w-full h-full object-cover">
                             </div>
-                            <div class="absolute -bottom-2 -right-2 w-10 h-10 bg-emerald-500 rounded-full flex items-center justify-center">
-                                <i class="fas fa-check text-white text-sm"></i>
+                            
+                            <!-- Info -->
+                            <div class="flex-1 flex flex-col justify-between">
+                                <div>
+                                    <div class="id-field mb-3">
+                                        <div class="id-label">Full Name</div>
+                                        <div class="id-value">Antono</div>
+                                    </div>
+                                    <div class="id-field mb-3">
+                                        <div class="id-label">Position</div>
+                                        <div class="id-value text-blue-400">Principal Developer</div>
+                                    </div>
+                                    <div class="id-field">
+                                        <div class="id-label">Location</div>
+                                        <div class="id-value text-sm">West Java, Indonesia</div>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                         
-                        <h2 class="text-2xl font-bold mb-2">Antono</h2>
-                        <p class="text-blue-400 font-medium mb-4">Principal Fullstack Developer</p>
+                        <!-- Divider -->
+                        <div class="h-px bg-gradient-to-r from-transparent via-blue-500/30 to-transparent my-4"></div>
                         
-                        <div class="flex items-center justify-center gap-2 text-gray-400 text-sm mb-6">
-                            <i class="fas fa-map-marker-alt"></i>
-                            <span>West Java, Indonesia</span>
+                        <!-- Middle Section -->
+                        <div class="flex justify-between items-start mb-4">
+                            <div>
+                                <div class="id-field mb-2">
+                                    <div class="id-label">ID Number</div>
+                                    <div class="id-number">DEV-2024-73286</div>
+                                </div>
+                                <div class="id-badge mt-2">
+                                    <span>Verified</span>
+                                </div>
+                            </div>
+                            <div class="id-chip"></div>
                         </div>
-
-                        <div class="flex justify-center gap-3">
-                            <a href="https://github.com/antono4" target="_blank" class="social-icon">
-                                <i class="fab fa-github"></i>
+                        
+                        <!-- Barcode -->
+                        <div class="flex justify-between items-end">
+                            <div class="id-barcode">
+                                <div class="barcode-bar" style="height: 20px;"></div>
+                                <div class="barcode-bar" style="height: 25px;"></div>
+                                <div class="barcode-bar" style="height: 15px;"></div>
+                                <div class="barcode-bar" style="height: 28px;"></div>
+                                <div class="barcode-bar" style="height: 18px;"></div>
+                                <div class="barcode-bar" style="height: 22px;"></div>
+                                <div class="barcode-bar" style="height: 12px;"></div>
+                                <div class="barcode-bar" style="height: 24px;"></div>
+                                <div class="barcode-bar" style="height: 16px;"></div>
+                                <div class="barcode-bar" style="height: 20px;"></div>
+                                <div class="barcode-bar" style="height: 26px;"></div>
+                                <div class="barcode-bar" style="height: 14px;"></div>
+                            </div>
+                            <div class="text-right">
+                                <div class="id-signature">Antono</div>
+                            </div>
+                        </div>
+                        
+                        <!-- Social Links at Bottom -->
+                        <div class="flex justify-center gap-2 mt-4 pt-3 border-t border-white/5">
+                            <a href="https://github.com/antono4" target="_blank" class="w-8 h-8 rounded-lg bg-blue-500/20 flex items-center justify-center text-blue-400 hover:bg-blue-500/40 transition">
+                                <i class="fab fa-github text-sm"></i>
                             </a>
-                            <a href="https://linkedin.com/in/antono4" target="_blank" class="social-icon">
-                                <i class="fab fa-linkedin-in"></i>
+                            <a href="https://linkedin.com/in/antono4" target="_blank" class="w-8 h-8 rounded-lg bg-blue-500/20 flex items-center justify-center text-blue-400 hover:bg-blue-500/40 transition">
+                                <i class="fab fa-linkedin-in text-sm"></i>
                             </a>
-                            <a href="https://twitter.com/antono4" target="_blank" class="social-icon">
-                                <i class="fab fa-x-twitter"></i>
+                            <a href="https://twitter.com/antono4" target="_blank" class="w-8 h-8 rounded-lg bg-blue-500/20 flex items-center justify-center text-blue-400 hover:bg-blue-500/40 transition">
+                                <i class="fab fa-x-twitter text-sm"></i>
                             </a>
                         </div>
                     </div>
