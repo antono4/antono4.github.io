@@ -352,7 +352,7 @@
             height: 150px;
             display: flex;
             justify-content: center;
-            z-index: 40;
+            z-index: 35;
             transition: height 0.3s ease;
         }
 
@@ -393,7 +393,7 @@
             background: linear-gradient(180deg, #1d4ed8 0%, #1e40af 100%);
             border-radius: 0 0 25px 25px;
             position: relative;
-            z-index: 41;
+            z-index: 36;
             box-shadow: 0 4px 15px rgba(0, 0, 0, 0.4);
             margin-top: 150px;
         }
@@ -425,7 +425,7 @@
             background: linear-gradient(180deg, #94a3b8 0%, #64748b 100%);
             border-radius: 0 0 10px 10px;
             position: relative;
-            z-index: 42;
+            z-index: 37;
             box-shadow: 0 3px 10px rgba(0, 0, 0, 0.3);
         }
 
@@ -733,7 +733,7 @@
     <canvas id="particles-canvas"></canvas>
     
     <!-- Navigation -->
-    <nav class="fixed top-0 left-0 right-0 z-50 glass" x-data="{ mobileOpen: false }">
+    <nav class="fixed top-0 left-0 right-0 z-50 glass" style="background: rgba(15, 23, 42, 0.8); backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px);" x-data="{ mobileOpen: false }">
         <div class="max-w-7xl mx-auto px-6 py-4">
             <div class="flex items-center justify-between">
                 <a href="#" class="text-xl font-bold gradient-text">Antono.dev</a>
