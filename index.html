@@ -216,73 +216,76 @@
 
                 <!-- Right Content - ID Card with Fixed Lanyard -->
                 <div class="flex justify-center lg:justify-end relative">
-                    <!-- Fixed Lanyard Anchor Point (from nav) -->
-                    <div id="lanyardAnchor" style="position: absolute; top: -130px; left: 50%; transform: translateX(-50%); z-index: 40;">
-                        <!-- Lanyard Top (connects to nav) -->
-                        <div class="w-5 h-[60px] lanyard-texture rounded-full shadow-xl"></div>
+                    <!-- Fixed Lanyard Anchor Point -->
+                    <div id="lanyardAnchor" style="position: absolute; top: -150px; left: 50%; transform: translateX(-50%); z-index: 40;">
+                        <!-- Metal connector piece -->
+                        <div class="w-8 h-4 bg-gradient-to-b from-gray-400 to-gray-600 rounded-lg shadow-lg"></div>
                     </div>
                     
-                    <!-- Draggable Card -->
-                    <div id="draggableCard" class="hanging-element flex flex-col items-center cursor-grab active:cursor-grabbing select-none" style="position: relative; z-index: 45;">
+                    <!-- Complete Lanyard System (draggable) -->
+                    <div id="lanyardSystem" class="flex flex-col items-center cursor-grab active:cursor-grabbing select-none" style="position: relative; z-index: 45;">
                         
-                        <!-- Lanyard String -->
-                        <div id="lanyardString" class="w-5 lanyard-texture rounded-full shadow-xl transition-all duration-100" style="height: 380px;"></div>
+                        <!-- Top fixed lanyard (from nav) -->
+                        <div id="lanyardTop" class="w-5 h-[80px] lanyard-texture rounded-full shadow-xl"></div>
+                        
+                        <!-- Bottom lanyard string (stretches) -->
+                        <div id="lanyardString" class="w-5 lanyard-texture rounded-full shadow-xl transition-all duration-100" style="height: 350px;"></div>
                         
                         <!-- Metal Clip -->
-                        <div class="w-12 h-10 bg-gradient-to-b from-gray-400 to-gray-600 rounded-t-lg shadow-xl z-20 -mt-1 relative glossy">
-                            <div class="absolute -bottom-1 left-1/2 -translate-x-1/2 w-6 h-6 bg-gradient-to-br from-gray-500 to-gray-700 rounded-full border-2 border-gray-400"></div>
+                        <div class="w-14 h-12 bg-gradient-to-b from-gray-400 to-gray-600 rounded-t-lg shadow-xl z-20 -mt-1 relative glossy">
+                            <div class="absolute -bottom-2 left-1/2 -translate-x-1/2 w-8 h-8 bg-gradient-to-br from-gray-500 to-gray-700 rounded-full border-2 border-gray-400"></div>
                         </div>
 
                         <!-- ID Card -->
-                        <div class="w-[300px] bg-white/95 backdrop-blur-xl rounded-[24px] id-card p-5 border border-white/50 relative z-20 -mt-1 overflow-hidden glossy" id="idCard">
+                        <div class="w-[320px] bg-white/95 backdrop-blur-xl rounded-[24px] id-card p-6 border border-white/50 relative z-20 -mt-1 overflow-hidden glossy" id="idCard">
                             
                             <!-- Header -->
-                            <div class="absolute top-0 left-0 right-0 bg-gradient-to-r from-emerald-700 to-emerald-800 text-white text-[8px] tracking-[0.3em] font-black text-center py-2.5">
+                            <div class="absolute top-0 left-0 right-0 bg-gradient-to-r from-emerald-700 to-emerald-800 text-white text-[9px] tracking-[0.3em] font-black text-center py-3">
                                 PROFESSIONAL IDENTITY CARD
                             </div>
 
                             <!-- Photo -->
-                            <div class="w-[100px] h-[120px] mx-auto mt-10 rounded-xl overflow-hidden border-4 border-slate-100 shadow-inner bg-slate-200">
+                            <div class="w-[110px] h-[130px] mx-auto mt-12 rounded-xl overflow-hidden border-4 border-slate-100 shadow-inner bg-slate-200">
                                 <img src="https://avatars.githubusercontent.com/u/73228642?v=4" alt="Antono" class="w-full h-full object-cover">
                             </div>
                             
                             <!-- Info -->
-                            <h3 class="text-center font-black text-xl text-slate-800 mt-3">ANTONO</h3>
-                            <p class="text-center text-emerald-600 text-[8px] font-bold tracking-[0.2em] uppercase">Principal Architect</p>
+                            <h3 class="text-center font-black text-2xl text-slate-800 mt-4">ANTONO</h3>
+                            <p class="text-center text-emerald-600 text-[9px] font-bold tracking-[0.2em] uppercase mt-1">Principal Architect</p>
                             
                             <!-- Details Grid -->
-                            <div class="grid grid-cols-2 gap-4 mt-4 pt-4 border-t border-slate-100">
+                            <div class="grid grid-cols-2 gap-4 mt-5 pt-4 border-t border-slate-100">
                                 <div>
-                                    <p class="text-[6px] text-slate-400 font-bold uppercase tracking-widest">Status</p>
-                                    <p class="font-bold text-slate-700 text-xs">ACTIVE</p>
+                                    <p class="text-[7px] text-slate-400 font-bold uppercase tracking-widest">Status</p>
+                                    <p class="font-bold text-slate-700 text-sm">ACTIVE</p>
                                 </div>
                                 <div>
-                                    <p class="text-[6px] text-slate-400 font-bold uppercase tracking-widest">Level</p>
-                                    <p class="font-bold text-emerald-600 text-xs">EXPERT</p>
+                                    <p class="text-[7px] text-slate-400 font-bold uppercase tracking-widest">Level</p>
+                                    <p class="font-bold text-emerald-600 text-sm">EXPERT</p>
                                 </div>
                                 <div>
-                                    <p class="text-[6px] text-slate-400 font-bold uppercase tracking-widest">Experience</p>
-                                    <p class="font-bold text-slate-700 text-xs">15+ Years</p>
+                                    <p class="text-[7px] text-slate-400 font-bold uppercase tracking-widest">Experience</p>
+                                    <p class="font-bold text-slate-700 text-sm">15+ Years</p>
                                 </div>
                                 <div>
-                                    <p class="text-[6px] text-slate-400 font-bold uppercase tracking-widest">ID</p>
-                                    <p class="font-bold text-slate-700 text-xs">ANT-001</p>
+                                    <p class="text-[7px] text-slate-400 font-bold uppercase tracking-widest">ID</p>
+                                    <p class="font-bold text-slate-700 text-sm">ANT-001</p>
                                 </div>
                             </div>
 
                             <!-- Barcode -->
-                            <div class="mt-4 flex justify-center items-end h-8 gap-[2px] opacity-50">
-                                <div class="w-1.5 h-full bg-slate-800"></div>
-                                <div class="w-0.5 h-3/4 bg-slate-800"></div>
+                            <div class="mt-5 flex justify-center items-end h-10 gap-[3px] opacity-50">
                                 <div class="w-2 h-full bg-slate-800"></div>
-                                <div class="w-1 h-2/3 bg-slate-800"></div>
+                                <div class="w-1 h-3/4 bg-slate-800"></div>
                                 <div class="w-2.5 h-full bg-slate-800"></div>
-                                <div class="w-0.5 h-1/2 bg-slate-800"></div>
-                                <div class="w-1 h-4/5 bg-slate-800"></div>
                                 <div class="w-1.5 h-2/3 bg-slate-800"></div>
                                 <div class="w-3 h-full bg-slate-800"></div>
-                                <div class="w-0.5 h-3/4 bg-slate-800"></div>
-                                <div class="w-1.5 h-full bg-slate-800"></div>
+                                <div class="w-1 h-1/2 bg-slate-800"></div>
+                                <div class="w-2 h-4/5 bg-slate-800"></div>
+                                <div class="w-1.5 h-2/3 bg-slate-800"></div>
+                                <div class="w-3.5 h-full bg-slate-800"></div>
+                                <div class="w-1 h-3/4 bg-slate-800"></div>
+                                <div class="w-2 h-full bg-slate-800"></div>
                             </div>
                         </div>
                     </div>
@@ -612,9 +615,10 @@
         
         // Draggable ID Card with Rubber Band Effect
         (function() {
-            const card = document.getElementById('draggableCard');
+            const lanyardSystem = document.getElementById('lanyardSystem');
             const lanyardString = document.getElementById('lanyardString');
-            if (!card) return;
+            const lanyardTop = document.getElementById('lanyardTop');
+            if (!lanyardSystem) return;
             
             let isDragging = false;
             let currentY = 0;
@@ -622,9 +626,9 @@
             let lastY = 0;
             let lastTime = 0;
             const maxTop = 0;
-            const minTop = 350;
-            const originalTop = 0;
-            const baseStringHeight = 380;
+            const minTop = 300;
+            const baseStringHeight = 350;
+            const baseTopHeight = 80;
             
             // Spring physics for rubber band effect
             function springBack() {
@@ -638,40 +642,49 @@
                 velocityY *= damping;
                 currentY += velocityY;
                 
-                // Update card position
-                card.style.top = currentY + 'px';
+                // Update system position
+                lanyardSystem.style.top = currentY + 'px';
                 
-                // Update lanyard string height dynamically
+                // Update lanyard string height dynamically (stretches when pulled down)
                 if (lanyardString) {
-                    const newHeight = baseStringHeight - currentY;
-                    lanyardString.style.height = Math.max(50, newHeight) + 'px';
+                    const newHeight = baseStringHeight + Math.abs(Math.min(0, currentY));
+                    lanyardString.style.height = Math.max(100, newHeight) + 'px';
+                }
+                
+                // Update top lanyard (shrinks when pulled down)
+                if (lanyardTop) {
+                    const newTopHeight = baseTopHeight - Math.abs(Math.min(0, currentY));
+                    lanyardTop.style.height = Math.max(10, newTopHeight) + 'px';
                 }
                 
                 // Calculate rotation based on position
-                const rotation = currentY * 0.02;
-                card.style.transform = `rotate(${rotation}deg)`;
+                const rotation = currentY * 0.015;
+                lanyardSystem.style.transform = `rotate(${rotation}deg)`;
                 
                 // Continue animation if not settled
                 if (Math.abs(diff) > 0.5 || Math.abs(velocityY) > 0.1) {
                     requestAnimationFrame(springBack);
                 } else {
-                    currentY = originalTop;
-                    card.style.top = originalTop + 'px';
-                    card.style.transform = '';
+                    currentY = 0;
+                    lanyardSystem.style.top = '0px';
+                    lanyardSystem.style.transform = '';
                     if (lanyardString) {
                         lanyardString.style.height = baseStringHeight + 'px';
                     }
-                    card.style.animation = 'sway 6s ease-in-out infinite';
+                    if (lanyardTop) {
+                        lanyardTop.style.height = baseTopHeight + 'px';
+                    }
                 }
             }
             
-            card.addEventListener('mousedown', function(e) {
+            const originalTop = 0;
+            
+            lanyardSystem.addEventListener('mousedown', function(e) {
                 isDragging = true;
                 velocityY = 0;
                 lastY = e.clientY;
                 lastTime = Date.now();
-                card.style.animation = 'none';
-                card.style.transition = 'none';
+                lanyardSystem.style.transition = 'none';
             });
             
             document.addEventListener('mousemove', function(e) {
@@ -690,17 +703,23 @@
                 lastY = e.clientY;
                 lastTime = now;
                 
-                card.style.top = currentY + 'px';
+                lanyardSystem.style.top = currentY + 'px';
                 
-                // Update lanyard string height dynamically
+                // Update lanyard string (stretches when pulled down)
                 if (lanyardString) {
-                    const newHeight = baseStringHeight - currentY;
-                    lanyardString.style.height = Math.max(50, newHeight) + 'px';
+                    const newHeight = baseStringHeight + Math.abs(Math.min(0, currentY));
+                    lanyardString.style.height = Math.max(100, newHeight) + 'px';
+                }
+                
+                // Update top lanyard (shrinks when pulled down)
+                if (lanyardTop) {
+                    const newTopHeight = baseTopHeight - Math.abs(Math.min(0, currentY));
+                    lanyardTop.style.height = Math.max(10, newTopHeight) + 'px';
                 }
                 
                 // Rotation based on drag
-                const rotation = currentY * 0.015;
-                card.style.transform = `rotate(${rotation}deg)`;
+                const rotation = currentY * 0.01;
+                lanyardSystem.style.transform = `rotate(${rotation}deg)`;
             });
             
             document.addEventListener('mouseup', function() {
@@ -711,13 +730,12 @@
             });
             
             // Touch support
-            card.addEventListener('touchstart', function(e) {
+            lanyardSystem.addEventListener('touchstart', function(e) {
                 isDragging = true;
                 velocityY = 0;
                 lastY = e.touches[0].clientY;
                 lastTime = Date.now();
-                card.style.animation = 'none';
-                card.style.transition = 'none';
+                lanyardSystem.style.transition = 'none';
             });
             
             document.addEventListener('touchmove', function(e) {
@@ -735,15 +753,21 @@
                 lastY = e.touches[0].clientY;
                 lastTime = now;
                 
-                card.style.top = currentY + 'px';
+                lanyardSystem.style.top = currentY + 'px';
                 
-                // Update lanyard string height
+                // Update lanyard string
                 if (lanyardString) {
-                    const newHeight = baseStringHeight - currentY;
-                    lanyardString.style.height = Math.max(50, newHeight) + 'px';
+                    const newHeight = baseStringHeight + Math.abs(Math.min(0, currentY));
+                    lanyardString.style.height = Math.max(100, newHeight) + 'px';
                 }
                 
-                card.style.transform = `rotate(${currentY * 0.015}deg)`;
+                // Update top lanyard
+                if (lanyardTop) {
+                    const newTopHeight = baseTopHeight - Math.abs(Math.min(0, currentY));
+                    lanyardTop.style.height = Math.max(10, newTopHeight) + 'px';
+                }
+                
+                lanyardSystem.style.transform = `rotate(${currentY * 0.01}deg)`;
             });
             
             document.addEventListener('touchend', function() {
