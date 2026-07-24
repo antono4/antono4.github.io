@@ -490,74 +490,125 @@
     </footer>
 
     <script>
-        // Draggable ID Card
+        // Draggable ID Card with Rubber Band Effect
         (function() {
             const card = document.getElementById('draggableCard');
             if (!card) return;
             
             let isDragging = false;
-            let startX, startY, startTop, startLeft;
+            let startY = 0;
+            let currentY = 0;
+            let velocityY = 0;
+            let lastY = 0;
+            let lastTime = 0;
             const maxTop = 0;
-            const minTop = 400;
+            const minTop = 350;
+            const originalTop = -100;
+            
+            // Spring physics for rubber band effect
+            function springBack() {
+                if (isDragging) return;
+                
+                const stiffness = 0.08;
+                const damping = 0.75;
+                const diff = originalTop - currentY;
+                
+                velocityY += diff * stiffness;
+                velocityY *= damping;
+                currentY += velocityY;
+                
+                card.style.top = currentY + 'px';
+                card.style.left = (currentY - originalTop) * 0.2 + 'px';
+                
+                // Calculate rotation based on position
+                const rotation = (currentY - originalTop) * 0.02;
+                card.style.transform = `rotate(${rotation}deg)`;
+                
+                // Continue animation if not settled
+                if (Math.abs(diff) > 0.5 || Math.abs(velocityY) > 0.1) {
+                    requestAnimationFrame(springBack);
+                } else {
+                    currentY = originalTop;
+                    card.style.top = originalTop + 'px';
+                    card.style.left = '0px';
+                    card.style.transform = '';
+                    card.style.animation = 'sway 6s ease-in-out infinite';
+                }
+            }
             
             card.addEventListener('mousedown', function(e) {
                 isDragging = true;
-                startX = e.clientX;
-                startY = e.clientY;
-                const rect = card.getBoundingClientRect();
-                const parentRect = card.parentElement.getBoundingClientRect();
-                startTop = rect.top - parentRect.top;
-                startLeft = rect.left - parentRect.left;
+                velocityY = 0;
+                lastY = e.clientY;
+                lastTime = Date.now();
                 card.style.animation = 'none';
+                card.style.transition = 'none';
             });
             
             document.addEventListener('mousemove', function(e) {
                 if (!isDragging) return;
-                const deltaX = e.clientX - startX;
-                const deltaY = e.clientY - startY;
-                const newTop = Math.max(maxTop, Math.min(minTop, startTop + deltaY));
-                const newLeft = startLeft + deltaX * 0.3;
-                card.style.top = newTop + 'px';
-                card.style.left = newLeft + 'px';
+                
+                const deltaY = e.clientY - lastY;
+                currentY += deltaY;
+                currentY = Math.max(maxTop, Math.min(minTop, currentY));
+                
+                // Calculate velocity for momentum
+                const now = Date.now();
+                const dt = now - lastTime;
+                if (dt > 0) {
+                    velocityY = deltaY / dt * 16;
+                }
+                lastY = e.clientY;
+                lastTime = now;
+                
+                card.style.top = currentY + 'px';
+                card.style.left = (currentY - originalTop) * 0.15 + 'px';
+                
+                // Rotation based on drag
+                const rotation = (currentY - originalTop) * 0.015;
+                card.style.transform = `rotate(${rotation}deg)`;
             });
             
             document.addEventListener('mouseup', function() {
                 if (isDragging) {
                     isDragging = false;
-                    setTimeout(() => {
-                        card.style.animation = 'sway 6s ease-in-out infinite';
-                    }, 100);
+                    springBack();
                 }
             });
             
             // Touch support
             card.addEventListener('touchstart', function(e) {
                 isDragging = true;
-                startX = e.touches[0].clientX;
-                startY = e.touches[0].clientY;
-                const rect = card.getBoundingClientRect();
-                const parentRect = card.parentElement.getBoundingClientRect();
-                startTop = rect.top - parentRect.top;
-                startLeft = rect.left - parentRect.left;
+                velocityY = 0;
+                lastY = e.touches[0].clientY;
+                lastTime = Date.now();
                 card.style.animation = 'none';
+                card.style.transition = 'none';
             });
             
             document.addEventListener('touchmove', function(e) {
                 if (!isDragging) return;
-                const deltaX = e.touches[0].clientX - startX;
-                const deltaY = e.touches[0].clientY - startY;
-                const newTop = Math.max(maxTop, Math.min(minTop, startTop + deltaY));
-                const newLeft = startLeft + deltaX * 0.3;
-                card.style.top = newTop + 'px';
-                card.style.left = newLeft + 'px';
+                
+                const deltaY = e.touches[0].clientY - lastY;
+                currentY += deltaY;
+                currentY = Math.max(maxTop, Math.min(minTop, currentY));
+                
+                const now = Date.now();
+                const dt = now - lastTime;
+                if (dt > 0) {
+                    velocityY = deltaY / dt * 16;
+                }
+                lastY = e.touches[0].clientY;
+                lastTime = now;
+                
+                card.style.top = currentY + 'px';
+                card.style.transform = `rotate(${(currentY - originalTop) * 0.015}deg)`;
             });
             
             document.addEventListener('touchend', function() {
                 if (isDragging) {
                     isDragging = false;
-                    setTimeout(() => {
-                        card.style.animation = 'sway 6s ease-in-out infinite';
-                    }, 100);
+                    springBack();
                 }
             });
         })();
