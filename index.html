@@ -619,6 +619,32 @@
                 }
             `;
             document.head.appendChild(style);
+            
+            // Hide card when scrolling down, show when scrolling up
+            let lastScrollY = window.scrollY;
+            let ticking = false;
+            
+            window.addEventListener('scroll', function() {
+                if (!ticking) {
+                    window.requestAnimationFrame(function() {
+                        const currentScrollY = window.scrollY;
+                        
+                        if (currentScrollY > lastScrollY && currentScrollY > 100) {
+                            // Scrolling down - hide card
+                            cardSystem.style.opacity = '0';
+                            cardSystem.style.pointerEvents = 'none';
+                        } else {
+                            // Scrolling up - show card
+                            cardSystem.style.opacity = '1';
+                            cardSystem.style.pointerEvents = 'auto';
+                        }
+                        
+                        lastScrollY = currentScrollY;
+                        ticking = false;
+                    });
+                    ticking = true;
+                }
+            });
         })();
 
         // 3D Particle Effect
