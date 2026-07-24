@@ -181,11 +181,11 @@
                 </div>
 
                 <!-- Right Content - ID Card -->
-                <div class="flex justify-center lg:justify-end">
-                    <div class="hanging-element flex flex-col items-center">
+                <div class="flex justify-center lg:justify-end relative">
+                    <div id="draggableCard" class="hanging-element flex flex-col items-center cursor-grab active:cursor-grabbing select-none" style="position: relative; top: -100px;">
                         
                         <!-- Lanyard -->
-                        <div class="w-5 h-[450px] lanyard-texture rounded-full shadow-xl z-10"></div>
+                        <div class="w-5 h-[350px] lanyard-texture rounded-full shadow-xl z-10"></div>
                         
                         <!-- Metal Clip -->
                         <div class="w-12 h-10 bg-gradient-to-b from-gray-400 to-gray-600 rounded-t-lg shadow-xl z-20 -mt-1 relative">
@@ -193,7 +193,7 @@
                         </div>
 
                         <!-- ID Card -->
-                        <div class="w-[300px] bg-white/95 backdrop-blur-xl rounded-[24px] id-card p-5 border border-white/50 relative z-20 -mt-1 overflow-hidden">
+                        <div class="w-[300px] bg-white/95 backdrop-blur-xl rounded-[24px] id-card p-5 border border-white/50 relative z-20 -mt-1 overflow-hidden" id="idCard">
                             
                             <!-- Header -->
                             <div class="absolute top-0 left-0 right-0 bg-gradient-to-r from-emerald-700 to-emerald-800 text-white text-[8px] tracking-[0.3em] font-black text-center py-2.5">
@@ -490,6 +490,78 @@
     </footer>
 
     <script>
+        // Draggable ID Card
+        (function() {
+            const card = document.getElementById('draggableCard');
+            if (!card) return;
+            
+            let isDragging = false;
+            let startX, startY, startTop, startLeft;
+            const maxTop = 0;
+            const minTop = 400;
+            
+            card.addEventListener('mousedown', function(e) {
+                isDragging = true;
+                startX = e.clientX;
+                startY = e.clientY;
+                const rect = card.getBoundingClientRect();
+                const parentRect = card.parentElement.getBoundingClientRect();
+                startTop = rect.top - parentRect.top;
+                startLeft = rect.left - parentRect.left;
+                card.style.animation = 'none';
+            });
+            
+            document.addEventListener('mousemove', function(e) {
+                if (!isDragging) return;
+                const deltaX = e.clientX - startX;
+                const deltaY = e.clientY - startY;
+                const newTop = Math.max(maxTop, Math.min(minTop, startTop + deltaY));
+                const newLeft = startLeft + deltaX * 0.3;
+                card.style.top = newTop + 'px';
+                card.style.left = newLeft + 'px';
+            });
+            
+            document.addEventListener('mouseup', function() {
+                if (isDragging) {
+                    isDragging = false;
+                    setTimeout(() => {
+                        card.style.animation = 'sway 6s ease-in-out infinite';
+                    }, 100);
+                }
+            });
+            
+            // Touch support
+            card.addEventListener('touchstart', function(e) {
+                isDragging = true;
+                startX = e.touches[0].clientX;
+                startY = e.touches[0].clientY;
+                const rect = card.getBoundingClientRect();
+                const parentRect = card.parentElement.getBoundingClientRect();
+                startTop = rect.top - parentRect.top;
+                startLeft = rect.left - parentRect.left;
+                card.style.animation = 'none';
+            });
+            
+            document.addEventListener('touchmove', function(e) {
+                if (!isDragging) return;
+                const deltaX = e.touches[0].clientX - startX;
+                const deltaY = e.touches[0].clientY - startY;
+                const newTop = Math.max(maxTop, Math.min(minTop, startTop + deltaY));
+                const newLeft = startLeft + deltaX * 0.3;
+                card.style.top = newTop + 'px';
+                card.style.left = newLeft + 'px';
+            });
+            
+            document.addEventListener('touchend', function() {
+                if (isDragging) {
+                    isDragging = false;
+                    setTimeout(() => {
+                        card.style.animation = 'sway 6s ease-in-out infinite';
+                    }, 100);
+                }
+            });
+        })();
+
         // 3D Particle Effect
         (function() {
             const canvas = document.getElementById('particles-canvas');
