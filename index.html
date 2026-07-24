@@ -63,35 +63,6 @@
         
         /* ID Card Styles */
         .id-card { box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.15), 0 0 30px rgba(16, 185, 129, 0.15); }
-        
-        @keyframes sway {
-            0%, 100% { transform: rotate(-2deg) translateY(0); }
-            25% { transform: rotate(1deg) translateY(-2px); }
-            50% { transform: rotate(2deg) translateY(0); }
-            75% { transform: rotate(-1deg) translateY(-1px); }
-        }
-        .hanging-element { transform-origin: top center; animation: sway 6s ease-in-out infinite; }
-        
-        .lanyard-texture {
-            background: linear-gradient(to right, #064e3b 0%, #047857 20%, #064e3b 80%, #022c22 100%);
-            position: relative;
-        }
-        .lanyard-texture::before {
-            content: '';
-            position: absolute;
-            inset: 0;
-            background: repeating-linear-gradient(90deg, transparent 0px, transparent 4px, rgba(255,255,255,0.1) 4px, rgba(255,255,255,0.1) 8px);
-        }
-        .lanyard-texture::after {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 50%;
-            transform: translateX(-50%);
-            width: 2px;
-            height: 100%;
-            background: linear-gradient(180deg, rgba(255,255,255,0.3) 0%, rgba(255,255,255,0.1) 100%);
-        }
 
         #particles-canvas { position: fixed; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none; z-index: 0; }
         
@@ -133,14 +104,11 @@
     <canvas id="particles-canvas"></canvas>
 
     	
-    <!-- Navigation with Lanyard -->
+    <!-- Navigation -->
     <nav class="fixed top-4 left-1/2 -translate-x-1/2 w-[95%] max-w-5xl z-50">
         <div class="bg-white/95 backdrop-blur-xl rounded-2xl shadow-lg border border-white/50 px-6 py-4 flex items-center justify-between glossy">
-            <!-- Lanyard Anchor at Logo -->
+            <!-- Logo -->
             <div class="flex items-center gap-3 group z-50 relative">
-                <!-- Lanyard String -->
-                <div id="lanyardString" class="absolute top-full left-1/2 -translate-x-1/2 w-4 lanyard-texture rounded-full shadow-xl" style="height: 250px;"></div>
-                
                 <div class="w-10 h-10 bg-gradient-to-br from-emerald-600 to-emerald-800 rounded-xl flex items-center justify-center text-white font-bold text-lg shadow-lg group-hover:scale-105 transition-transform z-10 bg-white">A</div>
                 <div>
                     <h1 class="font-bold text-sm text-slate-800">ANTONO_</h1>
@@ -219,16 +187,11 @@
                     </div>
                 </div>
 
-                <!-- Right Content - ID Card (hanging from nav lanyard) -->
+                <!-- Right Content - ID Card -->
                 <div class="flex justify-center lg:justify-end relative">
                     <!-- Draggable Card System -->
-                    <div id="cardSystem" class="flex flex-col items-center cursor-grab active:cursor-grabbing select-none" style="position: relative; z-index: 45;">
+                    <div id="cardSystem" class="cursor-grab active:cursor-grabbing select-none" style="position: relative; z-index: 45;">
                         
-                        <!-- Metal Clip -->
-                        <div class="w-14 h-12 bg-gradient-to-b from-gray-400 to-gray-600 rounded-t-lg shadow-xl z-20 -mt-1 relative glossy">
-                            <div class="absolute -bottom-2 left-1/2 -translate-x-1/2 w-8 h-8 bg-gradient-to-br from-gray-500 to-gray-700 rounded-full border-2 border-gray-400"></div>
-                        </div>
-
                         <!-- ID Card -->
                         <div class="w-[320px] bg-white/95 backdrop-blur-xl rounded-[24px] id-card p-6 border border-white/50 relative z-20 -mt-1 overflow-hidden glossy" id="idCard">
                             
@@ -606,20 +569,32 @@
         // Set current year dynamically
         document.getElementById('currentYear').textContent = new Date().getFullYear();
         
-        // Draggable ID Card with Lanyard from Nav
+        // Floating ID Card Animation
         (function() {
             const cardSystem = document.getElementById('cardSystem');
-            const lanyardString = document.getElementById('lanyardString');
-            if (!cardSystem || !lanyardString) return;
+            if (!cardSystem) return;
             
             let isDragging = false;
             let currentY = 0;
             let velocityY = 0;
             let lastY = 0;
             let lastTime = 0;
-            const minTop = 0;
-            const maxPull = 400;
-            const baseLanyardHeight = 250;
+            const maxPull = 80;
+            
+            // Float animation
+            let floatTime = 0;
+            const floatSpeed = 0.002;
+            
+            function animateFloat() {
+                if (!isDragging) {
+                    floatTime += floatSpeed;
+                    const floatY = Math.sin(floatTime) * 8;
+                    const floatRotation = Math.sin(floatTime * 0.7) * 0.5;
+                    cardSystem.style.transform = `translateY(${floatY}px) rotate(${floatRotation}deg)`;
+                }
+                requestAnimationFrame(animateFloat);
+            }
+            animateFloat();
             
             // Spring physics for rubber band effect
             function springBack() {
@@ -633,25 +608,16 @@
                 velocityY *= damping;
                 currentY += velocityY;
                 
-                // Update card position
                 cardSystem.style.marginTop = currentY + 'px';
                 
-                // Update lanyard string height (stretches when pulled)
-                const newHeight = baseLanyardHeight + currentY;
-                lanyardString.style.height = Math.min(newHeight, baseLanyardHeight + maxPull) + 'px';
-                
-                // Calculate rotation based on position
                 const rotation = currentY * 0.01;
                 cardSystem.style.transform = `rotate(${rotation}deg)`;
                 
-                // Continue animation if not settled
                 if (Math.abs(diff) > 0.5 || Math.abs(velocityY) > 0.1) {
                     requestAnimationFrame(springBack);
                 } else {
                     currentY = 0;
                     cardSystem.style.marginTop = '0px';
-                    cardSystem.style.transform = '';
-                    lanyardString.style.height = baseLanyardHeight + 'px';
                 }
             }
             
@@ -680,11 +646,6 @@
                 
                 cardSystem.style.marginTop = currentY + 'px';
                 
-                // Update lanyard string height
-                const newHeight = baseLanyardHeight + currentY;
-                lanyardString.style.height = newHeight + 'px';
-                
-                // Rotation based on drag
                 const rotation = currentY * 0.008;
                 cardSystem.style.transform = `rotate(${rotation}deg)`;
             });
@@ -721,11 +682,6 @@
                 lastTime = now;
                 
                 cardSystem.style.marginTop = currentY + 'px';
-                
-                // Update lanyard string
-                const newHeight = baseLanyardHeight + currentY;
-                lanyardString.style.height = newHeight + 'px';
-                
                 cardSystem.style.transform = `rotate(${currentY * 0.008}deg)`;
             });
             
