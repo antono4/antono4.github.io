@@ -345,11 +345,15 @@
                 #1d4ed8 80%, 
                 #1e40af 100%
             );
-            position: relative;
+            position: fixed;
+            top: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            height: 150px;
             display: flex;
             justify-content: center;
-            padding: 8px 0;
-            z-index: 2;
+            z-index: 40;
+            transition: height 0.3s ease;
         }
 
         .lanyard-strap::before {
@@ -368,14 +372,30 @@
             );
         }
 
+        .lanyard-strap::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 2px;
+            height: 100%;
+            background: linear-gradient(180deg, 
+                rgba(255,255,255,0.3) 0%,
+                rgba(255,255,255,0.1) 50%,
+                transparent 100%
+            );
+        }
+
         .lanyard-knot {
             width: 50px;
-            height: 20px;
+            height: 25px;
             background: linear-gradient(180deg, #1d4ed8 0%, #1e40af 100%);
             border-radius: 0 0 25px 25px;
             position: relative;
-            z-index: 3;
-            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+            z-index: 41;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.4);
+            margin-top: 150px;
         }
 
         .lanyard-knot::before,
@@ -401,22 +421,22 @@
 
         .lanyard-badge-clip {
             width: 30px;
-            height: 20px;
+            height: 25px;
             background: linear-gradient(180deg, #94a3b8 0%, #64748b 100%);
-            border-radius: 0 0 8px 8px;
+            border-radius: 0 0 10px 10px;
             position: relative;
-            z-index: 4;
-            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+            z-index: 42;
+            box-shadow: 0 3px 10px rgba(0, 0, 0, 0.3);
         }
 
         .lanyard-badge-clip::before {
             content: '';
             position: absolute;
-            top: 2px;
+            top: 3px;
             left: 50%;
             transform: translateX(-50%);
-            width: 10px;
-            height: 10px;
+            width: 12px;
+            height: 12px;
             background: linear-gradient(135deg, #cbd5e1 0%, #94a3b8 100%);
             border-radius: 50%;
             border: 2px solid #64748b;
@@ -425,6 +445,7 @@
         .id-card-with-lanyard {
             transform-origin: top center;
             transition: all 0.4s ease;
+            margin-top: -5px;
         }
 
         .lanyard-container:hover .id-card-with-lanyard {
@@ -448,6 +469,12 @@
 
         .lanyard-rope.left { left: 10px; }
         .lanyard-rope.right { right: 10px; }
+
+        /* Extend lanyard on scroll */
+        @keyframes extendLanyard {
+            from { height: 150px; }
+            to { height: 300px; }
+        }
 
         /* ===== Gradient Text ===== */
         .gradient-text {
@@ -801,12 +828,6 @@
                 <div class="slide-up flex justify-center lg:justify-end">
                     <!-- ID Card with Lanyard -->
                     <div class="lanyard-container">
-                        <!-- Lanyard Strap -->
-                        <div class="lanyard-strap" style="height: 100px;">
-                            <div class="lanyard-rope left"></div>
-                            <div class="lanyard-rope right"></div>
-                        </div>
-                        
                         <!-- Lanyard Knot -->
                         <div class="lanyard-knot"></div>
                         
@@ -895,6 +916,12 @@
                     </div>
                 </div>
             </div>
+        </div>
+        
+        <!-- Fixed Lanyard Strap (extends to top) -->
+        <div class="lanyard-strap" id="lanyardStrap">
+            <div class="lanyard-rope left"></div>
+            <div class="lanyard-rope right"></div>
         </div>
 
         <!-- Scroll Indicator -->
@@ -1408,6 +1435,45 @@
                 }
             });
         });
+
+        // ===== Lanyard Scroll Effect =====
+        (function initLanyard() {
+            const lanyardStrap = document.getElementById('lanyardStrap');
+            const lanyardKnot = document.querySelector('.lanyard-knot');
+            const lanyardBadgeClip = document.querySelector('.lanyard-badge-clip');
+            const lanyardContainer = document.querySelector('.lanyard-container');
+            
+            if (!lanyardStrap || !lanyardContainer) return;
+            
+            function updateLanyard() {
+                const scrollY = window.scrollY;
+                const heroSection = document.getElementById('about');
+                const heroTop = heroSection ? heroSection.offsetTop : 0;
+                const heroHeight = heroSection ? heroSection.offsetHeight : 0;
+                
+                // Calculate how much the card has scrolled past the top
+                const cardTop = lanyardContainer.getBoundingClientRect().top + scrollY;
+                const baseHeight = 150;
+                const extraHeight = Math.max(0, scrollY * 0.5);
+                const maxHeight = heroHeight + heroTop;
+                const newHeight = Math.min(maxHeight, baseHeight + extraHeight);
+                
+                lanyardStrap.style.height = newHeight + 'px';
+                lanyardKnot.style.marginTop = newHeight + 'px';
+                
+                // Hide lanyard when scrolled past hero section
+                if (scrollY > heroHeight - 100) {
+                    lanyardStrap.style.opacity = '0';
+                    lanyardStrap.style.transition = 'opacity 0.3s ease';
+                } else {
+                    lanyardStrap.style.opacity = '1';
+                }
+            }
+            
+            window.addEventListener('scroll', updateLanyard);
+            window.addEventListener('resize', updateLanyard);
+            updateLanyard();
+        })();
 
         // ===== 3D Particle Effect =====
         (function initParticles() {
