@@ -128,181 +128,292 @@
             transition: all 0.3s ease;
         }
 
-        /* ===== ID Card Style ===== */
-        .id-card {
-            position: relative;
-            background: linear-gradient(135deg, #1a1f35 0%, #0f172a 50%, #1a1f35 100%);
-            border-radius: 12px;
-            padding: 20px;
-            overflow: hidden;
-            transition: all 0.4s ease;
-            border: 2px solid transparent;
-            background-clip: padding-box;
+
+        /* ===== Realistic Lanyard System ===== */
+        
+        /* Main Lanyard Container - hangs from nav */
+        .lanyard-system {
+            position: fixed;
+            top: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            z-index: 40;
+            pointer-events: none;
         }
 
+        /* Lanyard Strap - The blue strap attached to nav */
+        .lanyard-strap-top {
+            width: 50px;
+            height: 60px;
+            background: linear-gradient(180deg, #1e3a8a 0%, #1d4ed8 30%, #3b82f6 50%, #2563eb 70%, #1e40af 100%);
+            position: relative;
+            margin: 0 auto;
+            border-radius: 0 0 4px 4px;
+            box-shadow: 
+                inset 0 2px 4px rgba(255,255,255,0.2),
+                inset -2px 0 4px rgba(0,0,0,0.1),
+                0 4px 8px rgba(0,0,0,0.3);
+        }
+
+        .lanyard-strap-top::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 30px;
+            height: 100%;
+            background: repeating-linear-gradient(
+                180deg,
+                transparent 0px,
+                transparent 8px,
+                rgba(255,255,255,0.05) 8px,
+                rgba(255,255,255,0.05) 10px
+            );
+        }
+
+        /* Strap connector to nav */
+        .lanyard-connector {
+            width: 40px;
+            height: 15px;
+            background: linear-gradient(180deg, #64748b 0%, #475569 50%, #334155 100%);
+            margin: 0 auto;
+            border-radius: 0 0 8px 8px;
+            position: relative;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.3);
+        }
+
+        .lanyard-connector::before {
+            content: '';
+            position: absolute;
+            top: 2px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 8px;
+            height: 8px;
+            background: radial-gradient(circle, #94a3b8 0%, #64748b 100%);
+            border-radius: 50%;
+            border: 1px solid #475569;
+        }
+
+        /* Main Lanyard Strap - Long strap that sways */
+        .lanyard-strap-main {
+            width: 45px;
+            margin: 0 auto;
+            background: linear-gradient(90deg, 
+                #1e3a8a 0%, 
+                #1d4ed8 15%, 
+                #3b82f6 30%, 
+                #60a5fa 50%, 
+                #3b82f6 70%, 
+                #1d4ed8 85%, 
+                #1e3a8a 100%
+            );
+            position: relative;
+            transform-origin: top center;
+            animation: sway 4s ease-in-out infinite;
+            box-shadow: 
+                2px 0 4px rgba(0,0,0,0.2),
+                -2px 0 4px rgba(0,0,0,0.2);
+        }
+
+        .lanyard-strap-main::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: repeating-linear-gradient(
+                180deg,
+                transparent 0px,
+                transparent 12px,
+                rgba(255,255,255,0.08) 12px,
+                rgba(255,255,255,0.08) 14px
+            );
+        }
+
+        /* Wind effect on strap */
+        .lanyard-strap-main::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 3px;
+            height: 100%;
+            background: linear-gradient(180deg, 
+                rgba(255,255,255,0.4) 0%,
+                rgba(255,255,255,0.1) 50%,
+                rgba(255,255,255,0.2) 100%
+            );
+        }
+
+        @keyframes sway {
+            0%, 100% { transform: rotate(-2deg) translateX(0); }
+            25% { transform: rotate(1deg) translateX(3px); }
+            50% { transform: rotate(2deg) translateX(0); }
+            75% { transform: rotate(-1deg) translateX(-2px); }
+        }
+
+        /* Knot */
+        .lanyard-knot {
+            width: 40px;
+            height: 20px;
+            background: linear-gradient(180deg, #1d4ed8 0%, #1e40af 100%);
+            margin: 0 auto;
+            border-radius: 0 0 20px 20px;
+            position: relative;
+            box-shadow: 0 3px 6px rgba(0,0,0,0.3);
+        }
+
+        .lanyard-knot::before {
+            content: '';
+            position: absolute;
+            top: -8px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 25px;
+            height: 12px;
+            background: linear-gradient(180deg, #3b82f6 0%, #1d4ed8 100%);
+            border-radius: 4px 4px 0 0;
+        }
+
+        /* Badge Clip */
+        .lanyard-clip {
+            width: 25px;
+            height: 18px;
+            background: linear-gradient(180deg, #cbd5e1 0%, #94a3b8 50%, #64748b 100%);
+            margin: 0 auto;
+            border-radius: 0 0 6px 6px;
+            position: relative;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+        }
+
+        .lanyard-clip::before {
+            content: '';
+            position: absolute;
+            top: 2px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 8px;
+            height: 8px;
+            background: radial-gradient(circle at 30% 30%, #e2e8f0, #94a3b8);
+            border-radius: 50%;
+            border: 1px solid #475569;
+        }
+
+        /* ID Card Container with physics */
+        .id-card-hanger {
+            transform-origin: top center;
+            animation: cardSway 5s ease-in-out infinite;
+            animation-delay: 0.3s;
+        }
+
+        @keyframes cardSway {
+            0%, 100% { transform: rotate(-3deg) translateX(-2px); }
+            20% { transform: rotate(1deg) translateX(2px); }
+            40% { transform: rotate(2deg) translateX(0); }
+            60% { transform: rotate(-1deg) translateX(-3px); }
+            80% { transform: rotate(-2deg) translateX(-1px); }
+        }
+
+        /* ID Card with glossy effect */
+        .id-card {
+            width: 320px;
+            background: linear-gradient(145deg, #1a2744 0%, #0f172a 50%, #1e293b 100%);
+            border-radius: 12px;
+            padding: 16px;
+            position: relative;
+            overflow: hidden;
+            box-shadow: 
+                0 10px 40px rgba(0,0,0,0.4),
+                0 0 0 1px rgba(255,255,255,0.1),
+                inset 0 1px 0 rgba(255,255,255,0.1);
+        }
+
+        /* Glossy overlay */
         .id-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 50%;
+            background: linear-gradient(180deg, 
+                rgba(255,255,255,0.08) 0%, 
+                rgba(255,255,255,0.02) 50%,
+                transparent 100%
+            );
+            pointer-events: none;
+            border-radius: 12px 12px 0 0;
+        }
+
+        /* Rainbow border */
+        .id-card::after {
             content: '';
             position: absolute;
             inset: 0;
             border-radius: 12px;
             padding: 2px;
-            background: linear-gradient(135deg, #3b82f6, #06b6d4, #8b5cf6, #3b82f6);
+            background: linear-gradient(135deg, #3b82f6, #06b6d4, #8b5cf6, #ec4899, #3b82f6);
             background-size: 300% 300%;
-            animation: gradientBorder 4s ease infinite;
+            animation: rainbowBorder 4s linear infinite;
             -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
             mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
             -webkit-mask-composite: xor;
             mask-composite: exclude;
         }
 
-        @keyframes gradientBorder {
-            0%, 100% { background-position: 0% 50%; }
-            50% { background-position: 100% 50%; }
+        @keyframes rainbowBorder {
+            0% { background-position: 0% 50%; }
+            100% { background-position: 300% 50%; }
         }
 
-        .id-card:hover {
-            transform: translateY(-4px) rotateX(2deg);
-            box-shadow: 
-                0 25px 50px -12px rgba(59, 130, 246, 0.25),
-                0 0 40px rgba(59, 130, 246, 0.1);
-        }
-
-        /* Holographic Effect */
-        .id-card::after {
-            content: '';
-            position: absolute;
-            top: -50%;
-            left: -50%;
-            width: 200%;
-            height: 200%;
-            background: linear-gradient(
-                45deg,
-                transparent 30%,
-                rgba(59, 130, 246, 0.03) 40%,
-                rgba(139, 92, 246, 0.05) 50%,
-                rgba(6, 182, 212, 0.03) 60%,
-                transparent 70%
-            );
-            transform: rotate(30deg);
-            pointer-events: none;
-            animation: holographic 6s linear infinite;
-        }
-
-        @keyframes holographic {
-            0% { transform: rotate(30deg) translateX(-10%); }
-            100% { transform: rotate(30deg) translateX(10%); }
-        }
-
-        /* ID Card Photo Frame */
-        .id-photo-frame {
-            width: 90px;
-            height: 110px;
-            border: 3px solid rgba(59, 130, 246, 0.5);
-            border-radius: 8px;
+        /* Photo frame */
+        .id-photo {
+            width: 85px;
+            height: 100px;
+            border: 3px solid rgba(59, 130, 246, 0.6);
+            border-radius: 6px;
             overflow: hidden;
-            position: relative;
             box-shadow: 
-                inset 0 0 20px rgba(59, 130, 246, 0.2),
-                0 4px 15px rgba(0, 0, 0, 0.3);
+                inset 0 0 15px rgba(59, 130, 246, 0.3),
+                0 4px 8px rgba(0,0,0,0.3);
         }
 
-        .id-photo-frame::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            height: 30%;
-            background: linear-gradient(to bottom, rgba(59, 130, 246, 0.1), transparent);
-            z-index: 1;
+        .id-photo img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
         }
 
-        /* ID Card Details */
+        /* ID Fields */
         .id-field {
             font-family: 'JetBrains Mono', monospace;
         }
 
         .id-label {
-            font-size: 8px;
+            font-size: 7px;
             color: #64748b;
             text-transform: uppercase;
-            letter-spacing: 1px;
-            margin-bottom: 2px;
+            letter-spacing: 1.5px;
         }
 
         .id-value {
-            font-size: 13px;
-            color: #f8fafc;
+            font-size: 12px;
+            color: #f1f5f9;
             font-weight: 500;
         }
 
-        /* ID Card Barcode */
-        .id-barcode {
-            display: flex;
-            gap: 2px;
-            height: 30px;
-            align-items: flex-end;
-        }
-
-        .barcode-bar {
-            width: 2px;
-            background: #64748b;
-            border-radius: 1px;
-        }
-
-        /* ID Badge */
-        .id-badge {
-            display: inline-flex;
-            align-items: center;
-            gap: 4px;
-            padding: 4px 10px;
-            background: linear-gradient(135deg, rgba(59, 130, 246, 0.2), rgba(139, 92, 246, 0.2));
-            border: 1px solid rgba(59, 130, 246, 0.3);
-            border-radius: 20px;
-            font-size: 10px;
-            color: #60a5fa;
-        }
-
-        .id-badge::before {
-            content: '';
-            width: 6px;
-            height: 6px;
-            background: #10b981;
-            border-radius: 50%;
-            animation: pulse 2s ease-in-out infinite;
-        }
-
-        @keyframes pulse {
-            0%, 100% { opacity: 1; transform: scale(1); }
-            50% { opacity: 0.5; transform: scale(0.8); }
-        }
-
-        /* Signature Area */
-        .id-signature {
-            font-family: 'Dancing Script', cursive;
-            font-size: 16px;
-            color: #94a3b8;
-            border-bottom: 1px solid rgba(148, 163, 184, 0.3);
-            padding-bottom: 4px;
-        }
-
-        /* ID Number Text */
-        .id-number {
-            font-family: 'JetBrains Mono', monospace;
-            font-size: 10px;
-            color: #475569;
-            letter-spacing: 2px;
-        }
-
-        /* Chip Design */
+        /* Chip */
         .id-chip {
-            width: 40px;
-            height: 30px;
-            background: linear-gradient(135deg, #fbbf24 0%, #d97706 50%, #fbbf24 100%);
-            border-radius: 6px;
+            width: 35px;
+            height: 25px;
+            background: linear-gradient(135deg, #fbbf24 0%, #f59e0b 50%, #d97706 100%);
+            border-radius: 4px;
             position: relative;
-            overflow: hidden;
-            box-shadow: 0 2px 8px rgba(251, 191, 36, 0.3);
+            box-shadow: 0 2px 4px rgba(251, 191, 36, 0.3);
         }
 
         .id-chip::before {
@@ -311,169 +422,144 @@
             top: 50%;
             left: 50%;
             transform: translate(-50%, -50%);
-            width: 30px;
-            height: 20px;
-            border: 1px solid rgba(0, 0, 0, 0.2);
-            border-radius: 3px;
+            width: 25px;
+            height: 15px;
+            border: 1px solid rgba(0,0,0,0.2);
+            border-radius: 2px;
         }
 
         .id-chip::after {
             content: '';
             position: absolute;
-            top: 4px;
-            left: 50%;
-            transform: translateX(-50%);
-            width: 24px;
-            height: 10px;
-            border: 1px solid rgba(0, 0, 0, 0.15);
-        }
-
-        /* ===== Lanyard Effect ===== */
-        .lanyard-container {
-            position: relative;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-        }
-
-        .lanyard-strap {
-            width: 60px;
-            background: linear-gradient(180deg, 
-                #1e40af 0%, 
-                #1d4ed8 20%, 
-                #3b82f6 50%, 
-                #1d4ed8 80%, 
-                #1e40af 100%
-            );
-            position: fixed;
-            top: 0;
-            left: 50%;
-            transform: translateX(-50%);
-            height: 150px;
-            display: flex;
-            justify-content: center;
-            z-index: 35;
-            transition: height 0.3s ease;
-        }
-
-        .lanyard-strap::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background: repeating-linear-gradient(
-                90deg,
-                transparent 0px,
-                transparent 4px,
-                rgba(255,255,255,0.1) 4px,
-                rgba(255,255,255,0.1) 8px
-            );
-        }
-
-        .lanyard-strap::after {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 50%;
-            transform: translateX(-50%);
-            width: 2px;
-            height: 100%;
-            background: linear-gradient(180deg, 
-                rgba(255,255,255,0.3) 0%,
-                rgba(255,255,255,0.1) 50%,
-                transparent 100%
-            );
-        }
-
-        .lanyard-knot {
-            width: 50px;
-            height: 25px;
-            background: linear-gradient(180deg, #1d4ed8 0%, #1e40af 100%);
-            border-radius: 0 0 25px 25px;
-            position: relative;
-            z-index: 36;
-            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.4);
-            margin-top: 150px;
-        }
-
-        .lanyard-knot::before,
-        .lanyard-knot::after {
-            content: '';
-            position: absolute;
-            top: 0;
-            width: 15px;
-            height: 15px;
-            background: linear-gradient(135deg, #3b82f6 0%, #1d4ed8 100%);
-            border-radius: 2px;
-        }
-
-        .lanyard-knot::before {
-            left: 5px;
-            transform: rotate(15deg);
-        }
-
-        .lanyard-knot::after {
-            right: 5px;
-            transform: rotate(-15deg);
-        }
-
-        .lanyard-badge-clip {
-            width: 30px;
-            height: 25px;
-            background: linear-gradient(180deg, #94a3b8 0%, #64748b 100%);
-            border-radius: 0 0 10px 10px;
-            position: relative;
-            z-index: 37;
-            box-shadow: 0 3px 10px rgba(0, 0, 0, 0.3);
-        }
-
-        .lanyard-badge-clip::before {
-            content: '';
-            position: absolute;
             top: 3px;
             left: 50%;
             transform: translateX(-50%);
-            width: 12px;
-            height: 12px;
-            background: linear-gradient(135deg, #cbd5e1 0%, #94a3b8 100%);
+            width: 20px;
+            height: 8px;
+            border: 1px solid rgba(0,0,0,0.15);
+        }
+
+        /* Barcode */
+        .id-barcode {
+            display: flex;
+            gap: 1.5px;
+            height: 25px;
+            align-items: flex-end;
+        }
+
+        .barcode-bar {
+            width: 2px;
+            background: #475569;
+            border-radius: 0.5px;
+        }
+
+        /* Badge */
+        .id-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 4px;
+            padding: 3px 8px;
+            background: linear-gradient(135deg, rgba(34, 197, 94, 0.2), rgba(16, 185, 129, 0.2));
+            border: 1px solid rgba(34, 197, 94, 0.4);
+            border-radius: 12px;
+            font-size: 9px;
+            color: #4ade80;
+        }
+
+        .id-badge::before {
+            content: '';
+            width: 5px;
+            height: 5px;
+            background: #22c55e;
             border-radius: 50%;
-            border: 2px solid #64748b;
+            animation: pulse 2s ease-in-out infinite;
         }
 
-        .id-card-with-lanyard {
-            transform-origin: top center;
-            transition: all 0.4s ease;
-            margin-top: -5px;
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.4; }
         }
 
-        .lanyard-container:hover .id-card-with-lanyard {
-            transform: rotateY(3deg) rotateX(5deg);
+        /* Signature */
+        .id-signature {
+            font-family: 'Dancing Script', cursive;
+            font-size: 14px;
+            color: #94a3b8;
+            border-bottom: 1px solid rgba(148, 163, 184, 0.2);
+            padding-bottom: 2px;
         }
 
-        /* Lanyard rope texture */
-        .lanyard-rope {
-            width: 8px;
-            height: 100%;
-            background: repeating-linear-gradient(
-                180deg,
-                #1e40af 0px,
-                #1e40af 3px,
-                #3b82f6 3px,
-                #3b82f6 6px
-            );
+        /* ID Number */
+        .id-number {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 9px;
+            color: #64748b;
+            letter-spacing: 2px;
+        }
+
+        /* Social Icons */
+        .id-social {
+            display: flex;
+            gap: 8px;
+        }
+
+        .id-social a {
+            width: 28px;
+            height: 28px;
+            border-radius: 6px;
+            background: rgba(59, 130, 246, 0.15);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #60a5fa;
+            transition: all 0.3s ease;
+        }
+
+        .id-social a:hover {
+            background: rgba(59, 130, 246, 0.3);
+            transform: translateY(-2px);
+        }
+
+        /* Holographic effect on card */
+        .holographic {
             position: absolute;
-            top: 0;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: linear-gradient(
+                45deg,
+                transparent 40%,
+                rgba(59, 130, 246, 0.05) 45%,
+                rgba(139, 92, 246, 0.08) 50%,
+                rgba(6, 182, 212, 0.05) 55%,
+                transparent 60%
+            );
+            transform: rotate(25deg);
+            animation: holoShift 8s linear infinite;
+            pointer-events: none;
         }
 
-        .lanyard-rope.left { left: 10px; }
-        .lanyard-rope.right { right: 10px; }
+        @keyframes holoShift {
+            0% { transform: rotate(25deg) translateX(-20%); }
+            100% { transform: rotate(25deg) translateX(20%); }
+        }
 
-        /* Extend lanyard on scroll */
-        @keyframes extendLanyard {
-            from { height: 150px; }
-            to { height: 300px; }
+        /* Wind particle effect */
+        .wind-particle {
+            position: absolute;
+            width: 20px;
+            height: 2px;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent);
+            border-radius: 2px;
+            animation: windFlow 2s linear infinite;
+            opacity: 0;
+        }
+
+        @keyframes windFlow {
+            0% { transform: translateX(-50px); opacity: 0; }
+            50% { opacity: 0.6; }
+            100% { transform: translateX(50px); opacity: 0; }
         }
 
         /* ===== Gradient Text ===== */
@@ -826,102 +912,110 @@
 
                 <!-- Right Content - Profile Card -->
                 <div class="slide-up flex justify-center lg:justify-end">
-                    <!-- ID Card with Lanyard -->
-                    <div class="lanyard-container">
-                        <!-- Lanyard Knot -->
+                    <!-- Realistic Lanyard System -->
+                    <div class="lanyard-system" id="lanyardSystem">
+                        <!-- Strap Top (attached to nav) -->
+                        <div class="lanyard-strap-top"></div>
+                        
+                        <!-- Metal Connector -->
+                        <div class="lanyard-connector"></div>
+                        
+                        <!-- Main Strap that sways in wind -->
+                        <div class="lanyard-strap-main" id="lanyardStrap" style="height: 280px;"></div>
+                        
+                        <!-- Knot -->
                         <div class="lanyard-knot"></div>
                         
                         <!-- Badge Clip -->
-                        <div class="lanyard-badge-clip"></div>
+                        <div class="lanyard-clip"></div>
                         
-                        <!-- ID Card -->
-                        <div class="id-card id-card-with-lanyard max-w-sm w-full mt-0">
-                            <!-- Top Section -->
-                            <div class="flex gap-4 mb-4">
-                                <!-- Photo -->
-                                <div class="id-photo-frame flex-shrink-0">
-                                    <img src="https://avatars.githubusercontent.com/u/73228642?v=4" alt="Antono" class="w-full h-full object-cover">
+                        <!-- ID Card Hanger -->
+                        <div class="id-card-hanger">
+                            <!-- ID Card -->
+                            <div class="id-card">
+                                <!-- Holographic Effect -->
+                                <div class="holographic"></div>
+                                
+                                <!-- Top Section -->
+                                <div class="flex gap-4 mb-4 relative z-10">
+                                    <!-- Photo -->
+                                    <div class="id-photo flex-shrink-0">
+                                        <img src="https://avatars.githubusercontent.com/u/73228642?v=4" alt="Antono">
+                                    </div>
+                                    
+                                    <!-- Info -->
+                                    <div class="flex-1 flex flex-col justify-between">
+                                        <div>
+                                            <div class="id-field mb-2">
+                                                <div class="id-label">Full Name</div>
+                                                <div class="id-value">Antono</div>
+                                            </div>
+                                            <div class="id-field mb-2">
+                                                <div class="id-label">Position</div>
+                                                <div class="id-value text-blue-400">Principal Developer</div>
+                                            </div>
+                                            <div class="id-field">
+                                                <div class="id-label">Location</div>
+                                                <div class="id-value" style="font-size: 11px;">West Java, Indonesia</div>
+                                            </div>
+                                        </div>
+                                    </div>
                                 </div>
                                 
-                                <!-- Info -->
-                                <div class="flex-1 flex flex-col justify-between">
+                                <!-- Divider -->
+                                <div class="h-px bg-gradient-to-r from-transparent via-blue-500/30 to-transparent my-3 relative z-10"></div>
+                                
+                                <!-- Bottom Section -->
+                                <div class="flex justify-between items-start relative z-10">
                                     <div>
-                                        <div class="id-field mb-3">
-                                            <div class="id-label">Full Name</div>
-                                            <div class="id-value">Antono</div>
+                                        <div class="id-field mb-2">
+                                            <div class="id-label">ID Number</div>
+                                            <div class="id-number">DEV-2024-73286</div>
                                         </div>
-                                        <div class="id-field mb-3">
-                                            <div class="id-label">Position</div>
-                                            <div class="id-value text-blue-400">Principal Developer</div>
-                                        </div>
-                                        <div class="id-field">
-                                            <div class="id-label">Location</div>
-                                            <div class="id-value text-sm">West Java, Indonesia</div>
+                                        <div class="id-badge mt-2">
+                                            <span>Verified</span>
                                         </div>
                                     </div>
+                                    <div class="id-chip"></div>
                                 </div>
-                            </div>
-                            
-                            <!-- Divider -->
-                            <div class="h-px bg-gradient-to-r from-transparent via-blue-500/30 to-transparent my-4"></div>
-                            
-                            <!-- Middle Section -->
-                            <div class="flex justify-between items-start mb-4">
-                                <div>
-                                    <div class="id-field mb-2">
-                                        <div class="id-label">ID Number</div>
-                                        <div class="id-number">DEV-2024-73286</div>
+                                
+                                <!-- Barcode & Signature -->
+                                <div class="flex justify-between items-end mt-4 relative z-10">
+                                    <div class="id-barcode">
+                                        <div class="barcode-bar" style="height: 15px;"></div>
+                                        <div class="barcode-bar" style="height: 20px;"></div>
+                                        <div class="barcode-bar" style="height: 12px;"></div>
+                                        <div class="barcode-bar" style="height: 22px;"></div>
+                                        <div class="barcode-bar" style="height: 18px;"></div>
+                                        <div class="barcode-bar" style="height: 25px;"></div>
+                                        <div class="barcode-bar" style="height: 10px;"></div>
+                                        <div class="barcode-bar" style="height: 20px;"></div>
+                                        <div class="barcode-bar" style="height: 16px;"></div>
+                                        <div class="barcode-bar" style="height: 22px;"></div>
+                                        <div class="barcode-bar" style="height: 14px;"></div>
                                     </div>
-                                    <div class="id-badge mt-2">
-                                        <span>Verified</span>
+                                    <div class="text-right">
+                                        <div class="id-signature">Antono</div>
                                     </div>
                                 </div>
-                                <div class="id-chip"></div>
-                            </div>
-                            
-                            <!-- Barcode -->
-                            <div class="flex justify-between items-end">
-                                <div class="id-barcode">
-                                    <div class="barcode-bar" style="height: 20px;"></div>
-                                    <div class="barcode-bar" style="height: 25px;"></div>
-                                    <div class="barcode-bar" style="height: 15px;"></div>
-                                    <div class="barcode-bar" style="height: 28px;"></div>
-                                    <div class="barcode-bar" style="height: 18px;"></div>
-                                    <div class="barcode-bar" style="height: 22px;"></div>
-                                    <div class="barcode-bar" style="height: 12px;"></div>
-                                    <div class="barcode-bar" style="height: 24px;"></div>
-                                    <div class="barcode-bar" style="height: 16px;"></div>
-                                    <div class="barcode-bar" style="height: 20px;"></div>
-                                    <div class="barcode-bar" style="height: 26px;"></div>
-                                    <div class="barcode-bar" style="height: 14px;"></div>
+                                
+                                <!-- Social Links -->
+                                <div class="id-social justify-center mt-4 pt-3 border-t border-white/5 relative z-10">
+                                    <a href="https://github.com/antono4" target="_blank">
+                                        <i class="fab fa-github text-sm"></i>
+                                    </a>
+                                    <a href="https://linkedin.com/in/antono4" target="_blank">
+                                        <i class="fab fa-linkedin-in text-sm"></i>
+                                    </a>
+                                    <a href="https://twitter.com/antono4" target="_blank">
+                                        <i class="fab fa-x-twitter text-sm"></i>
+                                    </a>
                                 </div>
-                                <div class="text-right">
-                                    <div class="id-signature">Antono</div>
-                                </div>
-                            </div>
-                            
-                            <!-- Social Links at Bottom -->
-                            <div class="flex justify-center gap-2 mt-4 pt-3 border-t border-white/5">
-                                <a href="https://github.com/antono4" target="_blank" class="w-8 h-8 rounded-lg bg-blue-500/20 flex items-center justify-center text-blue-400 hover:bg-blue-500/40 transition">
-                                    <i class="fab fa-github text-sm"></i>
-                                </a>
-                                <a href="https://linkedin.com/in/antono4" target="_blank" class="w-8 h-8 rounded-lg bg-blue-500/20 flex items-center justify-center text-blue-400 hover:bg-blue-500/40 transition">
-                                    <i class="fab fa-linkedin-in text-sm"></i>
-                                </a>
-                                <a href="https://twitter.com/antono4" target="_blank" class="w-8 h-8 rounded-lg bg-blue-500/20 flex items-center justify-center text-blue-400 hover:bg-blue-500/40 transition">
-                                    <i class="fab fa-x-twitter text-sm"></i>
-                                </a>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
-        </div>
-        
-        <!-- Fixed Lanyard Strap (extends to top) -->
-        <div class="lanyard-strap" id="lanyardStrap">
-            <div class="lanyard-rope left"></div>
-            <div class="lanyard-rope right"></div>
         </div>
 
         <!-- Scroll Indicator -->
@@ -1436,43 +1530,30 @@
             });
         });
 
-        // ===== Lanyard Scroll Effect =====
-        (function initLanyard() {
+        // ===== Wind Effect on Mouse Move =====
+        (function initWindEffect() {
             const lanyardStrap = document.getElementById('lanyardStrap');
-            const lanyardKnot = document.querySelector('.lanyard-knot');
-            const lanyardBadgeClip = document.querySelector('.lanyard-badge-clip');
-            const lanyardContainer = document.querySelector('.lanyard-container');
+            const idCardHanger = document.querySelector('.id-card-hanger');
             
-            if (!lanyardStrap || !lanyardContainer) return;
+            if (!lanyardStrap || !idCardHanger) return;
             
-            function updateLanyard() {
-                const scrollY = window.scrollY;
-                const heroSection = document.getElementById('about');
-                const heroTop = heroSection ? heroSection.offsetTop : 0;
-                const heroHeight = heroSection ? heroSection.offsetHeight : 0;
+            document.addEventListener('mousemove', (e) => {
+                const centerX = window.innerWidth / 2;
+                const mouseX = e.clientX;
+                const offsetX = (mouseX - centerX) / centerX;
                 
-                // Calculate how much the card has scrolled past the top
-                const cardTop = lanyardContainer.getBoundingClientRect().top + scrollY;
-                const baseHeight = 150;
-                const extraHeight = Math.max(0, scrollY * 0.5);
-                const maxHeight = heroHeight + heroTop;
-                const newHeight = Math.min(maxHeight, baseHeight + extraHeight);
+                // Apply wind effect to strap
+                lanyardStrap.style.transform = `rotate(${offsetX * 3}deg)`;
                 
-                lanyardStrap.style.height = newHeight + 'px';
-                lanyardKnot.style.marginTop = newHeight + 'px';
-                
-                // Hide lanyard when scrolled past hero section
-                if (scrollY > heroHeight - 100) {
-                    lanyardStrap.style.opacity = '0';
-                    lanyardStrap.style.transition = 'opacity 0.3s ease';
-                } else {
-                    lanyardStrap.style.opacity = '1';
-                }
-            }
+                // Apply more pronounced effect to card
+                idCardHanger.style.transform = `rotate(${offsetX * 5}deg) translateX(${offsetX * 10}px)`;
+            });
             
-            window.addEventListener('scroll', updateLanyard);
-            window.addEventListener('resize', updateLanyard);
-            updateLanyard();
+            // Reset on mouse leave
+            document.addEventListener('mouseleave', () => {
+                lanyardStrap.style.transform = '';
+                idCardHanger.style.transform = '';
+            });
         })();
 
         // ===== 3D Particle Effect =====
