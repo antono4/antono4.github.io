@@ -217,7 +217,7 @@
                 <!-- Right Content - ID Card with Fixed Lanyard -->
                 <div class="flex justify-center lg:justify-end relative">
                     <!-- Fixed Lanyard Anchor Point (from nav) -->
-                    <div id="lanyardAnchor" style="position: absolute; top: -70px; left: 50%; transform: translateX(-50%); z-index: 40;">
+                    <div id="lanyardAnchor" style="position: absolute; top: -130px; left: 50%; transform: translateX(-50%); z-index: 40;">
                         <!-- Lanyard Top (connects to nav) -->
                         <div class="w-5 h-[60px] lanyard-texture rounded-full shadow-xl"></div>
                     </div>
@@ -226,7 +226,7 @@
                     <div id="draggableCard" class="hanging-element flex flex-col items-center cursor-grab active:cursor-grabbing select-none" style="position: relative; z-index: 45;">
                         
                         <!-- Lanyard String -->
-                        <div id="lanyardString" class="w-5 lanyard-texture rounded-full shadow-xl transition-all duration-100" style="height: 280px;"></div>
+                        <div id="lanyardString" class="w-5 lanyard-texture rounded-full shadow-xl transition-all duration-100" style="height: 380px;"></div>
                         
                         <!-- Metal Clip -->
                         <div class="w-12 h-10 bg-gradient-to-b from-gray-400 to-gray-600 rounded-t-lg shadow-xl z-20 -mt-1 relative glossy">
@@ -624,7 +624,7 @@
             const maxTop = 0;
             const minTop = 350;
             const originalTop = 0;
-            const baseStringHeight = 280;
+            const baseStringHeight = 380;
             
             // Spring physics for rubber band effect
             function springBack() {
