@@ -134,17 +134,19 @@
         /* Main Lanyard Container - hangs from nav */
         .lanyard-system {
             position: fixed;
-            top: 0;
+            top: 60px; /* Start right below nav */
             left: 50%;
             transform: translateX(-50%);
-            z-index: 40;
-            pointer-events: none;
+            z-index: 35;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
         }
 
         /* Lanyard Strap - The blue strap attached to nav */
         .lanyard-strap-top {
             width: 50px;
-            height: 60px;
+            height: 40px;
             background: linear-gradient(180deg, #1e3a8a 0%, #1d4ed8 30%, #3b82f6 50%, #2563eb 70%, #1e40af 100%);
             position: relative;
             margin: 0 auto;
@@ -175,7 +177,7 @@
         /* Strap connector to nav */
         .lanyard-connector {
             width: 40px;
-            height: 15px;
+            height: 12px;
             background: linear-gradient(180deg, #64748b 0%, #475569 50%, #334155 100%);
             margin: 0 auto;
             border-radius: 0 0 8px 8px;
@@ -250,16 +252,16 @@
         }
 
         @keyframes sway {
-            0%, 100% { transform: rotate(-2deg) translateX(0); }
-            25% { transform: rotate(1deg) translateX(3px); }
-            50% { transform: rotate(2deg) translateX(0); }
-            75% { transform: rotate(-1deg) translateX(-2px); }
+            0%, 100% { transform: rotate(-3deg) translateX(0); }
+            25% { transform: rotate(1.5deg) translateX(4px); }
+            50% { transform: rotate(3deg) translateX(0); }
+            75% { transform: rotate(-1.5deg) translateX(-3px); }
         }
 
         /* Knot */
         .lanyard-knot {
             width: 40px;
-            height: 20px;
+            height: 18px;
             background: linear-gradient(180deg, #1d4ed8 0%, #1e40af 100%);
             margin: 0 auto;
             border-radius: 0 0 20px 20px;
@@ -270,11 +272,11 @@
         .lanyard-knot::before {
             content: '';
             position: absolute;
-            top: -8px;
+            top: -6px;
             left: 50%;
             transform: translateX(-50%);
             width: 25px;
-            height: 12px;
+            height: 10px;
             background: linear-gradient(180deg, #3b82f6 0%, #1d4ed8 100%);
             border-radius: 4px 4px 0 0;
         }
@@ -282,7 +284,7 @@
         /* Badge Clip */
         .lanyard-clip {
             width: 25px;
-            height: 18px;
+            height: 16px;
             background: linear-gradient(180deg, #cbd5e1 0%, #94a3b8 50%, #64748b 100%);
             margin: 0 auto;
             border-radius: 0 0 6px 6px;
