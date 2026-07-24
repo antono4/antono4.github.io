@@ -607,18 +607,7 @@
             // Remove cursor classes since no dragging
             cardSystem.classList.remove('cursor-grab', 'active:cursor-grabbing');
             
-            // 360 rotation every 30 seconds using CSS animation
-            cardSystem.style.animation = 'rotate360 30s linear infinite';
-            
-            // Add the rotation keyframes to the document
-            const style = document.createElement('style');
-            style.textContent = `
-                @keyframes rotate360 {
-                    from { transform: rotate(0deg); }
-                    to { transform: rotate(360deg); }
-                }
-            `;
-            document.head.appendChild(style);
+            // Remove rotation animation - card stays static
             
             // Hide card when scrolling down, show when scrolling up
             let lastScrollY = window.scrollY;
