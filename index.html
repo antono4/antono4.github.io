@@ -209,10 +209,10 @@
                     </div>
                 </div>
 
-                <!-- Right Content - ID Card with Lanyard -->
-                <div class="flex justify-center lg:justify-end relative">
-                    <!-- Draggable Card System -->
-                    <div id="cardSystem" class="flex flex-col items-center cursor-grab active:cursor-grabbing select-none" style="position: relative; z-index: 45;">
+                <!-- Right Content - ID Card with Lanyard (Fixed Position) -->
+                <div class="lg:justify-end relative">
+                    <!-- Draggable Card System - Fixed position so it doesn't affect text -->
+                    <div id="cardSystem" class="flex flex-col items-center cursor-grab active:cursor-grabbing select-none" style="position: fixed; top: 140px; right: 80px; z-index: 45;">
                         
                         <!-- Lanyard String (extends to nav) -->
                         <div id="lanyardString" class="w-4 lanyard-texture rounded-full shadow-xl" style="height: 250px; margin-top: -250px;"></div>
