@@ -211,8 +211,8 @@
 
                 <!-- Right Content - ID Card with Lanyard (Fixed Position) -->
                 <div class="lg:justify-end relative">
-                    <!-- Draggable Card System - Fixed position so it doesn't affect text -->
-                    <div id="cardSystem" class="flex flex-col items-center cursor-grab active:cursor-grabbing select-none" style="position: fixed; top: 140px; right: 80px; z-index: 45;">
+                    <!-- Card System - Fixed position with 360 rotation -->
+                    <div id="cardSystem" class="flex flex-col items-center" style="position: fixed; top: 140px; right: 80px; z-index: 45;">
                         
                         <!-- Lanyard String (extends to nav) -->
                         <div id="lanyardString" class="w-4 lanyard-texture rounded-full shadow-xl" style="height: 250px; margin-top: -250px;"></div>
@@ -599,144 +599,26 @@
         // Set current year dynamically
         document.getElementById('currentYear').textContent = new Date().getFullYear();
         
-        // Floating ID Card Animation with Lanyard
+        // ID Card with Lanyard - 360 Rotation Animation
         (function() {
             const cardSystem = document.getElementById('cardSystem');
-            const lanyardString = document.getElementById('lanyardString');
-            if (!cardSystem || !lanyardString) return;
+            if (!cardSystem) return;
             
-            let isDragging = false;
-            let currentY = 0;
-            let velocityY = 0;
-            let lastY = 0;
-            let lastTime = 0;
-            const maxPull = 300;
-            const baseLanyardHeight = 250;
+            // Remove cursor classes since no dragging
+            cardSystem.classList.remove('cursor-grab', 'active:cursor-grabbing');
             
-            // Float animation
-            let floatTime = 0;
-            const floatSpeed = 0.002;
+            // 360 rotation every 30 seconds using CSS animation
+            cardSystem.style.animation = 'rotate360 30s linear infinite';
             
-            function animateFloat() {
-                if (!isDragging) {
-                    floatTime += floatSpeed;
-                    const floatY = Math.sin(floatTime) * 5;
-                    const floatRotation = Math.sin(floatTime * 0.7) * 0.3;
-                    cardSystem.style.transform = `translateY(${floatY}px) rotate(${floatRotation}deg)`;
+            // Add the rotation keyframes to the document
+            const style = document.createElement('style');
+            style.textContent = `
+                @keyframes rotate360 {
+                    from { transform: rotate(0deg); }
+                    to { transform: rotate(360deg); }
                 }
-                requestAnimationFrame(animateFloat);
-            }
-            animateFloat();
-            
-            // Spring physics for rubber band effect
-            function springBack() {
-                if (isDragging) return;
-                
-                const stiffness = 0.08;
-                const damping = 0.75;
-                const diff = 0 - currentY;
-                
-                velocityY += diff * stiffness;
-                velocityY *= damping;
-                currentY += velocityY;
-                
-                cardSystem.style.marginTop = currentY + 'px';
-                
-                // Update lanyard string height
-                const newHeight = baseLanyardHeight + currentY;
-                lanyardString.style.height = Math.max(baseLanyardHeight, newHeight) + 'px';
-                
-                const rotation = currentY * 0.01;
-                cardSystem.style.transform = `rotate(${rotation}deg)`;
-                
-                if (Math.abs(diff) > 0.5 || Math.abs(velocityY) > 0.1) {
-                    requestAnimationFrame(springBack);
-                } else {
-                    currentY = 0;
-                    cardSystem.style.marginTop = '0px';
-                    lanyardString.style.height = baseLanyardHeight + 'px';
-                }
-            }
-            
-            cardSystem.addEventListener('mousedown', function(e) {
-                isDragging = true;
-                velocityY = 0;
-                lastY = e.clientY;
-                lastTime = Date.now();
-                cardSystem.style.transition = 'none';
-            });
-            
-            document.addEventListener('mousemove', function(e) {
-                if (!isDragging) return;
-                
-                const deltaY = e.clientY - lastY;
-                currentY += deltaY;
-                currentY = Math.max(0, Math.min(maxPull, currentY));
-                
-                const now = Date.now();
-                const dt = now - lastTime;
-                if (dt > 0) {
-                    velocityY = deltaY / dt * 16;
-                }
-                lastY = e.clientY;
-                lastTime = now;
-                
-                cardSystem.style.marginTop = currentY + 'px';
-                
-                // Update lanyard string height
-                const newHeight = baseLanyardHeight + currentY;
-                lanyardString.style.height = newHeight + 'px';
-                
-                const rotation = currentY * 0.008;
-                cardSystem.style.transform = `rotate(${rotation}deg)`;
-            });
-            
-            document.addEventListener('mouseup', function() {
-                if (isDragging) {
-                    isDragging = false;
-                    springBack();
-                }
-            });
-            
-            // Touch support
-            cardSystem.addEventListener('touchstart', function(e) {
-                isDragging = true;
-                velocityY = 0;
-                lastY = e.touches[0].clientY;
-                lastTime = Date.now();
-                cardSystem.style.transition = 'none';
-            });
-            
-            document.addEventListener('touchmove', function(e) {
-                if (!isDragging) return;
-                
-                const deltaY = e.touches[0].clientY - lastY;
-                currentY += deltaY;
-                currentY = Math.max(0, Math.min(maxPull, currentY));
-                
-                const now = Date.now();
-                const dt = now - lastTime;
-                if (dt > 0) {
-                    velocityY = deltaY / dt * 16;
-                }
-                lastY = e.touches[0].clientY;
-                lastTime = now;
-                
-                cardSystem.style.marginTop = currentY + 'px';
-                
-                // Update lanyard string height
-                const newHeight = baseLanyardHeight + currentY;
-                lanyardString.style.height = newHeight + 'px';
-                
-                cardSystem.style.transform = `rotate(${currentY * 0.008}deg)`;
-            });
-            
-            document.addEventListener('touchend', function() {
-                if (isDragging) {
-                    isDragging = false;
-                    springBack();
-                }
-            });
+            `;
+            document.head.appendChild(style);
         })();
 
         // 3D Particle Effect
