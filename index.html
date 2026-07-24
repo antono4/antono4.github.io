@@ -328,6 +328,127 @@
             border: 1px solid rgba(0, 0, 0, 0.15);
         }
 
+        /* ===== Lanyard Effect ===== */
+        .lanyard-container {
+            position: relative;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .lanyard-strap {
+            width: 60px;
+            background: linear-gradient(180deg, 
+                #1e40af 0%, 
+                #1d4ed8 20%, 
+                #3b82f6 50%, 
+                #1d4ed8 80%, 
+                #1e40af 100%
+            );
+            position: relative;
+            display: flex;
+            justify-content: center;
+            padding: 8px 0;
+            z-index: 2;
+        }
+
+        .lanyard-strap::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: repeating-linear-gradient(
+                90deg,
+                transparent 0px,
+                transparent 4px,
+                rgba(255,255,255,0.1) 4px,
+                rgba(255,255,255,0.1) 8px
+            );
+        }
+
+        .lanyard-knot {
+            width: 50px;
+            height: 20px;
+            background: linear-gradient(180deg, #1d4ed8 0%, #1e40af 100%);
+            border-radius: 0 0 25px 25px;
+            position: relative;
+            z-index: 3;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+        }
+
+        .lanyard-knot::before,
+        .lanyard-knot::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            width: 15px;
+            height: 15px;
+            background: linear-gradient(135deg, #3b82f6 0%, #1d4ed8 100%);
+            border-radius: 2px;
+        }
+
+        .lanyard-knot::before {
+            left: 5px;
+            transform: rotate(15deg);
+        }
+
+        .lanyard-knot::after {
+            right: 5px;
+            transform: rotate(-15deg);
+        }
+
+        .lanyard-badge-clip {
+            width: 30px;
+            height: 20px;
+            background: linear-gradient(180deg, #94a3b8 0%, #64748b 100%);
+            border-radius: 0 0 8px 8px;
+            position: relative;
+            z-index: 4;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+        }
+
+        .lanyard-badge-clip::before {
+            content: '';
+            position: absolute;
+            top: 2px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 10px;
+            height: 10px;
+            background: linear-gradient(135deg, #cbd5e1 0%, #94a3b8 100%);
+            border-radius: 50%;
+            border: 2px solid #64748b;
+        }
+
+        .id-card-with-lanyard {
+            transform-origin: top center;
+            transition: all 0.4s ease;
+        }
+
+        .lanyard-container:hover .id-card-with-lanyard {
+            transform: rotateY(3deg) rotateX(5deg);
+        }
+
+        /* Lanyard rope texture */
+        .lanyard-rope {
+            width: 8px;
+            height: 100%;
+            background: repeating-linear-gradient(
+                180deg,
+                #1e40af 0px,
+                #1e40af 3px,
+                #3b82f6 3px,
+                #3b82f6 6px
+            );
+            position: absolute;
+            top: 0;
+        }
+
+        .lanyard-rope.left { left: 10px; }
+        .lanyard-rope.right { right: 10px; }
+
         /* ===== Gradient Text ===== */
         .gradient-text {
             background: linear-gradient(135deg, var(--accent-blue) 0%, var(--accent-cyan) 50%, var(--accent-emerald) 100%);
@@ -678,83 +799,98 @@
 
                 <!-- Right Content - Profile Card -->
                 <div class="slide-up flex justify-center lg:justify-end">
-                    <!-- ID Card -->
-                    <div class="id-card max-w-sm w-full">
-                        <!-- Top Section -->
-                        <div class="flex gap-4 mb-4">
-                            <!-- Photo -->
-                            <div class="id-photo-frame flex-shrink-0">
-                                <img src="https://avatars.githubusercontent.com/u/73228642?v=4" alt="Antono" class="w-full h-full object-cover">
+                    <!-- ID Card with Lanyard -->
+                    <div class="lanyard-container">
+                        <!-- Lanyard Strap -->
+                        <div class="lanyard-strap" style="height: 100px;">
+                            <div class="lanyard-rope left"></div>
+                            <div class="lanyard-rope right"></div>
+                        </div>
+                        
+                        <!-- Lanyard Knot -->
+                        <div class="lanyard-knot"></div>
+                        
+                        <!-- Badge Clip -->
+                        <div class="lanyard-badge-clip"></div>
+                        
+                        <!-- ID Card -->
+                        <div class="id-card id-card-with-lanyard max-w-sm w-full mt-0">
+                            <!-- Top Section -->
+                            <div class="flex gap-4 mb-4">
+                                <!-- Photo -->
+                                <div class="id-photo-frame flex-shrink-0">
+                                    <img src="https://avatars.githubusercontent.com/u/73228642?v=4" alt="Antono" class="w-full h-full object-cover">
+                                </div>
+                                
+                                <!-- Info -->
+                                <div class="flex-1 flex flex-col justify-between">
+                                    <div>
+                                        <div class="id-field mb-3">
+                                            <div class="id-label">Full Name</div>
+                                            <div class="id-value">Antono</div>
+                                        </div>
+                                        <div class="id-field mb-3">
+                                            <div class="id-label">Position</div>
+                                            <div class="id-value text-blue-400">Principal Developer</div>
+                                        </div>
+                                        <div class="id-field">
+                                            <div class="id-label">Location</div>
+                                            <div class="id-value text-sm">West Java, Indonesia</div>
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
                             
-                            <!-- Info -->
-                            <div class="flex-1 flex flex-col justify-between">
+                            <!-- Divider -->
+                            <div class="h-px bg-gradient-to-r from-transparent via-blue-500/30 to-transparent my-4"></div>
+                            
+                            <!-- Middle Section -->
+                            <div class="flex justify-between items-start mb-4">
                                 <div>
-                                    <div class="id-field mb-3">
-                                        <div class="id-label">Full Name</div>
-                                        <div class="id-value">Antono</div>
+                                    <div class="id-field mb-2">
+                                        <div class="id-label">ID Number</div>
+                                        <div class="id-number">DEV-2024-73286</div>
                                     </div>
-                                    <div class="id-field mb-3">
-                                        <div class="id-label">Position</div>
-                                        <div class="id-value text-blue-400">Principal Developer</div>
-                                    </div>
-                                    <div class="id-field">
-                                        <div class="id-label">Location</div>
-                                        <div class="id-value text-sm">West Java, Indonesia</div>
+                                    <div class="id-badge mt-2">
+                                        <span>Verified</span>
                                     </div>
                                 </div>
+                                <div class="id-chip"></div>
                             </div>
-                        </div>
-                        
-                        <!-- Divider -->
-                        <div class="h-px bg-gradient-to-r from-transparent via-blue-500/30 to-transparent my-4"></div>
-                        
-                        <!-- Middle Section -->
-                        <div class="flex justify-between items-start mb-4">
-                            <div>
-                                <div class="id-field mb-2">
-                                    <div class="id-label">ID Number</div>
-                                    <div class="id-number">DEV-2024-73286</div>
+                            
+                            <!-- Barcode -->
+                            <div class="flex justify-between items-end">
+                                <div class="id-barcode">
+                                    <div class="barcode-bar" style="height: 20px;"></div>
+                                    <div class="barcode-bar" style="height: 25px;"></div>
+                                    <div class="barcode-bar" style="height: 15px;"></div>
+                                    <div class="barcode-bar" style="height: 28px;"></div>
+                                    <div class="barcode-bar" style="height: 18px;"></div>
+                                    <div class="barcode-bar" style="height: 22px;"></div>
+                                    <div class="barcode-bar" style="height: 12px;"></div>
+                                    <div class="barcode-bar" style="height: 24px;"></div>
+                                    <div class="barcode-bar" style="height: 16px;"></div>
+                                    <div class="barcode-bar" style="height: 20px;"></div>
+                                    <div class="barcode-bar" style="height: 26px;"></div>
+                                    <div class="barcode-bar" style="height: 14px;"></div>
                                 </div>
-                                <div class="id-badge mt-2">
-                                    <span>Verified</span>
+                                <div class="text-right">
+                                    <div class="id-signature">Antono</div>
                                 </div>
                             </div>
-                            <div class="id-chip"></div>
-                        </div>
-                        
-                        <!-- Barcode -->
-                        <div class="flex justify-between items-end">
-                            <div class="id-barcode">
-                                <div class="barcode-bar" style="height: 20px;"></div>
-                                <div class="barcode-bar" style="height: 25px;"></div>
-                                <div class="barcode-bar" style="height: 15px;"></div>
-                                <div class="barcode-bar" style="height: 28px;"></div>
-                                <div class="barcode-bar" style="height: 18px;"></div>
-                                <div class="barcode-bar" style="height: 22px;"></div>
-                                <div class="barcode-bar" style="height: 12px;"></div>
-                                <div class="barcode-bar" style="height: 24px;"></div>
-                                <div class="barcode-bar" style="height: 16px;"></div>
-                                <div class="barcode-bar" style="height: 20px;"></div>
-                                <div class="barcode-bar" style="height: 26px;"></div>
-                                <div class="barcode-bar" style="height: 14px;"></div>
+                            
+                            <!-- Social Links at Bottom -->
+                            <div class="flex justify-center gap-2 mt-4 pt-3 border-t border-white/5">
+                                <a href="https://github.com/antono4" target="_blank" class="w-8 h-8 rounded-lg bg-blue-500/20 flex items-center justify-center text-blue-400 hover:bg-blue-500/40 transition">
+                                    <i class="fab fa-github text-sm"></i>
+                                </a>
+                                <a href="https://linkedin.com/in/antono4" target="_blank" class="w-8 h-8 rounded-lg bg-blue-500/20 flex items-center justify-center text-blue-400 hover:bg-blue-500/40 transition">
+                                    <i class="fab fa-linkedin-in text-sm"></i>
+                                </a>
+                                <a href="https://twitter.com/antono4" target="_blank" class="w-8 h-8 rounded-lg bg-blue-500/20 flex items-center justify-center text-blue-400 hover:bg-blue-500/40 transition">
+                                    <i class="fab fa-x-twitter text-sm"></i>
+                                </a>
                             </div>
-                            <div class="text-right">
-                                <div class="id-signature">Antono</div>
-                            </div>
-                        </div>
-                        
-                        <!-- Social Links at Bottom -->
-                        <div class="flex justify-center gap-2 mt-4 pt-3 border-t border-white/5">
-                            <a href="https://github.com/antono4" target="_blank" class="w-8 h-8 rounded-lg bg-blue-500/20 flex items-center justify-center text-blue-400 hover:bg-blue-500/40 transition">
-                                <i class="fab fa-github text-sm"></i>
-                            </a>
-                            <a href="https://linkedin.com/in/antono4" target="_blank" class="w-8 h-8 rounded-lg bg-blue-500/20 flex items-center justify-center text-blue-400 hover:bg-blue-500/40 transition">
-                                <i class="fab fa-linkedin-in text-sm"></i>
-                            </a>
-                            <a href="https://twitter.com/antono4" target="_blank" class="w-8 h-8 rounded-lg bg-blue-500/20 flex items-center justify-center text-blue-400 hover:bg-blue-500/40 transition">
-                                <i class="fab fa-x-twitter text-sm"></i>
-                            </a>
                         </div>
                     </div>
                 </div>
