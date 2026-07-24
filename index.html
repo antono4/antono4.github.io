@@ -214,8 +214,8 @@
                     <!-- Draggable Card System -->
                     <div id="cardSystem" class="flex flex-col items-center cursor-grab active:cursor-grabbing select-none" style="position: relative; z-index: 45;">
                         
-                        <!-- Lanyard String -->
-                        <div id="lanyardString" class="w-4 lanyard-texture rounded-full shadow-xl" style="height: 100px;"></div>
+                        <!-- Lanyard String (extends to nav) -->
+                        <div id="lanyardString" class="w-4 lanyard-texture rounded-full shadow-xl" style="height: 250px; margin-top: -250px;"></div>
                         
                         <!-- Metal Clip -->
                         <div class="w-14 h-12 bg-gradient-to-b from-gray-400 to-gray-600 rounded-t-lg shadow-xl z-20 -mt-1 relative glossy">
@@ -611,7 +611,7 @@
             let lastY = 0;
             let lastTime = 0;
             const maxPull = 300;
-            const baseLanyardHeight = 100;
+            const baseLanyardHeight = 250;
             
             // Float animation
             let floatTime = 0;
