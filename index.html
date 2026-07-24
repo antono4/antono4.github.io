@@ -226,10 +226,10 @@
                     <div id="lanyardSystem" class="flex flex-col items-center cursor-grab active:cursor-grabbing select-none" style="position: relative; z-index: 45;">
                         
                         <!-- Top fixed lanyard (from nav) -->
-                        <div id="lanyardTop" class="w-5 h-[80px] lanyard-texture rounded-full shadow-xl"></div>
+                        <div id="lanyardTop" class="w-5 h-[40px] lanyard-texture rounded-full shadow-xl"></div>
                         
                         <!-- Bottom lanyard string (stretches) -->
-                        <div id="lanyardString" class="w-5 lanyard-texture rounded-full shadow-xl transition-all duration-100" style="height: 350px;"></div>
+                        <div id="lanyardString" class="w-5 lanyard-texture rounded-full shadow-xl transition-all duration-100" style="height: 200px;"></div>
                         
                         <!-- Metal Clip -->
                         <div class="w-14 h-12 bg-gradient-to-b from-gray-400 to-gray-600 rounded-t-lg shadow-xl z-20 -mt-1 relative glossy">
@@ -627,8 +627,8 @@
             let lastTime = 0;
             const maxTop = 0;
             const minTop = 300;
-            const baseStringHeight = 350;
-            const baseTopHeight = 80;
+            const baseStringHeight = 200;
+            const baseTopHeight = 40;
             
             // Spring physics for rubber band effect
             function springBack() {
