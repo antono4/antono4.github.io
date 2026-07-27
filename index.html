@@ -184,45 +184,54 @@
             }
         }
         
-        /* Wind blow effect for ID card - 15 seconds */
+        /* Natural Wind blow effect for ID card - 15 seconds */
         @keyframes windBlow {
-            0% { transform: rotate(0deg) translateX(0) scale(1); }
-            5% { transform: rotate(-2deg) translateX(5px) scale(1.01); }
-            10% { transform: rotate(1deg) translateX(-3px) scale(1); }
-            15% { transform: rotate(-3deg) translateX(8px) scale(1.02); }
-            20% { transform: rotate(2deg) translateX(-5px) scale(1); }
-            25% { transform: rotate(-1deg) translateX(3px) scale(1.01); }
-            30% { transform: rotate(2deg) translateX(-4px) scale(1); }
-            35% { transform: rotate(-2deg) translateX(6px) scale(1.01); }
-            40% { transform: rotate(1deg) translateX(-2px) scale(1); }
-            45% { transform: rotate(-3deg) translateX(7px) scale(1.02); }
-            50% { transform: rotate(2deg) translateX(-6px) scale(1); }
-            55% { transform: rotate(-1deg) translateX(4px) scale(1.01); }
-            60% { transform: rotate(3deg) translateX(-5px) scale(1); }
-            65% { transform: rotate(-2deg) translateX(8px) scale(1.01); }
-            70% { transform: rotate(1deg) translateX(-3px) scale(1); }
-            75% { transform: rotate(-3deg) translateX(5px) scale(1.02); }
-            80% { transform: rotate(2deg) translateX(-7px) scale(1); }
-            85% { transform: rotate(-1deg) translateX(4px) scale(1.01); }
-            90% { transform: rotate(2deg) translateX(-3px) scale(1); }
-            95% { transform: rotate(-2deg) translateX(5px) scale(1.01); }
-            100% { transform: rotate(0deg) translateX(0) scale(1); }
+            0% { transform: rotate(0deg) translateY(0) translateX(0) skewX(0deg); }
+            /* First gust - gentle push right */
+            8% { transform: rotate(1deg) translateY(-2px) translateX(12px) skewX(1deg); }
+            /* Slight rebound */
+            15% { transform: rotate(-0.5deg) translateY(1px) translateX(8px) skewX(-0.5deg); }
+            /* Stronger second gust */
+            22% { transform: rotate(2.5deg) translateY(-4px) translateX(20px) skewX(2deg); }
+            /* Slow drift back */
+            30% { transform: rotate(0.5deg) translateY(-1px) translateX(12px) skewX(0.5deg); }
+            /* Calm moment */
+            38% { transform: rotate(-0.3deg) translateY(0px) translateX(5px) skewX(0deg); }
+            /* Third gust - weaker */
+            45% { transform: rotate(1.5deg) translateY(-2px) translateX(15px) skewX(1deg); }
+            /* Settling sway */
+            52% { transform: rotate(0deg) translateY(0px) translateX(8px) skewX(0deg); }
+            /* Gentle flutter */
+            58% { transform: rotate(-1deg) translateY(-1px) translateX(5px) skewX(-0.5deg); }
+            /* Final gust */
+            65% { transform: rotate(2deg) translateY(-3px) translateX(18px) skewX(1.5deg); }
+            /* Slow return */
+            72% { transform: rotate(0.5deg) translateY(-1px) translateX(10px) skewX(0.5deg); }
+            /* Gentle wobble */
+            78% { transform: rotate(-0.5deg) translateY(0px) translateX(6px) skewX(-0.3deg); }
+            /* Final flutter */
+            85% { transform: rotate(1deg) translateY(-1px) translateX(8px) skewX(0.5deg); }
+            /* Almost still */
+            92% { transform: rotate(-0.2deg) translateY(0px) translateX(3px) skewX(0deg); }
+            /* Return to rest */
+            100% { transform: rotate(0deg) translateY(0) translateX(0) skewX(0deg); }
         }
         
         .wind-blow {
-            animation: windBlow 15s ease-in-out;
+            animation: windBlow 15s cubic-bezier(0.25, 0.1, 0.25, 1);
         }
         
-        /* Lanyard wave effect */
+        /* Natural lanyard wave effect */
         @keyframes lanyardWave {
-            0%, 100% { transform: skewX(0deg); }
-            25% { transform: skewX(3deg); }
-            50% { transform: skewX(-2deg); }
-            75% { transform: skewX(2deg); }
+            0%, 100% { transform: skewX(0deg) scaleX(1); }
+            20% { transform: skewX(4deg) scaleX(1.02); }
+            40% { transform: skewX(-3deg) scaleX(0.98); }
+            60% { transform: skewX(2deg) scaleX(1.01); }
+            80% { transform: skewX(-1deg) scaleX(0.99); }
         }
         
         .lanyard-wave {
-            animation: lanyardWave 0.8s ease-in-out infinite;
+            animation: lanyardWave 1.2s ease-in-out infinite;
             transform-origin: top center;
         }
     </style>
