@@ -616,7 +616,7 @@
         // Set current year dynamically
         document.getElementById('currentYear').textContent = new Date().getFullYear();
         
-        // ID Card with Lanyard - Static Display
+        // ID Card visibility control
         (function() {
             const cardSystem = document.getElementById('cardSystem');
             if (!cardSystem) return;
@@ -624,7 +624,23 @@
             // Remove cursor classes since no dragging
             cardSystem.classList.remove('cursor-grab', 'active:cursor-grabbing');
             
-            // Card stays static - no scroll effects
+            // Mobile detection - hide card below 1024px
+            function updateCardVisibility() {
+                const viewportWidth = window.innerWidth;
+                if (viewportWidth < 1024) {
+                    cardSystem.style.display = 'none';
+                    cardSystem.style.visibility = 'hidden';
+                } else {
+                    cardSystem.style.display = 'flex';
+                    cardSystem.style.visibility = 'visible';
+                }
+            }
+            
+            // Initial check
+            updateCardVisibility();
+            
+            // Update on resize
+            window.addEventListener('resize', updateCardVisibility);
         })();
 
         // 3D Particle Effect
