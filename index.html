@@ -119,6 +119,27 @@
         /* Marquee */
         @keyframes marquee { 0% { transform: translateX(0); } 100% { transform: translateX(-50%); } }
         .marquee { animation: marquee 30s linear infinite; }
+        
+        /* Responsive fixes for mobile/tablet */
+        @media (max-width: 1023px) {
+            #cardSystem { display: none !important; }
+        }
+        
+        /* Hero section responsive */
+        @media (max-width: 768px) {
+            main#about h1 {
+                font-size: 2.5rem !important;
+                line-height: 1.1 !important;
+            }
+            main#about .stat-item::after {
+                display: none;
+            }
+        }
+        
+        /* Ensure sections don't overlap */
+        section, main {
+            isolation: isolate;
+        }
     </style>
 </head>
 <body class="text-slate-900 overflow-x-hidden min-h-screen relative">
@@ -156,7 +177,7 @@
     </nav>
 
     <!-- ID Card with Lanyard (Fixed Position - Outside sections) -->
-    <div id="cardSystem" class="flex flex-col items-center" style="position: fixed; top: 140px; right: 80px; z-index: 9999;">
+    <div id="cardSystem" class="hidden lg:flex flex-col items-center" style="position: fixed; top: 140px; right: 80px; z-index: 9999;">
         <!-- Lanyard String (extends to nav) -->
         <div id="lanyardString" class="w-4 lanyard-texture rounded-full shadow-xl" style="height: 250px; margin-top: -250px;"></div>
         
