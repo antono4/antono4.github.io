@@ -18,7 +18,7 @@
         html { scroll-behavior: smooth; }
         body { font-family: 'Inter', sans-serif; background-color: #f8fafc; }
         
-        /* Glossy Effect Base */
+        /* Glossy Effect Base with Colored Shine */
         .glossy {
             position: relative;
             overflow: hidden;
@@ -29,8 +29,8 @@
             top: 0;
             left: 0;
             right: 0;
-            height: 50%;
-            background: linear-gradient(180deg, rgba(255,255,255,0.4) 0%, rgba(255,255,255,0.1) 50%, transparent 100%);
+            height: 60%;
+            background: linear-gradient(180deg, rgba(255,255,255,0.35) 0%, rgba(255,255,255,0.15) 40%, transparent 100%);
             border-radius: inherit;
             pointer-events: none;
             z-index: 1;
@@ -38,18 +38,199 @@
         .glossy::after {
             content: '';
             position: absolute;
-            top: -50%;
-            left: -50%;
-            width: 200%;
-            height: 200%;
-            background: linear-gradient(45deg, transparent 40%, rgba(255,255,255,0.2) 45%, rgba(255,255,255,0.4) 50%, rgba(255,255,255,0.2) 55%, transparent 60%);
-            animation: glossyShine 4s ease-in-out infinite;
+            top: 5%;
+            left: 8%;
+            width: 84%;
+            height: 10%;
+            background: linear-gradient(90deg, transparent 0%, rgba(255,255,255,0.6) 50%, transparent 100%);
+            border-radius: 50%;
+            filter: blur(3px);
             pointer-events: none;
             z-index: 2;
+            animation: glossyGlare 3s ease-in-out infinite;
         }
-        @keyframes glossyShine {
-            0% { transform: translateX(-100%) rotate(45deg); }
-            100% { transform: translateX(100%) rotate(45deg); }
+        @keyframes glossyGlare {
+            0%, 100% { opacity: 0.6; transform: scaleX(1); }
+            50% { opacity: 1; transform: scaleX(1.05); }
+        }
+        
+        /* Colored Glossy Variants */
+        .glossy-emerald {
+            position: relative;
+            overflow: hidden;
+        }
+        .glossy-emerald::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 60%;
+            background: linear-gradient(180deg, rgba(255,255,255,0.25) 0%, rgba(16,185,129,0.08) 50%, transparent 100%);
+            border-radius: inherit;
+            pointer-events: none;
+        }
+        .glossy-emerald::after {
+            content: '';
+            position: absolute;
+            top: 6%;
+            left: 10%;
+            width: 80%;
+            height: 8%;
+            background: linear-gradient(90deg, transparent 0%, rgba(255,255,255,0.7) 50%, transparent 100%);
+            border-radius: 50%;
+            filter: blur(4px);
+            pointer-events: none;
+            animation: glossyGlare 3s ease-in-out infinite;
+        }
+        
+        .glossy-blue {
+            position: relative;
+            overflow: hidden;
+        }
+        .glossy-blue::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 60%;
+            background: linear-gradient(180deg, rgba(255,255,255,0.25) 0%, rgba(59,130,246,0.1) 50%, transparent 100%);
+            border-radius: inherit;
+            pointer-events: none;
+        }
+        .glossy-blue::after {
+            content: '';
+            position: absolute;
+            top: 6%;
+            left: 10%;
+            width: 80%;
+            height: 8%;
+            background: linear-gradient(90deg, transparent 0%, rgba(255,255,255,0.7) 50%, transparent 100%);
+            border-radius: 50%;
+            filter: blur(4px);
+            pointer-events: none;
+            animation: glossyGlare 3s ease-in-out infinite;
+        }
+        
+        .glossy-purple {
+            position: relative;
+            overflow: hidden;
+        }
+        .glossy-purple::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 60%;
+            background: linear-gradient(180deg, rgba(255,255,255,0.25) 0%, rgba(139,92,246,0.1) 50%, transparent 100%);
+            border-radius: inherit;
+            pointer-events: none;
+        }
+        .glossy-purple::after {
+            content: '';
+            position: absolute;
+            top: 6%;
+            left: 10%;
+            width: 80%;
+            height: 8%;
+            background: linear-gradient(90deg, transparent 0%, rgba(255,255,255,0.7) 50%, transparent 100%);
+            border-radius: 50%;
+            filter: blur(4px);
+            pointer-events: none;
+            animation: glossyGlare 3s ease-in-out infinite;
+        }
+        
+        .glossy-orange {
+            position: relative;
+            overflow: hidden;
+        }
+        .glossy-orange::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 60%;
+            background: linear-gradient(180deg, rgba(255,255,255,0.25) 0%, rgba(249,115,22,0.1) 50%, transparent 100%);
+            border-radius: inherit;
+            pointer-events: none;
+        }
+        .glossy-orange::after {
+            content: '';
+            position: absolute;
+            top: 6%;
+            left: 10%;
+            width: 80%;
+            height: 8%;
+            background: linear-gradient(90deg, transparent 0%, rgba(255,255,255,0.7) 50%, transparent 100%);
+            border-radius: 50%;
+            filter: blur(4px);
+            pointer-events: none;
+            animation: glossyGlare 3s ease-in-out infinite;
+        }
+        
+        .glossy-dark {
+            position: relative;
+            overflow: hidden;
+        }
+        .glossy-dark::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 60%;
+            background: linear-gradient(180deg, rgba(255,255,255,0.1) 0%, rgba(255,255,255,0.02) 50%, transparent 100%);
+            border-radius: inherit;
+            pointer-events: none;
+        }
+        .glossy-dark::after {
+            content: '';
+            position: absolute;
+            top: 5%;
+            left: 10%;
+            width: 80%;
+            height: 6%;
+            background: linear-gradient(90deg, transparent 0%, rgba(255,255,255,0.15) 50%, transparent 100%);
+            border-radius: 50%;
+            filter: blur(3px);
+            pointer-events: none;
+            animation: glossyGlare 3s ease-in-out infinite;
+        }
+        
+        /* Gradient Card with Shimmer */
+        .glossy-shimmer {
+            position: relative;
+            overflow: hidden;
+        }
+        .glossy-shimmer::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 100%;
+            background: linear-gradient(135deg, rgba(255,255,255,0.15) 0%, transparent 40%, rgba(255,255,255,0.08) 100%);
+            border-radius: inherit;
+            pointer-events: none;
+        }
+        .glossy-shimmer::after {
+            content: '';
+            position: absolute;
+            top: -100%;
+            left: -100%;
+            width: 300%;
+            height: 300%;
+            background: linear-gradient(90deg, transparent 0%, rgba(255,255,255,0.1) 25%, rgba(255,255,255,0.2) 50%, rgba(255,255,255,0.1) 75%, transparent 100%);
+            transform: rotate(30deg);
+            animation: shimmer 4s ease-in-out infinite;
+            pointer-events: none;
+        }
+        @keyframes shimmer {
+            0% { transform: translateX(-100%) rotate(30deg); }
+            100% { transform: translateX(100%) rotate(30deg); }
         }
         
         /* Custom scrollbar */
@@ -660,7 +841,7 @@
             
             <div class="grid lg:grid-cols-5 gap-8">
                 <!-- Contact Form -->
-                <div class="lg:col-span-3 bg-white rounded-3xl p-8 border border-slate-100 shadow-lg">
+                <div class="lg:col-span-3 bg-white rounded-3xl p-8 border border-slate-100 shadow-lg glossy">
                     <h3 class="font-bold text-xl text-slate-800 mb-6">Send a Message</h3>
                     <form class="space-y-5">
                         <div class="grid md:grid-cols-2 gap-5">
@@ -690,7 +871,7 @@
                 
                 <!-- Contact Info -->
                 <div class="lg:col-span-2 space-y-5">
-                    <div class="group bg-white rounded-2xl p-5 border border-slate-100 hover:border-emerald-200 hover:shadow-lg transition-all duration-300">
+                    <div class="group bg-white rounded-2xl p-5 border border-slate-100 hover:border-emerald-200 hover:shadow-lg transition-all duration-300 glossy-emerald">
                         <div class="flex items-center gap-4">
                             <div class="w-12 h-12 bg-gradient-to-br from-emerald-500 to-emerald-600 rounded-xl flex items-center justify-center shadow-lg shadow-emerald-500/20 group-hover:scale-105 transition-transform">
                                 <i class="fas fa-envelope text-white text-lg"></i>
@@ -702,7 +883,7 @@
                         </div>
                     </div>
                     
-                    <div class="group bg-white rounded-2xl p-5 border border-slate-100 hover:border-blue-200 hover:shadow-lg transition-all duration-300">
+                    <div class="group bg-white rounded-2xl p-5 border border-slate-100 hover:border-blue-200 hover:shadow-lg transition-all duration-300 glossy-blue">
                         <div class="flex items-center gap-4">
                             <div class="w-12 h-12 bg-gradient-to-br from-blue-600 to-blue-700 rounded-xl flex items-center justify-center shadow-lg shadow-blue-500/20 group-hover:scale-105 transition-transform">
                                 <i class="fab fa-linkedin-in text-white text-lg"></i>
@@ -714,7 +895,7 @@
                         </div>
                     </div>
                     
-                    <div class="group bg-white rounded-2xl p-5 border border-slate-100 hover:border-slate-200 hover:shadow-lg transition-all duration-300">
+                    <div class="group bg-white rounded-2xl p-5 border border-slate-100 hover:border-slate-200 hover:shadow-lg transition-all duration-300 glossy-dark">
                         <div class="flex items-center gap-4">
                             <div class="w-12 h-12 bg-gradient-to-br from-slate-700 to-slate-800 rounded-xl flex items-center justify-center shadow-lg shadow-slate-500/20 group-hover:scale-105 transition-transform">
                                 <i class="fab fa-github text-white text-lg"></i>
@@ -726,7 +907,7 @@
                         </div>
                     </div>
                     
-                    <div class="bg-white rounded-3xl p-6 border border-slate-100 shadow-xl card-hover glossy">
+                    <div class="bg-white rounded-3xl p-6 border border-slate-100 shadow-xl card-hover glossy-emerald">
                         <div class="flex items-center gap-4">
                             <div class="w-14 h-14 bg-gradient-to-br from-emerald-600 to-emerald-700 rounded-2xl flex items-center justify-center shadow-lg shadow-emerald-500/20">
                                 <i class="fas fa-map-marker-alt text-white text-xl"></i>
@@ -739,7 +920,7 @@
                     </div>
                     
                     <!-- Availability Status -->
-                    <div class="bg-gradient-to-br from-emerald-800 to-emerald-900 rounded-3xl p-6 text-white glossy">
+                    <div class="bg-gradient-to-br from-emerald-800 to-emerald-900 rounded-3xl p-6 text-white glossy-dark">
                         <div class="flex items-center gap-3 mb-3">
                             <span class="relative flex h-3 w-3">
                                 <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
