@@ -132,6 +132,48 @@
                 line-height: 1.1 !important;
             }
         }
+        
+        /* Wind blow effect for ID card - 15 seconds */
+        @keyframes windBlow {
+            0% { transform: rotate(0deg) translateX(0) scale(1); }
+            5% { transform: rotate(-2deg) translateX(5px) scale(1.01); }
+            10% { transform: rotate(1deg) translateX(-3px) scale(1); }
+            15% { transform: rotate(-3deg) translateX(8px) scale(1.02); }
+            20% { transform: rotate(2deg) translateX(-5px) scale(1); }
+            25% { transform: rotate(-1deg) translateX(3px) scale(1.01); }
+            30% { transform: rotate(2deg) translateX(-4px) scale(1); }
+            35% { transform: rotate(-2deg) translateX(6px) scale(1.01); }
+            40% { transform: rotate(1deg) translateX(-2px) scale(1); }
+            45% { transform: rotate(-3deg) translateX(7px) scale(1.02); }
+            50% { transform: rotate(2deg) translateX(-6px) scale(1); }
+            55% { transform: rotate(-1deg) translateX(4px) scale(1.01); }
+            60% { transform: rotate(3deg) translateX(-5px) scale(1); }
+            65% { transform: rotate(-2deg) translateX(8px) scale(1.01); }
+            70% { transform: rotate(1deg) translateX(-3px) scale(1); }
+            75% { transform: rotate(-3deg) translateX(5px) scale(1.02); }
+            80% { transform: rotate(2deg) translateX(-7px) scale(1); }
+            85% { transform: rotate(-1deg) translateX(4px) scale(1.01); }
+            90% { transform: rotate(2deg) translateX(-3px) scale(1); }
+            95% { transform: rotate(-2deg) translateX(5px) scale(1.01); }
+            100% { transform: rotate(0deg) translateX(0) scale(1); }
+        }
+        
+        .wind-blow {
+            animation: windBlow 15s ease-in-out;
+        }
+        
+        /* Lanyard wave effect */
+        @keyframes lanyardWave {
+            0%, 100% { transform: skewX(0deg); }
+            25% { transform: skewX(3deg); }
+            50% { transform: skewX(-2deg); }
+            75% { transform: skewX(2deg); }
+        }
+        
+        .lanyard-wave {
+            animation: lanyardWave 0.8s ease-in-out infinite;
+            transform-origin: top center;
+        }
     </style>
 </head>
 <body class="text-slate-900 overflow-x-hidden min-h-screen relative">
@@ -222,8 +264,8 @@
                     </div>
                 </div>
 
-                <!-- Right Content - ID Card with Lanyard -->
-                <div id="cardSystem" class="flex-shrink-0 flex flex-col items-center">
+                <!-- Right Content - ID Card with Lanyard (Wind Blowing Effect) -->
+                <div id="cardSystem" class="flex-shrink-0 flex flex-col items-center wind-blow">
                     <!-- Lanyard String (extends to nav) -->
                     <div id="lanyardString" class="w-4 lanyard-texture rounded-full shadow-xl" style="height: 250px; margin-top: -250px;"></div>
                     
