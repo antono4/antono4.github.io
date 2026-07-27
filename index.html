@@ -766,7 +766,7 @@
     </section>
 
     <!-- Experience Section -->
-    <section id="experience" class="py-24 bg-slate-50/50 relative z-10">
+    <section id="experience" class="py-24 relative z-10">
         <div class="max-w-4xl mx-auto px-6">
             <div class="text-center mb-16">
                 <span class="inline-flex items-center gap-2 bg-emerald-50 border border-emerald-100 text-emerald-700 px-4 py-2 rounded-full text-xs font-semibold mb-4">
@@ -778,50 +778,81 @@
 
             <div class="relative">
                 <!-- Timeline line -->
-                <div class="absolute left-[23px] md:left-1/2 md:-translate-x-px top-0 bottom-0 w-0.5 bg-gradient-to-b from-emerald-500 via-emerald-300 to-slate-200"></div>
+                <div class="absolute left-[27px] top-0 bottom-0 w-0.5 bg-gradient-to-b from-emerald-500 via-emerald-300 to-slate-200 rounded-full"></div>
 
-                <!-- Timeline Item 1 -->
-                <div class="relative pl-16 md:pl-0 mb-8">
-                    <div class="absolute left-0 top-0 w-12 h-12 bg-gradient-to-br from-emerald-600 to-emerald-700 rounded-2xl flex items-center justify-center shadow-lg shadow-emerald-500/30 z-10">
-                        <i class="fas fa-building text-white"></i>
+                <!-- Timeline Item 1 - Current -->
+                <div class="relative pl-20 mb-12 group">
+                    <div class="absolute left-0 top-0 w-14 h-14 bg-gradient-to-br from-emerald-500 to-emerald-600 rounded-2xl flex items-center justify-center shadow-xl shadow-emerald-500/30 z-10 glossy-emerald">
+                        <i class="fas fa-building text-white text-lg"></i>
                     </div>
-                    <div class="md:ml-[calc(50%+2rem)] bg-white rounded-2xl p-6 border border-slate-100 hover:border-emerald-200 hover:shadow-lg transition-all duration-300">
-                        <div class="flex items-center gap-3 mb-3">
-                            <span class="text-xs font-semibold text-emerald-600 uppercase tracking-wider bg-emerald-50 px-3 py-1 rounded-full">2022 - Present</span>
+                    <div class="bg-white rounded-2xl p-6 border border-slate-100 hover:border-emerald-200 hover:shadow-xl transition-all duration-300 ml-4">
+                        <div class="flex flex-wrap items-center gap-3 mb-4">
+                            <span class="inline-flex items-center gap-1.5 text-xs font-semibold text-emerald-600 bg-emerald-50 px-3 py-1.5 rounded-full border border-emerald-100">
+                                <span class="relative flex h-2 w-2">
+                                    <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
+                                    <span class="relative inline-flex rounded-full h-2 w-2 bg-emerald-600"></span>
+                                </span>
+                                Current
+                            </span>
+                            <span class="text-xs font-medium text-slate-400">2022 - Present</span>
                         </div>
                         <h3 class="font-bold text-xl text-slate-800 mb-1">Principal Architect</h3>
-                        <p class="text-emerald-600 font-medium text-sm mb-3">TechCorp Indonesia</p>
-                        <p class="text-slate-500 text-sm leading-relaxed">Leading architecture for distributed systems serving 10M+ users. Reduced latency by 60% and improved uptime to 99.9%. Managed team of 20+ engineers.</p>
+                        <p class="text-emerald-600 font-medium text-sm mb-3 flex items-center gap-2">
+                            <i class="fas fa-map-marker-alt text-xs"></i>
+                            TechCorp Indonesia
+                        </p>
+                        <p class="text-slate-500 text-sm leading-relaxed">Leading architecture for distributed systems serving 10M+ users. Reduced latency by 60% and improved uptime to 99.9%. Managed team of 20+ engineers across multiple locations.</p>
+                        <div class="flex flex-wrap gap-2 mt-4">
+                            <span class="text-xs bg-slate-100 text-slate-600 px-2.5 py-1 rounded-lg">System Design</span>
+                            <span class="text-xs bg-slate-100 text-slate-600 px-2.5 py-1 rounded-lg">AWS</span>
+                            <span class="text-xs bg-slate-100 text-slate-600 px-2.5 py-1 rounded-lg">Kubernetes</span>
+                        </div>
                     </div>
                 </div>
 
                 <!-- Timeline Item 2 -->
-                <div class="relative pl-16 md:pl-0 mb-8">
-                    <div class="absolute left-0 top-0 w-12 h-12 bg-gradient-to-br from-blue-600 to-blue-700 rounded-2xl flex items-center justify-center shadow-lg shadow-blue-500/30 z-10">
-                        <i class="fas fa-server text-white"></i>
+                <div class="relative pl-20 mb-12 group">
+                    <div class="absolute left-0 top-0 w-14 h-14 bg-gradient-to-br from-blue-500 to-blue-600 rounded-2xl flex items-center justify-center shadow-xl shadow-blue-500/30 z-10 glossy-blue">
+                        <i class="fas fa-server text-white text-lg"></i>
                     </div>
-                    <div class="md:mr-[calc(50%+2rem)] md:text-right bg-white rounded-2xl p-6 border border-slate-100 hover:border-blue-200 hover:shadow-lg transition-all duration-300">
-                        <div class="flex items-center md:justify-end gap-3 mb-3">
-                            <span class="text-xs font-semibold text-blue-600 uppercase tracking-wider bg-blue-50 px-3 py-1 rounded-full">2019 - 2022</span>
+                    <div class="bg-white rounded-2xl p-6 border border-slate-100 hover:border-blue-200 hover:shadow-xl transition-all duration-300 ml-4">
+                        <div class="flex flex-wrap items-center gap-3 mb-4">
+                            <span class="text-xs font-medium text-slate-400">2019 - 2022</span>
                         </div>
                         <h3 class="font-bold text-xl text-slate-800 mb-1">Senior Backend Engineer</h3>
-                        <p class="text-blue-600 font-medium text-sm mb-3">Digital Solutions Corp</p>
-                        <p class="text-slate-500 text-sm leading-relaxed">Designed microservices architecture for 5M+ users. Reduced API latency by 60% through optimization and caching strategies.</p>
+                        <p class="text-blue-600 font-medium text-sm mb-3 flex items-center gap-2">
+                            <i class="fas fa-map-marker-alt text-xs"></i>
+                            Digital Solutions Corp
+                        </p>
+                        <p class="text-slate-500 text-sm leading-relaxed">Designed microservices architecture for 5M+ users. Reduced API latency by 60% through optimization and caching strategies. Led backend team of 8 developers.</p>
+                        <div class="flex flex-wrap gap-2 mt-4">
+                            <span class="text-xs bg-slate-100 text-slate-600 px-2.5 py-1 rounded-lg">Go</span>
+                            <span class="text-xs bg-slate-100 text-slate-600 px-2.5 py-1 rounded-lg">PostgreSQL</span>
+                            <span class="text-xs bg-slate-100 text-slate-600 px-2.5 py-1 rounded-lg">Redis</span>
+                        </div>
                     </div>
                 </div>
 
                 <!-- Timeline Item 3 -->
-                <div class="relative pl-16 md:pl-0">
-                    <div class="absolute left-0 top-0 w-12 h-12 bg-gradient-to-br from-slate-500 to-slate-600 rounded-2xl flex items-center justify-center shadow-lg shadow-slate-500/30 z-10">
-                        <i class="fas fa-code text-white"></i>
+                <div class="relative pl-20 group">
+                    <div class="absolute left-0 top-0 w-14 h-14 bg-gradient-to-br from-purple-500 to-purple-600 rounded-2xl flex items-center justify-center shadow-xl shadow-purple-500/30 z-10 glossy-purple">
+                        <i class="fas fa-code text-white text-lg"></i>
                     </div>
-                    <div class="md:ml-[calc(50%+2rem)] bg-white rounded-2xl p-6 border border-slate-100 hover:border-slate-200 hover:shadow-lg transition-all duration-300">
-                        <div class="flex items-center gap-3 mb-3">
-                            <span class="text-xs font-semibold text-slate-600 uppercase tracking-wider bg-slate-50 px-3 py-1 rounded-full">2016 - 2019</span>
+                    <div class="bg-white rounded-2xl p-6 border border-slate-100 hover:border-purple-200 hover:shadow-xl transition-all duration-300 ml-4">
+                        <div class="flex flex-wrap items-center gap-3 mb-4">
+                            <span class="text-xs font-medium text-slate-400">2016 - 2019</span>
                         </div>
                         <h3 class="font-bold text-xl text-slate-800 mb-1">Full Stack Developer</h3>
-                        <p class="text-slate-600 font-medium text-sm mb-3">Startup Hub</p>
-                        <p class="text-slate-500 text-sm leading-relaxed">Built and shipped 20+ products across various domains. Full-stack development with modern frameworks and agile methodologies.</p>
+                        <p class="text-purple-600 font-medium text-sm mb-3 flex items-center gap-2">
+                            <i class="fas fa-map-marker-alt text-xs"></i>
+                            Startup Hub
+                        </p>
+                        <p class="text-slate-500 text-sm leading-relaxed">Built and shipped 20+ products across various domains. Full-stack development with modern frameworks and agile methodologies. Rapid product development lifecycle.</p>
+                        <div class="flex flex-wrap gap-2 mt-4">
+                            <span class="text-xs bg-slate-100 text-slate-600 px-2.5 py-1 rounded-lg">React</span>
+                            <span class="text-xs bg-slate-100 text-slate-600 px-2.5 py-1 rounded-lg">Node.js</span>
+                            <span class="text-xs bg-slate-100 text-slate-600 px-2.5 py-1 rounded-lg">MongoDB</span>
+                        </div>
                     </div>
                 </div>
             </div>
