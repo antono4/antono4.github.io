@@ -310,55 +310,62 @@
     <div class="h-20"></div>
 
     <!-- Hero Section with ID Card Side by Side -->
-    <main id="about" class="min-h-screen pt-32 pb-20 relative z-10">
+    <main id="about" class="min-h-screen py-20 relative z-10">
         <div class="max-w-7xl mx-auto px-6">
-            <div class="flex flex-col xl:flex-row items-center xl:items-start gap-12 xl:gap-8">
+            <div class="flex flex-col xl:flex-row items-center xl:items-start gap-12 xl:gap-12">
                 <!-- Left Content -->
                 <div class="flex-1 space-y-8 text-center xl:text-left">
-                    <div class="inline-flex items-center gap-3 bg-emerald-50 text-emerald-700 px-4 py-2 rounded-full text-xs font-bold uppercase tracking-wider">
+                    <!-- Status Badge -->
+                    <div class="inline-flex items-center gap-2 bg-emerald-50 border border-emerald-100 text-emerald-700 px-4 py-2 rounded-full text-xs font-semibold">
                         <span class="relative flex h-2 w-2">
-                            <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
-                            <span class="relative inline-flex rounded-full h-2 w-2 bg-emerald-500"></span>
+                            <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-500 opacity-75"></span>
+                            <span class="relative inline-flex rounded-full h-2 w-2 bg-emerald-600"></span>
                         </span>
                         Available for Projects
                     </div>
                     
-                    <h1 class="text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-black leading-[0.9]">
+                    <!-- Heading -->
+                    <h1 class="text-5xl md:text-6xl lg:text-7xl font-black leading-[0.95] tracking-tight">
                         <span class="text-slate-900">BUILDING</span><br>
                         <span class="gradient-text">EFFICIENCY</span><br>
-                        <span class="text-slate-400">AT SCALE.</span>
+                        <span class="text-slate-300">AT SCALE.</span>
                     </h1>
                     
-                    <p class="text-lg text-slate-600 max-w-lg mx-auto xl:mx-0 leading-relaxed">
-                        Principal Architect specializing in designing and building high-performance distributed systems. With 15+ years of experience, I architect solutions that handle <span class="font-semibold text-emerald-600">10M+ daily requests</span>.
+                    <!-- Description -->
+                    <p class="text-lg text-slate-500 max-w-xl mx-auto xl:mx-0 leading-relaxed">
+                        Principal Architect specializing in designing and building high-performance distributed systems. With <span class="font-semibold text-slate-700">15+ years of experience</span>, I architect solutions that handle <span class="font-semibold text-emerald-600">10M+ daily requests</span>.
                     </p>
                     
-                    <!-- Stats -->
-                    <div class="flex flex-wrap justify-center xl:justify-start gap-8 py-6 border-y border-slate-100">
-                        <div class="stat-item pr-8">
+                    <!-- Stats Grid -->
+                    <div class="grid grid-cols-2 md:grid-cols-4 gap-6 py-6 border-y border-slate-100">
+                        <div class="text-center">
                             <div class="text-4xl font-black text-slate-900">15+</div>
-                            <div class="text-xs text-slate-500 uppercase tracking-wider">Years Exp.</div>
+                            <div class="text-xs text-slate-400 uppercase tracking-wider mt-1">Years Exp.</div>
                         </div>
-                        <div class="stat-item pr-8">
+                        <div class="text-center">
                             <div class="text-4xl font-black text-slate-900">50+</div>
-                            <div class="text-xs text-slate-500 uppercase tracking-wider">Projects</div>
+                            <div class="text-xs text-slate-400 uppercase tracking-wider mt-1">Projects</div>
                         </div>
-                        <div class="stat-item pr-8">
+                        <div class="text-center">
                             <div class="text-4xl font-black text-slate-900">10M+</div>
-                            <div class="text-xs text-slate-500 uppercase tracking-wider">Daily Users</div>
+                            <div class="text-xs text-slate-400 uppercase tracking-wider mt-1">Daily Users</div>
                         </div>
-                        <div>
+                        <div class="text-center">
                             <div class="text-4xl font-black text-emerald-600">99.9%</div>
-                            <div class="text-xs text-slate-500 uppercase tracking-wider">Uptime</div>
+                            <div class="text-xs text-slate-400 uppercase tracking-wider mt-1">Uptime</div>
                         </div>
                     </div>
                     
+                    <!-- CTA Buttons -->
                     <div class="flex flex-wrap justify-center xl:justify-start gap-4">
-                        <a href="#projects" class="btn-primary text-white px-8 py-4 rounded-2xl font-bold shadow-xl shadow-emerald-600/20 flex items-center gap-2">
-                            <i class="fas fa-folder-open"></i> View Projects
+                        <a href="#projects" class="group inline-flex items-center gap-2 bg-gradient-to-r from-emerald-600 to-emerald-500 text-white px-8 py-4 rounded-xl font-semibold shadow-lg shadow-emerald-500/30 hover:shadow-emerald-500/50 hover:-translate-y-0.5 transition-all duration-300">
+                            <i class="fas fa-folder-open text-sm"></i>
+                            View Projects
+                            <i class="fas fa-arrow-right text-sm opacity-0 -ml-6 group-hover:opacity-100 group-hover:ml-0 transition-all duration-300"></i>
                         </a>
-                        <a href="#contact" class="bg-white border-2 border-slate-200 px-8 py-4 rounded-2xl font-bold text-slate-700 hover:border-emerald-600 hover:text-emerald-600 transition-all flex items-center gap-2">
-                            <i class="fas fa-envelope"></i> Contact Me
+                        <a href="#contact" class="group inline-flex items-center gap-2 bg-white border-2 border-slate-200 px-8 py-4 rounded-xl font-semibold text-slate-600 hover:border-emerald-500 hover:text-emerald-600 transition-all duration-300">
+                            <i class="fas fa-envelope text-sm"></i>
+                            Contact Me
                         </a>
                     </div>
                 </div>
@@ -431,142 +438,145 @@
     </main>
 
     <!-- Tech Stack Section -->
-    <section id="skills" class="py-24 relative z-10">
+    <section id="skills" class="py-24 bg-slate-50/50 relative z-10">
         <div class="max-w-7xl mx-auto px-6">
             <div class="text-center mb-16">
-                <span class="inline-flex items-center gap-2 bg-emerald-100 text-emerald-700 px-4 py-2 rounded-full text-xs font-bold uppercase tracking-wider mb-4">
-                    <i class="fas fa-code"></i> Expertise
+                <span class="inline-flex items-center gap-2 bg-emerald-50 border border-emerald-100 text-emerald-700 px-4 py-2 rounded-full text-xs font-semibold mb-4">
+                    <i class="fas fa-code text-xs"></i> Expertise
                 </span>
-                <h2 class="text-4xl md:text-5xl font-black text-slate-900 mb-4">Tech Stack</h2>
-                <p class="text-slate-600 max-w-2xl mx-auto">Building robust, scalable, and high-performance systems using modern technologies and best practices.</p>
+                <h2 class="text-4xl md:text-5xl font-black text-slate-900 mb-4 tracking-tight">Tech Stack</h2>
+                <p class="text-slate-500 max-w-2xl mx-auto">Building robust, scalable, and high-performance systems using modern technologies and industry best practices.</p>
             </div>
 
-            <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
-                <div class="card-hover bg-white rounded-2xl p-6 border border-slate-100 glossy">
-                    <div class="w-14 h-14 bg-gradient-to-br from-green-500 to-emerald-600 rounded-2xl flex items-center justify-center mb-4 shadow-lg shadow-emerald-500/20">
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-5">
+                <div class="group bg-white rounded-2xl p-6 border border-slate-100 hover:border-emerald-200 hover:shadow-lg hover:shadow-emerald-500/5 transition-all duration-300">
+                    <div class="w-14 h-14 bg-gradient-to-br from-green-500 to-emerald-600 rounded-2xl flex items-center justify-center mb-4 shadow-lg shadow-green-500/20 group-hover:scale-110 transition-transform duration-300">
                         <i class="fab fa-node-js text-white text-2xl"></i>
                     </div>
                     <h3 class="font-bold text-slate-800 mb-1">Node.js</h3>
-                    <p class="text-sm text-slate-500">Backend API</p>
+                    <p class="text-sm text-slate-400">Backend API</p>
                 </div>
-                <div class="card-hover bg-white rounded-2xl p-6 border border-slate-100 glossy">
-                    <div class="w-14 h-14 bg-gradient-to-br from-blue-500 to-blue-600 rounded-2xl flex items-center justify-center mb-4 shadow-lg shadow-blue-500/20">
+                <div class="group bg-white rounded-2xl p-6 border border-slate-100 hover:border-blue-200 hover:shadow-lg hover:shadow-blue-500/5 transition-all duration-300">
+                    <div class="w-14 h-14 bg-gradient-to-br from-blue-500 to-blue-600 rounded-2xl flex items-center justify-center mb-4 shadow-lg shadow-blue-500/20 group-hover:scale-110 transition-transform duration-300">
                         <i class="fab fa-python text-white text-2xl"></i>
                     </div>
                     <h3 class="font-bold text-slate-800 mb-1">Python</h3>
-                    <p class="text-sm text-slate-500">AI & Data</p>
+                    <p class="text-sm text-slate-400">AI & Data</p>
                 </div>
-                <div class="card-hover bg-white rounded-2xl p-6 border border-slate-100 glossy">
-                    <div class="w-14 h-14 bg-gradient-to-br from-cyan-500 to-cyan-600 rounded-2xl flex items-center justify-center mb-4 shadow-lg shadow-cyan-500/20">
+                <div class="group bg-white rounded-2xl p-6 border border-slate-100 hover:border-cyan-200 hover:shadow-lg hover:shadow-cyan-500/5 transition-all duration-300">
+                    <div class="w-14 h-14 bg-gradient-to-br from-cyan-500 to-blue-600 rounded-2xl flex items-center justify-center mb-4 shadow-lg shadow-cyan-500/20 group-hover:scale-110 transition-transform duration-300">
                         <i class="fab fa-golang text-white text-2xl"></i>
                     </div>
                     <h3 class="font-bold text-slate-800 mb-1">Go</h3>
-                    <p class="text-sm text-slate-500">High Performance</p>
+                    <p class="text-sm text-slate-400">High Performance</p>
                 </div>
-                <div class="card-hover bg-white rounded-2xl p-6 border border-slate-100 glossy">
-                    <div class="w-14 h-14 bg-gradient-to-br from-slate-600 to-slate-700 rounded-2xl flex items-center justify-center mb-4 shadow-lg shadow-slate-500/20">
+                <div class="group bg-white rounded-2xl p-6 border border-slate-100 hover:border-slate-200 hover:shadow-lg transition-all duration-300">
+                    <div class="w-14 h-14 bg-gradient-to-br from-slate-600 to-slate-700 rounded-2xl flex items-center justify-center mb-4 shadow-lg shadow-slate-500/20 group-hover:scale-110 transition-transform duration-300">
                         <i class="fas fa-database text-white text-2xl"></i>
                     </div>
                     <h3 class="font-bold text-slate-800 mb-1">PostgreSQL</h3>
-                    <p class="text-sm text-slate-500">Database</p>
+                    <p class="text-sm text-slate-400">Database</p>
                 </div>
-                <div class="card-hover bg-white rounded-2xl p-6 border border-slate-100 glossy">
-                    <div class="w-14 h-14 bg-gradient-to-br from-blue-600 to-blue-700 rounded-2xl flex items-center justify-center mb-4 shadow-lg shadow-blue-600/20">
+                <div class="group bg-white rounded-2xl p-6 border border-slate-100 hover:border-orange-200 hover:shadow-lg hover:shadow-orange-500/5 transition-all duration-300">
+                    <div class="w-14 h-14 bg-gradient-to-br from-orange-500 to-orange-600 rounded-2xl flex items-center justify-center mb-4 shadow-lg shadow-orange-500/20 group-hover:scale-110 transition-transform duration-300">
                         <i class="fab fa-aws text-white text-2xl"></i>
                     </div>
                     <h3 class="font-bold text-slate-800 mb-1">AWS</h3>
-                    <p class="text-sm text-slate-500">Cloud Platform</p>
+                    <p class="text-sm text-slate-400">Cloud Platform</p>
                 </div>
-                <div class="card-hover bg-white rounded-2xl p-6 border border-slate-100 glossy">
-                    <div class="w-14 h-14 bg-gradient-to-br from-blue-400 to-purple-500 rounded-2xl flex items-center justify-center mb-4 shadow-lg shadow-purple-500/20">
+                <div class="group bg-white rounded-2xl p-6 border border-slate-100 hover:border-purple-200 hover:shadow-lg hover:shadow-purple-500/5 transition-all duration-300">
+                    <div class="w-14 h-14 bg-gradient-to-br from-purple-500 to-pink-500 rounded-2xl flex items-center justify-center mb-4 shadow-lg shadow-purple-500/20 group-hover:scale-110 transition-transform duration-300">
                         <i class="fas fa-brain text-white text-2xl"></i>
                     </div>
                     <h3 class="font-bold text-slate-800 mb-1">ML/AI</h3>
-                    <p class="text-sm text-slate-500">Machine Learning</p>
+                    <p class="text-sm text-slate-400">Machine Learning</p>
                 </div>
-                <div class="card-hover bg-white rounded-2xl p-6 border border-slate-100 glossy">
-                    <div class="w-14 h-14 bg-gradient-to-br from-red-500 to-red-600 rounded-2xl flex items-center justify-center mb-4 shadow-lg shadow-red-500/20">
+                <div class="group bg-white rounded-2xl p-6 border border-slate-100 hover:border-blue-200 hover:shadow-lg hover:shadow-blue-500/5 transition-all duration-300">
+                    <div class="w-14 h-14 bg-gradient-to-br from-blue-600 to-indigo-600 rounded-2xl flex items-center justify-center mb-4 shadow-lg shadow-blue-500/20 group-hover:scale-110 transition-transform duration-300">
                         <i class="fas fa-cube text-white text-2xl"></i>
                     </div>
                     <h3 class="font-bold text-slate-800 mb-1">Kubernetes</h3>
-                    <p class="text-sm text-slate-500">Container Orch.</p>
+                    <p class="text-sm text-slate-400">Container Orchestration</p>
                 </div>
-                <div class="card-hover bg-white rounded-2xl p-6 border border-slate-100 glossy">
-                    <div class="w-14 h-14 bg-gradient-to-br from-emerald-500 to-emerald-600 rounded-2xl flex items-center justify-center mb-4 shadow-lg shadow-emerald-500/20">
+                <div class="group bg-white rounded-2xl p-6 border border-slate-100 hover:border-emerald-200 hover:shadow-lg hover:shadow-emerald-500/5 transition-all duration-300">
+                    <div class="w-14 h-14 bg-gradient-to-br from-emerald-500 to-teal-600 rounded-2xl flex items-center justify-center mb-4 shadow-lg shadow-emerald-500/20 group-hover:scale-110 transition-transform duration-300">
                         <i class="fas fa-project-diagram text-white text-2xl"></i>
                     </div>
                     <h3 class="font-bold text-slate-800 mb-1">System Design</h3>
-                    <p class="text-sm text-slate-500">Architecture</p>
+                    <p class="text-sm text-slate-400">Architecture</p>
                 </div>
             </div>
         </div>
     </section>
 
     <!-- Projects Section -->
-    <section id="projects" class="py-24 bg-slate-50 relative z-10">
+    <section id="projects" class="py-24 relative z-10">
         <div class="max-w-7xl mx-auto px-6">
             <div class="text-center mb-16">
-                <span class="inline-flex items-center gap-2 bg-emerald-100 text-emerald-700 px-4 py-2 rounded-full text-xs font-bold uppercase tracking-wider mb-4">
-                    <i class="fas fa-rocket"></i> Portfolio
+                <span class="inline-flex items-center gap-2 bg-emerald-50 border border-emerald-100 text-emerald-700 px-4 py-2 rounded-full text-xs font-semibold mb-4">
+                    <i class="fas fa-rocket text-xs"></i> Portfolio
                 </span>
-                <h2 class="text-4xl md:text-5xl font-black text-slate-900 mb-4">Featured Projects</h2>
-                <p class="text-slate-600 max-w-2xl mx-auto">Real-world systems I've architected and built for enterprise clients.</p>
+                <h2 class="text-4xl md:text-5xl font-black text-slate-900 mb-4 tracking-tight">Featured Projects</h2>
+                <p class="text-slate-500 max-w-2xl mx-auto">Real-world systems I've architected and built for enterprise clients worldwide.</p>
             </div>
 
             <div class="grid md:grid-cols-3 gap-6">
-                <div class="card-hover bg-white rounded-3xl overflow-hidden border border-slate-100 group glossy">
-                    <div class="h-48 bg-gradient-to-br from-emerald-500 to-emerald-700 flex items-center justify-center">
+                <div class="group bg-white rounded-3xl overflow-hidden border border-slate-100 hover:border-emerald-200 hover:shadow-xl hover:shadow-emerald-500/10 transition-all duration-300">
+                    <div class="h-48 bg-gradient-to-br from-emerald-500 to-emerald-700 flex items-center justify-center relative overflow-hidden">
                         <i class="fas fa-shopping-cart text-white text-5xl opacity-80"></i>
+                        <div class="absolute inset-0 bg-black/0 group-hover:bg-black/10 transition-colors duration-300"></div>
                     </div>
                     <div class="p-6">
                         <div class="flex items-center gap-2 mb-3">
-                            <span class="bg-emerald-100 text-emerald-700 text-xs font-bold px-2 py-1 rounded">E-Commerce</span>
-                            <span class="bg-slate-100 text-slate-600 text-xs px-2 py-1 rounded">10M+ Users</span>
+                            <span class="bg-emerald-50 text-emerald-700 text-xs font-semibold px-2.5 py-1 rounded-full">E-Commerce</span>
+                            <span class="bg-slate-100 text-slate-500 text-xs px-2.5 py-1 rounded-full">10M+ Users</span>
                         </div>
-                        <h3 class="font-bold text-lg text-slate-800 mb-2">Enterprise Marketplace</h3>
-                        <p class="text-sm text-slate-600 mb-4">High-throughput e-commerce platform handling 1M+ daily transactions with sub-second response times.</p>
+                        <h3 class="font-bold text-lg text-slate-800 mb-2 group-hover:text-emerald-700 transition-colors">Enterprise Marketplace</h3>
+                        <p class="text-sm text-slate-500 mb-4 leading-relaxed">High-throughput e-commerce platform handling 1M+ daily transactions with sub-second response times.</p>
                         <div class="flex flex-wrap gap-2">
-                            <span class="text-xs bg-slate-100 text-slate-600 px-2 py-1 rounded">Next.js</span>
-                            <span class="text-xs bg-slate-100 text-slate-600 px-2 py-1 rounded">Go</span>
-                            <span class="text-xs bg-slate-100 text-slate-600 px-2 py-1 rounded">Redis</span>
+                            <span class="text-xs bg-slate-50 text-slate-600 px-3 py-1.5 rounded-lg border border-slate-100">Next.js</span>
+                            <span class="text-xs bg-slate-50 text-slate-600 px-3 py-1.5 rounded-lg border border-slate-100">Go</span>
+                            <span class="text-xs bg-slate-50 text-slate-600 px-3 py-1.5 rounded-lg border border-slate-100">Redis</span>
                         </div>
                     </div>
                 </div>
 
-                <div class="card-hover bg-white rounded-3xl overflow-hidden border border-slate-100 group glossy">
-                    <div class="h-48 bg-gradient-to-br from-blue-500 to-purple-600 flex items-center justify-center">
+                <div class="group bg-white rounded-3xl overflow-hidden border border-slate-100 hover:border-purple-200 hover:shadow-xl hover:shadow-purple-500/10 transition-all duration-300">
+                    <div class="h-48 bg-gradient-to-br from-blue-500 to-purple-600 flex items-center justify-center relative overflow-hidden">
                         <i class="fas fa-robot text-white text-5xl opacity-80"></i>
+                        <div class="absolute inset-0 bg-black/0 group-hover:bg-black/10 transition-colors duration-300"></div>
                     </div>
                     <div class="p-6">
                         <div class="flex items-center gap-2 mb-3">
-                            <span class="bg-blue-100 text-blue-700 text-xs font-bold px-2 py-1 rounded">AI Platform</span>
-                            <span class="bg-slate-100 text-slate-600 text-xs px-2 py-1 rounded">Enterprise</span>
+                            <span class="bg-purple-50 text-purple-700 text-xs font-semibold px-2.5 py-1 rounded-full">AI Platform</span>
+                            <span class="bg-slate-100 text-slate-500 text-xs px-2.5 py-1 rounded-full">Enterprise</span>
                         </div>
-                        <h3 class="font-bold text-lg text-slate-800 mb-2">AI Content Platform</h3>
-                        <p class="text-sm text-slate-600 mb-4">Multi-language AI content generation with custom fine-tuned models for enterprise clients.</p>
+                        <h3 class="font-bold text-lg text-slate-800 mb-2 group-hover:text-purple-700 transition-colors">AI Content Platform</h3>
+                        <p class="text-sm text-slate-500 mb-4 leading-relaxed">Multi-language AI content generation with custom fine-tuned models for enterprise clients.</p>
                         <div class="flex flex-wrap gap-2">
-                            <span class="text-xs bg-slate-100 text-slate-600 px-2 py-1 rounded">Python</span>
-                            <span class="text-xs bg-slate-100 text-slate-600 px-2 py-1 rounded">FastAPI</span>
-                            <span class="text-xs bg-slate-100 text-slate-600 px-2 py-1 rounded">LangChain</span>
+                            <span class="text-xs bg-slate-50 text-slate-600 px-3 py-1.5 rounded-lg border border-slate-100">Python</span>
+                            <span class="text-xs bg-slate-50 text-slate-600 px-3 py-1.5 rounded-lg border border-slate-100">FastAPI</span>
+                            <span class="text-xs bg-slate-50 text-slate-600 px-3 py-1.5 rounded-lg border border-slate-100">LangChain</span>
                         </div>
                     </div>
                 </div>
 
-                <div class="card-hover bg-white rounded-3xl overflow-hidden border border-slate-100 group glossy">
-                    <div class="h-48 bg-gradient-to-br from-orange-500 to-red-600 flex items-center justify-center">
+                <div class="group bg-white rounded-3xl overflow-hidden border border-slate-100 hover:border-orange-200 hover:shadow-xl hover:shadow-orange-500/10 transition-all duration-300">
+                    <div class="h-48 bg-gradient-to-br from-orange-500 to-red-600 flex items-center justify-center relative overflow-hidden">
                         <i class="fas fa-heartbeat text-white text-5xl opacity-80"></i>
+                        <div class="absolute inset-0 bg-black/0 group-hover:bg-black/10 transition-colors duration-300"></div>
                     </div>
                     <div class="p-6">
                         <div class="flex items-center gap-2 mb-3">
-                            <span class="bg-orange-100 text-orange-700 text-xs font-bold px-2 py-1 rounded">Healthcare</span>
-                            <span class="bg-slate-100 text-slate-600 text-xs px-2 py-1 rounded">SaaS</span>
+                            <span class="bg-orange-50 text-orange-700 text-xs font-semibold px-2.5 py-1 rounded-full">Healthcare</span>
+                            <span class="bg-slate-100 text-slate-500 text-xs px-2.5 py-1 rounded-full">SaaS</span>
                         </div>
-                        <h3 class="font-bold text-lg text-slate-800 mb-2">Hospital Management</h3>
-                        <p class="text-sm text-slate-600 mb-4">Comprehensive hospital information system with real-time monitoring and analytics.</p>
+                        <h3 class="font-bold text-lg text-slate-800 mb-2 group-hover:text-orange-700 transition-colors">Hospital Management</h3>
+                        <p class="text-sm text-slate-500 mb-4 leading-relaxed">Comprehensive hospital information system with real-time monitoring and analytics.</p>
                         <div class="flex flex-wrap gap-2">
-                            <span class="text-xs bg-slate-100 text-slate-600 px-2 py-1 rounded">React</span>
-                            <span class="text-xs bg-slate-100 text-slate-600 px-2 py-1 rounded">Node.js</span>
-                            <span class="text-xs bg-slate-100 text-slate-600 px-2 py-1 rounded">MongoDB</span>
+                            <span class="text-xs bg-slate-50 text-slate-600 px-3 py-1.5 rounded-lg border border-slate-100">React</span>
+                            <span class="text-xs bg-slate-50 text-slate-600 px-3 py-1.5 rounded-lg border border-slate-100">Node.js</span>
+                            <span class="text-xs bg-slate-50 text-slate-600 px-3 py-1.5 rounded-lg border border-slate-100">MongoDB</span>
                         </div>
                     </div>
                 </div>
@@ -575,80 +585,93 @@
     </section>
 
     <!-- Experience Section -->
-    <section id="experience" class="py-24 relative z-10">
+    <section id="experience" class="py-24 bg-slate-50/50 relative z-10">
         <div class="max-w-4xl mx-auto px-6">
             <div class="text-center mb-16">
-                <span class="inline-flex items-center gap-2 bg-emerald-100 text-emerald-700 px-4 py-2 rounded-full text-xs font-bold uppercase tracking-wider mb-4">
-                    <i class="fas fa-briefcase"></i> Career
+                <span class="inline-flex items-center gap-2 bg-emerald-50 border border-emerald-100 text-emerald-700 px-4 py-2 rounded-full text-xs font-semibold mb-4">
+                    <i class="fas fa-briefcase text-xs"></i> Career
                 </span>
-                <h2 class="text-4xl md:text-5xl font-black text-slate-900 mb-4">Career Path</h2>
-                <p class="text-slate-600">A journey of building scalable systems and leading engineering teams.</p>
+                <h2 class="text-4xl md:text-5xl font-black text-slate-900 mb-4 tracking-tight">Career Path</h2>
+                <p class="text-slate-500 max-w-xl mx-auto">A journey of building scalable systems and leading engineering teams across the globe.</p>
             </div>
 
-            <div class="space-y-8">
-                <div class="relative pl-16">
-                    <div class="timeline-line"></div>
-                    <div class="absolute left-0 top-0 w-12 h-12 bg-gradient-to-br from-emerald-600 to-emerald-800 rounded-2xl flex items-center justify-center shadow-lg shadow-emerald-500/30 glossy">
+            <div class="relative">
+                <!-- Timeline line -->
+                <div class="absolute left-[23px] md:left-1/2 md:-translate-x-px top-0 bottom-0 w-0.5 bg-gradient-to-b from-emerald-500 via-emerald-300 to-slate-200"></div>
+
+                <!-- Timeline Item 1 -->
+                <div class="relative pl-16 md:pl-0 mb-8">
+                    <div class="absolute left-0 top-0 w-12 h-12 bg-gradient-to-br from-emerald-600 to-emerald-700 rounded-2xl flex items-center justify-center shadow-lg shadow-emerald-500/30 z-10">
                         <i class="fas fa-building text-white"></i>
                     </div>
-                    <div class="bg-white rounded-2xl p-6 border border-slate-100 card-hover glossy">
-                        <span class="text-xs font-bold text-emerald-600 uppercase tracking-wider">2022 - Present</span>
-                        <h3 class="font-bold text-xl text-slate-800 mt-1 mb-1">Principal Architect</h3>
+                    <div class="md:ml-[calc(50%+2rem)] bg-white rounded-2xl p-6 border border-slate-100 hover:border-emerald-200 hover:shadow-lg transition-all duration-300">
+                        <div class="flex items-center gap-3 mb-3">
+                            <span class="text-xs font-semibold text-emerald-600 uppercase tracking-wider bg-emerald-50 px-3 py-1 rounded-full">2022 - Present</span>
+                        </div>
+                        <h3 class="font-bold text-xl text-slate-800 mb-1">Principal Architect</h3>
                         <p class="text-emerald-600 font-medium text-sm mb-3">TechCorp Indonesia</p>
-                        <p class="text-slate-600 text-sm">Leading architecture for distributed systems serving 10M+ users. Reduced latency by 60% and improved uptime to 99.9%. Managed team of 20+ engineers.</p>
+                        <p class="text-slate-500 text-sm leading-relaxed">Leading architecture for distributed systems serving 10M+ users. Reduced latency by 60% and improved uptime to 99.9%. Managed team of 20+ engineers.</p>
                     </div>
                 </div>
 
-                <div class="relative pl-16">
-                    <div class="absolute left-0 top-0 w-12 h-12 bg-gradient-to-br from-blue-600 to-blue-800 rounded-2xl flex items-center justify-center shadow-lg shadow-blue-500/30 glossy">
+                <!-- Timeline Item 2 -->
+                <div class="relative pl-16 md:pl-0 mb-8">
+                    <div class="absolute left-0 top-0 w-12 h-12 bg-gradient-to-br from-blue-600 to-blue-700 rounded-2xl flex items-center justify-center shadow-lg shadow-blue-500/30 z-10">
                         <i class="fas fa-server text-white"></i>
                     </div>
-                    <div class="bg-white rounded-2xl p-6 border border-slate-100 card-hover glossy">
-                        <span class="text-xs font-bold text-blue-600 uppercase tracking-wider">2019 - 2022</span>
-                        <h3 class="font-bold text-xl text-slate-800 mt-1 mb-1">Senior Backend Engineer</h3>
+                    <div class="md:mr-[calc(50%+2rem)] md:text-right bg-white rounded-2xl p-6 border border-slate-100 hover:border-blue-200 hover:shadow-lg transition-all duration-300">
+                        <div class="flex items-center md:justify-end gap-3 mb-3">
+                            <span class="text-xs font-semibold text-blue-600 uppercase tracking-wider bg-blue-50 px-3 py-1 rounded-full">2019 - 2022</span>
+                        </div>
+                        <h3 class="font-bold text-xl text-slate-800 mb-1">Senior Backend Engineer</h3>
                         <p class="text-blue-600 font-medium text-sm mb-3">Digital Solutions Corp</p>
-                        <p class="text-slate-600 text-sm">Designed microservices architecture for 5M+ users. Reduced API latency by 60% through optimization and caching strategies.</p>
+                        <p class="text-slate-500 text-sm leading-relaxed">Designed microservices architecture for 5M+ users. Reduced API latency by 60% through optimization and caching strategies.</p>
                     </div>
                 </div>
 
-                <div class="relative pl-16">
-                    <div class="absolute left-0 top-0 w-12 h-12 bg-gradient-to-br from-slate-500 to-slate-700 rounded-2xl flex items-center justify-center shadow-lg shadow-slate-500/30 glossy">
+                <!-- Timeline Item 3 -->
+                <div class="relative pl-16 md:pl-0">
+                    <div class="absolute left-0 top-0 w-12 h-12 bg-gradient-to-br from-slate-500 to-slate-600 rounded-2xl flex items-center justify-center shadow-lg shadow-slate-500/30 z-10">
                         <i class="fas fa-code text-white"></i>
                     </div>
-                    <div class="bg-white rounded-2xl p-6 border border-slate-100 card-hover glossy">
-                        <span class="text-xs font-bold text-slate-600 uppercase tracking-wider">2016 - 2019</span>
-                        <h3 class="font-bold text-xl text-slate-800 mt-1 mb-1">Full Stack Developer</h3>
+                    <div class="md:ml-[calc(50%+2rem)] bg-white rounded-2xl p-6 border border-slate-100 hover:border-slate-200 hover:shadow-lg transition-all duration-300">
+                        <div class="flex items-center gap-3 mb-3">
+                            <span class="text-xs font-semibold text-slate-600 uppercase tracking-wider bg-slate-50 px-3 py-1 rounded-full">2016 - 2019</span>
+                        </div>
+                        <h3 class="font-bold text-xl text-slate-800 mb-1">Full Stack Developer</h3>
                         <p class="text-slate-600 font-medium text-sm mb-3">Startup Hub</p>
-                        <p class="text-slate-600 text-sm">Built and shipped 20+ products across various domains. Full-stack development with modern frameworks.</p>
+                        <p class="text-slate-500 text-sm leading-relaxed">Built and shipped 20+ products across various domains. Full-stack development with modern frameworks and agile methodologies.</p>
                     </div>
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- Contact Section - Professional -->
-    <section id="contact" class="py-24 relative z-10">
+    <!-- Contact Section -->
+    <section id="contact" class="py-24 bg-slate-50/50 relative z-10">
         <div class="max-w-5xl mx-auto px-6">
-            <div class="text-center mb-12">
-                <span class="inline-flex items-center gap-2 bg-emerald-100 text-emerald-700 px-4 py-2 rounded-full text-xs font-bold uppercase tracking-wider mb-4">
-                    <i class="fas fa-paper-plane"></i> Get In Touch
+            <div class="text-center mb-16">
+                <span class="inline-flex items-center gap-2 bg-emerald-50 border border-emerald-100 text-emerald-700 px-4 py-2 rounded-full text-xs font-semibold mb-4">
+                    <i class="fas fa-paper-plane text-xs"></i> Get In Touch
                 </span>
-                <h2 class="text-4xl md:text-5xl font-black text-slate-900 mb-4">Let's Build Something<br><span class="gradient-text">Amazing Together</span></h2>
-                <p class="text-slate-600 max-w-2xl mx-auto">I'm always interested in hearing about new projects and opportunities. Whether you have a question or just want to say hi, I'll try my best to get back to you!</p>
+                <h2 class="text-4xl md:text-5xl font-black text-slate-900 mb-4 tracking-tight">Let's Build Something <span class="gradient-text">Amazing Together</span></h2>
+                <p class="text-slate-500 max-w-2xl mx-auto">I'm always interested in hearing about new projects and opportunities. Whether you have a question or just want to say hi, I'll try my best to get back to you!</p>
             </div>
             
-            <div class="grid md:grid-cols-2 gap-8">
+            <div class="grid lg:grid-cols-5 gap-8">
                 <!-- Contact Form -->
-                <div class="bg-white rounded-3xl p-8 border border-slate-100 shadow-xl glossy">
+                <div class="lg:col-span-3 bg-white rounded-3xl p-8 border border-slate-100 shadow-lg">
                     <h3 class="font-bold text-xl text-slate-800 mb-6">Send a Message</h3>
-                    <form class="space-y-4">
-                        <div>
-                            <label class="block text-sm font-medium text-slate-700 mb-2">Your Name</label>
-                            <input type="text" placeholder="John Doe" class="w-full px-4 py-3 bg-slate-50 border border-slate-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-transparent transition-all">
-                        </div>
-                        <div>
-                            <label class="block text-sm font-medium text-slate-700 mb-2">Email Address</label>
-                            <input type="email" placeholder="john@example.com" class="w-full px-4 py-3 bg-slate-50 border border-slate-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-transparent transition-all">
+                    <form class="space-y-5">
+                        <div class="grid md:grid-cols-2 gap-5">
+                            <div>
+                                <label class="block text-sm font-medium text-slate-700 mb-2">Your Name</label>
+                                <input type="text" placeholder="John Doe" class="w-full px-4 py-3 bg-slate-50 border border-slate-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-transparent transition-all">
+                            </div>
+                            <div>
+                                <label class="block text-sm font-medium text-slate-700 mb-2">Email Address</label>
+                                <input type="email" placeholder="john@example.com" class="w-full px-4 py-3 bg-slate-50 border border-slate-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-transparent transition-all">
+                            </div>
                         </div>
                         <div>
                             <label class="block text-sm font-medium text-slate-700 mb-2">Subject</label>
@@ -658,46 +681,47 @@
                             <label class="block text-sm font-medium text-slate-700 mb-2">Message</label>
                             <textarea rows="4" placeholder="Tell me about your project..." class="w-full px-4 py-3 bg-slate-50 border border-slate-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-transparent transition-all resize-none"></textarea>
                         </div>
-                        <button type="submit" class="w-full btn-primary text-white py-4 rounded-xl font-bold flex items-center justify-center gap-2">
-                            <i class="fas fa-paper-plane"></i> Send Message
+                        <button type="submit" class="group w-full inline-flex items-center justify-center gap-2 bg-gradient-to-r from-emerald-600 to-emerald-500 text-white py-4 rounded-xl font-semibold shadow-lg shadow-emerald-500/30 hover:shadow-emerald-500/50 hover:-translate-y-0.5 transition-all duration-300">
+                            <i class="fas fa-paper-plane text-sm"></i> Send Message
+                            <i class="fas fa-arrow-right text-sm opacity-0 -ml-6 group-hover:opacity-100 group-hover:ml-0 transition-all duration-300"></i>
                         </button>
                     </form>
                 </div>
                 
                 <!-- Contact Info -->
-                <div class="space-y-6">
-                    <div class="bg-white rounded-3xl p-6 border border-slate-100 shadow-xl card-hover glossy">
+                <div class="lg:col-span-2 space-y-5">
+                    <div class="group bg-white rounded-2xl p-5 border border-slate-100 hover:border-emerald-200 hover:shadow-lg transition-all duration-300">
                         <div class="flex items-center gap-4">
-                            <div class="w-14 h-14 bg-gradient-to-br from-emerald-500 to-emerald-600 rounded-2xl flex items-center justify-center shadow-lg shadow-emerald-500/20">
-                                <i class="fas fa-envelope text-white text-xl"></i>
+                            <div class="w-12 h-12 bg-gradient-to-br from-emerald-500 to-emerald-600 rounded-xl flex items-center justify-center shadow-lg shadow-emerald-500/20 group-hover:scale-105 transition-transform">
+                                <i class="fas fa-envelope text-white text-lg"></i>
                             </div>
                             <div>
-                                <h4 class="font-bold text-slate-800">Email</h4>
-                                <a href="mailto:Antonockr1@gmail.com" class="text-emerald-600 hover:text-emerald-700 transition-colors">Antonockr1@gmail.com</a>
+                                <h4 class="font-semibold text-slate-800 text-sm">Email</h4>
+                                <a href="mailto:Antonockr1@gmail.com" class="text-emerald-600 hover:text-emerald-700 transition-colors text-sm">Antonockr1@gmail.com</a>
                             </div>
                         </div>
                     </div>
                     
-                    <div class="bg-white rounded-3xl p-6 border border-slate-100 shadow-xl card-hover glossy">
+                    <div class="group bg-white rounded-2xl p-5 border border-slate-100 hover:border-blue-200 hover:shadow-lg transition-all duration-300">
                         <div class="flex items-center gap-4">
-                            <div class="w-14 h-14 bg-gradient-to-br from-blue-600 to-blue-700 rounded-2xl flex items-center justify-center shadow-lg shadow-blue-500/20">
-                                <i class="fab fa-linkedin-in text-white text-xl"></i>
+                            <div class="w-12 h-12 bg-gradient-to-br from-blue-600 to-blue-700 rounded-xl flex items-center justify-center shadow-lg shadow-blue-500/20 group-hover:scale-105 transition-transform">
+                                <i class="fab fa-linkedin-in text-white text-lg"></i>
                             </div>
                             <div>
-                                <h4 class="font-bold text-slate-800">LinkedIn</h4>
-                                <a href="https://www.linkedin.com/in/antono-40aa4b93/" target="_blank" class="text-blue-600 hover:text-blue-700 transition-colors">linkedin.com/in/antono-40aa4b93/</a>
+                                <h4 class="font-semibold text-slate-800 text-sm">LinkedIn</h4>
+                                <a href="https://www.linkedin.com/in/antono-40aa4b93/" target="_blank" class="text-blue-600 hover:text-blue-700 transition-colors text-sm">linkedin.com/in/antono-40aa4b93/</a>
                             </div>
                         </div>
                     </div>
                     
-                    <div class="bg-white rounded-3xl p-6 border border-slate-100 shadow-xl card-hover glossy">
+                    <div class="group bg-white rounded-2xl p-5 border border-slate-100 hover:border-slate-200 hover:shadow-lg transition-all duration-300">
                         <div class="flex items-center gap-4">
-                            <div class="w-14 h-14 bg-gradient-to-br from-slate-700 to-slate-800 rounded-2xl flex items-center justify-center shadow-lg shadow-slate-500/20">
-                                <i class="fab fa-github text-white text-xl"></i>
+                            <div class="w-12 h-12 bg-gradient-to-br from-slate-700 to-slate-800 rounded-xl flex items-center justify-center shadow-lg shadow-slate-500/20 group-hover:scale-105 transition-transform">
+                                <i class="fab fa-github text-white text-lg"></i>
                             </div>
                             <div>
-                                <h4 class="font-bold text-slate-800">GitHub</h4>
-                                <a href="https://github.com/antono4" target="_blank" class="text-slate-700 hover:text-slate-800 transition-colors">github.com/antono4</a>
+                                <h4 class="font-semibold text-slate-800 text-sm">GitHub</h4>
+                                <a href="https://github.com/antono4" target="_blank" class="text-slate-700 hover:text-slate-800 transition-colors text-sm">github.com/antono4</a>
                             </div>
                         </div>
                     </div>
