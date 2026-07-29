@@ -55,6 +55,30 @@
             background: #e2e8f0;
         }
         .timeline-item:last-child::after { display: none; }
+        
+        /* Lanyard animations */
+        @keyframes lanyardWave {
+            0%, 100% { transform: skewX(0deg) scaleX(1); }
+            20% { transform: skewX(3deg) scaleX(1.02); }
+            40% { transform: skewX(-2deg) scaleX(0.98); }
+            60% { transform: skewX(1.5deg) scaleX(1.01); }
+            80% { transform: skewX(-1deg) scaleX(0.99); }
+        }
+        .lanyard-wave {
+            animation: lanyardWave 1.5s ease-in-out infinite;
+            transform-origin: top center;
+        }
+        
+        @keyframes cardSwing {
+            0%, 100% { transform: rotate(-1.5deg); }
+            25% { transform: rotate(0.5deg); }
+            50% { transform: rotate(1.5deg); }
+            75% { transform: rotate(-0.5deg); }
+        }
+        .card-swing {
+            animation: cardSwing 5s ease-in-out infinite;
+            transform-origin: top center;
+        }
     </style>
 </head>
 <body class="bg-slate-50 text-slate-800 antialiased">
@@ -133,34 +157,65 @@
                     </div>
                 </div>
                 <div class="mt-12 lg:mt-0 lg:col-span-5 flex justify-center">
-                    <!-- Professional Profile Card -->
-                    <div class="relative">
-                        <div class="w-72 bg-white rounded-2xl shadow-xl overflow-hidden border border-slate-200">
-                            <div class="h-32 bg-gradient-to-br from-emerald-600 to-emerald-800"></div>
-                            <div class="px-6 pb-6">
-                                <div class="relative -mt-16 mb-4">
-                                    <div class="w-32 h-32 rounded-2xl overflow-hidden border-4 border-white shadow-lg mx-auto">
-                                        <img src="https://avatars.githubusercontent.com/u/73228642?v=4" alt="Antono" class="w-full h-full object-cover">
-                                    </div>
+                    <!-- ID Card with Lanyard -->
+                    <div id="cardSystem" class="flex-shrink-0 flex flex-col items-center">
+                        <!-- Lanyard String -->
+                        <div id="lanyardString" class="w-6 bg-gradient-to-b from-amber-500 to-amber-600 rounded-lg shadow-xl lanyard-wave" style="height: 120px; margin-top: -120px;"></div>
+
+                        <!-- Metal Clip -->
+                        <div class="w-20 h-14 bg-gradient-to-b from-gray-400 to-gray-600 rounded-t-lg shadow-xl z-20 -mt-1 relative">
+                            <div class="absolute -bottom-2 left-1/2 -translate-x-1/2 w-10 h-10 bg-gradient-to-br from-gray-500 to-gray-700 rounded-full border-2 border-gray-400"></div>
+                        </div>
+
+                        <!-- ID Card -->
+                        <div class="w-[280px] bg-white/95 backdrop-blur-xl rounded-[24px] p-5 border border-white/50 relative z-20 -mt-1 overflow-hidden shadow-xl card-swing">
+                            <!-- Header -->
+                            <div class="absolute top-0 left-0 right-0 bg-gradient-to-r from-emerald-700 to-emerald-800 text-white text-[8px] tracking-[0.3em] font-black text-center py-2">
+                                PROFESSIONAL IDENTITY CARD
+                            </div>
+
+                            <!-- Photo -->
+                            <div class="w-[90px] h-[100px] mx-auto mt-10 rounded-xl overflow-hidden border-4 border-slate-100 shadow-inner bg-slate-200">
+                                <img src="https://avatars.githubusercontent.com/u/73228642?v=4" alt="Antono" class="w-full h-full object-cover">
+                            </div>
+
+                            <!-- Info -->
+                            <h3 class="text-center font-black text-xl text-slate-800 mt-3">ANTONO</h3>
+                            <p class="text-center text-emerald-600 text-[8px] font-bold tracking-[0.15em] uppercase mt-0.5">Full Stack Web Developer</p>
+
+                            <!-- Details Grid -->
+                            <div class="grid grid-cols-2 gap-3 mt-4 pt-3 border-t border-slate-100">
+                                <div>
+                                    <p class="text-[6px] text-slate-400 font-bold uppercase tracking-widest">Status</p>
+                                    <p class="font-bold text-emerald-600 text-xs">ACTIVE</p>
                                 </div>
-                                <h3 class="text-xl font-bold text-slate-900 text-center">Antono</h3>
-                                <p class="text-emerald-600 text-sm text-center mt-1">Full Stack Web Developer</p>
-                                <div class="flex justify-center gap-6 mt-6 text-center">
-                                    <div>
-                                        <div class="text-2xl font-bold text-slate-900">15+</div>
-                                        <div class="text-xs text-slate-500">Years Exp</div>
-                                    </div>
-                                    <div class="w-px bg-slate-200"></div>
-                                    <div>
-                                        <div class="text-2xl font-bold text-slate-900">7</div>
-                                        <div class="text-xs text-slate-500">Companies</div>
-                                    </div>
-                                    <div class="w-px bg-slate-200"></div>
-                                    <div>
-                                        <div class="text-2xl font-bold text-slate-900">Expert</div>
-                                        <div class="text-xs text-slate-500">Level</div>
-                                    </div>
+                                <div>
+                                    <p class="text-[6px] text-slate-400 font-bold uppercase tracking-widest">Level</p>
+                                    <p class="font-bold text-emerald-600 text-xs">EXPERT</p>
                                 </div>
+                                <div>
+                                    <p class="text-[6px] text-slate-400 font-bold uppercase tracking-widest">Experience</p>
+                                    <p class="font-bold text-slate-700 text-xs">15+ Years</p>
+                                </div>
+                                <div>
+                                    <p class="text-[6px] text-slate-400 font-bold uppercase tracking-widest">Location</p>
+                                    <p class="font-bold text-slate-700 text-xs">Bekasi</p>
+                                </div>
+                            </div>
+
+                            <!-- Barcode -->
+                            <div class="mt-4 flex justify-center items-end h-8 gap-[2px]">
+                                <div class="w-1.5 h-full bg-slate-800"></div>
+                                <div class="w-1 h-3/4 bg-slate-800"></div>
+                                <div class="w-2 h-full bg-slate-800"></div>
+                                <div class="w-1 h-2/3 bg-slate-800"></div>
+                                <div class="w-2.5 h-full bg-slate-800"></div>
+                                <div class="w-1 h-1/2 bg-slate-800"></div>
+                                <div class="w-1.5 h-4/5 bg-slate-800"></div>
+                                <div class="w-1 h-2/3 bg-slate-800"></div>
+                                <div class="w-3 h-full bg-slate-800"></div>
+                                <div class="w-1 h-3/4 bg-slate-800"></div>
+                                <div class="w-1.5 h-full bg-slate-800"></div>
                             </div>
                         </div>
                     </div>
