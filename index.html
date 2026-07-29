@@ -123,9 +123,126 @@
             50% { opacity: 1; transform: scale(1); }
         }
         
+        /* 3D Card Effect */
+        .card-3d {
+            transform-style: preserve-3d;
+            transition: transform 0.1s ease-out;
+        }
+        .card-3d:hover {
+            transform: perspective(1000px) rotateX(5deg) rotateY(-5deg) scale(1.02);
+        }
+        
+        /* Background Particles */
+        #particles-container {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 0;
+            overflow: hidden;
+        }
+        .particle {
+            position: absolute;
+            width: 6px;
+            height: 6px;
+            background: linear-gradient(135deg, #10b981, #059669);
+            border-radius: 50%;
+            opacity: 0.3;
+            animation: float-particle 15s linear infinite;
+        }
+        @keyframes float-particle {
+            0% { transform: translateY(100vh) rotate(0deg); opacity: 0; }
+            10% { opacity: 0.3; }
+            90% { opacity: 0.3; }
+            100% { transform: translateY(-100vh) rotate(720deg); opacity: 0; }
+        }
+        
+        /* AI Agent Assistant */
+        #ai-assistant {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            z-index: 9999;
+        }
+        #ai-assistant-btn {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #10b981, #059669);
+            border: none;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 4px 20px rgba(16, 185, 129, 0.4);
+            transition: all 0.3s ease;
+        }
+        #ai-assistant-btn:hover {
+            transform: scale(1.1);
+            box-shadow: 0 6px 30px rgba(16, 185, 129, 0.6);
+        }
+        #ai-assistant-btn svg {
+            width: 30px;
+            height: 30px;
+            fill: white;
+        }
+        #ai-tooltip {
+            position: absolute;
+            bottom: 75px;
+            right: 0;
+            width: 300px;
+            max-height: 200px;
+            background: white;
+            border-radius: 16px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.2);
+            padding: 16px;
+            display: none;
+            font-size: 14px;
+            line-height: 1.5;
+            color: #334155;
+            overflow-y: auto;
+        }
+        #ai-tooltip.active {
+            display: block;
+            animation: slideUp 0.3s ease;
+        }
+        @keyframes slideUp {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        #ai-tooltip .ai-header {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            margin-bottom: 8px;
+            padding-bottom: 8px;
+            border-bottom: 1px solid #e2e8f0;
+        }
+        #ai-tooltip .ai-header .ai-dot {
+            width: 8px;
+            height: 8px;
+            background: #10b981;
+            border-radius: 50%;
+            animation: pulse 1.5s infinite;
+        }
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.5; }
+        }
+        #ai-tooltip .ai-header span {
+            font-weight: 600;
+            color: #10b981;
+            font-size: 13px;
+        }
+        
     </style>
 </head>
 <body class="bg-slate-50 text-slate-800 antialiased">
+
+    <!-- Background Particles -->
+    <div id="particles-container"></div>
 
     <!-- Navigation -->
     <nav class="fixed w-full z-50 bg-white/95 backdrop-blur-md border-b border-slate-200/50 shadow-sm transition-all duration-300" id="navbar">
@@ -216,7 +333,7 @@
                         </div>
 
                         <!-- ID Card -->
-                        <div class="w-[280px] bg-white/95 backdrop-blur-xl rounded-[24px] p-5 border border-white/50 relative z-20 -mt-1 overflow-hidden shadow-xl glossy-holo">
+                        <div class="w-[280px] bg-white/95 backdrop-blur-xl rounded-[24px] p-5 border border-white/50 relative z-20 -mt-1 overflow-hidden shadow-xl glossy-holo card-3d">
                             <!-- Header -->
                             <div class="absolute top-0 left-0 right-0 bg-gradient-to-r from-emerald-700 to-emerald-800 text-white text-[8px] tracking-[0.3em] font-black text-center py-2">
                                 PROFESSIONAL IDENTITY CARD
@@ -659,12 +776,94 @@
         </div>
     </footer>
     
+    <!-- AI Assistant -->
+    <div id="ai-assistant">
+        <div id="ai-tooltip">
+            <div class="ai-header">
+                <div class="ai-dot"></div>
+                <span>AI Guide</span>
+            </div>
+            <div id="ai-content">Gerakkan mouse ke elemen untuk melihat penjelasan...</div>
+        </div>
+        <button id="ai-assistant-btn" title="AI Assistant">
+            <svg viewBox="0 0 24 24"><path d="M12 2a2 2 0 0 1 2 2c0 .74-.4 1.39-1 1.73V7h1a7 7 0 0 1 7 7h1a1 1 0 0 1 1 1v3a1 1 0 0 1-1 1h-1v1a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-1H2a1 1 0 0 1-1-1v-3a1 1 0 0 1 1-1h1a7 7 0 0 1 7-7h1V5.73c-.6-.34-1-.99-1-1.73a2 2 0 0 1 2-2M7.5 13A2.5 2.5 0 0 0 5 15.5A2.5 2.5 0 0 0 7.5 18a2.5 2.5 0 0 0 2.5-2.5A2.5 2.5 0 0 0 7.5 13m9 0a2.5 2.5 0 0 0-2.5 2.5a2.5 2.5 0 0 0 2.5 2.5a2.5 2.5 0 0 0 2.5-2.5a2.5 2.5 0 0 0-2.5-2.5z"/></svg>
+        </button>
+    </div>
+    
     
     <!-- Scripts -->
     <script>
         document.addEventListener('DOMContentLoaded', () => {
             // Set current year in footer
             document.getElementById('year').textContent = new Date().getFullYear();
+            
+            // Create background particles
+            const particlesContainer = document.getElementById('particles-container');
+            for (let i = 0; i < 30; i++) {
+                const particle = document.createElement('div');
+                particle.className = 'particle';
+                particle.style.left = Math.random() * 100 + '%';
+                particle.style.animationDelay = Math.random() * 15 + 's';
+                particle.style.animationDuration = (15 + Math.random() * 10) + 's';
+                particle.style.width = (4 + Math.random() * 6) + 'px';
+                particle.style.height = particle.style.width;
+                particlesContainer.appendChild(particle);
+            }
+            
+            // AI Assistant functionality
+            const aiBtn = document.getElementById('ai-assistant-btn');
+            const aiTooltip = document.getElementById('ai-tooltip');
+            const aiContent = document.getElementById('ai-content');
+            
+            aiBtn.addEventListener('click', () => {
+                aiTooltip.classList.toggle('active');
+            });
+            
+            // Element descriptions for AI assistant
+            const elementDescriptions = {
+                'navbar': 'Navigasi utama portfolio dengan tautan ke bagian About, Skills, Experience, Projects, dan Education. Juga tersedia tombol Download CV.',
+                'about': 'Bagian perkenalan yang menampilkan profil Antono dengan pengalaman 15+ tahun di 7 perusahaan berbeda.',
+                'skills': 'Keempat kompetensi utama: Web Development & AI, Networking & Security, Databases & Systems, dan Management.',
+                'experience': 'Riwayat pekerjaan dimulai dari IT OSS & Network Engineer di Mondelez International (2022-sekarang) hingga berbagai posisi IT sebelumnya.',
+                'projects': 'Portofolio proyek termasuk Awan Rent Car, BrainMetrics Elite, MRP Simulation, dan IT Asset Management.',
+                'education': 'Pendidikan dan sertifikasi: gelar Magister, Diploma D3 dari LP3I, dan sertifikasi CCNA.',
+                'cardSystem': 'Kartu ID profesional dengan efek holographic 3D ala kartu Pokemon rare. Menampilkan profil, status, level keahlian, pengalaman, dan lokasi.',
+                'lanyardString': 'Tali ID card bermotif dengan tulisan "ANTONO PROFESSIONAL • EXCELLENCE • INNOVATION" yang berulang.',
+                'ai-assistant': 'Asisten AI yang menjelaskan elemen yang ditunjuk mouse. Klik tombol ini untuk toggle tooltip.',
+                'footer': 'Footer dengan tautan ke profil GitHub dan kontak email/WhatsApp.'
+            };
+            
+            // Track mouse position and show descriptions
+            let currentElement = null;
+            document.addEventListener('mousemove', (e) => {
+                const element = document.elementFromPoint(e.clientX, e.clientY);
+                if (element && element !== currentElement) {
+                    currentElement = element;
+                    let description = 'Elemen ini adalah bagian dari portfolio Antono.';
+                    
+                    // Find closest identifiable element
+                    let el = element;
+                    while (el && el !== document.body) {
+                        const id = el.id;
+                        const sectionId = el.closest('section')?.id;
+                        const sectionClass = el.closest('[class*="card"]')?.className;
+                        
+                        if (id && elementDescriptions[id]) {
+                            description = elementDescriptions[id];
+                            break;
+                        } else if (sectionId && elementDescriptions[sectionId]) {
+                            description = elementDescriptions[sectionId];
+                            break;
+                        } else if (sectionClass && sectionClass.includes('card')) {
+                            description = elementDescriptions['cardSystem'];
+                            break;
+                        }
+                        el = el.parentElement;
+                    }
+                    
+                    aiContent.textContent = description;
+                }
+            });
             
             // Mobile menu toggle
             const btn = document.getElementById('mobile-menu-btn');
