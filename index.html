@@ -84,27 +84,18 @@
         .glossy-holo::after {
             content: '';
             position: absolute;
-            top: -150%;
-            left: -150%;
-            width: 400%;
-            height: 400%;
-            background: conic-gradient(
-                from 0deg,
-                transparent 0deg,
-                rgba(255, 255, 255, 0.1) 60deg,
-                rgba(255, 255, 255, 0.3) 120deg,
-                rgba(255, 0, 128, 0.15) 180deg,
-                rgba(0, 255, 255, 0.15) 240deg,
-                rgba(128, 0, 255, 0.15) 300deg,
-                transparent 360deg
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(
+                135deg,
+                transparent 0%,
+                rgba(255, 255, 255, 0.3) 50%,
+                transparent 100%
             );
-            animation: holoShine 4s linear infinite;
             pointer-events: none;
             z-index: 2;
-        }
-        @keyframes holoShine {
-            0% { transform: translateX(-25%) translateY(-25%) rotate(0deg); }
-            100% { transform: translateX(25%) translateY(25%) rotate(360deg); }
         }
         
         /* Sparkle particles */
