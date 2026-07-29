@@ -56,6 +56,73 @@
         }
         .timeline-item:last-child::after { display: none; }
         
+        /* Pokemon Rare Card Holographic Effect */
+        .glossy-holo {
+            position: relative;
+            overflow: hidden;
+        }
+        .glossy-holo::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(
+                115deg,
+                transparent 20%,
+                rgba(255, 0, 128, 0.1) 35%,
+                rgba(0, 255, 255, 0.1) 45%,
+                rgba(128, 0, 255, 0.1) 50%,
+                rgba(255, 200, 0, 0.1) 55%,
+                rgba(0, 255, 128, 0.1) 65%,
+                transparent 80%
+            );
+            pointer-events: none;
+            z-index: 1;
+        }
+        .glossy-holo::after {
+            content: '';
+            position: absolute;
+            top: -150%;
+            left: -150%;
+            width: 400%;
+            height: 400%;
+            background: conic-gradient(
+                from 0deg,
+                transparent 0deg,
+                rgba(255, 255, 255, 0.1) 60deg,
+                rgba(255, 255, 255, 0.3) 120deg,
+                rgba(255, 0, 128, 0.15) 180deg,
+                rgba(0, 255, 255, 0.15) 240deg,
+                rgba(128, 0, 255, 0.15) 300deg,
+                transparent 360deg
+            );
+            animation: holoShine 4s linear infinite;
+            pointer-events: none;
+            z-index: 2;
+        }
+        @keyframes holoShine {
+            0% { transform: translateX(-25%) translateY(-25%) rotate(0deg); }
+            100% { transform: translateX(25%) translateY(25%) rotate(360deg); }
+        }
+        
+        /* Sparkle particles */
+        .glossy-holo .sparkle {
+            position: absolute;
+            width: 4px;
+            height: 4px;
+            background: white;
+            border-radius: 50%;
+            pointer-events: none;
+            z-index: 3;
+            animation: sparkle 2s ease-in-out infinite;
+        }
+        @keyframes sparkle {
+            0%, 100% { opacity: 0; transform: scale(0); }
+            50% { opacity: 1; transform: scale(1); }
+        }
+        
     </style>
 </head>
 <body class="bg-slate-50 text-slate-800 antialiased">
@@ -145,11 +212,16 @@
                         </div>
 
                         <!-- ID Card -->
-                        <div class="w-[280px] bg-white/95 backdrop-blur-xl rounded-[24px] p-5 border border-white/50 relative z-20 -mt-1 overflow-hidden shadow-xl">
+                        <div class="w-[280px] bg-white/95 backdrop-blur-xl rounded-[24px] p-5 border border-white/50 relative z-20 -mt-1 overflow-hidden shadow-xl glossy-holo">
                             <!-- Header -->
                             <div class="absolute top-0 left-0 right-0 bg-gradient-to-r from-emerald-700 to-emerald-800 text-white text-[8px] tracking-[0.3em] font-black text-center py-2">
                                 PROFESSIONAL IDENTITY CARD
                             </div>
+                            <!-- Sparkles -->
+                            <div class="sparkle" style="top: 20%; left: 15%; animation-delay: 0s;"></div>
+                            <div class="sparkle" style="top: 35%; left: 80%; animation-delay: 0.5s;"></div>
+                            <div class="sparkle" style="top: 60%; left: 25%; animation-delay: 1s;"></div>
+                            <div class="sparkle" style="top: 75%; left: 70%; animation-delay: 1.5s;"></div>
 
                             <!-- Photo -->
                             <div class="w-[90px] h-[100px] mx-auto mt-10 rounded-xl overflow-hidden border-4 border-slate-100 shadow-inner bg-slate-200">
