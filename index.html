@@ -56,25 +56,6 @@
         }
         .timeline-item:last-child::after { display: none; }
         
-        /* Lanyard animations */
-        @keyframes lanyardWave {
-            0%, 100% { transform: skewX(0deg) scaleX(1); }
-            20% { transform: skewX(3deg) scaleX(1.02); }
-            40% { transform: skewX(-2deg) scaleX(0.98); }
-            60% { transform: skewX(1.5deg) scaleX(1.01); }
-            80% { transform: skewX(-1deg) scaleX(0.99); }
-        }
-        .lanyard-wave {
-            animation: lanyardWave 1.5s ease-in-out infinite;
-            transform-origin: top center;
-        }
-        
-        @keyframes cardSwing {
-            0%, 100% { transform: rotate(-1.5deg); }
-            25% { transform: rotate(0.5deg); }
-            50% { transform: rotate(1.5deg); }
-            75% { transform: rotate(-0.5deg); }
-        }
     </style>
 </head>
 <body class="bg-slate-50 text-slate-800 antialiased">
@@ -156,7 +137,7 @@
                     <!-- ID Card with Lanyard -->
                     <div id="cardSystem" class="flex-shrink-0 flex flex-col items-center">
                         <!-- Lanyard String -->
-                        <div id="lanyardString" class="w-6 bg-gradient-to-b from-amber-500 to-amber-600 rounded-lg shadow-xl lanyard-wave" style="height: 120px; margin-top: -120px;"></div>
+                        <div id="lanyardString" class="w-6 bg-gradient-to-b from-amber-500 to-amber-600 rounded-lg shadow-xl" style="height: 120px; margin-top: -120px;"></div>
 
                         <!-- Metal Clip -->
                         <div class="w-20 h-14 bg-gradient-to-b from-gray-400 to-gray-600 rounded-t-lg shadow-xl z-20 -mt-1 relative">
