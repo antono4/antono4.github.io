@@ -541,11 +541,171 @@
             animation: lanyardWave 1.2s ease-in-out infinite;
             transform-origin: top center;
         }
+        
+        /* Time-Based Background Effects */
+        .time-background {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            transition: background 2s ease-in-out;
+        }
+        
+        /* Morning (5am - 11am) - Warm sunrise gradient */
+        .time-morning {
+            background: linear-gradient(135deg, #fef3c7 0%, #fde68a 25%, #fcd34d 50%, #fbbf24 75%, #f59e0b 100%);
+        }
+        
+        /* Day (11am - 5pm) - Bright blue sky */
+        .time-day {
+            background: linear-gradient(135deg, #bfdbfe 0%, #93c5fd 25%, #60a5fa 50%, #3b82f6 75%, #2563eb 100%);
+        }
+        
+        /* Evening (5pm - 7pm) - Sunset gradient */
+        .time-evening {
+            background: linear-gradient(135deg, #7c3aed 0%, #a855f7 20%, #ec4899 40%, #f97316 60%, #fbbf24 80%, #fcd34d 100%);
+        }
+        
+        /* Night (7pm - 5am) - Deep night sky */
+        .time-night {
+            background: linear-gradient(135deg, #0f172a 0%, #1e1b4b 25%, #312e81 50%, #1e3a5f 75%, #0f172a 100%);
+        }
+        
+        /* Animated Particles */
+        .particles-container {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            overflow: hidden;
+            pointer-events: none;
+        }
+        
+        .particle {
+            position: absolute;
+            border-radius: 50%;
+            pointer-events: none;
+        }
+        
+        /* Sun rays */
+        .sun-rays {
+            position: fixed;
+            top: -50%;
+            right: -50%;
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(circle, rgba(255,255,255,0.3) 0%, transparent 70%);
+            animation: rotateSun 60s linear infinite;
+        }
+        
+        @keyframes rotateSun {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+        
+        /* Stars for night */
+        .star {
+            position: absolute;
+            background: white;
+            border-radius: 50%;
+            animation: twinkle 2s ease-in-out infinite;
+        }
+        
+        @keyframes twinkle {
+            0%, 100% { opacity: 0.3; transform: scale(1); }
+            50% { opacity: 1; transform: scale(1.2); }
+        }
+        
+        /* Clouds for day */
+        .cloud {
+            position: absolute;
+            background: rgba(255,255,255,0.8);
+            border-radius: 50%;
+            filter: blur(10px);
+            animation: floatCloud 30s linear infinite;
+        }
+        
+        @keyframes floatCloud {
+            0% { transform: translateX(-100px); }
+            100% { transform: translateX(calc(100vw + 100px)); }
+        }
+        
+        /* Rain drops */
+        .raindrop {
+            position: absolute;
+            background: linear-gradient(transparent, rgba(255,255,255,0.6));
+            width: 2px;
+            animation: rain 0.5s linear infinite;
+        }
+        
+        @keyframes rain {
+            0% { transform: translateY(-100vh); opacity: 0; }
+            10% { opacity: 1; }
+            100% { transform: translateY(100vh); opacity: 0; }
+        }
+        
+        /* Fireflies for evening */
+        .firefly {
+            position: absolute;
+            background: #fbbf24;
+            border-radius: 50%;
+            box-shadow: 0 0 10px #fbbf24, 0 0 20px #fbbf24;
+            animation: fireflyFloat 3s ease-in-out infinite;
+        }
+        
+        @keyframes fireflyFloat {
+            0%, 100% { transform: translate(0, 0); opacity: 0.4; }
+            25% { transform: translate(10px, -20px); opacity: 1; }
+            50% { transform: translate(-5px, -10px); opacity: 0.7; }
+            75% { transform: translate(15px, -15px); opacity: 1; }
+        }
+        
+        /* Moon glow for night */
+        .moon {
+            position: fixed;
+            top: 10%;
+            right: 15%;
+            width: 80px;
+            height: 80px;
+            background: radial-gradient(circle at 30% 30%, #fef3c7 0%, #fcd34d 50%, #f59e0b 100%);
+            border-radius: 50%;
+            box-shadow: 0 0 50px rgba(253,224,71,0.5), 0 0 100px rgba(253,224,71,0.3);
+        }
+        
+        /* Aurora effect for night */
+        .aurora {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(180deg, 
+                rgba(16,185,129,0.1) 0%, 
+                rgba(59,130,246,0.1) 25%, 
+                rgba(139,92,246,0.1) 50%, 
+                rgba(236,72,153,0.1) 75%, 
+                transparent 100%);
+            animation: auroraShift 10s ease-in-out infinite;
+            mix-blend-mode: screen;
+        }
+        
+        @keyframes auroraShift {
+            0%, 100% { opacity: 0.3; transform: translateY(0); }
+            50% { opacity: 0.6; transform: translateY(-20px); }
+        }
     </style>
-</head>
 </head>
 <body class="bg-slate-50 text-slate-800 antialiased selection:bg-accent selection:text-white">
 
+    
+    <!-- Time-Based Background -->
+    <div id="timeBackground" class="time-background"></div>
+    <div id="particlesContainer" class="particles-container"></div>
+    <div id="timeEffects"></div>
 
     <!-- Navigation -->
     <nav class="fixed w-full z-50 bg-white/80 backdrop-blur-md border-b border-slate-200 shadow-sm transition-all duration-300" id="navbar">
@@ -1091,6 +1251,91 @@
                 }
             });
         });
+        
+        // Time-Based Background Effects
+        (function() {
+            const timeBackground = document.getElementById('timeBackground');
+            const particlesContainer = document.getElementById('particlesContainer');
+            const timeEffects = document.getElementById('timeEffects');
+            
+            function getTimeOfDay() {
+                const hour = new Date().getHours();
+                if (hour >= 5 && hour < 11) return 'morning';
+                if (hour >= 11 && hour < 17) return 'day';
+                if (hour >= 17 && hour < 19) return 'evening';
+                return 'night';
+            }
+            
+            function clearEffects() {
+                timeBackground.className = 'time-background';
+                particlesContainer.innerHTML = '';
+                timeEffects.innerHTML = '';
+            }
+            
+            function createMorningEffects() {
+                const sunRays = document.createElement('div');
+                sunRays.className = 'sun-rays';
+                timeEffects.appendChild(sunRays);
+                
+                for (let i = 0; i < 15; i++) {
+                    const particle = document.createElement('div');
+                    particle.className = 'particle';
+                    particle.style.cssText = 'width:' + (Math.random() * 4 + 2) + 'px;height:' + (Math.random() * 4 + 2) + 'px;background:rgba(255,255,255,' + (Math.random() * 0.5 + 0.3) + ');left:' + (Math.random() * 100) + '%;top:' + (Math.random() * 100) + '%;animation:float ' + (Math.random() * 3 + 2) + 's ease-in-out infinite;animation-delay:' + (Math.random() * 2) + 's;';
+                    particlesContainer.appendChild(particle);
+                }
+            }
+            
+            function createDayEffects() {
+                for (let i = 0; i < 5; i++) {
+                    const cloud = document.createElement('div');
+                    cloud.className = 'cloud';
+                    cloud.style.cssText = 'width:' + (Math.random() * 200 + 100) + 'px;height:' + (Math.random() * 60 + 40) + 'px;top:' + (Math.random() * 30) + '%;animation-duration:' + (Math.random() * 20 + 30) + 's;animation-delay:' + (Math.random() * 10) + 's;';
+                    particlesContainer.appendChild(cloud);
+                }
+            }
+            
+            function createEveningEffects() {
+                for (let i = 0; i < 20; i++) {
+                    const firefly = document.createElement('div');
+                    firefly.className = 'firefly';
+                    firefly.style.cssText = 'width:' + (Math.random() * 4 + 2) + 'px;height:' + (Math.random() * 4 + 2) + 'px;left:' + (Math.random() * 100) + '%;top:' + (Math.random() * 100) + '%;animation-duration:' + (Math.random() * 2 + 2) + 's;animation-delay:' + (Math.random() * 3) + 's;';
+                    particlesContainer.appendChild(firefly);
+                }
+            }
+            
+            function createNightEffects() {
+                for (let i = 0; i < 50; i++) {
+                    const star = document.createElement('div');
+                    star.className = 'star';
+                    star.style.cssText = 'width:' + (Math.random() * 3 + 1) + 'px;height:' + (Math.random() * 3 + 1) + 'px;left:' + (Math.random() * 100) + '%;top:' + (Math.random() * 70) + '%;animation-duration:' + (Math.random() * 2 + 1) + 's;animation-delay:' + (Math.random() * 2) + 's;';
+                    particlesContainer.appendChild(star);
+                }
+                
+                const moon = document.createElement('div');
+                moon.className = 'moon';
+                timeEffects.appendChild(moon);
+                
+                const aurora = document.createElement('div');
+                aurora.className = 'aurora';
+                timeEffects.appendChild(aurora);
+            }
+            
+            function applyTimeEffects() {
+                clearEffects();
+                const timeOfDay = getTimeOfDay();
+                timeBackground.classList.add('time-' + timeOfDay);
+                
+                switch(timeOfDay) {
+                    case 'morning': createMorningEffects(); break;
+                    case 'day': createDayEffects(); break;
+                    case 'evening': createEveningEffects(); break;
+                    case 'night': createNightEffects(); break;
+                }
+            }
+            
+            applyTimeEffects();
+            setInterval(applyTimeEffects, 60000);
+        })();
     </script>
 </body>
 </html>
