@@ -18,347 +18,6 @@
         html { scroll-behavior: smooth; }
         body { font-family: 'Inter', sans-serif; background-color: #f8fafc; }
         
-        /* 3D Raised Card Effect */
-        .card-3d {
-            position: relative;
-            transform-style: preserve-3d;
-            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-        }
-        .card-3d::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            height: 50%;
-            background: linear-gradient(180deg, rgba(255,255,255,0.4) 0%, rgba(255,255,255,0.1) 50%, transparent 100%);
-            border-radius: inherit;
-            pointer-events: none;
-            z-index: 1;
-        }
-        .card-3d::after {
-            content: '';
-            position: absolute;
-            top: 4%;
-            left: 8%;
-            width: 84%;
-            height: 8%;
-            background: linear-gradient(90deg, transparent 0%, rgba(255,255,255,0.7) 50%, transparent 100%);
-            border-radius: 50%;
-            filter: blur(3px);
-            pointer-events: none;
-            z-index: 2;
-            animation: glossyGlare 3s ease-in-out infinite;
-        }
-        .card-3d:hover {
-            transform: translateY(-8px) rotateX(2deg);
-            box-shadow: 
-                0 25px 50px -12px rgba(0,0,0,0.25),
-                0 12px 20px -8px rgba(0,0,0,0.15),
-                inset 0 1px 0 rgba(255,255,255,0.6);
-        }
-        
-        /* 3D Shadow Layers */
-        .shadow-3d {
-            box-shadow: 
-                0 1px 2px rgba(255,255,255,0.5) inset,
-                0 2px 4px rgba(0,0,0,0.05),
-                0 4px 8px rgba(0,0,0,0.05),
-                0 8px 16px rgba(0,0,0,0.08),
-                0 16px 32px rgba(0,0,0,0.1);
-        }
-        
-        /* Glossy Effect Base with Colored Shine */
-        .glossy {
-            position: relative;
-            overflow: hidden;
-        }
-        .glossy::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            height: 50%;
-            background: linear-gradient(180deg, rgba(255,255,255,0.5) 0%, rgba(255,255,255,0.15) 40%, transparent 100%);
-            border-radius: inherit;
-            pointer-events: none;
-            z-index: 1;
-        }
-        .glossy::after {
-            content: '';
-            position: absolute;
-            top: 4%;
-            left: 8%;
-            width: 84%;
-            height: 10%;
-            background: linear-gradient(90deg, transparent 0%, rgba(255,255,255,0.8) 50%, transparent 100%);
-            border-radius: 50%;
-            filter: blur(3px);
-            pointer-events: none;
-            z-index: 2;
-            animation: glossyGlare 3s ease-in-out infinite;
-        }
-        @keyframes glossyGlare {
-            0%, 100% { opacity: 0.6; transform: scaleX(1); }
-            50% { opacity: 1; transform: scaleX(1.05); }
-        }
-        
-        /* 3D Glossy Variants */
-        .glossy-3d {
-            position: relative;
-            overflow: hidden;
-            transform-style: preserve-3d;
-            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-            box-shadow: 
-                0 1px 2px rgba(255,255,255,0.5) inset,
-                0 4px 8px rgba(0,0,0,0.08),
-                0 8px 16px rgba(0,0,0,0.1),
-                0 16px 32px rgba(0,0,0,0.12);
-        }
-        .glossy-3d::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            height: 60%;
-            background: linear-gradient(180deg, rgba(255,255,255,0.5) 0%, rgba(255,255,255,0.2) 40%, transparent 100%);
-            border-radius: inherit;
-            pointer-events: none;
-            z-index: 1;
-        }
-        .glossy-3d::after {
-            content: '';
-            position: absolute;
-            top: 4%;
-            left: 6%;
-            width: 88%;
-            height: 12%;
-            background: linear-gradient(90deg, transparent 0%, rgba(255,255,255,0.9) 50%, transparent 100%);
-            border-radius: 50%;
-            filter: blur(4px);
-            pointer-events: none;
-            z-index: 2;
-            animation: glossyGlare 3s ease-in-out infinite;
-        }
-        .glossy-3d:hover {
-            transform: translateY(-6px) rotateX(1deg);
-            box-shadow: 
-                0 1px 2px rgba(255,255,255,0.6) inset,
-                0 8px 16px rgba(0,0,0,0.1),
-                0 16px 32px rgba(0,0,0,0.15),
-                0 24px 48px rgba(0,0,0,0.2);
-        }
-        
-        /* Colored Glossy Variants */
-        .glossy-emerald {
-            position: relative;
-            overflow: hidden;
-        }
-        .glossy-emerald::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            height: 60%;
-            background: linear-gradient(180deg, rgba(255,255,255,0.3) 0%, rgba(16,185,129,0.1) 50%, transparent 100%);
-            border-radius: inherit;
-            pointer-events: none;
-        }
-        .glossy-emerald::after {
-            content: '';
-            position: absolute;
-            top: 5%;
-            left: 8%;
-            width: 84%;
-            height: 10%;
-            background: linear-gradient(90deg, transparent 0%, rgba(255,255,255,0.8) 50%, transparent 100%);
-            border-radius: 50%;
-            filter: blur(4px);
-            pointer-events: none;
-            animation: glossyGlare 3s ease-in-out infinite;
-        }
-        
-        .glossy-blue {
-            position: relative;
-            overflow: hidden;
-        }
-        .glossy-blue::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            height: 60%;
-            background: linear-gradient(180deg, rgba(255,255,255,0.3) 0%, rgba(59,130,246,0.12) 50%, transparent 100%);
-            border-radius: inherit;
-            pointer-events: none;
-        }
-        .glossy-blue::after {
-            content: '';
-            position: absolute;
-            top: 5%;
-            left: 8%;
-            width: 84%;
-            height: 10%;
-            background: linear-gradient(90deg, transparent 0%, rgba(255,255,255,0.8) 50%, transparent 100%);
-            border-radius: 50%;
-            filter: blur(4px);
-            pointer-events: none;
-            animation: glossyGlare 3s ease-in-out infinite;
-        }
-        
-        .glossy-purple {
-            position: relative;
-            overflow: hidden;
-        }
-        .glossy-purple::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            height: 60%;
-            background: linear-gradient(180deg, rgba(255,255,255,0.3) 0%, rgba(139,92,246,0.12) 50%, transparent 100%);
-            border-radius: inherit;
-            pointer-events: none;
-        }
-        .glossy-purple::after {
-            content: '';
-            position: absolute;
-            top: 5%;
-            left: 8%;
-            width: 84%;
-            height: 10%;
-            background: linear-gradient(90deg, transparent 0%, rgba(255,255,255,0.8) 50%, transparent 100%);
-            border-radius: 50%;
-            filter: blur(4px);
-            pointer-events: none;
-            animation: glossyGlare 3s ease-in-out infinite;
-        }
-        
-        .glossy-orange {
-            position: relative;
-            overflow: hidden;
-        }
-        .glossy-orange::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            height: 60%;
-            background: linear-gradient(180deg, rgba(255,255,255,0.3) 0%, rgba(249,115,22,0.12) 50%, transparent 100%);
-            border-radius: inherit;
-            pointer-events: none;
-        }
-        .glossy-orange::after {
-            content: '';
-            position: absolute;
-            top: 5%;
-            left: 8%;
-            width: 84%;
-            height: 10%;
-            background: linear-gradient(90deg, transparent 0%, rgba(255,255,255,0.8) 50%, transparent 100%);
-            border-radius: 50%;
-            filter: blur(4px);
-            pointer-events: none;
-            animation: glossyGlare 3s ease-in-out infinite;
-        }
-        
-        .glossy-amber {
-            position: relative;
-            overflow: hidden;
-        }
-        .glossy-amber::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            height: 60%;
-            background: linear-gradient(180deg, rgba(255,255,255,0.3) 0%, rgba(245,158,11,0.15) 50%, transparent 100%);
-            border-radius: inherit;
-            pointer-events: none;
-        }
-        .glossy-amber::after {
-            content: '';
-            position: absolute;
-            top: 5%;
-            left: 8%;
-            width: 84%;
-            height: 10%;
-            background: linear-gradient(90deg, transparent 0%, rgba(255,255,255,0.8) 50%, transparent 100%);
-            border-radius: 50%;
-            filter: blur(4px);
-            pointer-events: none;
-            animation: glossyGlare 3s ease-in-out infinite;
-        }
-        
-        .glossy-dark {
-            position: relative;
-            overflow: hidden;
-        }
-        .glossy-dark::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            height: 60%;
-            background: linear-gradient(180deg, rgba(255,255,255,0.15) 0%, rgba(255,255,255,0.03) 50%, transparent 100%);
-            border-radius: inherit;
-            pointer-events: none;
-        }
-        .glossy-dark::after {
-            content: '';
-            position: absolute;
-            top: 4%;
-            left: 8%;
-            width: 84%;
-            height: 8%;
-            background: linear-gradient(90deg, transparent 0%, rgba(255,255,255,0.25) 50%, transparent 100%);
-            border-radius: 50%;
-            filter: blur(3px);
-            pointer-events: none;
-            animation: glossyGlare 3s ease-in-out infinite;
-        }
-        
-        /* Gradient Card with Shimmer */
-        .glossy-shimmer {
-            position: relative;
-            overflow: hidden;
-        }
-        .glossy-shimmer::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            height: 100%;
-            background: linear-gradient(135deg, rgba(255,255,255,0.2) 0%, transparent 40%, rgba(255,255,255,0.1) 100%);
-            border-radius: inherit;
-            pointer-events: none;
-        }
-        .glossy-shimmer::after {
-            content: '';
-            position: absolute;
-            top: -100%;
-            left: -100%;
-            width: 300%;
-            height: 300%;
-            background: linear-gradient(90deg, transparent 0%, rgba(255,255,255,0.15) 25%, rgba(255,255,255,0.3) 50%, rgba(255,255,255,0.15) 75%, transparent 100%);
-            transform: rotate(30deg);
-            animation: shimmer 4s ease-in-out infinite;
-            pointer-events: none;
-        }
-        @keyframes shimmer {
-            0% { transform: translateX(-100%) rotate(30deg); }
-            100% { transform: translateX(100%) rotate(30deg); }
-        }
-        
         /* Custom scrollbar */
         ::-webkit-scrollbar { width: 8px; }
         ::-webkit-scrollbar-track { background: #f1f5f9; }
@@ -368,565 +27,140 @@
         /* Gradient text */
         .gradient-text { background: linear-gradient(135deg, #10b981 0%, #059669 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
         
-        /* ID Card Styles */
-        .id-card { box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.15), 0 0 30px rgba(16, 185, 129, 0.15); }
-        
-        /* Lanyard String - Wider Fabric with Pattern */
-        .lanyard-texture {
-            width: 24px !important;
-            background: 
-                repeating-linear-gradient(
-                    45deg,
-                    #047857 0px,
-                    #047857 3px,
-                    #065f46 3px,
-                    #065f46 6px
-                ),
-                repeating-linear-gradient(
-                    -45deg,
-                    rgba(255,255,255,0.05) 0px,
-                    rgba(255,255,255,0.05) 2px,
-                    transparent 2px,
-                    transparent 4px
-                ),
-                linear-gradient(
-                    to right,
-                    #022c22 0%,
-                    #064e3b 20%,
-                    #047857 50%,
-                    #064e3b 80%,
-                    #022c22 100%
-                );
-            position: relative;
-            box-shadow: 
-                inset 2px 0 0 rgba(255,255,255,0.2),
-                inset -2px 0 0 rgba(0,0,0,0.2),
-                inset 0 2px 0 rgba(255,255,255,0.1),
-                inset 0 -2px 0 rgba(0,0,0,0.1),
-                2px 4px 8px rgba(0,0,0,0.3);
-            border-radius: 4px;
-        }
-        
-        /* Fabric cross-hatch pattern */
-        .lanyard-texture::before {
-            content: '';
-            position: absolute;
-            inset: 0;
-            background: 
-                repeating-linear-gradient(
-                    0deg,
-                    transparent 0px,
-                    transparent 2px,
-                    rgba(255,255,255,0.06) 2px,
-                    rgba(255,255,255,0.06) 4px
-                );
-            border-radius: inherit;
-        }
-        
-        /* Decorative stripes and highlights */
-        .lanyard-texture::after {
-            content: '';
-            position: absolute;
-            inset: 0;
-            background: 
-                linear-gradient(
-                    90deg,
-                    rgba(0,0,0,0.15) 0px,
-                    transparent 3px,
-                    transparent 8px,
-                    rgba(255,255,255,0.1) 8px,
-                    rgba(255,255,255,0.1) 10px,
-                    transparent 10px,
-                    transparent 15px,
-                    rgba(0,0,0,0.1) 15px,
-                    transparent 18px
-                );
-            border-radius: inherit;
-        }
-
-        #particles-canvas { position: fixed; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none; z-index: 0; }
-        
-        /* Floating animation */
-        @keyframes float { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-10px); } }
-        .float-animation { animation: float 3s ease-in-out infinite; }
-        
-        /* Pulse glow */
-        @keyframes pulseGlow { 0%, 100% { box-shadow: 0 0 20px rgba(16, 185, 129, 0.3); } 50% { box-shadow: 0 0 40px rgba(16, 185, 129, 0.5); } }
-        .pulse-glow { animation: pulseGlow 2s ease-in-out infinite; }
-        
-        /* Stats counter */
-        .stat-item { position: relative; }
-        .stat-item::after { content: ''; position: absolute; right: -20px; top: 50%; transform: translateY(-50%); width: 1px; height: 40px; background: linear-gradient(180deg, transparent, #e2e8f0, transparent); }
-        .stat-item:last-child::after { display: none; }
-        
         /* Card hover effects */
         .card-hover { transition: all 0.3s ease; }
-        .card-hover:hover { transform: translateY(-5px); box-shadow: 0 20px 40px -10px rgba(0,0,0,0.1); }
+        .card-hover:hover { transform: translateY(-4px); box-shadow: 0 20px 40px -10px rgba(0,0,0,0.1); }
         
-        /* Timeline line */
-        .timeline-line { position: absolute; left: 23px; top: 60px; bottom: 0; width: 2px; background: linear-gradient(180deg, #10b981, transparent); }
-        
-        /* Gradient border */
-        .gradient-border { position: relative; background: white; border-radius: 1rem; }
-        .gradient-border::before { content: ''; position: absolute; inset: 0; padding: 2px; background: linear-gradient(135deg, #10b981, #059669, #047857); border-radius: 1rem; -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0); mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0); -webkit-mask-composite: xor; mask-composite: exclude; }
-        
-        /* Button styles */
-        .btn-primary { background: linear-gradient(135deg, #10b981 0%, #059669 100%); transition: all 0.3s ease; }
-        .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 10px 30px -10px rgba(16, 185, 129, 0.5); }
-        
-        /* Marquee */
-        @keyframes marquee { 0% { transform: translateX(0); } 100% { transform: translateX(-50%); } }
-        .marquee { animation: marquee 30s linear infinite; }
-        
-        /* Ensure sections don't overlap */
-        section, main {
-            isolation: isolate;
-        }
-        
-        /* Responsive hero text */
-        @media (max-width: 768px) {
-            main#about h1 {
-                font-size: 2rem !important;
-                line-height: 1.1 !important;
-            }
-        }
-        
-        /* Natural Wind blow effect for ID card - 15 seconds */
-        @keyframes windBlow {
-            0% { transform: rotate(0deg) translateY(0) translateX(0) skewX(0deg); }
-            /* First gust - gentle push right */
-            8% { transform: rotate(1deg) translateY(-2px) translateX(12px) skewX(1deg); }
-            /* Slight rebound */
-            15% { transform: rotate(-0.5deg) translateY(1px) translateX(8px) skewX(-0.5deg); }
-            /* Stronger second gust */
-            22% { transform: rotate(2.5deg) translateY(-4px) translateX(20px) skewX(2deg); }
-            /* Slow drift back */
-            30% { transform: rotate(0.5deg) translateY(-1px) translateX(12px) skewX(0.5deg); }
-            /* Calm moment */
-            38% { transform: rotate(-0.3deg) translateY(0px) translateX(5px) skewX(0deg); }
-            /* Third gust - weaker */
-            45% { transform: rotate(1.5deg) translateY(-2px) translateX(15px) skewX(1deg); }
-            /* Settling sway */
-            52% { transform: rotate(0deg) translateY(0px) translateX(8px) skewX(0deg); }
-            /* Gentle flutter */
-            58% { transform: rotate(-1deg) translateY(-1px) translateX(5px) skewX(-0.5deg); }
-            /* Final gust */
-            65% { transform: rotate(2deg) translateY(-3px) translateX(18px) skewX(1.5deg); }
-            /* Slow return */
-            72% { transform: rotate(0.5deg) translateY(-1px) translateX(10px) skewX(0.5deg); }
-            /* Gentle wobble */
-            78% { transform: rotate(-0.5deg) translateY(0px) translateX(6px) skewX(-0.3deg); }
-            /* Final flutter */
-            85% { transform: rotate(1deg) translateY(-1px) translateX(8px) skewX(0.5deg); }
-            /* Almost still */
-            92% { transform: rotate(-0.2deg) translateY(0px) translateX(3px) skewX(0deg); }
-            /* Return to rest */
-            100% { transform: rotate(0deg) translateY(0) translateX(0) skewX(0deg); }
-        }
-        
-        .wind-blow {
-            animation: windBlow 15s cubic-bezier(0.25, 0.1, 0.25, 1);
-        }
-        
-        /* Natural lanyard wave effect */
-        @keyframes lanyardWave {
-            0%, 100% { transform: skewX(0deg) scaleX(1); }
-            20% { transform: skewX(4deg) scaleX(1.02); }
-            40% { transform: skewX(-3deg) scaleX(0.98); }
-            60% { transform: skewX(2deg) scaleX(1.01); }
-            80% { transform: skewX(-1deg) scaleX(0.99); }
-        }
-        
-        .lanyard-wave {
-            animation: lanyardWave 1.2s ease-in-out infinite;
-            transform-origin: top center;
-        }
-        
-        /* Time-Based Background Effects */
-        .time-background {
-            position: fixed;
-            top: 0;
+        /* Timeline styles */
+        .timeline-item { position: relative; padding-left: 2rem; }
+        .timeline-item::before {
+            content: '';
+            position: absolute;
             left: 0;
-            width: 100%;
-            height: 100%;
-            z-index: -1;
-            transition: background 2s ease-in-out;
-        }
-        
-        /* Morning (5am - 11am) - Warm sunrise gradient */
-        .time-morning {
-            background: linear-gradient(135deg, #fef3c7 0%, #fde68a 25%, #fcd34d 50%, #fbbf24 75%, #f59e0b 100%);
-        }
-        
-        /* Day (11am - 5pm) - Bright blue sky */
-        .time-day {
-            background: linear-gradient(135deg, #bfdbfe 0%, #93c5fd 25%, #60a5fa 50%, #3b82f6 75%, #2563eb 100%);
-        }
-        
-        /* Evening (5pm - 7pm) - Sunset gradient */
-        .time-evening {
-            background: linear-gradient(135deg, #7c3aed 0%, #a855f7 20%, #ec4899 40%, #f97316 60%, #fbbf24 80%, #fcd34d 100%);
-        }
-        
-        /* Night (7pm - 5am) - Deep night sky */
-        .time-night {
-            background: linear-gradient(135deg, #0f172a 0%, #1e1b4b 25%, #312e81 50%, #1e3a5f 75%, #0f172a 100%);
-        }
-        
-        /* Animated Particles */
-        .particles-container {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            z-index: -1;
-            overflow: hidden;
-            pointer-events: none;
-        }
-        
-        .particle {
-            position: absolute;
+            top: 0.5rem;
+            width: 12px;
+            height: 12px;
             border-radius: 50%;
-            pointer-events: none;
+            background: #10b981;
+            border: 3px solid #ecfdf5;
+            box-shadow: 0 0 0 2px #10b981;
         }
-        
-        /* Sun rays */
-        .sun-rays {
-            position: fixed;
-            top: -50%;
-            right: -50%;
-            width: 100%;
-            height: 100%;
-            background: radial-gradient(circle, rgba(255,255,255,0.3) 0%, transparent 70%);
-            animation: rotateSun 60s linear infinite;
-        }
-        
-        @keyframes rotateSun {
-            from { transform: rotate(0deg); }
-            to { transform: rotate(360deg); }
-        }
-        
-        /* Stars for night */
-        .star {
+        .timeline-item::after {
+            content: '';
             position: absolute;
-            background: white;
-            border-radius: 50%;
-            animation: twinkle 2s ease-in-out infinite;
-        }
-        
-        @keyframes twinkle {
-            0%, 100% { opacity: 0.3; transform: scale(1); }
-            50% { opacity: 1; transform: scale(1.2); }
-        }
-        
-        /* Clouds for day */
-        .cloud {
-            position: absolute;
-            background: rgba(255,255,255,0.8);
-            border-radius: 50%;
-            filter: blur(10px);
-            animation: floatCloud 30s linear infinite;
-        }
-        
-        @keyframes floatCloud {
-            0% { transform: translateX(-100px); }
-            100% { transform: translateX(calc(100vw + 100px)); }
-        }
-        
-        /* Rain drops */
-        .raindrop {
-            position: absolute;
-            background: linear-gradient(transparent, rgba(255,255,255,0.6));
+            left: 5px;
+            top: 1.5rem;
             width: 2px;
-            animation: rain 0.5s linear infinite;
+            height: calc(100% - 0.5rem);
+            background: #e2e8f0;
         }
-        
-        @keyframes rain {
-            0% { transform: translateY(-100vh); opacity: 0; }
-            10% { opacity: 1; }
-            100% { transform: translateY(100vh); opacity: 0; }
-        }
-        
-        /* Fireflies for evening */
-        .firefly {
-            position: absolute;
-            background: #fbbf24;
-            border-radius: 50%;
-            box-shadow: 0 0 10px #fbbf24, 0 0 20px #fbbf24;
-            animation: fireflyFloat 3s ease-in-out infinite;
-        }
-        
-        @keyframes fireflyFloat {
-            0%, 100% { transform: translate(0, 0); opacity: 0.4; }
-            25% { transform: translate(10px, -20px); opacity: 1; }
-            50% { transform: translate(-5px, -10px); opacity: 0.7; }
-            75% { transform: translate(15px, -15px); opacity: 1; }
-        }
-        
-        /* Moon glow for night */
-        .moon {
-            position: fixed;
-            top: 10%;
-            right: 15%;
-            width: 80px;
-            height: 80px;
-            background: radial-gradient(circle at 30% 30%, #fef3c7 0%, #fcd34d 50%, #f59e0b 100%);
-            border-radius: 50%;
-            box-shadow: 0 0 50px rgba(253,224,71,0.5), 0 0 100px rgba(253,224,71,0.3);
-        }
-        
-        /* Aurora effect for night */
-        .aurora {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(180deg, 
-                rgba(16,185,129,0.1) 0%, 
-                rgba(59,130,246,0.1) 25%, 
-                rgba(139,92,246,0.1) 50%, 
-                rgba(236,72,153,0.1) 75%, 
-                transparent 100%);
-            animation: auroraShift 10s ease-in-out infinite;
-            mix-blend-mode: screen;
-        }
-        
-        @keyframes auroraShift {
-            0%, 100% { opacity: 0.3; transform: translateY(0); }
-            50% { opacity: 0.6; transform: translateY(-20px); }
-        }
-        
-        /* ID Card Swing Animation */
-        @keyframes cardSwing {
-            0%, 100% { transform: rotate(-2deg); }
-            25% { transform: rotate(1deg); }
-            50% { transform: rotate(2deg); }
-            75% { transform: rotate(-1deg); }
-        }
-        
-        .card-swing {
-            animation: cardSwing 4s ease-in-out infinite;
-            transform-origin: top center;
-        }
-        
-        /* Wind effect for lanyard */
-        @keyframes windSway {
-            0%, 100% { transform: rotate(-3deg) scaleY(1); }
-            25% { transform: rotate(2deg) scaleY(1.02); }
-            50% { transform: rotate(3deg) scaleY(1); }
-            75% { transform: rotate(-2deg) scaleY(0.98); }
-        }
-        
-        .lanyard-sway {
-            animation: windSway 3s ease-in-out infinite;
-            transform-origin: top center;
-        }
-        
-        /* Text Tilt/Glow Effect */
-        .text-tilt {
-            display: inline-block;
-            transition: all 0.3s ease;
-            transform-style: preserve-3d;
-        }
-        
-        .text-tilt:hover {
-            transform: perspective(500px) rotateX(5deg) translateY(-5px);
-            text-shadow: 0 10px 20px rgba(16, 185, 129, 0.3);
-        }
-        
-        /* 3D Text Effect */
-        .text-3d {
-            position: relative;
-            display: inline-block;
-            text-transform: uppercase;
-            background: linear-gradient(135deg, #059669 0%, #10b981 50%, #34d399 100%);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-        }
-        
-        .text-3d::before {
-            content: attr(data-text);
-            position: absolute;
-            left: 0;
-            top: 0;
-            background: linear-gradient(135deg, #059669 0%, #10b981 50%, #34d399 100%);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-            transform: translate(2px, 2px);
-            z-index: -1;
-            filter: blur(1px);
-            opacity: 0.8;
-        }
-        
-        /* Neon Glow Text */
-        .text-glow {
-            transition: all 0.3s ease;
-        }
-        
-        .text-glow:hover {
-            text-shadow: 
-                0 0 5px rgba(16, 185, 129, 0.7),
-                0 0 10px rgba(16, 185, 129, 0.5),
-                0 0 20px rgba(16, 185, 129, 0.3),
-                0 0 40px rgba(16, 185, 129, 0.2);
-            transform: scale(1.05);
-        }
-        
-        /* Float Text Animation */
-        @keyframes magneticPulse {
-            0%, 100% { transform: translateY(0); }
-            50% { transform: translateY(-3px); }
-        }
-        
-        .text-float {
-            animation: magneticPulse 2s ease-in-out infinite;
-        }
+        .timeline-item:last-child::after { display: none; }
     </style>
 </head>
-<body class="bg-slate-50 text-slate-800 antialiased selection:bg-accent selection:text-white">
-
-    
-    <!-- Time-Based Background -->
-    <div id="timeBackground" class="time-background"></div>
-    <div id="particlesContainer" class="particles-container"></div>
-    <div id="timeEffects"></div>
+<body class="bg-slate-50 text-slate-800 antialiased">
 
     <!-- Navigation -->
-    <nav class="fixed w-full z-50 bg-white/80 backdrop-blur-xl border-b border-white/50 shadow-lg transition-all duration-300 glossy-3d" id="navbar">
+    <nav class="fixed w-full z-50 bg-white/95 backdrop-blur-md border-b border-slate-200/50 shadow-sm transition-all duration-300" id="navbar">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="flex justify-between items-center h-16">
                 <div class="flex-shrink-0 flex items-center">
-                    <a href="#" class="text-2xl font-bold tracking-tighter text-primary text-3d">ANTONO.</a>
+                    <a href="#" class="text-2xl font-bold tracking-tight text-emerald-700">ANTONO</a>
                 </div>
                 <!-- Desktop Menu -->
                 <div class="hidden md:flex items-center space-x-8">
-                    <a href="#about" class="text-sm font-semibold text-slate-600 hover:text-accent transition-colors">About</a>
-                    <a href="#skills" class="text-sm font-semibold text-slate-600 hover:text-accent transition-colors">Skills</a>
-                    <a href="#experience" class="text-sm font-semibold text-slate-600 hover:text-accent transition-colors">Experience</a>
-                    <a href="#projects" class="text-sm font-semibold text-slate-600 hover:text-accent transition-colors">Projects</a>
-                    <a href="#education" class="text-sm font-semibold text-slate-600 hover:text-accent transition-colors">Education</a>
-                    <a href="https://github.com/antono4/antono4.github.io/raw/main/CV_Antono.docx" class="inline-flex items-center px-4 py-2 bg-emerald-600 hover:bg-emerald-700 text-white text-sm font-semibold rounded-lg shadow-sm transition-colors">
+                    <a href="#about" class="text-sm font-medium text-slate-600 hover:text-emerald-600 transition-colors">About</a>
+                    <a href="#skills" class="text-sm font-medium text-slate-600 hover:text-emerald-600 transition-colors">Skills</a>
+                    <a href="#experience" class="text-sm font-medium text-slate-600 hover:text-emerald-600 transition-colors">Experience</a>
+                    <a href="#projects" class="text-sm font-medium text-slate-600 hover:text-emerald-600 transition-colors">Projects</a>
+                    <a href="#education" class="text-sm font-medium text-slate-600 hover:text-emerald-600 transition-colors">Education</a>
+                    <a href="https://github.com/antono4/antono4.github.io/raw/main/CV_Antono.docx" class="inline-flex items-center px-4 py-2 bg-emerald-600 hover:bg-emerald-700 text-white text-sm font-medium rounded-lg transition-colors">
                         <i class="fas fa-download mr-2"></i> Download CV
                     </a>
                 </div>
                 <!-- Mobile Menu Button -->
                 <div class="md:hidden flex items-center">
-                    <button id="mobile-menu-btn" class="text-slate-600 hover:text-accent focus:outline-none">
+                    <button id="mobile-menu-btn" class="text-slate-600 hover:text-emerald-600 focus:outline-none">
                         <i class="fas fa-bars text-2xl"></i>
                     </button>
                 </div>
             </div>
         </div>
         <!-- Mobile Menu -->
-        <div id="mobile-menu" class="hidden md:hidden bg-white/95 backdrop-blur-xl border-t border-white/50 shadow-xl rounded-b-2xl glossy-3d">
-            <div class="px-2 pt-2 pb-3 space-y-1 sm:px-3 shadow-lg">
-                <a href="#about" class="block px-3 py-2 rounded-md text-base font-medium text-slate-700 hover:text-accent hover:bg-slate-50">About</a>
-                <a href="#skills" class="block px-3 py-2 rounded-md text-base font-medium text-slate-700 hover:text-accent hover:bg-slate-50">Skills</a>
-                <a href="#experience" class="block px-3 py-2 rounded-md text-base font-medium text-slate-700 hover:text-accent hover:bg-slate-50">Experience</a>
-                <a href="#projects" class="block px-3 py-2 rounded-md text-base font-medium text-slate-700 hover:text-accent hover:bg-slate-50">Projects</a>
-                <a href="#education" class="block px-3 py-2 rounded-md text-base font-medium text-slate-700 hover:text-accent hover:bg-slate-50">Education</a>
-                <a href="https://github.com/antono4/antono4.github.io/raw/main/CV_Antono.docx" class="flex items-center px-3 py-2 mt-2 rounded-md text-base font-semibold text-white bg-emerald-600 hover:bg-emerald-700">
+        <div id="mobile-menu" class="hidden md:hidden bg-white/95 backdrop-blur-xl border-t border-slate-200/50 shadow-lg">
+            <div class="px-4 pt-2 pb-4 space-y-1">
+                <a href="#about" class="block px-3 py-2 rounded-lg text-base font-medium text-slate-700 hover:text-emerald-600 hover:bg-slate-50">About</a>
+                <a href="#skills" class="block px-3 py-2 rounded-lg text-base font-medium text-slate-700 hover:text-emerald-600 hover:bg-slate-50">Skills</a>
+                <a href="#experience" class="block px-3 py-2 rounded-lg text-base font-medium text-slate-700 hover:text-emerald-600 hover:bg-slate-50">Experience</a>
+                <a href="#projects" class="block px-3 py-2 rounded-lg text-base font-medium text-slate-700 hover:text-emerald-600 hover:bg-slate-50">Projects</a>
+                <a href="#education" class="block px-3 py-2 rounded-lg text-base font-medium text-slate-700 hover:text-emerald-600 hover:bg-slate-50">Education</a>
+                <a href="https://github.com/antono4/antono4.github.io/raw/main/CV_Antono.docx" class="flex items-center px-3 py-2 mt-2 rounded-lg text-base font-medium text-white bg-emerald-600 hover:bg-emerald-700">
                     <i class="fas fa-download mr-2"></i> Download CV
                 </a>
             </div>
         </div>
     </nav>
-
-
+    
+    
     <!-- Hero / About Section -->
-    <section id="about" class="pt-32 pb-20 lg:pt-40 lg:pb-28 overflow-hidden">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative">
-            <div class="lg:grid lg:grid-cols-12 lg:gap-8 items-center">
-                <div class="sm:text-center md:max-w-2xl md:mx-auto lg:col-span-8 lg:text-left">
-                    <div class="inline-flex items-center rounded-full px-3 py-1 text-sm font-semibold text-accent bg-blue-50 border border-blue-100 mb-4">
-                        <span class="flex h-2 w-2 rounded-full bg-accent mr-2 animate-pulse"></span>
+    <section id="about" class="pt-32 pb-20 lg:pt-40 lg:pb-28">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="lg:grid lg:grid-cols-12 lg:gap-12 items-center">
+                <div class="sm:text-center md:max-w-2xl md:mx-auto lg:col-span-7 lg:text-left">
+                    <div class="inline-flex items-center rounded-full px-3 py-1 text-sm font-medium text-emerald-700 bg-emerald-50 border border-emerald-100 mb-6">
+                        <span class="flex h-2 w-2 rounded-full bg-emerald-500 mr-2"></span>
                         Available for Opportunities
                     </div>
-                    <h1 class="text-4xl tracking-tight font-extrabold text-slate-900 sm:text-5xl md:text-6xl lg:text-5xl xl:text-6xl text-tilt">
-                        Hi, I'm <span class="gradient-text text-glow">Antono</span>
+                    <h1 class="text-4xl tracking-tight font-bold text-slate-900 sm:text-5xl md:text-5xl lg:text-5xl xl:text-6xl">
+                        Hi, I'm <span class="gradient-text">Antono</span>
                     </h1>
-                    <p class="mt-3 text-base text-slate-600 sm:mt-5 sm:text-xl lg:text-lg xl:text-xl font-medium">
+                    <p class="mt-4 text-lg text-slate-600 sm:mt-5 sm:text-xl lg:text-lg xl:text-xl">
                         Full Stack Web Developer | IT OSS & Network Engineer | Database Analyst
                     </p>
-                    <p class="mt-6 text-base text-slate-500 leading-relaxed max-w-3xl sm:mx-auto lg:mx-0">
+                    <p class="mt-6 text-base text-slate-500 leading-relaxed">
                         A highly competent and innovative IT professional with over 15 years of experience across 7 companies. Passionate about technological advancements, continuously evolving skills in software development and network infrastructure. Proven expertise in building responsive web applications and managing large-scale server infrastructures.
                     </p>
-                    <div class="mt-8 sm:max-w-lg sm:mx-auto sm:text-center lg:text-left lg:mx-0 flex flex-wrap gap-4 justify-center lg:justify-start">
-                        <a href="mailto:antonockr1@gmail.com" class="inline-flex items-center px-6 py-3 bg-emerald-600 hover:bg-emerald-700 text-black font-semibold rounded-lg shadow-sm transition-colors focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-emerald-500">
+                    <div class="mt-8 flex flex-wrap gap-4 justify-center lg:justify-start">
+                        <a href="mailto:antonockr1@gmail.com" class="inline-flex items-center px-6 py-3 bg-emerald-600 hover:bg-emerald-700 text-white font-medium rounded-lg transition-colors">
                             <i class="fas fa-envelope mr-2"></i> Contact Me
                         </a>
-                        <a href="tel:082261569466" class="inline-flex items-center px-6 py-3 bg-emerald-600 hover:bg-emerald-700 text-black font-semibold rounded-lg shadow-sm transition-colors focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-emerald-500">
+                        <a href="tel:082261569466" class="inline-flex items-center px-6 py-3 border-2 border-slate-300 hover:border-emerald-500 text-slate-700 hover:text-emerald-600 font-medium rounded-lg transition-colors">
                             <i class="fab fa-whatsapp mr-2"></i> WhatsApp
                         </a>
                     </div>
-                    <div class="mt-8 flex gap-4 justify-center lg:justify-start text-slate-400">
-                        <p class="text-sm flex items-center"><i class="fas fa-map-marker-alt mr-1"></i> Cikarang Barat, Bekasi, Jawa Barat</p>
+                    <div class="mt-6 flex items-center gap-2 text-slate-500 justify-center lg:justify-start">
+                        <i class="fas fa-map-marker-alt"></i>
+                        <p class="text-sm">Cikarang Barat, Bekasi, Jawa Barat</p>
                     </div>
                 </div>
-                <div class="mt-12 relative sm:max-w-lg sm:mx-auto lg:mt-0 lg:max-w-none lg:mx-0 lg:col-span-4 lg:flex lg:items-center">
-                    <!-- ID Card with Lanyard -->
-                    <div id="cardSystem" class="flex-shrink-0 flex flex-col items-center">
-                        <!-- Lanyard String -->
-                        <div id="lanyardString" class="w-6 bg-gradient-to-b from-amber-500 to-amber-600 rounded-lg shadow-xl lanyard-sway" style="height: 120px; margin-top: -120px;"></div>
-                        
-                        <!-- Metal Clip -->
-                        <div class="w-20 h-14 bg-gradient-to-b from-gray-400 to-gray-600 rounded-t-lg shadow-xl z-20 -mt-1 relative">
-                            <div class="absolute -bottom-2 left-1/2 -translate-x-1/2 w-10 h-10 bg-gradient-to-br from-gray-500 to-gray-700 rounded-full border-2 border-gray-400"></div>
-                        </div>
-
-                        <!-- ID Card -->
-                        <div class="w-[280px] bg-white/95 backdrop-blur-xl rounded-[24px] p-5 border border-white/50 relative z-20 -mt-1 overflow-hidden shadow-xl glossy-3d glossy-emerald card-swing">
-                            <!-- Header -->
-                            <div class="absolute top-0 left-0 right-0 bg-gradient-to-r from-emerald-700 to-emerald-800 text-white text-[8px] tracking-[0.3em] font-black text-center py-2">
-                                PROFESSIONAL IDENTITY CARD
-                            </div>
-
-                            <!-- Photo -->
-                            <div class="w-[90px] h-[100px] mx-auto mt-10 rounded-xl overflow-hidden border-4 border-slate-100 shadow-inner bg-slate-200">
-                                <img src="https://avatars.githubusercontent.com/u/73228642?v=4" alt="Antono" class="w-full h-full object-cover">
-                            </div>
-
-                            <!-- Info -->
-                            <h3 class="text-center font-black text-xl text-slate-800 mt-3">ANTONO</h3>
-                            <p class="text-center text-emerald-600 text-[8px] font-bold tracking-[0.15em] uppercase mt-0.5">Full Stack Web Developer</p>
-
-                            <!-- Details Grid -->
-                            <div class="grid grid-cols-2 gap-3 mt-4 pt-3 border-t border-slate-100">
-                                <div>
-                                    <p class="text-[6px] text-slate-400 font-bold uppercase tracking-widest">Status</p>
-                                    <p class="font-bold text-emerald-600 text-xs">ACTIVE</p>
+                <div class="mt-12 lg:mt-0 lg:col-span-5 flex justify-center">
+                    <!-- Professional Profile Card -->
+                    <div class="relative">
+                        <div class="w-72 bg-white rounded-2xl shadow-xl overflow-hidden border border-slate-200">
+                            <div class="h-32 bg-gradient-to-br from-emerald-600 to-emerald-800"></div>
+                            <div class="px-6 pb-6">
+                                <div class="relative -mt-16 mb-4">
+                                    <div class="w-32 h-32 rounded-2xl overflow-hidden border-4 border-white shadow-lg mx-auto">
+                                        <img src="https://avatars.githubusercontent.com/u/73228642?v=4" alt="Antono" class="w-full h-full object-cover">
+                                    </div>
                                 </div>
-                                <div>
-                                    <p class="text-[6px] text-slate-400 font-bold uppercase tracking-widest">Level</p>
-                                    <p class="font-bold text-emerald-600 text-xs">EXPERT</p>
+                                <h3 class="text-xl font-bold text-slate-900 text-center">Antono</h3>
+                                <p class="text-emerald-600 text-sm text-center mt-1">Full Stack Web Developer</p>
+                                <div class="flex justify-center gap-6 mt-6 text-center">
+                                    <div>
+                                        <div class="text-2xl font-bold text-slate-900">15+</div>
+                                        <div class="text-xs text-slate-500">Years Exp</div>
+                                    </div>
+                                    <div class="w-px bg-slate-200"></div>
+                                    <div>
+                                        <div class="text-2xl font-bold text-slate-900">7</div>
+                                        <div class="text-xs text-slate-500">Companies</div>
+                                    </div>
+                                    <div class="w-px bg-slate-200"></div>
+                                    <div>
+                                        <div class="text-2xl font-bold text-slate-900">Expert</div>
+                                        <div class="text-xs text-slate-500">Level</div>
+                                    </div>
                                 </div>
-                                <div>
-                                    <p class="text-[6px] text-slate-400 font-bold uppercase tracking-widest">Experience</p>
-                                    <p class="font-bold text-slate-700 text-xs">15+ Years</p>
-                                </div>
-                                <div>
-                                    <p class="text-[6px] text-slate-400 font-bold uppercase tracking-widest">Location</p>
-                                    <p class="font-bold text-slate-700 text-xs">Bekasi</p>
-                                </div>
-                            </div>
-
-                            <!-- Barcode -->
-                            <div class="mt-4 flex justify-center items-end h-8 gap-[2px]">
-                                <div class="w-1.5 h-full bg-slate-800"></div>
-                                <div class="w-1 h-3/4 bg-slate-800"></div>
-                                <div class="w-2 h-full bg-slate-800"></div>
-                                <div class="w-1 h-2/3 bg-slate-800"></div>
-                                <div class="w-2.5 h-full bg-slate-800"></div>
-                                <div class="w-1 h-1/2 bg-slate-800"></div>
-                                <div class="w-1.5 h-4/5 bg-slate-800"></div>
-                                <div class="w-1 h-2/3 bg-slate-800"></div>
-                                <div class="w-3 h-full bg-slate-800"></div>
-                                <div class="w-1 h-3/4 bg-slate-800"></div>
-                                <div class="w-1.5 h-full bg-slate-800"></div>
                             </div>
                         </div>
                     </div>
@@ -934,60 +168,60 @@
             </div>
         </div>
     </section>
-
-
+    
+    
     <!-- Skills Section -->
-    <section id="skills" class="py-16 bg-white border-y border-slate-200">
+    <section id="skills" class="py-20 bg-white border-y border-slate-200">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="text-center max-w-3xl mx-auto mb-12">
-                <h2 class="text-base text-accent font-semibold tracking-wide uppercase">Expertise</h2>
-                <p class="mt-2 text-3xl leading-8 font-extrabold tracking-tight text-slate-900 sm:text-4xl text-tilt">Core Competencies & Technical Skills</p>
+            <div class="text-center max-w-3xl mx-auto mb-16">
+                <h2 class="text-sm font-semibold text-emerald-600 tracking-wider uppercase">Expertise</h2>
+                <p class="mt-2 text-3xl leading-8 font-bold tracking-tight text-slate-900 sm:text-4xl">Core Competencies & Technical Skills</p>
             </div>
-
-
-            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+            
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
                 <!-- Skill Card 1 -->
-                <div class="bg-slate-50 rounded-xl p-6 border border-slate-100 hover:shadow-md transition-shadow glossy-3d glossy-blue">
-                    <div class="w-12 h-12 inline-flex items-center justify-center rounded-lg bg-blue-100 text-accent mb-4">
+                <div class="bg-slate-50 rounded-xl p-6 border border-slate-100 hover:shadow-lg transition-all duration-300 card-hover">
+                    <div class="w-12 h-12 inline-flex items-center justify-center rounded-lg bg-blue-100 text-blue-600 mb-4">
                         <i class="fas fa-code text-xl"></i>
                     </div>
-                    <h3 class="text-lg font-bold text-slate-900 mb-2">Web Dev & AI</h3>
+                    <h3 class="text-lg font-semibold text-slate-900 mb-2">Web Dev & AI</h3>
                     <p class="text-sm text-slate-600 leading-relaxed">
                         HTML5, Tailwind CSS, JavaScript, PHP, AI API Integration (OpenAI, Gemini), Three.js, GSAP, Delphi 10 Embarcadero.
                     </p>
                 </div>
-
-
+                
+                
                 <!-- Skill Card 2 -->
-                <div class="bg-slate-50 rounded-xl p-6 border border-slate-100 hover:shadow-md transition-shadow glossy-3d glossy-emerald">
-                    <div class="w-12 h-12 inline-flex items-center justify-center rounded-lg bg-green-100 text-green-600 mb-4">
+                <div class="bg-slate-50 rounded-xl p-6 border border-slate-100 hover:shadow-lg transition-all duration-300 card-hover">
+                    <div class="w-12 h-12 inline-flex items-center justify-center rounded-lg bg-emerald-100 text-emerald-600 mb-4">
                         <i class="fas fa-network-wired text-xl"></i>
                     </div>
-                    <h3 class="text-lg font-bold text-slate-900 mb-2">Networking & Security</h3>
+                    <h3 class="text-lg font-semibold text-slate-900 mb-2">Networking & Security</h3>
                     <p class="text-sm text-slate-600 leading-relaxed">
                         Cyber Security Risk, CCNA Networking, Server Monitoring, Network Troubleshooting, Structured Cabling.
                     </p>
                 </div>
-
-
+                
+                
                 <!-- Skill Card 3 -->
-                <div class="bg-slate-50 rounded-xl p-6 border border-slate-100 hover:shadow-md transition-shadow glossy-3d glossy-purple">
+                <div class="bg-slate-50 rounded-xl p-6 border border-slate-100 hover:shadow-lg transition-all duration-300 card-hover">
                     <div class="w-12 h-12 inline-flex items-center justify-center rounded-lg bg-purple-100 text-purple-600 mb-4">
                         <i class="fas fa-database text-xl"></i>
                     </div>
-                    <h3 class="text-lg font-bold text-slate-900 mb-2">Databases & Systems</h3>
+                    <h3 class="text-lg font-semibold text-slate-900 mb-2">Databases & Systems</h3>
                     <p class="text-sm text-slate-600 leading-relaxed">
                         MySQL, SQL Server, Database Analysis, Hardware & Software Maintenance, System Audits.
                     </p>
                 </div>
-
-
+                
+                
                 <!-- Skill Card 4 -->
-                <div class="bg-slate-50 rounded-xl p-6 border border-slate-100 hover:shadow-md transition-shadow glossy-3d glossy-amber">
+                <div class="bg-slate-50 rounded-xl p-6 border border-slate-100 hover:shadow-lg transition-all duration-300 card-hover">
                     <div class="w-12 h-12 inline-flex items-center justify-center rounded-lg bg-amber-100 text-amber-600 mb-4">
                         <i class="fas fa-tasks text-xl"></i>
                     </div>
-                    <h3 class="text-lg font-bold text-slate-900 mb-2">Management</h3>
+                    <h3 class="text-lg font-semibold text-slate-900 mb-2">Management</h3>
                     <p class="text-sm text-slate-600 leading-relaxed">
                         IT Operations Specialist, Technical Support, Asset Management Systems, Single-Page Application Architecture.
                     </p>
@@ -995,257 +229,286 @@
             </div>
         </div>
     </section>
-
-
+    
+    
     <!-- Experience Section -->
-    <section id="experience" class="py-16 sm:py-24 bg-slate-50">
+    <section id="experience" class="py-20 bg-slate-50">
         <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="text-center mb-16">
-                <h2 class="text-base text-accent font-semibold tracking-wide uppercase">Career Path</h2>
-                <p class="mt-2 text-3xl leading-8 font-extrabold tracking-tight text-slate-900 sm:text-4xl text-tilt">Professional Experience</p>
+                <h2 class="text-sm font-semibold text-emerald-600 tracking-wider uppercase">Career Path</h2>
+                <p class="mt-2 text-3xl leading-8 font-bold tracking-tight text-slate-900 sm:text-4xl">Professional Experience</p>
             </div>
-
-
-            <div class="relative border-l-2 border-slate-200 ml-3 md:ml-0">
-                
+            
+            
+            <div class="space-y-8">
                 <!-- Job 1 -->
-                <div class="mb-10 ml-6 md:ml-8 relative">
-                    <span class="absolute flex items-center justify-center w-6 h-6 bg-accent rounded-full -left-9 md:-left-[37px] ring-4 ring-slate-50">
-                        <i class="fas fa-briefcase text-white text-xs"></i>
-                    </span>
-                    <div class="bg-white p-6 rounded-xl shadow-sm border border-slate-100 hover:shadow-md transition-shadow glossy-3d glossy-emerald">
-                        <div class="flex flex-col md:flex-row md:justify-between md:items-center mb-2">
-                            <h3 class="text-xl font-bold text-slate-900">IT OSS & Network Engineer & IT Operations Specialist</h3>
-                            <span class="text-sm font-medium text-accent bg-blue-50 px-3 py-1 rounded-full mt-2 md:mt-0 w-max">Feb 2022 - Present</span>
+                <div class="timeline-item">
+                    <div class="bg-white p-6 rounded-xl shadow-sm border border-slate-100">
+                        <div class="flex flex-col md:flex-row md:justify-between md:items-start mb-2">
+                            <div>
+                                <h3 class="text-lg font-bold text-slate-900">IT OSS & Network Engineer & IT Operations Specialist</h3>
+                                <p class="text-emerald-600 font-medium">Mondelez International (PT Mondelez Manufacturing)</p>
+                            </div>
+                            <span class="text-sm font-medium text-emerald-700 bg-emerald-50 px-3 py-1 rounded-full mt-2 md:mt-0 w-max">Feb 2022 - Present</span>
                         </div>
-                        <p class="text-base font-semibold text-slate-700 mb-4">Mondelez International (PT Mondelez Manufacturing)</p>
-                        <ul class="list-disc list-outside ml-4 text-sm text-slate-600 space-y-1.5 marker:text-slate-300">
-                            <li>Monitor and maintain the health of server infrastructures across the entire South East Asia (SEA) region.</li>
-                            <li>Identify hardware and software solutions, resolving complex network and connectivity issues.</li>
-                            <li>Troubleshoot technical issues, diagnosing and repairing faults to ensure continuous manufacturing operations.</li>
-                            <li>Install, configure, and maintain critical hardware and software systems.</li>
+                        <ul class="mt-4 space-y-2 text-sm text-slate-600">
+                            <li class="flex items-start">
+                                <i class="fas fa-check text-emerald-500 mt-1 mr-3 text-xs"></i>
+                                Monitor and maintain the health of server infrastructures across the entire South East Asia (SEA) region.
+                            </li>
+                            <li class="flex items-start">
+                                <i class="fas fa-check text-emerald-500 mt-1 mr-3 text-xs"></i>
+                                Identify hardware and software solutions, resolving complex network and connectivity issues.
+                            </li>
+                            <li class="flex items-start">
+                                <i class="fas fa-check text-emerald-500 mt-1 mr-3 text-xs"></i>
+                                Troubleshoot technical issues, diagnosing and repairing faults to ensure continuous manufacturing operations.
+                            </li>
+                            <li class="flex items-start">
+                                <i class="fas fa-check text-emerald-500 mt-1 mr-3 text-xs"></i>
+                                Install, configure, and maintain critical hardware and software systems.
+                            </li>
                         </ul>
                     </div>
                 </div>
-
-
+                
+                
                 <!-- Job 2 -->
-                <div class="mb-10 ml-6 md:ml-8 relative">
-                    <span class="absolute flex items-center justify-center w-6 h-6 bg-slate-300 rounded-full -left-9 md:-left-[37px] ring-4 ring-slate-50"></span>
-                    <div class="bg-white p-6 rounded-xl shadow-sm border border-slate-100 glossy-3d glossy-emerald">
-                        <div class="flex flex-col md:flex-row md:justify-between md:items-center mb-2">
-                            <h3 class="text-lg font-bold text-slate-900">IT Programmer and IT Technical Support</h3>
-                            <span class="text-sm text-slate-500 mt-2 md:mt-0">Mar 2020 - Mar 2021</span>
+                <div class="timeline-item">
+                    <div class="bg-white p-6 rounded-xl shadow-sm border border-slate-100">
+                        <div class="flex flex-col md:flex-row md:justify-between md:items-start mb-2">
+                            <div>
+                                <h3 class="text-lg font-bold text-slate-900">IT Programmer and IT Technical Support</h3>
+                                <p class="text-slate-600 font-medium">PT Multi Usage Indonesia</p>
+                            </div>
+                            <span class="text-sm font-medium text-slate-500 mt-2 md:mt-0">Mar 2020 - Mar 2021</span>
                         </div>
-                        <p class="text-base font-medium text-slate-700 mb-3">PT Multi Usage Indonesia</p>
-                        <ul class="list-disc list-outside ml-4 text-sm text-slate-600 space-y-1 marker:text-slate-300">
-                            <li>Developed corporate systems and applications utilizing Delphi 10 Embarcadero.</li>
-                            <li>Identified and implemented hardware and software solutions tailored to business needs.</li>
-                            <li>Troubleshoot technical issues, diagnosing system faults, and resolving network bottlenecks.</li>
+                        <ul class="mt-4 space-y-2 text-sm text-slate-600">
+                            <li class="flex items-start">
+                                <i class="fas fa-check text-emerald-500 mt-1 mr-3 text-xs"></i>
+                                Developed corporate systems and applications utilizing Delphi 10 Embarcadero.
+                            </li>
+                            <li class="flex items-start">
+                                <i class="fas fa-check text-emerald-500 mt-1 mr-3 text-xs"></i>
+                                Identified and implemented hardware and software solutions tailored to business needs.
+                            </li>
+                            <li class="flex items-start">
+                                <i class="fas fa-check text-emerald-500 mt-1 mr-3 text-xs"></i>
+                                Troubleshoot technical issues, diagnosing system faults, and resolving network bottlenecks.
+                            </li>
                         </ul>
                     </div>
                 </div>
-
-
+                
+                
                 <!-- Job 3 -->
-                <div class="mb-10 ml-6 md:ml-8 relative">
-                    <span class="absolute flex items-center justify-center w-6 h-6 bg-slate-300 rounded-full -left-9 md:-left-[37px] ring-4 ring-slate-50"></span>
-                    <div class="bg-white p-6 rounded-xl shadow-sm border border-slate-100 glossy-3d glossy-emerald">
-                        <div class="flex flex-col md:flex-row md:justify-between md:items-center mb-2">
-                            <h3 class="text-lg font-bold text-slate-900">EDP / SIMRS</h3>
-                            <span class="text-sm text-slate-500 mt-2 md:mt-0">Sep 2016 - Dec 2019</span>
+                <div class="timeline-item">
+                    <div class="bg-white p-6 rounded-xl shadow-sm border border-slate-100">
+                        <div class="flex flex-col md:flex-row md:justify-between md:items-start mb-2">
+                            <div>
+                                <h3 class="text-lg font-bold text-slate-900">EDP / SIMRS</h3>
+                                <p class="text-slate-600 font-medium">PT Annisa Mitra Husada (Rumah Sakit Annisa)</p>
+                            </div>
+                            <span class="text-sm font-medium text-slate-500 mt-2 md:mt-0">Sep 2016 - Dec 2019</span>
                         </div>
-                        <p class="text-base font-medium text-slate-700 mb-3">PT Annisa Mitra Husada (Rumah Sakit Annisa)</p>
-                        <ul class="list-disc list-outside ml-4 text-sm text-slate-600 space-y-1 marker:text-slate-300">
-                            <li>Managed hospital information systems (SIMRS), ensuring data integrity and continuous system availability.</li>
-                            <li>Supported IT-related medical projects, network administration, and hardware maintenance.</li>
+                        <ul class="mt-4 space-y-2 text-sm text-slate-600">
+                            <li class="flex items-start">
+                                <i class="fas fa-check text-emerald-500 mt-1 mr-3 text-xs"></i>
+                                Managed hospital information systems (SIMRS), ensuring data integrity and continuous system availability.
+                            </li>
+                            <li class="flex items-start">
+                                <i class="fas fa-check text-emerald-500 mt-1 mr-3 text-xs"></i>
+                                Supported IT-related medical projects, network administration, and hardware maintenance.
+                            </li>
                         </ul>
                     </div>
                 </div>
-
-
-                 <!-- Job 4 -->
-                 <div class="mb-10 ml-6 md:ml-8 relative">
-                    <span class="absolute flex items-center justify-center w-6 h-6 bg-slate-300 rounded-full -left-9 md:-left-[37px] ring-4 ring-slate-50"></span>
-                    <div class="bg-white p-6 rounded-xl shadow-sm border border-slate-100 glossy-3d glossy-emerald">
-                        <div class="flex flex-col md:flex-row md:justify-between md:items-center mb-2">
-                            <h3 class="text-lg font-bold text-slate-900">Programmer</h3>
-                            <span class="text-sm text-slate-500 mt-2 md:mt-0">Feb 2014 - Aug 2016</span>
+                
+                
+                <!-- Job 4 -->
+                <div class="timeline-item">
+                    <div class="bg-white p-6 rounded-xl shadow-sm border border-slate-100">
+                        <div class="flex flex-col md:flex-row md:justify-between md:items-start mb-2">
+                            <div>
+                                <h3 class="text-lg font-bold text-slate-900">Programmer</h3>
+                                <p class="text-slate-600 font-medium">PT Multi Mayaka</p>
+                            </div>
+                            <span class="text-sm font-medium text-slate-500 mt-2 md:mt-0">Feb 2014 - Aug 2016</span>
                         </div>
-                        <p class="text-base font-medium text-slate-700 mb-3">PT Multi Mayaka</p>
-                        <ul class="list-disc list-outside ml-4 text-sm text-slate-600 space-y-1 marker:text-slate-300">
-                            <li>Developed and maintained company software and database systems, driving continuous improvements in operational efficiency.</li>
+                        <ul class="mt-4 space-y-2 text-sm text-slate-600">
+                            <li class="flex items-start">
+                                <i class="fas fa-check text-emerald-500 mt-1 mr-3 text-xs"></i>
+                                Developed and maintained company software and database systems, driving continuous improvements in operational efficiency.
+                            </li>
                         </ul>
                     </div>
                 </div>
-
-
+                
+                
                 <!-- Toggle for older experience -->
-                <div class="ml-6 md:ml-8 relative text-center">
-                    <button id="toggle-exp-btn" class="text-sm font-semibold text-accent hover:text-primary transition-colors py-2 px-4 rounded-full border border-blue-100 hover:bg-blue-50">
-                        View Earlier Experience (2006 - 2014) <i class="fas fa-chevron-down ml-1"></i>
+                <div class="text-center pt-4">
+                    <button id="toggle-exp-btn" class="inline-flex items-center px-4 py-2 text-sm font-medium text-emerald-600 hover:text-emerald-700 border border-emerald-200 hover:bg-emerald-50 rounded-full transition-colors">
+                        View Earlier Experience (2006 - 2014) <i class="fas fa-chevron-down ml-2"></i>
                     </button>
                 </div>
-
-
+                
+                
                 <!-- Hidden Older Jobs -->
-                <div id="older-experience" class="hidden mt-10">
-                    <!-- Job 5 -->
-                    <div class="mb-8 ml-6 md:ml-8 relative">
-                        <span class="absolute flex items-center justify-center w-4 h-4 bg-slate-200 rounded-full -left-8 md:-left-[33px] ring-4 ring-slate-50"></span>
-                        <div class="py-2">
-                            <h3 class="text-md font-bold text-slate-800">IT Staff</h3>
+                <div id="older-experience" class="hidden space-y-8">
+                    <div class="timeline-item">
+                        <div class="bg-white p-4 rounded-lg border border-slate-100">
+                            <h3 class="text-base font-semibold text-slate-800">IT Staff</h3>
                             <p class="text-sm text-slate-600">PT Gunung Garuda (Gunung Steel Group) | Mar 2013 - Feb 2014</p>
                         </div>
                     </div>
-                    <!-- Job 6 -->
-                    <div class="mb-8 ml-6 md:ml-8 relative">
-                        <span class="absolute flex items-center justify-center w-4 h-4 bg-slate-200 rounded-full -left-8 md:-left-[33px] ring-4 ring-slate-50"></span>
-                        <div class="py-2">
-                            <h3 class="text-md font-bold text-slate-800">IT Programmer</h3>
+                    <div class="timeline-item">
+                        <div class="bg-white p-4 rounded-lg border border-slate-100">
+                            <h3 class="text-base font-semibold text-slate-800">IT Programmer</h3>
                             <p class="text-sm text-slate-600">PT Multi Usage Indonesia | Apr 2012 - Apr 2013</p>
                         </div>
                     </div>
-                    <!-- Job 7 -->
-                    <div class="mb-8 ml-6 md:ml-8 relative">
-                        <span class="absolute flex items-center justify-center w-4 h-4 bg-slate-200 rounded-full -left-8 md:-left-[33px] ring-4 ring-slate-50"></span>
-                        <div class="py-2">
-                            <h3 class="text-md font-bold text-slate-800">IT Staff</h3>
+                    <div class="timeline-item">
+                        <div class="bg-white p-4 rounded-lg border border-slate-100">
+                            <h3 class="text-base font-semibold text-slate-800">IT Staff</h3>
                             <p class="text-sm text-slate-600">LP3I Cikarang | Sep 2010 - Aug 2011</p>
                         </div>
                     </div>
-                    <!-- Job 8 -->
-                    <div class="ml-6 md:ml-8 relative">
-                        <span class="absolute flex items-center justify-center w-4 h-4 bg-slate-200 rounded-full -left-8 md:-left-[33px] ring-4 ring-slate-50"></span>
-                        <div class="py-2">
-                            <h3 class="text-md font-bold text-slate-800">Warehouse Staff</h3>
+                    <div class="timeline-item">
+                        <div class="bg-white p-4 rounded-lg border border-slate-100">
+                            <h3 class="text-base font-semibold text-slate-800">Warehouse Staff</h3>
                             <p class="text-sm text-slate-600">PT Oriental Asahi JP Carton Box | Aug 2006 - Jul 2010</p>
                         </div>
                     </div>
                 </div>
-
-
             </div>
         </div>
     </section>
-
-
+    
+    
     <!-- Projects Section -->
-    <section id="projects" class="py-16 sm:py-24 bg-white border-y border-slate-200">
+    <section id="projects" class="py-20 bg-white border-y border-slate-200">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="text-center mb-16">
-                <h2 class="text-base text-accent font-semibold tracking-wide uppercase">Portfolio</h2>
-                <p class="mt-2 text-3xl leading-8 font-extrabold tracking-tight text-slate-900 sm:text-4xl text-tilt">Notable Development Projects</p>
+                <h2 class="text-sm font-semibold text-emerald-600 tracking-wider uppercase">Portfolio</h2>
+                <p class="mt-2 text-3xl leading-8 font-bold tracking-tight text-slate-900 sm:text-4xl">Notable Development Projects</p>
             </div>
-
-
+            
+            
             <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
                 <!-- Project 1 -->
-                <div class="group relative bg-slate-50 rounded-2xl p-8 border border-slate-100 hover:border-blue-200 hover:shadow-xl transition-all duration-300 glossy-3d glossy-emerald">
-                    <div class="absolute top-0 right-0 p-6 opacity-10 group-hover:opacity-20 transition-opacity">
-                        <i class="fas fa-car text-6xl text-primary"></i>
+                <div class="bg-slate-50 rounded-2xl p-8 border border-slate-100 hover:shadow-xl transition-all duration-300 card-hover">
+                    <div class="flex items-start justify-between">
+                        <div class="w-14 h-14 inline-flex items-center justify-center rounded-xl bg-emerald-100 text-emerald-600 mb-4">
+                            <i class="fas fa-car text-2xl"></i>
+                        </div>
                     </div>
-                    <h3 class="text-2xl font-bold text-slate-900 mb-3 group-hover:text-primary transition-colors">Awan Rent Car</h3>
-                    <p class="text-slate-600 mb-6 relative z-10">
+                    <h3 class="text-xl font-bold text-slate-900 mb-3">Awan Rent Car</h3>
+                    <p class="text-slate-600 mb-6">
                         Developed a premium web application template featuring a 10-vehicle fleet gallery and booking submission tools linked directly to the WhatsApp API for seamless customer interaction.
                     </p>
-                    <div class="flex flex-wrap gap-2 relative z-10">
-                        <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-white border border-slate-200 text-slate-700">Web App</span>
-                        <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-white border border-slate-200 text-slate-700">WhatsApp API</span>
+                    <div class="flex flex-wrap gap-2">
+                        <span class="px-3 py-1 rounded-full text-xs font-medium bg-slate-200 text-slate-700">Web App</span>
+                        <span class="px-3 py-1 rounded-full text-xs font-medium bg-slate-200 text-slate-700">WhatsApp API</span>
                     </div>
                 </div>
-
-
+                
+                
                 <!-- Project 2 -->
-                <div class="group relative bg-slate-50 rounded-2xl p-8 border border-slate-100 hover:border-blue-200 hover:shadow-xl transition-all duration-300 glossy-3d glossy-blue">
-                    <div class="absolute top-0 right-0 p-6 opacity-10 group-hover:opacity-20 transition-opacity">
-                        <i class="fas fa-brain text-6xl text-primary"></i>
+                <div class="bg-slate-50 rounded-2xl p-8 border border-slate-100 hover:shadow-xl transition-all duration-300 card-hover">
+                    <div class="flex items-start justify-between">
+                        <div class="w-14 h-14 inline-flex items-center justify-center rounded-xl bg-blue-100 text-blue-600 mb-4">
+                            <i class="fas fa-brain text-2xl"></i>
+                        </div>
                     </div>
-                    <h3 class="text-2xl font-bold text-slate-900 mb-3 group-hover:text-primary transition-colors">BrainMetrics Elite</h3>
-                    <p class="text-slate-600 mb-6 relative z-10">
+                    <h3 class="text-xl font-bold text-slate-900 mb-3">BrainMetrics Elite</h3>
+                    <p class="text-slate-600 mb-6">
                         Designed a comprehensive cognitive assessment application with a 50-question test bank across five intelligence domains, featuring complex radar chart outputs and downloadable PDF reports.
                     </p>
-                    <div class="flex flex-wrap gap-2 relative z-10">
-                        <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-white border border-slate-200 text-slate-700">Assessment Tool</span>
-                        <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-white border border-slate-200 text-slate-700">Data Vis (Charts)</span>
-                        <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-white border border-slate-200 text-slate-700">PDF Gen</span>
+                    <div class="flex flex-wrap gap-2">
+                        <span class="px-3 py-1 rounded-full text-xs font-medium bg-slate-200 text-slate-700">Assessment Tool</span>
+                        <span class="px-3 py-1 rounded-full text-xs font-medium bg-slate-200 text-slate-700">Data Visualization</span>
+                        <span class="px-3 py-1 rounded-full text-xs font-medium bg-slate-200 text-slate-700">PDF Generation</span>
                     </div>
                 </div>
-
-
+                
+                
                 <!-- Project 3 -->
-                <div class="group relative bg-slate-50 rounded-2xl p-8 border border-slate-100 hover:border-blue-200 hover:shadow-xl transition-all duration-300 glossy-3d glossy-orange">
-                    <div class="absolute top-0 right-0 p-6 opacity-10 group-hover:opacity-20 transition-opacity">
-                        <i class="fas fa-boxes text-6xl text-primary"></i>
+                <div class="bg-slate-50 rounded-2xl p-8 border border-slate-100 hover:shadow-xl transition-all duration-300 card-hover">
+                    <div class="flex items-start justify-between">
+                        <div class="w-14 h-14 inline-flex items-center justify-center rounded-xl bg-amber-100 text-amber-600 mb-4">
+                            <i class="fas fa-boxes text-2xl"></i>
+                        </div>
                     </div>
-                    <h3 class="text-2xl font-bold text-slate-900 mb-3 group-hover:text-primary transition-colors">MRP Simulation</h3>
-                    <p class="text-slate-600 mb-6 relative z-10">
+                    <h3 class="text-xl font-bold text-slate-900 mb-3">MRP Simulation</h3>
+                    <p class="text-slate-600 mb-6">
                         Built a Material Requirements Planning application featuring multi-warehouse inventory locations and integrated QR code data scanning capabilities to streamline stock tracking.
                     </p>
-                    <div class="flex flex-wrap gap-2 relative z-10">
-                        <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-white border border-slate-200 text-slate-700">Inventory Management</span>
-                        <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-white border border-slate-200 text-slate-700">QR Scanning</span>
+                    <div class="flex flex-wrap gap-2">
+                        <span class="px-3 py-1 rounded-full text-xs font-medium bg-slate-200 text-slate-700">Inventory Management</span>
+                        <span class="px-3 py-1 rounded-full text-xs font-medium bg-slate-200 text-slate-700">QR Scanning</span>
                     </div>
                 </div>
-
-
+                
+                
                 <!-- Project 4 -->
-                <div class="group relative bg-slate-50 rounded-2xl p-8 border border-slate-100 hover:border-blue-200 hover:shadow-xl transition-all duration-300 glossy-3d glossy-purple">
-                    <div class="absolute top-0 right-0 p-6 opacity-10 group-hover:opacity-20 transition-opacity">
-                        <i class="fas fa-server text-6xl text-primary"></i>
+                <div class="bg-slate-50 rounded-2xl p-8 border border-slate-100 hover:shadow-xl transition-all duration-300 card-hover">
+                    <div class="flex items-start justify-between">
+                        <div class="w-14 h-14 inline-flex items-center justify-center rounded-xl bg-purple-100 text-purple-600 mb-4">
+                            <i class="fas fa-server text-2xl"></i>
+                        </div>
                     </div>
-                    <h3 class="text-2xl font-bold text-slate-900 mb-3 group-hover:text-primary transition-colors">IT Asset Management</h3>
-                    <p class="text-slate-600 mb-6 relative z-10">
+                    <h3 class="text-xl font-bold text-slate-900 mb-3">IT Asset Management</h3>
+                    <p class="text-slate-600 mb-6">
                         Created a custom, fast single-page CRUD application configured for database connections to systematically track and manage organizational IT assets efficiently.
                     </p>
-                    <div class="flex flex-wrap gap-2 relative z-10">
-                        <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-white border border-slate-200 text-slate-700">SPA</span>
-                        <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-white border border-slate-200 text-slate-700">CRUD Database</span>
-                        <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-white border border-slate-200 text-slate-700">Asset Tracking</span>
+                    <div class="flex flex-wrap gap-2">
+                        <span class="px-3 py-1 rounded-full text-xs font-medium bg-slate-200 text-slate-700">SPA</span>
+                        <span class="px-3 py-1 rounded-full text-xs font-medium bg-slate-200 text-slate-700">CRUD Database</span>
+                        <span class="px-3 py-1 rounded-full text-xs font-medium bg-slate-200 text-slate-700">Asset Tracking</span>
                     </div>
                 </div>
             </div>
         </div>
     </section>
-
-
+    
+    
     <!-- Education Section -->
-    <section id="education" class="py-16 bg-slate-50">
+    <section id="education" class="py-20 bg-slate-50">
         <div class="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="text-center mb-12">
-                <h2 class="text-base text-accent font-semibold tracking-wide uppercase">Academic Background</h2>
-                <p class="mt-2 text-3xl leading-8 font-extrabold tracking-tight text-slate-900 text-tilt">Education & Certifications</p>
+                <h2 class="text-sm font-semibold text-emerald-600 tracking-wider uppercase">Academic Background</h2>
+                <p class="mt-2 text-3xl leading-8 font-bold tracking-tight text-slate-900">Education & Certifications</p>
             </div>
-
-
-            <div class="bg-white shadow-sm rounded-2xl overflow-hidden border border-slate-100 glossy-3d glossy-emerald">
+            
+            
+            <div class="bg-white shadow-sm rounded-2xl overflow-hidden border border-slate-100">
                 <ul class="divide-y divide-slate-100">
                     <li class="p-6 hover:bg-slate-50 transition-colors flex items-start">
-                        <div class="flex-shrink-0 mr-4 mt-1 text-primary">
+                        <div class="flex-shrink-0 mr-4 mt-1 text-emerald-600">
                             <i class="fas fa-graduation-cap text-2xl"></i>
                         </div>
                         <div>
-                            <h4 class="text-lg font-bold text-slate-900">Master's Degree</h4>
-                            <p class="text-slate-700 font-medium">Manajemen Informatika</p>
+                            <h4 class="text-lg font-semibold text-slate-900">Master's Degree</h4>
+                            <p class="text-slate-700">Manajemen Informatika</p>
                         </div>
                     </li>
                     <li class="p-6 hover:bg-slate-50 transition-colors flex items-start">
-                        <div class="flex-shrink-0 mr-4 mt-1 text-primary">
+                        <div class="flex-shrink-0 mr-4 mt-1 text-emerald-600">
                             <i class="fas fa-university text-2xl"></i>
                         </div>
                         <div>
-                            <h4 class="text-lg font-bold text-slate-900">Diploma (D3)</h4>
-                            <p class="text-slate-700 font-medium">Engineering (Computer/Telecommunication)</p>
+                            <h4 class="text-lg font-semibold text-slate-900">Diploma (D3)</h4>
+                            <p class="text-slate-700">Engineering (Computer/Telecommunication)</p>
                             <p class="text-sm text-slate-500 mt-1">LP3I - Graduated 2010</p>
                         </div>
                     </li>
                     <li class="p-6 hover:bg-slate-50 transition-colors flex items-start">
-                        <div class="flex-shrink-0 mr-4 mt-1 text-accent">
+                        <div class="flex-shrink-0 mr-4 mt-1 text-emerald-600">
                             <i class="fas fa-certificate text-2xl"></i>
                         </div>
                         <div>
-                            <h4 class="text-lg font-bold text-slate-900">Certification</h4>
-                            <p class="text-slate-700 font-medium">CCNA (Cisco Certified Network Associate)</p>
+                            <h4 class="text-lg font-semibold text-slate-900">Certification</h4>
+                            <p class="text-slate-700">CCNA (Cisco Certified Network Associate)</p>
                             <p class="text-sm text-slate-500 mt-1">Issued by LP3I</p>
                         </div>
                     </li>
@@ -1253,36 +516,37 @@
             </div>
         </div>
     </section>
-
-
+    
+    
     <!-- Footer -->
-    <footer class="bg-secondary text-white py-12 border-t border-slate-800">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-            <h2 class="text-2xl font-bold tracking-tighter mb-6 text-3d">ANTONO.</h2>
-            <div class="flex justify-center space-x-6 mb-8">
-                <a href="mailto:antonockr1@gmail.com" class="text-slate-400 hover:text-white transition-colors">
-                    <span class="sr-only">Email</span>
-                    <i class="fas fa-envelope text-xl"></i>
-                </a>
-                <a href="tel:082261569466" class="text-slate-400 hover:text-white transition-colors">
-                    <span class="sr-only">Phone/WhatsApp</span>
-                    <i class="fab fa-whatsapp text-xl"></i>
-                </a>
+    <footer class="bg-slate-900 text-white py-12">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center">
+                <h2 class="text-2xl font-bold tracking-tight mb-6">ANTONO</h2>
+                <div class="flex justify-center space-x-6 mb-8">
+                    <a href="mailto:antonockr1@gmail.com" class="text-slate-400 hover:text-emerald-400 transition-colors">
+                        <span class="sr-only">Email</span>
+                        <i class="fas fa-envelope text-xl"></i>
+                    </a>
+                    <a href="tel:082261569466" class="text-slate-400 hover:text-emerald-400 transition-colors">
+                        <span class="sr-only">Phone/WhatsApp</span>
+                        <i class="fab fa-whatsapp text-xl"></i>
+                    </a>
+                </div>
+                <p class="text-sm text-slate-500">
+                    &copy; <span id="year"></span> Antono. All rights reserved.
+                </p>
             </div>
-            <p class="text-sm text-slate-500">
-                &copy; <span id="year"></span> Antono. All rights reserved.
-            </p>
         </div>
     </footer>
-
-
-    <!-- Interactive Scripts -->
+    
+    
+    <!-- Scripts -->
     <script>
         document.addEventListener('DOMContentLoaded', () => {
             // Set current year in footer
             document.getElementById('year').textContent = new Date().getFullYear();
-
-
+            
             // Mobile menu toggle
             const btn = document.getElementById('mobile-menu-btn');
             const menu = document.getElementById('mobile-menu');
@@ -1298,9 +562,8 @@
                     icon.classList.add('fa-times');
                 }
             });
-
-
-            // Close mobile menu on click
+            
+            // Close mobile menu on link click
             const mobileLinks = menu.querySelectorAll('a');
             mobileLinks.forEach(link => {
                 link.addEventListener('click', () => {
@@ -1308,8 +571,7 @@
                     btn.querySelector('i').classList.replace('fa-times', 'fa-bars');
                 });
             });
-
-
+            
             // Toggle older experience
             const toggleExpBtn = document.getElementById('toggle-exp-btn');
             const olderExpDiv = document.getElementById('older-experience');
@@ -1319,14 +581,13 @@
                     olderExpDiv.classList.toggle('hidden');
                     const icon = toggleExpBtn.querySelector('i');
                     if(olderExpDiv.classList.contains('hidden')) {
-                        toggleExpBtn.innerHTML = 'View Earlier Experience (2006 - 2014) <i class="fas fa-chevron-down ml-1"></i>';
+                        toggleExpBtn.innerHTML = 'View Earlier Experience (2006 - 2014) <i class="fas fa-chevron-down ml-2"></i>';
                     } else {
-                        toggleExpBtn.innerHTML = 'Hide Earlier Experience <i class="fas fa-chevron-up ml-1"></i>';
+                        toggleExpBtn.innerHTML = 'Hide Earlier Experience <i class="fas fa-chevron-up ml-2"></i>';
                     }
                 });
             }
-
-
+            
             // Navbar scroll effect
             const navbar = document.getElementById('navbar');
             window.addEventListener('scroll', () => {
@@ -1339,91 +600,6 @@
                 }
             });
         });
-        
-        // Time-Based Background Effects
-        (function() {
-            const timeBackground = document.getElementById('timeBackground');
-            const particlesContainer = document.getElementById('particlesContainer');
-            const timeEffects = document.getElementById('timeEffects');
-            
-            function getTimeOfDay() {
-                const hour = new Date().getHours();
-                if (hour >= 5 && hour < 11) return 'morning';
-                if (hour >= 11 && hour < 17) return 'day';
-                if (hour >= 17 && hour < 19) return 'evening';
-                return 'night';
-            }
-            
-            function clearEffects() {
-                timeBackground.className = 'time-background';
-                particlesContainer.innerHTML = '';
-                timeEffects.innerHTML = '';
-            }
-            
-            function createMorningEffects() {
-                const sunRays = document.createElement('div');
-                sunRays.className = 'sun-rays';
-                timeEffects.appendChild(sunRays);
-                
-                for (let i = 0; i < 15; i++) {
-                    const particle = document.createElement('div');
-                    particle.className = 'particle';
-                    particle.style.cssText = 'width:' + (Math.random() * 4 + 2) + 'px;height:' + (Math.random() * 4 + 2) + 'px;background:rgba(255,255,255,' + (Math.random() * 0.5 + 0.3) + ');left:' + (Math.random() * 100) + '%;top:' + (Math.random() * 100) + '%;animation:float ' + (Math.random() * 3 + 2) + 's ease-in-out infinite;animation-delay:' + (Math.random() * 2) + 's;';
-                    particlesContainer.appendChild(particle);
-                }
-            }
-            
-            function createDayEffects() {
-                for (let i = 0; i < 5; i++) {
-                    const cloud = document.createElement('div');
-                    cloud.className = 'cloud';
-                    cloud.style.cssText = 'width:' + (Math.random() * 200 + 100) + 'px;height:' + (Math.random() * 60 + 40) + 'px;top:' + (Math.random() * 30) + '%;animation-duration:' + (Math.random() * 20 + 30) + 's;animation-delay:' + (Math.random() * 10) + 's;';
-                    particlesContainer.appendChild(cloud);
-                }
-            }
-            
-            function createEveningEffects() {
-                for (let i = 0; i < 20; i++) {
-                    const firefly = document.createElement('div');
-                    firefly.className = 'firefly';
-                    firefly.style.cssText = 'width:' + (Math.random() * 4 + 2) + 'px;height:' + (Math.random() * 4 + 2) + 'px;left:' + (Math.random() * 100) + '%;top:' + (Math.random() * 100) + '%;animation-duration:' + (Math.random() * 2 + 2) + 's;animation-delay:' + (Math.random() * 3) + 's;';
-                    particlesContainer.appendChild(firefly);
-                }
-            }
-            
-            function createNightEffects() {
-                for (let i = 0; i < 50; i++) {
-                    const star = document.createElement('div');
-                    star.className = 'star';
-                    star.style.cssText = 'width:' + (Math.random() * 3 + 1) + 'px;height:' + (Math.random() * 3 + 1) + 'px;left:' + (Math.random() * 100) + '%;top:' + (Math.random() * 70) + '%;animation-duration:' + (Math.random() * 2 + 1) + 's;animation-delay:' + (Math.random() * 2) + 's;';
-                    particlesContainer.appendChild(star);
-                }
-                
-                const moon = document.createElement('div');
-                moon.className = 'moon';
-                timeEffects.appendChild(moon);
-                
-                const aurora = document.createElement('div');
-                aurora.className = 'aurora';
-                timeEffects.appendChild(aurora);
-            }
-            
-            function applyTimeEffects() {
-                clearEffects();
-                const timeOfDay = getTimeOfDay();
-                timeBackground.classList.add('time-' + timeOfDay);
-                
-                switch(timeOfDay) {
-                    case 'morning': createMorningEffects(); break;
-                    case 'day': createDayEffects(); break;
-                    case 'evening': createEveningEffects(); break;
-                    case 'night': createNightEffects(); break;
-                }
-            }
-            
-            applyTimeEffects();
-            setInterval(applyTimeEffects, 60000);
-        })();
     </script>
 </body>
 </html>
