@@ -1,0 +1,38 @@
+name: Generate Contribution Snake
+
+permissions:
+  contents: write
+
+on:
+  schedule:
+    - cron: '*/30 * * * *'
+  workflow_dispatch:
+
+jobs:
+  generate-snake:
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4.2.2
+
+      - name: Generate contribution snake
+        uses: platana/snake@main
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          contributions_path: ${{ github.workspace }}
+          output_file: ${{ github.workspace }}/assets/snake.svg
+
+      - name: Configure Git
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+
+      - name: Commit and push snake
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          git pull --rebase origin ${{ github.ref_name }}
+          git add assets/snake.svg
+          git commit -m "Update contribution snake SVG at $(date +'%Y-%m-%d %H:%M:%S')" || echo "No changes"
+          git push origin ${{ github.ref_name }}
