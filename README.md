@@ -6,6 +6,6 @@ Last updated: 2026-08-03 02:07:49 WIB
 
 ![Snake Animation](https://raw.githubusercontent.com/antono4/antono4/main/assets/snake.svg)
 
-## 📊 Contributions in the Last Year
+## 📊 GitHub Activity Graph
 
-![GitHub Contribution Graph](https://ghchart.rshah.org/antono4)
+![GitHub Activity Graph](https://github-readme-activity-graph.vercel.app/graph?username=antono4&theme=dracula)
