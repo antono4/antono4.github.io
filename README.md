@@ -8,4 +8,4 @@ Last updated: 2026-08-03 02:07:49 WIB
 
 ## 📊 Contributions in the Last Year
 
-![GitHub Contribution Graph](https://github-contributions-api.deta.dev/?username=antono4&theme=dracula)
+![GitHub Contribution Graph](https://ghchart.rshah.org/antono4)
