@@ -174,89 +174,184 @@
             .portfolio-grid-inner { grid-template-columns: 1fr; }
         }
 
-        /* Education Timeline */
-        .edu-timeline {
+        /* Education Certificates */
+        .edu-cert {
             position: relative;
-            padding-left: 2.5rem;
-        }
-        .edu-timeline::before {
-            content: '';
-            position: absolute;
-            left: 11px;
-            top: 8px;
-            bottom: 8px;
-            width: 3px;
-            background: linear-gradient(180deg, #10b981, #8b5cf6);
-            border-radius: 9999px;
-            opacity: 0.7;
-        }
-        .edu-item {
-            position: relative;
+            background:
+                radial-gradient(circle at 20% 20%, rgba(16, 185, 129, 0.06), transparent 40%),
+                radial-gradient(circle at 80% 80%, rgba(139, 92, 246, 0.06), transparent 40%),
+                linear-gradient(135deg, #fffefb 0%, #fdfcf7 100%);
+            border-radius: 18px;
+            padding: 2rem 2.25rem 1.75rem;
+            box-shadow: 0 12px 40px -18px rgba(16, 185, 129, 0.25);
+            overflow: hidden;
+            transition: transform 0.4s cubic-bezier(0.22, 1, 0.36, 1), box-shadow 0.4s ease;
             margin-bottom: 1.5rem;
         }
-        .edu-item:last-child { margin-bottom: 0; }
-        .edu-node {
+        .edu-cert:last-child { margin-bottom: 0; }
+        .edu-cert:hover {
+            transform: translateY(-6px);
+            box-shadow: 0 24px 50px -20px rgba(16, 185, 129, 0.35);
+        }
+        .edu-cert::before {
+            content: '';
             position: absolute;
-            left: -2.5rem;
-            top: 1.25rem;
-            width: 24px;
-            height: 24px;
-            border-radius: 9999px;
-            background: white;
-            border: 3px solid #10b981;
-            box-shadow: 0 0 0 4px rgba(16, 185, 129, 0.18);
-            transition: all 0.3s ease;
+            inset: 8px;
+            border: 2px solid rgba(16, 185, 129, 0.4);
+            border-radius: 12px;
+            pointer-events: none;
         }
-        .edu-item:nth-child(2) .edu-node { border-color: #3b82f6; box-shadow: 0 0 0 4px rgba(59, 130, 246, 0.18); }
-        .edu-item:nth-child(3) .edu-node { border-color: #8b5cf6; box-shadow: 0 0 0 4px rgba(139, 92, 246, 0.18); }
-        .edu-card {
-            background: rgba(255, 255, 255, 0.65);
-            backdrop-filter: blur(10px);
-            border: 1px solid rgba(255, 255, 255, 0.7);
-            border-radius: 20px;
-            padding: 1.5rem 1.75rem;
-            box-shadow: 0 8px 24px -14px rgba(16, 185, 129, 0.2);
-            transition: transform 0.35s cubic-bezier(0.22, 1, 0.36, 1), box-shadow 0.35s ease, border-color 0.35s ease;
-            overflow: hidden;
-            position: relative;
+        .edu-cert::after {
+            content: '';
+            position: absolute;
+            inset: 14px;
+            border: 1px solid rgba(139, 92, 246, 0.25);
+            border-radius: 8px;
+            pointer-events: none;
         }
-        .edu-card:hover {
-            transform: translateX(6px);
-            box-shadow: 0 20px 40px -16px rgba(16, 185, 129, 0.3);
-            border-color: rgba(16, 185, 129, 0.3);
+        .edu-corner {
+            position: absolute;
+            width: 28px;
+            height: 28px;
+            border: 2px solid rgba(16, 185, 129, 0.5);
+            pointer-events: none;
+            z-index: 2;
         }
-        .edu-icon {
-            display: inline-flex;
+        .edu-corner.tl { top: 10px; left: 10px; border-right: none; border-bottom: none; border-radius: 8px 0 0 0; }
+        .edu-corner.tr { top: 10px; right: 10px; border-left: none; border-bottom: none; border-radius: 0 8px 0 0; }
+        .edu-corner.bl { bottom: 10px; left: 10px; border-right: none; border-top: none; border-radius: 0 0 0 8px; }
+        .edu-corner.br { bottom: 10px; right: 10px; border-left: none; border-top: none; border-radius: 0 0 8px 0; }
+        .edu-watermark {
+            position: absolute;
+            right: 1.5rem;
+            top: 50%;
+            transform: translateY(-50%);
+            font-size: 6rem;
+            color: rgba(16, 185, 129, 0.07);
+            pointer-events: none;
+            z-index: 0;
+        }
+        .edu-cert-body { position: relative; z-index: 1; }
+        .edu-cert-header {
+            display: flex;
             align-items: center;
             justify-content: center;
-            width: 56px;
-            height: 56px;
-            border-radius: 9999px;
-            margin-bottom: 0.75rem;
-            transition: transform 0.35s cubic-bezier(0.22, 1, 0.36, 1);
+            gap: 0.5rem;
+            margin-bottom: 0.25rem;
         }
-        .edu-card:hover .edu-icon { transform: scale(1.1) rotate(-6deg); }
-        .edu-year {
+        .edu-cert-kicker {
+            font-size: 0.7rem;
+            font-weight: 700;
+            letter-spacing: 0.25em;
+            text-transform: uppercase;
+            color: rgba(16, 185, 129, 0.8);
+        }
+        .edu-cert-line {
+            flex: 1;
+            height: 1px;
+            max-width: 60px;
+            background: linear-gradient(90deg, transparent, rgba(16, 185, 129, 0.5), transparent);
+        }
+        .edu-seal {
+            position: absolute;
+            right: 1.75rem;
+            bottom: 1.25rem;
+            width: 64px;
+            height: 64px;
+            border-radius: 9999px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: linear-gradient(135deg, #10b981, #047857);
+            color: white;
+            box-shadow: 0 6px 20px -6px rgba(16, 185, 129, 0.6), 0 0 0 4px rgba(255, 255, 255, 0.9), 0 0 0 6px rgba(16, 185, 129, 0.3);
+            transition: transform 0.4s cubic-bezier(0.22, 1, 0.36, 1);
+            z-index: 2;
+        }
+        .edu-cert:hover .edu-seal { transform: rotate(12deg) scale(1.08); }
+        .edu-seal.blue { background: linear-gradient(135deg, #3b82f6, #1d4ed8); box-shadow: 0 6px 20px -6px rgba(59, 130, 246, 0.6), 0 0 0 4px rgba(255, 255, 255, 0.9), 0 0 0 6px rgba(59, 130, 246, 0.3); }
+        .edu-seal.purple { background: linear-gradient(135deg, #8b5cf6, #6d28d9); box-shadow: 0 6px 20px -6px rgba(139, 92, 246, 0.6), 0 0 0 4px rgba(255, 255, 255, 0.9), 0 0 0 6px rgba(139, 92, 246, 0.3); }
+        .edu-cert-title {
+            font-family: 'Georgia', 'Times New Roman', serif;
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: #1e293b;
+            text-align: center;
+            margin-top: 0.5rem;
+        }
+        .edu-cert-subtitle {
+            text-align: center;
+            font-size: 0.75rem;
+            letter-spacing: 0.15em;
+            text-transform: uppercase;
+            color: #94a3b8;
+            margin-bottom: 0.5rem;
+        }
+        .edu-cert-credential {
+            text-align: center;
+            font-family: 'Georgia', 'Times New Roman', serif;
+            font-size: 1.05rem;
+            font-weight: 600;
+            color: #047857;
+            margin-bottom: 0.5rem;
+        }
+        .edu-cert-desc {
+            text-align: center;
+            font-size: 0.85rem;
+            color: #64748b;
+            line-height: 1.6;
+            max-width: 85%;
+            margin: 0 auto 1rem;
+        }
+        .edu-cert-foot {
+            display: flex;
+            align-items: flex-end;
+            justify-content: space-between;
+            gap: 1rem;
+            margin-top: 0.5rem;
+        }
+        .edu-sign { text-align: left; }
+        .edu-sign-label {
+            font-size: 0.65rem;
+            letter-spacing: 0.15em;
+            text-transform: uppercase;
+            color: #94a3b8;
+            border-top: 1px solid rgba(16, 185, 129, 0.3);
+            padding-top: 0.3rem;
+            min-width: 120px;
+        }
+        .edu-sign-value {
+            font-family: 'Georgia', 'Times New Roman', serif;
+            font-style: italic;
+            font-size: 0.95rem;
+            color: #334155;
+            margin-bottom: 0.2rem;
+        }
+        .edu-ribbon {
             display: inline-flex;
             align-items: center;
-            padding: 0.25rem 0.75rem;
+            gap: 0.4rem;
+            padding: 0.3rem 0.85rem;
             border-radius: 9999px;
             font-size: 0.7rem;
             font-weight: 700;
-            letter-spacing: 0.03em;
+            letter-spacing: 0.05em;
             background: rgba(16, 185, 129, 0.12);
             color: #047857;
-            border: 1px solid rgba(16, 185, 129, 0.2);
+            border: 1px solid rgba(16, 185, 129, 0.25);
         }
-        .edu-item:nth-child(2) .edu-year { background: rgba(59, 130, 246, 0.12); color: #1d4ed8; border-color: rgba(59, 130, 246, 0.2); }
-        .edu-item:nth-child(3) .edu-year { background: rgba(139, 92, 246, 0.12); color: #6d28d9; border-color: rgba(139, 92, 246, 0.2); }
-        .edu-stat {
-            display: flex;
-            align-items: center;
-            gap: 0.4rem;
-            font-size: 0.8rem;
-            color: #64748b;
-        }
+        .edu-cert:nth-of-type(2) .edu-ribbon { background: rgba(59, 130, 246, 0.12); color: #1d4ed8; border-color: rgba(59, 130, 246, 0.25); }
+        .edu-cert:nth-of-type(2) .edu-cert-credential { color: #1d4ed8; }
+        .edu-cert:nth-of-type(2) .edu-cert-kicker { color: rgba(59, 130, 246, 0.8); }
+        .edu-cert:nth-of-type(2)::before { border-color: rgba(59, 130, 246, 0.4); }
+        .edu-cert:nth-of-type(2)::after { border-color: rgba(16, 185, 129, 0.2); }
+        .edu-cert:nth-of-type(2) .edu-corner { border-color: rgba(59, 130, 246, 0.5); }
+        .edu-cert:nth-of-type(3) .edu-ribbon { background: rgba(139, 92, 246, 0.12); color: #6d28d9; border-color: rgba(139, 92, 246, 0.25); }
+        .edu-cert:nth-of-type(3) .edu-cert-credential { color: #6d28d9; }
+        .edu-cert:nth-of-type(3) .edu-cert-kicker { color: rgba(139, 92, 246, 0.8); }
+        .edu-cert:nth-of-type(3)::before { border-color: rgba(139, 92, 246, 0.4); }
+        .edu-cert:nth-of-type(3)::after { border-color: rgba(16, 185, 129, 0.2); }
+        .edu-cert:nth-of-type(3) .edu-corner { border-color: rgba(139, 92, 246, 0.5); }
         .edu-reveal {
             opacity: 0;
             transform: translateY(20px);
@@ -1071,70 +1166,93 @@
             <div class="text-center mb-14">
                 <h2 class="text-sm font-semibold text-emerald-600 tracking-wider uppercase">Academic Background</h2>
                 <p class="mt-2 text-3xl leading-8 font-bold tracking-tight text-slate-900 sm:text-4xl">Education &amp; Certifications</p>
-                <p class="mt-3 text-sm text-slate-500">A foundation of formal study and professional certifications</p>
+                <p class="mt-3 text-sm text-slate-500">Certified credentials and academic achievements</p>
             </div>
 
-            <div class="edu-timeline">
+            <div class="edu-stack">
 
-                <div class="edu-item edu-reveal">
-                    <span class="edu-node"></span>
-                    <div class="edu-card">
-                        <div class="flex flex-wrap items-center justify-between gap-3 mb-2">
-                            <span class="edu-year"><i class="fas fa-calendar-alt mr-1.5"></i>Postgraduate</span>
-                            <span class="edu-stat"><i class="fas fa-award text-emerald-500"></i> Distinction</span>
+                <!-- Certificate 1 -->
+                <div class="edu-cert edu-reveal">
+                    <span class="edu-corner tl"></span>
+                    <span class="edu-corner tr"></span>
+                    <span class="edu-corner bl"></span>
+                    <span class="edu-corner br"></span>
+                    <i class="fas fa-graduation-cap edu-watermark"></i>
+                    <div class="edu-cert-body">
+                        <div class="edu-cert-header">
+                            <span class="edu-cert-line"></span>
+                            <span class="edu-cert-kicker">Certificate of Degree</span>
+                            <span class="edu-cert-line"></span>
                         </div>
-                        <div class="edu-icon" style="background: rgba(16, 185, 129, 0.12); color: #059669;">
-                            <i class="fas fa-graduation-cap text-2xl"></i>
-                        </div>
-                        <h4 class="text-xl font-bold text-slate-900">Master's Degree</h4>
-                        <p class="text-slate-700 font-medium mt-1">Manajemen Informatika</p>
-                        <p class="text-sm text-slate-500 mt-2 leading-relaxed">Advanced study in information systems management, focusing on strategic IT governance and modern software engineering practices.</p>
-                        <div class="flex flex-wrap gap-2 mt-4">
-                            <span class="portfolio-badge">IT Management</span>
-                            <span class="portfolio-badge">Information Systems</span>
+                        <p class="edu-cert-subtitle">This is to certify that</p>
+                        <h3 class="edu-cert-title">Master's Degree</h3>
+                        <p class="edu-cert-credential">Manajemen Informatika</p>
+                        <p class="edu-cert-desc">Advanced study in information systems management, focusing on strategic IT governance and modern software engineering practices.</p>
+                        <div class="edu-cert-foot">
+                            <div class="edu-sign">
+                                <p class="edu-sign-value">Antono</p>
+                                <p class="edu-sign-label">Recipient</p>
+                            </div>
+                            <span class="edu-ribbon"><i class="fas fa-award"></i> Postgraduate</span>
                         </div>
                     </div>
+                    <div class="edu-seal" title="Verified"><i class="fas fa-check text-xl"></i></div>
                 </div>
 
-                <div class="edu-item edu-reveal">
-                    <span class="edu-node"></span>
-                    <div class="edu-card">
-                        <div class="flex flex-wrap items-center justify-between gap-3 mb-2">
-                            <span class="edu-year"><i class="fas fa-calendar-alt mr-1.5"></i>Graduated 2010</span>
-                            <span class="edu-stat"><i class="fas fa-map-marker-alt text-blue-500"></i> LP3I Cikarang</span>
+                <!-- Certificate 2 -->
+                <div class="edu-cert edu-reveal">
+                    <span class="edu-corner tl"></span>
+                    <span class="edu-corner tr"></span>
+                    <span class="edu-corner bl"></span>
+                    <span class="edu-corner br"></span>
+                    <i class="fas fa-university edu-watermark"></i>
+                    <div class="edu-cert-body">
+                        <div class="edu-cert-header">
+                            <span class="edu-cert-line"></span>
+                            <span class="edu-cert-kicker">Diploma of Engineering</span>
+                            <span class="edu-cert-line"></span>
                         </div>
-                        <div class="edu-icon" style="background: rgba(59, 130, 246, 0.12); color: #2563eb;">
-                            <i class="fas fa-university text-2xl"></i>
-                        </div>
-                        <h4 class="text-xl font-bold text-slate-900">Diploma (D3)</h4>
-                        <p class="text-slate-700 font-medium mt-1">Engineering (Computer / Telecommunication)</p>
-                        <p class="text-sm text-slate-500 mt-2 leading-relaxed">Three-year diploma covering computer engineering and telecommunication fundamentals, from networking to embedded systems.</p>
-                        <div class="flex flex-wrap gap-2 mt-4">
-                            <span class="portfolio-badge">Computer Engineering</span>
-                            <span class="portfolio-badge">Telecommunication</span>
+                        <p class="edu-cert-subtitle">This is to certify that</p>
+                        <h3 class="edu-cert-title">Diploma (D3)</h3>
+                        <p class="edu-cert-credential">Engineering (Computer / Telecommunication)</p>
+                        <p class="edu-cert-desc">Three-year diploma covering computer engineering and telecommunication fundamentals, from networking to embedded systems.</p>
+                        <div class="edu-cert-foot">
+                            <div class="edu-sign">
+                                <p class="edu-sign-value">LP3I Cikarang</p>
+                                <p class="edu-sign-label">Institution &middot; Graduated 2010</p>
+                            </div>
+                            <span class="edu-ribbon"><i class="fas fa-calendar-alt"></i> 2010</span>
                         </div>
                     </div>
+                    <div class="edu-seal blue" title="Verified"><i class="fas fa-check text-xl"></i></div>
                 </div>
 
-                <div class="edu-item edu-reveal">
-                    <span class="edu-node"></span>
-                    <div class="edu-card">
-                        <div class="flex flex-wrap items-center justify-between gap-3 mb-2">
-                            <span class="edu-year"><i class="fas fa-calendar-alt mr-1.5"></i>Professional</span>
-                            <span class="edu-stat"><i class="fas fa-building text-purple-500"></i> Issued by LP3I</span>
+                <!-- Certificate 3 -->
+                <div class="edu-cert edu-reveal">
+                    <span class="edu-corner tl"></span>
+                    <span class="edu-corner tr"></span>
+                    <span class="edu-corner bl"></span>
+                    <span class="edu-corner br"></span>
+                    <i class="fas fa-certificate edu-watermark"></i>
+                    <div class="edu-cert-body">
+                        <div class="edu-cert-header">
+                            <span class="edu-cert-line"></span>
+                            <span class="edu-cert-kicker">Professional Certification</span>
+                            <span class="edu-cert-line"></span>
                         </div>
-                        <div class="edu-icon" style="background: rgba(139, 92, 246, 0.12); color: #7c3aed;">
-                            <i class="fas fa-certificate text-2xl"></i>
-                        </div>
-                        <h4 class="text-xl font-bold text-slate-900">Certification</h4>
-                        <p class="text-slate-700 font-medium mt-1">CCNA (Cisco Certified Network Associate)</p>
-                        <p class="text-sm text-slate-500 mt-2 leading-relaxed">Industry-recognized certification validating expertise in networking fundamentals, routing, switching, and network security.</p>
-                        <div class="flex flex-wrap gap-2 mt-4">
-                            <span class="portfolio-badge">Networking</span>
-                            <span class="portfolio-badge">Routing</span>
-                            <span class="portfolio-badge">Cisco</span>
+                        <p class="edu-cert-subtitle">This is to certify that</p>
+                        <h3 class="edu-cert-title">CCNA</h3>
+                        <p class="edu-cert-credential">Cisco Certified Network Associate</p>
+                        <p class="edu-cert-desc">Industry-recognized certification validating expertise in networking fundamentals, routing, switching, and network security.</p>
+                        <div class="edu-cert-foot">
+                            <div class="edu-sign">
+                                <p class="edu-sign-value">LP3I</p>
+                                <p class="edu-sign-label">Issued By</p>
+                            </div>
+                            <span class="edu-ribbon"><i class="fas fa-network-wired"></i> Networking</span>
                         </div>
                     </div>
+                    <div class="edu-seal purple" title="Verified"><i class="fas fa-check text-xl"></i></div>
                 </div>
 
             </div>
