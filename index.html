@@ -16,7 +16,25 @@
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; }
         html { scroll-behavior: smooth; }
-        body { font-family: 'Inter', sans-serif; background: linear-gradient(180deg, #f0fdfa 0%, #f8fafc 40%, #f5f3ff 100%); background-attachment: fixed; }
+        body { font-family: 'Inter', sans-serif; background:
+            radial-gradient(circle at 12% 18%, rgba(16, 185, 129, 0.18), transparent 38%),
+            radial-gradient(circle at 88% 22%, rgba(59, 130, 246, 0.16), transparent 40%),
+            radial-gradient(circle at 18% 82%, rgba(139, 92, 246, 0.16), transparent 42%),
+            radial-gradient(circle at 85% 88%, rgba(245, 158, 11, 0.14), transparent 40%),
+            linear-gradient(135deg, #f0fdfa 0%, #eff6ff 25%, #f8fafc 50%, #f5f3ff 75%, #fffbeb 100%);
+            background-attachment: fixed;
+        }
+        .bg-blobs { position: fixed; inset: 0; z-index: -1; overflow: hidden; pointer-events: none; }
+        .bg-blob { position: absolute; border-radius: 9999px; filter: blur(60px); opacity: 0.35; animation: blob-float 18s ease-in-out infinite; }
+        .bg-blob.b1 { width: 380px; height: 380px; background: radial-gradient(circle, #34d399, transparent 70%); top: -80px; left: -60px; }
+        .bg-blob.b2 { width: 420px; height: 420px; background: radial-gradient(circle, #60a5fa, transparent 70%); top: 30%; right: -100px; animation-delay: -6s; }
+        .bg-blob.b3 { width: 400px; height: 400px; background: radial-gradient(circle, #a78bfa, transparent 70%); bottom: -80px; left: 20%; animation-delay: -12s; }
+        .bg-blob.b4 { width: 320px; height: 320px; background: radial-gradient(circle, #fbbf24, transparent 70%); bottom: 10%; right: 18%; animation-delay: -9s; }
+        @keyframes blob-float {
+            0%, 100% { transform: translate(0, 0) scale(1); }
+            33% { transform: translate(30px, -40px) scale(1.08); }
+            66% { transform: translate(-20px, 30px) scale(0.95); }
+        }
         
         /* Custom scrollbar */
         ::-webkit-scrollbar { width: 8px; }
@@ -814,6 +832,14 @@
     </style>
 </head>
 <body class="text-slate-800 antialiased">
+
+    <!-- Animated background blobs -->
+    <div class="bg-blobs" aria-hidden="true">
+        <span class="bg-blob b1"></span>
+        <span class="bg-blob b2"></span>
+        <span class="bg-blob b3"></span>
+        <span class="bg-blob b4"></span>
+    </div>
 
     <!-- Background Particles -->
     <div id="particles-container"></div>
