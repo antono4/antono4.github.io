@@ -30,6 +30,76 @@
         /* Card hover effects */
         .card-hover { transition: all 0.3s ease; }
         .card-hover:hover { transform: translateY(-4px); box-shadow: 0 20px 40px -10px rgba(0,0,0,0.1); }
+
+        /* Portfolio Cards */
+        .portfolio-card {
+            position: relative;
+            background: rgba(255, 255, 255, 0.6);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.7);
+            border-radius: 24px;
+            padding: 2rem;
+            overflow: hidden;
+            transition: transform 0.35s cubic-bezier(0.22, 1, 0.36, 1), box-shadow 0.35s ease, border-color 0.35s ease;
+            box-shadow: 0 8px 30px -12px rgba(16, 185, 129, 0.15);
+        }
+        .portfolio-card::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            border-radius: 24px;
+            padding: 1px;
+            background: linear-gradient(135deg, rgba(16, 185, 129, 0.4), transparent 40%, transparent 60%, rgba(139, 92, 246, 0.3));
+            -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+            -webkit-mask-composite: xor;
+            mask-composite: exclude;
+            opacity: 0;
+            transition: opacity 0.35s ease;
+            pointer-events: none;
+        }
+        .portfolio-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 25px 50px -12px rgba(16, 185, 129, 0.28);
+            border-color: rgba(16, 185, 129, 0.3);
+        }
+        .portfolio-card:hover::before { opacity: 1; }
+        .portfolio-accent {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 4px;
+            border-radius: 24px 24px 0 0;
+            transform: scaleX(0);
+            transform-origin: left;
+            transition: transform 0.4s cubic-bezier(0.22, 1, 0.36, 1);
+        }
+        .portfolio-card:hover .portfolio-accent { transform: scaleX(1); }
+        .portfolio-icon {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 56px;
+            height: 56px;
+            border-radius: 18px;
+            margin-bottom: 1.25rem;
+            transition: transform 0.35s cubic-bezier(0.22, 1, 0.36, 1);
+        }
+        .portfolio-card:hover .portfolio-icon { transform: scale(1.1) rotate(-6deg); }
+        .portfolio-card h3 {
+            transition: color 0.3s ease;
+        }
+        .portfolio-card:hover h3 { color: #047857; }
+        .portfolio-badge {
+            padding: 0.3rem 0.75rem;
+            border-radius: 9999px;
+            font-size: 0.7rem;
+            font-weight: 600;
+            letter-spacing: 0.01em;
+            background: rgba(16, 185, 129, 0.1);
+            color: #047857;
+            border: 1px solid rgba(16, 185, 129, 0.2);
+        }
         
         /* Timeline styles */
         .timeline-item { position: relative; padding-left: 2rem; }
@@ -608,79 +678,71 @@
                 <h2 class="text-sm font-semibold text-emerald-600 tracking-wider uppercase">Portfolio</h2>
                 <p class="mt-2 text-3xl leading-8 font-bold tracking-tight text-slate-900 sm:text-4xl">Notable Development Projects</p>
             </div>
-            
-            
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
                 <!-- Project 1 -->
-                <div class="bg-slate-50 rounded-2xl p-8 border border-slate-100 hover:shadow-xl transition-all duration-300 card-hover">
-                    <div class="flex items-start justify-between">
-                        <div class="w-14 h-14 inline-flex items-center justify-center rounded-xl bg-emerald-100 text-emerald-600 mb-4">
-                            <i class="fas fa-car text-2xl"></i>
-                        </div>
+                <div class="portfolio-card">
+                    <span class="portfolio-accent" style="background: linear-gradient(90deg, #10b981, #34d399);"></span>
+                    <div class="portfolio-icon" style="background: rgba(16, 185, 129, 0.12); color: #059669;">
+                        <i class="fas fa-car text-2xl"></i>
                     </div>
                     <h3 class="text-xl font-bold text-slate-900 mb-3">Awan Rent Car</h3>
-                    <p class="text-slate-600 mb-6">
-                        Developed a premium web application template featuring a 10-vehicle fleet gallery and booking submission tools linked directly to the WhatsApp API for seamless customer interaction.
+                    <p class="text-slate-600 mb-6 leading-relaxed">
+                        Premium web application template featuring a 10-vehicle fleet gallery and booking submission tools linked directly to the WhatsApp API for seamless customer interaction.
                     </p>
                     <div class="flex flex-wrap gap-2">
-                        <span class="px-3 py-1 rounded-full text-xs font-medium bg-slate-200 text-slate-700">Web App</span>
-                        <span class="px-3 py-1 rounded-full text-xs font-medium bg-slate-200 text-slate-700">WhatsApp API</span>
+                        <span class="portfolio-badge">Web App</span>
+                        <span class="portfolio-badge">WhatsApp API</span>
                     </div>
                 </div>
-                
-                
+
                 <!-- Project 2 -->
-                <div class="bg-slate-50 rounded-2xl p-8 border border-slate-100 hover:shadow-xl transition-all duration-300 card-hover">
-                    <div class="flex items-start justify-between">
-                        <div class="w-14 h-14 inline-flex items-center justify-center rounded-xl bg-blue-100 text-blue-600 mb-4">
-                            <i class="fas fa-brain text-2xl"></i>
-                        </div>
+                <div class="portfolio-card">
+                    <span class="portfolio-accent" style="background: linear-gradient(90deg, #3b82f6, #60a5fa);"></span>
+                    <div class="portfolio-icon" style="background: rgba(59, 130, 246, 0.12); color: #2563eb;">
+                        <i class="fas fa-brain text-2xl"></i>
                     </div>
                     <h3 class="text-xl font-bold text-slate-900 mb-3">BrainMetrics Elite</h3>
-                    <p class="text-slate-600 mb-6">
-                        Designed a comprehensive cognitive assessment application with a 50-question test bank across five intelligence domains, featuring complex radar chart outputs and downloadable PDF reports.
+                    <p class="text-slate-600 mb-6 leading-relaxed">
+                        Comprehensive cognitive assessment application with a 50-question test bank across five intelligence domains, featuring complex radar chart outputs and downloadable PDF reports.
                     </p>
                     <div class="flex flex-wrap gap-2">
-                        <span class="px-3 py-1 rounded-full text-xs font-medium bg-slate-200 text-slate-700">Assessment Tool</span>
-                        <span class="px-3 py-1 rounded-full text-xs font-medium bg-slate-200 text-slate-700">Data Visualization</span>
-                        <span class="px-3 py-1 rounded-full text-xs font-medium bg-slate-200 text-slate-700">PDF Generation</span>
+                        <span class="portfolio-badge">Assessment Tool</span>
+                        <span class="portfolio-badge">Data Visualization</span>
+                        <span class="portfolio-badge">PDF Generation</span>
                     </div>
                 </div>
-                
-                
+
                 <!-- Project 3 -->
-                <div class="bg-slate-50 rounded-2xl p-8 border border-slate-100 hover:shadow-xl transition-all duration-300 card-hover">
-                    <div class="flex items-start justify-between">
-                        <div class="w-14 h-14 inline-flex items-center justify-center rounded-xl bg-amber-100 text-amber-600 mb-4">
-                            <i class="fas fa-boxes text-2xl"></i>
-                        </div>
+                <div class="portfolio-card">
+                    <span class="portfolio-accent" style="background: linear-gradient(90deg, #f59e0b, #fbbf24);"></span>
+                    <div class="portfolio-icon" style="background: rgba(245, 158, 11, 0.12); color: #d97706;">
+                        <i class="fas fa-boxes text-2xl"></i>
                     </div>
                     <h3 class="text-xl font-bold text-slate-900 mb-3">MRP Simulation</h3>
-                    <p class="text-slate-600 mb-6">
-                        Built a Material Requirements Planning application featuring multi-warehouse inventory locations and integrated QR code data scanning capabilities to streamline stock tracking.
+                    <p class="text-slate-600 mb-6 leading-relaxed">
+                        Material Requirements Planning application featuring multi-warehouse inventory locations and integrated QR code data scanning capabilities to streamline stock tracking.
                     </p>
                     <div class="flex flex-wrap gap-2">
-                        <span class="px-3 py-1 rounded-full text-xs font-medium bg-slate-200 text-slate-700">Inventory Management</span>
-                        <span class="px-3 py-1 rounded-full text-xs font-medium bg-slate-200 text-slate-700">QR Scanning</span>
+                        <span class="portfolio-badge">Inventory Management</span>
+                        <span class="portfolio-badge">QR Scanning</span>
                     </div>
                 </div>
-                
-                
+
                 <!-- Project 4 -->
-                <div class="bg-slate-50 rounded-2xl p-8 border border-slate-100 hover:shadow-xl transition-all duration-300 card-hover">
-                    <div class="flex items-start justify-between">
-                        <div class="w-14 h-14 inline-flex items-center justify-center rounded-xl bg-purple-100 text-purple-600 mb-4">
-                            <i class="fas fa-server text-2xl"></i>
-                        </div>
+                <div class="portfolio-card">
+                    <span class="portfolio-accent" style="background: linear-gradient(90deg, #8b5cf6, #a78bfa);"></span>
+                    <div class="portfolio-icon" style="background: rgba(139, 92, 246, 0.12); color: #7c3aed;">
+                        <i class="fas fa-server text-2xl"></i>
                     </div>
                     <h3 class="text-xl font-bold text-slate-900 mb-3">IT Asset Management</h3>
-                    <p class="text-slate-600 mb-6">
-                        Created a custom, fast single-page CRUD application configured for database connections to systematically track and manage organizational IT assets efficiently.
+                    <p class="text-slate-600 mb-6 leading-relaxed">
+                        Custom, fast single-page CRUD application configured for database connections to systematically track and manage organizational IT assets efficiently.
                     </p>
                     <div class="flex flex-wrap gap-2">
-                        <span class="px-3 py-1 rounded-full text-xs font-medium bg-slate-200 text-slate-700">SPA</span>
-                        <span class="px-3 py-1 rounded-full text-xs font-medium bg-slate-200 text-slate-700">CRUD Database</span>
-                        <span class="px-3 py-1 rounded-full text-xs font-medium bg-slate-200 text-slate-700">Asset Tracking</span>
+                        <span class="portfolio-badge">SPA</span>
+                        <span class="portfolio-badge">CRUD Database</span>
+                        <span class="portfolio-badge">Asset Tracking</span>
                     </div>
                 </div>
             </div>
