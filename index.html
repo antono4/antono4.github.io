@@ -477,6 +477,167 @@
             background: #e2e8f0;
         }
         .timeline-item:last-child::after { display: none; }
+
+        /* Career Path */
+        .career-timeline {
+            position: relative;
+            padding-left: 3rem;
+        }
+        .career-timeline::before {
+            content: '';
+            position: absolute;
+            left: 13px;
+            top: 10px;
+            bottom: 10px;
+            width: 3px;
+            background: linear-gradient(180deg, #10b981, #3b82f6, #8b5cf6);
+            border-radius: 9999px;
+            opacity: 0.6;
+        }
+        .career-item {
+            position: relative;
+            margin-bottom: 1.5rem;
+        }
+        .career-item:last-child { margin-bottom: 0; }
+        .career-node {
+            position: absolute;
+            left: -3rem;
+            top: 1.5rem;
+            width: 30px;
+            height: 30px;
+            border-radius: 9999px;
+            background: white;
+            border: 3px solid #10b981;
+            box-shadow: 0 0 0 5px rgba(16, 185, 129, 0.15);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #059669;
+            font-size: 0.7rem;
+            z-index: 2;
+            transition: all 0.3s ease;
+        }
+        .career-item:hover .career-node { transform: scale(1.15); box-shadow: 0 0 0 6px rgba(16, 185, 129, 0.22); }
+        .career-item:nth-of-type(2) .career-node { border-color: #3b82f6; color: #2563eb; box-shadow: 0 0 0 5px rgba(59, 130, 246, 0.15); }
+        .career-item:nth-of-type(3) .career-node { border-color: #8b5cf6; color: #7c3aed; box-shadow: 0 0 0 5px rgba(139, 92, 246, 0.15); }
+        .career-item:nth-of-type(4) .career-node { border-color: #f59e0b; color: #d97706; box-shadow: 0 0 0 5px rgba(245, 158, 11, 0.15); }
+        .career-card {
+            background: rgba(255, 255, 255, 0.65);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.7);
+            border-radius: 20px;
+            padding: 1.5rem 1.75rem;
+            box-shadow: 0 8px 28px -16px rgba(16, 185, 129, 0.2);
+            transition: transform 0.35s cubic-bezier(0.22, 1, 0.36, 1), box-shadow 0.35s ease, border-color 0.35s ease;
+            position: relative;
+            overflow: hidden;
+        }
+        .career-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 4px;
+            height: 100%;
+            background: linear-gradient(180deg, #10b981, #34d399);
+            opacity: 0;
+            transition: opacity 0.35s ease;
+        }
+        .career-card:hover {
+            transform: translateX(6px);
+            box-shadow: 0 18px 40px -16px rgba(16, 185, 129, 0.3);
+            border-color: rgba(16, 185, 129, 0.3);
+        }
+        .career-card:hover::before { opacity: 1; }
+        .career-item:nth-of-type(2) .career-card::before { background: linear-gradient(180deg, #3b82f6, #60a5fa); }
+        .career-item:nth-of-type(3) .career-card::before { background: linear-gradient(180deg, #8b5cf6, #a78bfa); }
+        .career-item:nth-of-type(4) .career-card::before { background: linear-gradient(180deg, #f59e0b, #fbbf24); }
+        .career-role {
+            font-size: 1.05rem;
+            font-weight: 700;
+            color: #1e293b;
+        }
+        .career-company {
+            font-weight: 600;
+            color: #059669;
+            margin-top: 0.15rem;
+        }
+        .career-item:nth-of-type(2) .career-company { color: #2563eb; }
+        .career-item:nth-of-type(3) .career-company { color: #7c3aed; }
+        .career-item:nth-of-type(4) .career-company { color: #d97706; }
+        .career-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.4rem;
+            padding: 0.3rem 0.8rem;
+            border-radius: 9999px;
+            font-size: 0.72rem;
+            font-weight: 700;
+            background: rgba(16, 185, 129, 0.12);
+            color: #047857;
+            border: 1px solid rgba(16, 185, 129, 0.2);
+            white-space: nowrap;
+        }
+        .career-item:nth-of-type(2) .career-badge { background: rgba(59, 130, 246, 0.12); color: #1d4ed8; border-color: rgba(59, 130, 246, 0.2); }
+        .career-item:nth-of-type(3) .career-badge { background: rgba(139, 92, 246, 0.12); color: #6d28d9; border-color: rgba(139, 92, 246, 0.2); }
+        .career-item:nth-of-type(4) .career-badge { background: rgba(245, 158, 11, 0.12); color: #b45309; border-color: rgba(245, 158, 11, 0.2); }
+        .career-list li {
+            display: flex;
+            align-items: flex-start;
+            gap: 0.6rem;
+            font-size: 0.85rem;
+            color: #475569;
+            line-height: 1.55;
+        }
+        .career-list li i {
+            color: #10b981;
+            margin-top: 0.25rem;
+            font-size: 0.7rem;
+            flex-shrink: 0;
+        }
+        .career-item:nth-of-type(2) .career-list li i { color: #3b82f6; }
+        .career-item:nth-of-type(3) .career-list li i { color: #8b5cf6; }
+        .career-item:nth-of-type(4) .career-list li i { color: #f59e0b; }
+        .career-mini {
+            background: rgba(255, 255, 255, 0.6);
+            backdrop-filter: blur(8px);
+            border: 1px solid rgba(255, 255, 255, 0.7);
+            border-radius: 14px;
+            padding: 0.85rem 1.1rem;
+            box-shadow: 0 4px 16px -10px rgba(16, 185, 129, 0.2);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        .career-mini:hover { transform: translateX(4px); box-shadow: 0 8px 20px -10px rgba(16, 185, 129, 0.3); }
+        .career-reveal {
+            opacity: 0;
+            transform: translateY(20px);
+            transition: opacity 0.6s ease, transform 0.6s cubic-bezier(0.22, 1, 0.36, 1);
+        }
+        .career-reveal.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        .career-toggle {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.6rem 1.5rem;
+            border-radius: 9999px;
+            font-size: 0.85rem;
+            font-weight: 700;
+            color: #047857;
+            background: rgba(16, 185, 129, 0.1);
+            border: 1px solid rgba(16, 185, 129, 0.25);
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        .career-toggle:hover {
+            background: rgba(16, 185, 129, 0.18);
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px -10px rgba(16, 185, 129, 0.4);
+        }
+        .career-toggle i { transition: transform 0.3s ease; }
+        .career-toggle.open i { transform: rotate(180deg); }
         
         /* Pokemon Rare Card Holographic Effect */
         .glossy-holo {
@@ -926,152 +1087,126 @@
     </section>
     
     
-    <!-- Experience Section -->
+<!-- Experience Section -->
     <section id="experience" class="py-20 bg-slate-50/60 backdrop-blur-sm">
         <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="text-center mb-16">
+            <div class="text-center mb-14">
                 <h2 class="text-sm font-semibold text-emerald-600 tracking-wider uppercase">Career Path</h2>
                 <p class="mt-2 text-3xl leading-8 font-bold tracking-tight text-slate-900 sm:text-4xl">Professional Experience</p>
+                <p class="mt-3 text-sm text-slate-500">15+ years across 7 companies in IT, networking &amp; software</p>
             </div>
-            
-            
-            <div class="space-y-8">
+
+            <div class="career-timeline">
+
                 <!-- Job 1 -->
-                <div class="timeline-item">
-                    <div class="bg-white p-6 rounded-xl shadow-sm border border-slate-100">
-                        <div class="flex flex-col md:flex-row md:justify-between md:items-start mb-2">
+                <div class="career-item career-reveal">
+                    <span class="career-node"><i class="fas fa-briefcase"></i></span>
+                    <div class="career-card">
+                        <div class="flex flex-col md:flex-row md:justify-between md:items-start gap-2 mb-2">
                             <div>
-                                <h3 class="text-lg font-bold text-slate-900">IT OSS & Network Engineer & IT Operations Specialist</h3>
-                                <p class="text-emerald-600 font-medium">Mondelez International (PT Mondelez Manufacturing)</p>
+                                <h3 class="career-role">IT OSS &amp; Network Engineer / IT Operations Specialist</h3>
+                                <p class="career-company"><i class="fas fa-building mr-1.5"></i>Mondelez International (PT Mondelez Manufacturing)</p>
                             </div>
-                            <span class="text-sm font-medium text-emerald-700 bg-emerald-50 px-3 py-1 rounded-full mt-2 md:mt-0 w-max">Feb 2022 - Present</span>
+                            <span class="career-badge"><i class="fas fa-clock"></i> Feb 2022 - Present</span>
                         </div>
-                        <ul class="mt-4 space-y-2 text-sm text-slate-600">
-                            <li class="flex items-start">
-                                <i class="fas fa-check text-emerald-500 mt-1 mr-3 text-xs"></i>
-                                Monitor and maintain the health of server infrastructures across the entire South East Asia (SEA) region.
-                            </li>
-                            <li class="flex items-start">
-                                <i class="fas fa-check text-emerald-500 mt-1 mr-3 text-xs"></i>
-                                Identify hardware and software solutions, resolving complex network and connectivity issues.
-                            </li>
-                            <li class="flex items-start">
-                                <i class="fas fa-check text-emerald-500 mt-1 mr-3 text-xs"></i>
-                                Troubleshoot technical issues, diagnosing and repairing faults to ensure continuous manufacturing operations.
-                            </li>
-                            <li class="flex items-start">
-                                <i class="fas fa-check text-emerald-500 mt-1 mr-3 text-xs"></i>
-                                Install, configure, and maintain critical hardware and software systems.
-                            </li>
+                        <ul class="career-list mt-3 space-y-2">
+                            <li><i class="fas fa-check-circle"></i><span>Monitor and maintain server infrastructures across the entire South East Asia (SEA) region.</span></li>
+                            <li><i class="fas fa-check-circle"></i><span>Identify hardware and software solutions, resolving complex network and connectivity issues.</span></li>
+                            <li><i class="fas fa-check-circle"></i><span>Troubleshoot technical issues to ensure continuous manufacturing operations.</span></li>
+                            <li><i class="fas fa-check-circle"></i><span>Install, configure, and maintain critical hardware and software systems.</span></li>
                         </ul>
                     </div>
                 </div>
-                
-                
+
                 <!-- Job 2 -->
-                <div class="timeline-item">
-                    <div class="bg-white p-6 rounded-xl shadow-sm border border-slate-100">
-                        <div class="flex flex-col md:flex-row md:justify-between md:items-start mb-2">
+                <div class="career-item career-reveal">
+                    <span class="career-node"><i class="fas fa-laptop-code"></i></span>
+                    <div class="career-card">
+                        <div class="flex flex-col md:flex-row md:justify-between md:items-start gap-2 mb-2">
                             <div>
-                                <h3 class="text-lg font-bold text-slate-900">IT Programmer and IT Technical Support</h3>
-                                <p class="text-slate-600 font-medium">PT Multi Usage Indonesia</p>
+                                <h3 class="career-role">IT Programmer &amp; IT Technical Support</h3>
+                                <p class="career-company"><i class="fas fa-building mr-1.5"></i>PT Multi Usage Indonesia</p>
                             </div>
-                            <span class="text-sm font-medium text-slate-500 mt-2 md:mt-0">Mar 2020 - Mar 2021</span>
+                            <span class="career-badge"><i class="fas fa-clock"></i> Mar 2020 - Mar 2021</span>
                         </div>
-                        <ul class="mt-4 space-y-2 text-sm text-slate-600">
-                            <li class="flex items-start">
-                                <i class="fas fa-check text-emerald-500 mt-1 mr-3 text-xs"></i>
-                                Developed corporate systems and applications utilizing Delphi 10 Embarcadero.
-                            </li>
-                            <li class="flex items-start">
-                                <i class="fas fa-check text-emerald-500 mt-1 mr-3 text-xs"></i>
-                                Identified and implemented hardware and software solutions tailored to business needs.
-                            </li>
-                            <li class="flex items-start">
-                                <i class="fas fa-check text-emerald-500 mt-1 mr-3 text-xs"></i>
-                                Troubleshoot technical issues, diagnosing system faults, and resolving network bottlenecks.
-                            </li>
+                        <ul class="career-list mt-3 space-y-2">
+                            <li><i class="fas fa-check-circle"></i><span>Developed corporate systems and applications utilizing Delphi 10 Embarcadero.</span></li>
+                            <li><i class="fas fa-check-circle"></i><span>Identified and implemented hardware and software solutions tailored to business needs.</span></li>
+                            <li><i class="fas fa-check-circle"></i><span>Troubleshoot technical issues, diagnosing system faults, and resolving network bottlenecks.</span></li>
                         </ul>
                     </div>
                 </div>
-                
-                
+
                 <!-- Job 3 -->
-                <div class="timeline-item">
-                    <div class="bg-white p-6 rounded-xl shadow-sm border border-slate-100">
-                        <div class="flex flex-col md:flex-row md:justify-between md:items-start mb-2">
+                <div class="career-item career-reveal">
+                    <span class="career-node"><i class="fas fa-hospital"></i></span>
+                    <div class="career-card">
+                        <div class="flex flex-col md:flex-row md:justify-between md:items-start gap-2 mb-2">
                             <div>
-                                <h3 class="text-lg font-bold text-slate-900">EDP / SIMRS</h3>
-                                <p class="text-slate-600 font-medium">PT Annisa Mitra Husada (Rumah Sakit Annisa)</p>
+                                <h3 class="career-role">EDP / SIMRS</h3>
+                                <p class="career-company"><i class="fas fa-building mr-1.5"></i>PT Annisa Mitra Husada (Rumah Sakit Annisa)</p>
                             </div>
-                            <span class="text-sm font-medium text-slate-500 mt-2 md:mt-0">Sep 2016 - Dec 2019</span>
+                            <span class="career-badge"><i class="fas fa-clock"></i> Sep 2016 - Dec 2019</span>
                         </div>
-                        <ul class="mt-4 space-y-2 text-sm text-slate-600">
-                            <li class="flex items-start">
-                                <i class="fas fa-check text-emerald-500 mt-1 mr-3 text-xs"></i>
-                                Managed hospital information systems (SIMRS), ensuring data integrity and continuous system availability.
-                            </li>
-                            <li class="flex items-start">
-                                <i class="fas fa-check text-emerald-500 mt-1 mr-3 text-xs"></i>
-                                Supported IT-related medical projects, network administration, and hardware maintenance.
-                            </li>
+                        <ul class="career-list mt-3 space-y-2">
+                            <li><i class="fas fa-check-circle"></i><span>Managed hospital information systems (SIMRS), ensuring data integrity and continuous availability.</span></li>
+                            <li><i class="fas fa-check-circle"></i><span>Supported IT-related medical projects, network administration, and hardware maintenance.</span></li>
                         </ul>
                     </div>
                 </div>
-                
-                
+
                 <!-- Job 4 -->
-                <div class="timeline-item">
-                    <div class="bg-white p-6 rounded-xl shadow-sm border border-slate-100">
-                        <div class="flex flex-col md:flex-row md:justify-between md:items-start mb-2">
+                <div class="career-item career-reveal">
+                    <span class="career-node"><i class="fas fa-code"></i></span>
+                    <div class="career-card">
+                        <div class="flex flex-col md:flex-row md:justify-between md:items-start gap-2 mb-2">
                             <div>
-                                <h3 class="text-lg font-bold text-slate-900">Programmer</h3>
-                                <p class="text-slate-600 font-medium">PT Multi Mayaka</p>
+                                <h3 class="career-role">Programmer</h3>
+                                <p class="career-company"><i class="fas fa-building mr-1.5"></i>PT Multi Mayaka</p>
                             </div>
-                            <span class="text-sm font-medium text-slate-500 mt-2 md:mt-0">Feb 2014 - Aug 2016</span>
+                            <span class="career-badge"><i class="fas fa-clock"></i> Feb 2014 - Aug 2016</span>
                         </div>
-                        <ul class="mt-4 space-y-2 text-sm text-slate-600">
-                            <li class="flex items-start">
-                                <i class="fas fa-check text-emerald-500 mt-1 mr-3 text-xs"></i>
-                                Developed and maintained company software and database systems, driving continuous improvements in operational efficiency.
-                            </li>
+                        <ul class="career-list mt-3 space-y-2">
+                            <li><i class="fas fa-check-circle"></i><span>Developed and maintained company software and database systems, driving operational efficiency.</span></li>
                         </ul>
                     </div>
                 </div>
-                
-                
+
                 <!-- Toggle for older experience -->
                 <div class="text-center pt-4">
-                    <button id="toggle-exp-btn" class="inline-flex items-center px-4 py-2 text-sm font-medium text-emerald-600 hover:text-emerald-700 border border-emerald-200 hover:bg-emerald-50 rounded-full transition-colors">
-                        View Earlier Experience (2006 - 2014) <i class="fas fa-chevron-down ml-2"></i>
+                    <button id="toggle-exp-btn" class="career-toggle">
+                        View Earlier Experience (2006 - 2014) <i class="fas fa-chevron-down"></i>
                     </button>
                 </div>
-                
-                
+
                 <!-- Hidden Older Jobs -->
-                <div id="older-experience" class="hidden space-y-8">
-                    <div class="timeline-item">
-                        <div class="bg-white p-4 rounded-lg border border-slate-100">
-                            <h3 class="text-base font-semibold text-slate-800">IT Staff</h3>
-                            <p class="text-sm text-slate-600">PT Gunung Garuda (Gunung Steel Group) | Mar 2013 - Feb 2014</p>
+                <div id="older-experience" class="hidden space-y-4 mt-6">
+                    <div class="career-item career-reveal">
+                        <span class="career-node"><i class="fas fa-server"></i></span>
+                        <div class="career-mini">
+                            <h3 class="text-base font-bold text-slate-800">IT Staff</h3>
+                            <p class="text-sm text-slate-600 mt-0.5"><i class="fas fa-building mr-1.5 text-emerald-500"></i>PT Gunung Garuda (Gunung Steel Group) &middot; Mar 2013 - Feb 2014</p>
                         </div>
                     </div>
-                    <div class="timeline-item">
-                        <div class="bg-white p-4 rounded-lg border border-slate-100">
-                            <h3 class="text-base font-semibold text-slate-800">IT Programmer</h3>
-                            <p class="text-sm text-slate-600">PT Multi Usage Indonesia | Apr 2012 - Apr 2013</p>
+                    <div class="career-item career-reveal">
+                        <span class="career-node"><i class="fas fa-keyboard"></i></span>
+                        <div class="career-mini">
+                            <h3 class="text-base font-bold text-slate-800">IT Programmer</h3>
+                            <p class="text-sm text-slate-600 mt-0.5"><i class="fas fa-building mr-1.5 text-blue-500"></i>PT Multi Usage Indonesia &middot; Apr 2012 - Apr 2013</p>
                         </div>
                     </div>
-                    <div class="timeline-item">
-                        <div class="bg-white p-4 rounded-lg border border-slate-100">
-                            <h3 class="text-base font-semibold text-slate-800">IT Staff</h3>
-                            <p class="text-sm text-slate-600">LP3I Cikarang | Sep 2010 - Aug 2011</p>
+                    <div class="career-item career-reveal">
+                        <span class="career-node"><i class="fas fa-chalkboard-teacher"></i></span>
+                        <div class="career-mini">
+                            <h3 class="text-base font-bold text-slate-800">IT Staff</h3>
+                            <p class="text-sm text-slate-600 mt-0.5"><i class="fas fa-building mr-1.5 text-purple-500"></i>LP3I Cikarang &middot; Sep 2010 - Aug 2011</p>
                         </div>
                     </div>
-                    <div class="timeline-item">
-                        <div class="bg-white p-4 rounded-lg border border-slate-100">
-                            <h3 class="text-base font-semibold text-slate-800">Warehouse Staff</h3>
-                            <p class="text-sm text-slate-600">PT Oriental Asahi JP Carton Box | Aug 2006 - Jul 2010</p>
+                    <div class="career-item career-reveal">
+                        <span class="career-node"><i class="fas fa-warehouse"></i></span>
+                        <div class="career-mini">
+                            <h3 class="text-base font-bold text-slate-800">Warehouse Staff</h3>
+                            <p class="text-sm text-slate-600 mt-0.5"><i class="fas fa-building mr-1.5 text-amber-500"></i>PT Oriental Asahi JP Carton Box &middot; Aug 2006 - Jul 2010</p>
                         </div>
                     </div>
                 </div>
@@ -1561,12 +1696,17 @@
             
             if(toggleExpBtn && olderExpDiv) {
                 toggleExpBtn.addEventListener('click', () => {
+                    const wasHidden = olderExpDiv.classList.contains('hidden');
                     olderExpDiv.classList.toggle('hidden');
-                    const icon = toggleExpBtn.querySelector('i');
-                    if(olderExpDiv.classList.contains('hidden')) {
-                        toggleExpBtn.innerHTML = 'View Earlier Experience (2006 - 2014) <i class="fas fa-chevron-down ml-2"></i>';
+                    toggleExpBtn.classList.toggle('open', wasHidden);
+                    if(wasHidden) {
+                        toggleExpBtn.innerHTML = 'Hide Earlier Experience <i class="fas fa-chevron-down"></i>';
+                        const items = olderExpDiv.querySelectorAll('.career-reveal');
+                        items.forEach(function (el, i) {
+                            setTimeout(function () { el.classList.add('visible'); }, i * 120);
+                        });
                     } else {
-                        toggleExpBtn.innerHTML = 'Hide Earlier Experience <i class="fas fa-chevron-up ml-2"></i>';
+                        toggleExpBtn.innerHTML = 'View Earlier Experience (2006 - 2014) <i class="fas fa-chevron-down"></i>';
                     }
                 });
             }
@@ -1674,6 +1814,27 @@
                     }
                 });
             }, { threshold: 0.25 });
+            items.forEach(function (el) { observer.observe(el); });
+        })();
+
+        // Career cards reveal on scroll
+        (function () {
+            const items = document.querySelectorAll('.career-reveal');
+            if (!items.length) return;
+            if (!('IntersectionObserver' in window)) {
+                items.forEach(function (el) { el.classList.add('visible'); });
+                return;
+            }
+            const observer = new IntersectionObserver(function (entries) {
+                entries.forEach(function (entry) {
+                    if (entry.isIntersecting) {
+                        const el = entry.target;
+                        const idx = Array.from(items).indexOf(el);
+                        setTimeout(function () { el.classList.add('visible'); }, idx * 120);
+                        observer.unobserve(el);
+                    }
+                });
+            }, { threshold: 0.2 });
             items.forEach(function (el) { observer.observe(el); });
         })();
     </script>
