@@ -100,6 +100,79 @@
             color: #047857;
             border: 1px solid rgba(16, 185, 129, 0.2);
         }
+
+        /* Portfolio Auto Slider */
+        .portfolio-slider {
+            position: relative;
+            overflow: hidden;
+            border-radius: 28px;
+        }
+        .portfolio-track {
+            display: flex;
+            transition: transform 0.8s cubic-bezier(0.22, 1, 0.36, 1);
+            will-change: transform;
+        }
+        .portfolio-slide {
+            flex: 0 0 100%;
+            padding: 0.5rem;
+            box-sizing: border-box;
+        }
+        .portfolio-grid-inner {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 1.5rem;
+        }
+        .portfolio-dots {
+            display: flex;
+            justify-content: center;
+            gap: 0.5rem;
+            margin-top: 1.75rem;
+        }
+        .portfolio-dot {
+            width: 10px;
+            height: 10px;
+            border-radius: 9999px;
+            background: rgba(16, 185, 129, 0.25);
+            border: none;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            padding: 0;
+        }
+        .portfolio-dot.active {
+            width: 28px;
+            background: linear-gradient(90deg, #10b981, #34d399);
+        }
+        .portfolio-arrow {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 44px;
+            height: 44px;
+            border-radius: 9999px;
+            background: rgba(255, 255, 255, 0.85);
+            backdrop-filter: blur(8px);
+            border: 1px solid rgba(16, 185, 129, 0.2);
+            color: #047857;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            z-index: 5;
+            box-shadow: 0 6px 20px -6px rgba(16, 185, 129, 0.4);
+            transition: all 0.3s ease;
+        }
+        .portfolio-arrow:hover {
+            background: rgba(16, 185, 129, 0.12);
+            transform: translateY(-50%) scale(1.1);
+        }
+        .portfolio-arrow.prev { left: 0.5rem; }
+        .portfolio-arrow.next { right: 0.5rem; }
+        @media (max-width: 1023px) {
+            .portfolio-grid-inner { grid-template-columns: repeat(2, 1fr); }
+        }
+        @media (max-width: 639px) {
+            .portfolio-grid-inner { grid-template-columns: 1fr; }
+        }
         
         /* Timeline styles */
         .timeline-item { position: relative; padding-left: 2rem; }
@@ -671,80 +744,229 @@
     </section>
     
     
-    <!-- Projects Section -->
+<!-- Projects Section -->
     <section id="projects" class="py-20 bg-white/70 backdrop-blur-sm border-y border-emerald-100/50">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="text-center mb-16">
                 <h2 class="text-sm font-semibold text-emerald-600 tracking-wider uppercase">Portfolio</h2>
                 <p class="mt-2 text-3xl leading-8 font-bold tracking-tight text-slate-900 sm:text-4xl">Notable Development Projects</p>
+                <p class="mt-3 text-sm text-slate-500">Auto-sliding showcase &middot; hover to pause</p>
             </div>
 
-            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-                <!-- Project 1 -->
-                <div class="portfolio-card">
-                    <span class="portfolio-accent" style="background: linear-gradient(90deg, #10b981, #34d399);"></span>
-                    <div class="portfolio-icon" style="background: rgba(16, 185, 129, 0.12); color: #059669;">
-                        <i class="fas fa-car text-2xl"></i>
+            <div class="portfolio-slider" id="portfolioSlider">
+                <button class="portfolio-arrow prev" id="portfolioPrev" aria-label="Previous slide">
+                    <i class="fas fa-chevron-left"></i>
+                </button>
+                <button class="portfolio-arrow next" id="portfolioNext" aria-label="Next slide">
+                    <i class="fas fa-chevron-right"></i>
+                </button>
+
+                <div class="portfolio-track" id="portfolioTrack">
+
+                    <!-- Slide 1 -->
+                    <div class="portfolio-slide">
+                        <div class="portfolio-grid-inner">
+                            <div class="portfolio-card">
+                                <span class="portfolio-accent" style="background: linear-gradient(90deg, #10b981, #34d399);"></span>
+                                <div class="portfolio-icon" style="background: rgba(16, 185, 129, 0.12); color: #059669;">
+                                    <i class="fas fa-car text-2xl"></i>
+                                </div>
+                                <h3 class="text-xl font-bold text-slate-900 mb-3">Awan Rent Car</h3>
+                                <p class="text-slate-600 mb-6 leading-relaxed">
+                                    Premium web app template with a 10-vehicle fleet gallery and booking submission tools linked directly to the WhatsApp API.
+                                </p>
+                                <div class="flex flex-wrap gap-2">
+                                    <span class="portfolio-badge">Web App</span>
+                                    <span class="portfolio-badge">WhatsApp API</span>
+                                </div>
+                            </div>
+                            <div class="portfolio-card">
+                                <span class="portfolio-accent" style="background: linear-gradient(90deg, #3b82f6, #60a5fa);"></span>
+                                <div class="portfolio-icon" style="background: rgba(59, 130, 246, 0.12); color: #2563eb;">
+                                    <i class="fas fa-brain text-2xl"></i>
+                                </div>
+                                <h3 class="text-xl font-bold text-slate-900 mb-3">BrainMetrics Elite</h3>
+                                <p class="text-slate-600 mb-6 leading-relaxed">
+                                    Cognitive assessment app with a 50-question test bank across five intelligence domains, radar chart outputs and downloadable PDF reports.
+                                </p>
+                                <div class="flex flex-wrap gap-2">
+                                    <span class="portfolio-badge">Assessment</span>
+                                    <span class="portfolio-badge">Data Viz</span>
+                                    <span class="portfolio-badge">PDF</span>
+                                </div>
+                            </div>
+                            <div class="portfolio-card">
+                                <span class="portfolio-accent" style="background: linear-gradient(90deg, #f59e0b, #fbbf24);"></span>
+                                <div class="portfolio-icon" style="background: rgba(245, 158, 11, 0.12); color: #d97706;">
+                                    <i class="fas fa-boxes text-2xl"></i>
+                                </div>
+                                <h3 class="text-xl font-bold text-slate-900 mb-3">MRP Simulation</h3>
+                                <p class="text-slate-600 mb-6 leading-relaxed">
+                                    Material Requirements Planning app with multi-warehouse inventory locations and integrated QR code scanning for stock tracking.
+                                </p>
+                                <div class="flex flex-wrap gap-2">
+                                    <span class="portfolio-badge">Inventory</span>
+                                    <span class="portfolio-badge">QR Scanning</span>
+                                </div>
+                            </div>
+                        </div>
                     </div>
-                    <h3 class="text-xl font-bold text-slate-900 mb-3">Awan Rent Car</h3>
-                    <p class="text-slate-600 mb-6 leading-relaxed">
-                        Premium web application template featuring a 10-vehicle fleet gallery and booking submission tools linked directly to the WhatsApp API for seamless customer interaction.
-                    </p>
-                    <div class="flex flex-wrap gap-2">
-                        <span class="portfolio-badge">Web App</span>
-                        <span class="portfolio-badge">WhatsApp API</span>
+
+                    <!-- Slide 2 -->
+                    <div class="portfolio-slide">
+                        <div class="portfolio-grid-inner">
+                            <div class="portfolio-card">
+                                <span class="portfolio-accent" style="background: linear-gradient(90deg, #8b5cf6, #a78bfa);"></span>
+                                <div class="portfolio-icon" style="background: rgba(139, 92, 246, 0.12); color: #7c3aed;">
+                                    <i class="fas fa-server text-2xl"></i>
+                                </div>
+                                <h3 class="text-xl font-bold text-slate-900 mb-3">IT Asset Management</h3>
+                                <p class="text-slate-600 mb-6 leading-relaxed">
+                                    Custom, fast single-page CRUD app configured for database connections to track and manage organizational IT assets efficiently.
+                                </p>
+                                <div class="flex flex-wrap gap-2">
+                                    <span class="portfolio-badge">SPA</span>
+                                    <span class="portfolio-badge">CRUD</span>
+                                    <span class="portfolio-badge">Asset Tracking</span>
+                                </div>
+                            </div>
+                            <a href="https://github.com/antono4/StockMind" target="_blank" class="portfolio-card" style="text-decoration:none;">
+                                <span class="portfolio-accent" style="background: linear-gradient(90deg, #ef4444, #f87171);"></span>
+                                <div class="portfolio-icon" style="background: rgba(239, 68, 68, 0.12); color: #dc2626;">
+                                    <i class="fas fa-chart-line text-2xl"></i>
+                                </div>
+                                <h3 class="text-xl font-bold text-slate-900 mb-3">StockMind</h3>
+                                <p class="text-slate-600 mb-6 leading-relaxed">
+                                    AI-powered stock prediction tool that analyses market trends to deliver actionable forecasting insights.
+                                </p>
+                                <div class="flex flex-wrap gap-2">
+                                    <span class="portfolio-badge">AI</span>
+                                    <span class="portfolio-badge">Prediction</span>
+                                    <span class="portfolio-badge">HTML</span>
+                                </div>
+                            </a>
+                            <a href="https://github.com/antono4/Local-AI-Like-Ollama" target="_blank" class="portfolio-card" style="text-decoration:none;">
+                                <span class="portfolio-accent" style="background: linear-gradient(90deg, #14b8a6, #2dd4bf);"></span>
+                                <div class="portfolio-icon" style="background: rgba(20, 184, 166, 0.12); color: #0d9488;">
+                                    <i class="fas fa-robot text-2xl"></i>
+                                </div>
+                                <h3 class="text-xl font-bold text-slate-900 mb-3">Local AI Like Ollama</h3>
+                                <p class="text-slate-600 mb-6 leading-relaxed">
+                                    Self-hosted local AI interface inspired by Ollama, bringing conversational AI capabilities to your own machine.
+                                </p>
+                                <div class="flex flex-wrap gap-2">
+                                    <span class="portfolio-badge">AI</span>
+                                    <span class="portfolio-badge">Local LLM</span>
+                                    <span class="portfolio-badge">Self-hosted</span>
+                                </div>
+                            </a>
+                        </div>
                     </div>
+
+                    <!-- Slide 3 -->
+                    <div class="portfolio-slide">
+                        <div class="portfolio-grid-inner">
+                            <a href="https://github.com/antono4/Koinku" target="_blank" class="portfolio-card" style="text-decoration:none;">
+                                <span class="portfolio-accent" style="background: linear-gradient(90deg, #eab308, #facc15);"></span>
+                                <div class="portfolio-icon" style="background: rgba(234, 179, 8, 0.12); color: #ca8a04;">
+                                    <i class="fas fa-coins text-2xl"></i>
+                                </div>
+                                <h3 class="text-xl font-bold text-slate-900 mb-3">Koinku</h3>
+                                <p class="text-slate-600 mb-6 leading-relaxed">
+                                    Personal finance management app with a bold Neobrutalism design for tracking income, expenses and budgets.
+                                </p>
+                                <div class="flex flex-wrap gap-2">
+                                    <span class="portfolio-badge">TypeScript</span>
+                                    <span class="portfolio-badge">Finance</span>
+                                    <span class="portfolio-badge">Neobrutalism</span>
+                                </div>
+                            </a>
+                            <a href="https://github.com/antono4/-NEXUS-SOCIAL-MEDIA" target="_blank" class="portfolio-card" style="text-decoration:none;">
+                                <span class="portfolio-accent" style="background: linear-gradient(90deg, #6366f1, #818cf8);"></span>
+                                <div class="portfolio-icon" style="background: rgba(99, 102, 241, 0.12); color: #4f46e5;">
+                                    <i class="fas fa-users text-2xl"></i>
+                                </div>
+                                <h3 class="text-xl font-bold text-slate-900 mb-3">Nexus Social Media</h3>
+                                <p class="text-slate-600 mb-6 leading-relaxed">
+                                    Social media platform project with modern community features, deployed on Vercel for a live demo experience.
+                                </p>
+                                <div class="flex flex-wrap gap-2">
+                                    <span class="portfolio-badge">JavaScript</span>
+                                    <span class="portfolio-badge">Social</span>
+                                    <span class="portfolio-badge">Vercel</span>
+                                </div>
+                            </a>
+                            <a href="https://github.com/antono4/OptiCore-OS" target="_blank" class="portfolio-card" style="text-decoration:none;">
+                                <span class="portfolio-accent" style="background: linear-gradient(90deg, #0ea5e9, #38bdf8);"></span>
+                                <div class="portfolio-icon" style="background: rgba(14, 165, 233, 0.12); color: #0284c7;">
+                                    <i class="fas fa-microchip text-2xl"></i>
+                                </div>
+                                <h3 class="text-xl font-bold text-slate-900 mb-3">OptiCore-OS</h3>
+                                <p class="text-slate-600 mb-6 leading-relaxed">
+                                    Premium Windows optimization system to enhance performance, privacy and security on Windows 10/11.
+                                </p>
+                                <div class="flex flex-wrap gap-2">
+                                    <span class="portfolio-badge">PowerShell</span>
+                                    <span class="portfolio-badge">Optimization</span>
+                                    <span class="portfolio-badge">Security</span>
+                                </div>
+                            </a>
+                        </div>
+                    </div>
+
+                    <!-- Slide 4 -->
+                    <div class="portfolio-slide">
+                        <div class="portfolio-grid-inner">
+                            <a href="https://antono4.github.io/RentCar" target="_blank" class="portfolio-card" style="text-decoration:none;">
+                                <span class="portfolio-accent" style="background: linear-gradient(90deg, #10b981, #34d399);"></span>
+                                <div class="portfolio-icon" style="background: rgba(16, 185, 129, 0.12); color: #059669;">
+                                    <i class="fas fa-car-side text-2xl"></i>
+                                </div>
+                                <h3 class="text-xl font-bold text-slate-900 mb-3">RentCar</h3>
+                                <p class="text-slate-600 mb-6 leading-relaxed">
+                                    Live car rental web project with a clean, responsive interface for browsing and booking vehicles online.
+                                </p>
+                                <div class="flex flex-wrap gap-2">
+                                    <span class="portfolio-badge">HTML</span>
+                                    <span class="portfolio-badge">Live Demo</span>
+                                </div>
+                            </a>
+                            <a href="https://antono4.github.io/neon-strike-game" target="_blank" class="portfolio-card" style="text-decoration:none;">
+                                <span class="portfolio-accent" style="background: linear-gradient(90deg, #ec4899, #f472b6);"></span>
+                                <div class="portfolio-icon" style="background: rgba(236, 72, 153, 0.12); color: #db2777;">
+                                    <i class="fas fa-gamepad text-2xl"></i>
+                                </div>
+                                <h3 class="text-xl font-bold text-slate-900 mb-3">Neon Strike Game</h3>
+                                <p class="text-slate-600 mb-6 leading-relaxed">
+                                    Browser-based arcade game with neon visuals and fast-paced gameplay, deployed via GitHub Pages.
+                                </p>
+                                <div class="flex flex-wrap gap-2">
+                                    <span class="portfolio-badge">Game</span>
+                                    <span class="portfolio-badge">HTML</span>
+                                    <span class="portfolio-badge">Live Demo</span>
+                                </div>
+                            </a>
+                            <a href="https://antono4.github.io/AetherOS" target="_blank" class="portfolio-card" style="text-decoration:none;">
+                                <span class="portfolio-accent" style="background: linear-gradient(90deg, #8b5cf6, #a78bfa);"></span>
+                                <div class="portfolio-icon" style="background: rgba(139, 92, 246, 0.12); color: #7c3aed;">
+                                    <i class="fas fa-desktop text-2xl"></i>
+                                </div>
+                                <h3 class="text-xl font-bold text-slate-900 mb-3">AetherOS</h3>
+                                <p class="text-slate-600 mb-6 leading-relaxed">
+                                    Web-based operating system experience built with TypeScript, featuring a modern desktop-like interface.
+                                </p>
+                                <div class="flex flex-wrap gap-2">
+                                    <span class="portfolio-badge">TypeScript</span>
+                                    <span class="portfolio-badge">Web OS</span>
+                                    <span class="portfolio-badge">Live Demo</span>
+                                </div>
+                            </a>
+                        </div>
+                    </div>
+
                 </div>
 
-                <!-- Project 2 -->
-                <div class="portfolio-card">
-                    <span class="portfolio-accent" style="background: linear-gradient(90deg, #3b82f6, #60a5fa);"></span>
-                    <div class="portfolio-icon" style="background: rgba(59, 130, 246, 0.12); color: #2563eb;">
-                        <i class="fas fa-brain text-2xl"></i>
-                    </div>
-                    <h3 class="text-xl font-bold text-slate-900 mb-3">BrainMetrics Elite</h3>
-                    <p class="text-slate-600 mb-6 leading-relaxed">
-                        Comprehensive cognitive assessment application with a 50-question test bank across five intelligence domains, featuring complex radar chart outputs and downloadable PDF reports.
-                    </p>
-                    <div class="flex flex-wrap gap-2">
-                        <span class="portfolio-badge">Assessment Tool</span>
-                        <span class="portfolio-badge">Data Visualization</span>
-                        <span class="portfolio-badge">PDF Generation</span>
-                    </div>
-                </div>
-
-                <!-- Project 3 -->
-                <div class="portfolio-card">
-                    <span class="portfolio-accent" style="background: linear-gradient(90deg, #f59e0b, #fbbf24);"></span>
-                    <div class="portfolio-icon" style="background: rgba(245, 158, 11, 0.12); color: #d97706;">
-                        <i class="fas fa-boxes text-2xl"></i>
-                    </div>
-                    <h3 class="text-xl font-bold text-slate-900 mb-3">MRP Simulation</h3>
-                    <p class="text-slate-600 mb-6 leading-relaxed">
-                        Material Requirements Planning application featuring multi-warehouse inventory locations and integrated QR code data scanning capabilities to streamline stock tracking.
-                    </p>
-                    <div class="flex flex-wrap gap-2">
-                        <span class="portfolio-badge">Inventory Management</span>
-                        <span class="portfolio-badge">QR Scanning</span>
-                    </div>
-                </div>
-
-                <!-- Project 4 -->
-                <div class="portfolio-card">
-                    <span class="portfolio-accent" style="background: linear-gradient(90deg, #8b5cf6, #a78bfa);"></span>
-                    <div class="portfolio-icon" style="background: rgba(139, 92, 246, 0.12); color: #7c3aed;">
-                        <i class="fas fa-server text-2xl"></i>
-                    </div>
-                    <h3 class="text-xl font-bold text-slate-900 mb-3">IT Asset Management</h3>
-                    <p class="text-slate-600 mb-6 leading-relaxed">
-                        Custom, fast single-page CRUD application configured for database connections to systematically track and manage organizational IT assets efficiently.
-                    </p>
-                    <div class="flex flex-wrap gap-2">
-                        <span class="portfolio-badge">SPA</span>
-                        <span class="portfolio-badge">CRUD Database</span>
-                        <span class="portfolio-badge">Asset Tracking</span>
-                    </div>
-                </div>
+                <div class="portfolio-dots" id="portfolioDots"></div>
             </div>
         </div>
     </section>
@@ -971,6 +1193,57 @@
                 }
             });
         });
+    </script>
+
+    <!-- Portfolio Auto Slider -->
+    <script>
+        (function () {
+            const track = document.getElementById('portfolioTrack');
+            const slider = document.getElementById('portfolioSlider');
+            const dotsContainer = document.getElementById('portfolioDots');
+            const prevBtn = document.getElementById('portfolioPrev');
+            const nextBtn = document.getElementById('portfolioNext');
+            if (!track || !slider || !dotsContainer) return;
+
+            const slides = Array.from(track.querySelectorAll('.portfolio-slide'));
+            const total = slides.length;
+            let current = 0;
+            let timer = null;
+            const INTERVAL = 4500;
+
+            slides.forEach(function (_, i) {
+                const dot = document.createElement('button');
+                dot.className = 'portfolio-dot' + (i === 0 ? ' active' : '');
+                dot.setAttribute('aria-label', 'Go to slide ' + (i + 1));
+                dot.addEventListener('click', function () { goTo(i); reset(); });
+                dotsContainer.appendChild(dot);
+            });
+            const dots = Array.from(dotsContainer.querySelectorAll('.portfolio-dot'));
+
+            function goTo(index) {
+                current = (index + total) % total;
+                track.style.transform = 'translateX(-' + (current * 100) + '%)';
+                dots.forEach(function (d, i) { d.classList.toggle('active', i === current); });
+            }
+            function next() { goTo(current + 1); }
+            function prev() { goTo(current - 1); }
+            function start() { timer = setInterval(next, INTERVAL); }
+            function stop() { if (timer) { clearInterval(timer); timer = null; } }
+            function reset() { stop(); start(); }
+
+            nextBtn.addEventListener('click', function () { next(); reset(); });
+            prevBtn.addEventListener('click', function () { prev(); reset(); });
+
+            slider.addEventListener('mouseenter', stop);
+            slider.addEventListener('mouseleave', start);
+
+            // Pause when tab not visible
+            document.addEventListener('visibilitychange', function () {
+                if (document.hidden) stop(); else start();
+            });
+
+            start();
+        })();
     </script>
 </body>
 </html>
