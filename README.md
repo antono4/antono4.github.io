@@ -1,1 +1,26 @@
-Last updated: 2026-09-02 01:46:30 WIB
+# antono4.github.io
+
+
+
+## 📋 Overview
+
+This repository contains **54 files** and is built with the following technologies:
+
+Python, HTML, CSS
+
+## 🚀 Quick Start
+
+## ✨ Features
+
+- 📝 Auto-generated documentation
+
+## 🛠️ Technologies
+
+Python, HTML, CSS
+
+## 📄 License
+
+MIT License
+
+---
+*Last updated: 2026-09-02 02:33:04 WIB*
