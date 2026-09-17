@@ -13,7 +13,7 @@ permissions:
 
 concurrency:
   group: auto-commit
-  cancel-in-progress: false
+  cancel-in-progress: true
 
 jobs:
   auto_commit:
@@ -48,11 +48,11 @@ jobs:
 
           rand=$[$RANDOM % ${#arr[@]}]
 
-          git commit -m "${arr[$rand]}"
+          git commit -m "${arr[$rand]}" || echo "No changes to commit"
 
       - name: GitHub Push
-        uses: ad-m/github-push-action@master
-        with:
-          pull: true
-          directory: "."
-          github_token: ${{ secrets.GITHUB_TOKEN }}
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          git remote set-url origin "https://x-access-token:${GITHUB_TOKEN}@github.com/${{ github.repository }}.git"
+          git push origin HEAD:main
