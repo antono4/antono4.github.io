@@ -12,7 +12,7 @@ on:
 jobs:
   generate-snake:
     runs-on: ubuntu-latest
-    
+
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
@@ -31,7 +31,9 @@ jobs:
 
       - name: Commit and push snake
         run: |
-          git pull --rebase origin ${{ github.ref_name }}
           git add assets/snake.svg
-          git commit -m "Update contribution snake SVG at $(date +'%Y-%m-%d %H:%M:%S')" || echo "No changes"
-          git push origin ${{ github.ref_name }}
+          if ! git diff --cached --quiet; then
+            git commit -m "Update contribution snake SVG at $(date +'%Y-%m-%d %H:%M:%S')"
+          fi
+          git pull --rebase origin "${{ github.ref_name }}"
+          git push origin "${{ github.ref_name }}"
