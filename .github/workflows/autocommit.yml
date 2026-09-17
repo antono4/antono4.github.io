@@ -26,14 +26,24 @@ jobs:
 
       - name: Modify last update
         run: |
-          d=`date '+%Y-%m-%dT%H:%M:%SZ'`
-          echo $d > LAST_UPDATED
+          d=$(date -u '+%Y-%m-%dT%H:%M:%SZ')
+          printf '%s\n' "$d" > LAST_UPDATED
 
       - name: Commit changes
+        shell: bash
         run: |
           git config --local user.email "73228642+antono4@users.noreply.github.com"
           git config --local user.name "antono4"
+          git fetch origin main
+          git checkout main
+          git pull --rebase origin main || true
+
           git add -A
+
+          if git diff --cached --quiet; then
+            echo "No changes to commit"
+            exit 0
+          fi
 
           arr[0]="chore(bot): 😂 auto commit"
           arr[1]="chore(bot): 😱 auto commit"
@@ -46,9 +56,8 @@ jobs:
           arr[8]="chore(bot): 🟩 auto commit"
           arr[9]="chore(bot): 👻 auto commit"
 
-          rand=$[$RANDOM % ${#arr[@]}]
-
-          git commit -m "${arr[$rand]}" || echo "No changes to commit"
+          rand=$((RANDOM % ${#arr[@]}))
+          git commit -m "${arr[$rand]}"
 
       - name: GitHub Push
         env:
