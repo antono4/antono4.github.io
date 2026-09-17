@@ -4,6 +4,8 @@ on:
   push:
     branches:
       - main
+    paths-ignore:
+      - LAST_UPDATED
   schedule:
     - cron: "*/10 * * * *"
 
@@ -12,7 +14,7 @@ permissions:
 
 concurrency:
   group: auto-commit
-  cancel-in-progress: true
+  cancel-in-progress: false
 
 jobs:
   auto_commit:
@@ -33,47 +35,52 @@ jobs:
           git config --local user.email "73228642+antono4@users.noreply.github.com"
           git config --local user.name "antono4"
 
-      - name: Sync with remote main
-        shell: bash
-        run: |
-          git fetch origin main --prune
-          git checkout -B main origin/main
-          git pull --ff-only origin main || true
-
-      - name: Modify last update
-        shell: bash
-        run: |
-          d=$(date -u '+%Y-%m-%dT%H:%M:%SZ')
-          printf '%s\n' "$d" > LAST_UPDATED
-
-      - name: Commit changes
-        shell: bash
-        run: |
-          git add -A
-
-          if git diff --cached --quiet; then
-            echo "No changes to commit"
-            exit 0
-          fi
-
-          arr[0]="chore(bot): 😂 auto commit"
-          arr[1]="chore(bot): 😱 auto commit"
-          arr[2]="chore(bot): 👿 auto commit"
-          arr[3]="chore(bot): 💩 auto commit"
-          arr[4]="chore(bot): 🙏 auto commit"
-          arr[5]="chore(bot): 🙈 auto commit"
-          arr[6]="chore(bot): 🐐 auto commit"
-          arr[7]="chore(bot): 🤖 auto commit"
-          arr[8]="chore(bot): 🟩 auto commit"
-          arr[9]="chore(bot): 👻 auto commit"
-
-          rand=$((RANDOM % ${#arr[@]}))
-          git commit -m "${arr[$rand]}"
-
-      - name: Push changes
+      - name: Commit and push with retry
         shell: bash
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
+          set -Eeuo pipefail
+
           git remote set-url origin "https://x-access-token:${GITHUB_TOKEN}@github.com/${{ github.repository }}.git"
-          git push origin HEAD:main
+
+          messages=(
+            "chore(bot): 😂 auto commit"
+            "chore(bot): 😱 auto commit"
+            "chore(bot): 👿 auto commit"
+            "chore(bot): 💩 auto commit"
+            "chore(bot): 🙏 auto commit"
+            "chore(bot): 🙈 auto commit"
+            "chore(bot): 🐐 auto commit"
+            "chore(bot): 🤖 auto commit"
+            "chore(bot): 🟩 auto commit"
+            "chore(bot): 👻 auto commit"
+          )
+
+          for attempt in 1 2 3; do
+            echo "Attempt $attempt/3"
+            git fetch origin main --prune
+            git checkout -B main origin/main
+
+            printf '%s\n' "$(date -u '+%Y-%m-%dT%H:%M:%SZ')" > LAST_UPDATED
+            git add LAST_UPDATED
+
+            if git diff --cached --quiet; then
+              echo "No changes to commit"
+              exit 0
+            fi
+
+            git commit -m "${messages[$((RANDOM % ${#messages[@]}))]}"
+
+            if git push origin HEAD:refs/heads/main; then
+              echo "Push succeeded"
+              exit 0
+            fi
+
+            echo "Push failed because main changed; retrying..."
+            git reset --hard origin/main
+            sleep $((attempt * 5))
+          done
+
+          echo "Push failed after 3 attempts"
+          exit 1
