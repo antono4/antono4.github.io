@@ -5,7 +5,6 @@ on:
     branches:
       - main
   schedule:
-    # setiap 10 menit
     - cron: "*/10 * * * *"
 
 permissions:
@@ -18,13 +17,31 @@ concurrency:
 jobs:
   auto_commit:
     runs-on: ubuntu-latest
+    permissions:
+      contents: write
     steps:
-      - uses: actions/checkout@v4
+      - name: Checkout repository
+        uses: actions/checkout@v4
         with:
           persist-credentials: false
           fetch-depth: 0
 
+      - name: Setup git identity
+        shell: bash
+        run: |
+          git config --global --add safe.directory "$GITHUB_WORKSPACE"
+          git config --local user.email "73228642+antono4@users.noreply.github.com"
+          git config --local user.name "antono4"
+
+      - name: Sync with remote main
+        shell: bash
+        run: |
+          git fetch origin main --prune
+          git checkout -B main origin/main
+          git pull --ff-only origin main || true
+
       - name: Modify last update
+        shell: bash
         run: |
           d=$(date -u '+%Y-%m-%dT%H:%M:%SZ')
           printf '%s\n' "$d" > LAST_UPDATED
@@ -32,12 +49,6 @@ jobs:
       - name: Commit changes
         shell: bash
         run: |
-          git config --local user.email "73228642+antono4@users.noreply.github.com"
-          git config --local user.name "antono4"
-          git fetch origin main
-          git checkout main
-          git pull --rebase origin main || true
-
           git add -A
 
           if git diff --cached --quiet; then
@@ -59,7 +70,8 @@ jobs:
           rand=$((RANDOM % ${#arr[@]}))
           git commit -m "${arr[$rand]}"
 
-      - name: GitHub Push
+      - name: Push changes
+        shell: bash
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
