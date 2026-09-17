@@ -7,13 +7,13 @@ on:
     paths-ignore:
       - LAST_UPDATED
   schedule:
-    - cron: "*/10 * * * *"
+    - cron: "10-59/30 * * * *"
 
 permissions:
   contents: write
 
 concurrency:
-  group: auto-commit
+  group: readme-updater
   cancel-in-progress: false
 
 jobs:
